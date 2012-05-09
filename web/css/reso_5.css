@@ -1,0 +1,47 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/Night_Glow_Stock_by_SimplyBackgrounds.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+ 	background-position: 25% 33%;
+	padding-top: 70px;
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 255, 160, 255 );
+	border-color: rgb( 160, 120, 220 );
+	background-color: rgb( 10, 10, 10 );
+}
+
+#downloads {
+	border-color: rgb( 160, 120, 220 );
+}
+
+
+#p1
+{
+	margin: 20px 15% 20px auto;
+	width: 30em;
+}
+
+#p2
+{
+	margin: 20px 15% 20px auto;
+	width: 40em;
+}
+
+#p3
+{
+	margin: 20px 15% 20px auto;
+	width: 50em;
+}
+
+#p4
+{
+	margin: 20px 15% 20px auto;
+	width: 50em;
+}
+
+#credits {
+	border-color: rgb( 160, 120, 220 );
+}

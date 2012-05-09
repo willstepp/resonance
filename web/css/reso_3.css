@@ -1,0 +1,40 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/Stock_landscape_1_by_AzurylipfesStock.jpg');
+	background-repeat: no-repeat;
+ 	background-position: 50% 50%;
+	background-attachment: fixed;
+	margin: auto;
+	padding-top: 5em;
+	color: rgb( 10, 10, 10 );
+}
+
+a {
+	color: rgb( 10, 10, 10 );
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 246, 243, 230 );
+	background-color: rgb( 60, 34, 19 );
+}
+
+#downloads {
+	margin: 2em auto;
+	background-color: rgb( 150, 165, 140 );
+}
+
+#p1, #p2, #p3 {
+	text-align: center;
+	margin: 2em 20% 2em 20%;
+	width: auto;
+}
+
+#p4 {
+	text-align: center;
+	margin: 4em 20% 4em 20%;
+	width: auto;
+}
+
+#credits {
+	background-color: rgb( 150, 165, 140 );
+}

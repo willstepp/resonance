@@ -1,0 +1,39 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/Smith_River_Magic_by_riktorsashen.jpg');
+	background-repeat: no-repeat;
+ 	background-position: 30% 50%;
+	margin: auto;
+	padding-top: 6em;
+	color: rgb( 10, 10, 10 );
+}
+
+a {
+	color: rgb( 10, 10, 10 );
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 20, 30, 0 );
+	border-color: rgb( 80, 110, 40 );
+	background-color: rgb( 190, 190, 190 );
+}
+
+#downloads {
+	margin: 2em auto 2em 30em;
+	border-color: rgb( 80, 110, 40 );
+}
+
+#p1, #p2 {
+	margin: 2em auto 2em 10em;
+	width: 20em;
+}
+
+#p3, #p4 {
+	margin: 2em auto 2em 10em;
+	width: 40em;
+}
+
+#credits {
+	border-color: rgb( 80, 110, 40 );
+	background-color: rgb( 145, 160, 130 );
+}

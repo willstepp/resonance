@@ -1,0 +1,44 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/Empty_Words_I_by_lady_symphonia_stock.jpg');
+	background-repeat: no-repeat;
+ 	background-position: 50% 80%;
+	background-attachment: fixed;
+	margin: auto;
+	padding-top: 5em;
+	color: rgb( 10, 10, 10 );
+}
+
+a {
+	color: rgb( 10, 10, 10 );
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 110, 30, 150 );
+	border-color: rgb( 10, 15, 30 );
+	background-color: transparent;
+}
+
+#downloads {
+	margin: 2em auto;
+}
+
+#p1, #p2, #p3 {
+	text-align: center;
+	margin: 2em 20% 2em 20%;
+	width: auto;
+}
+
+#p4 {
+	text-align: center;
+	margin: 4em 20% 4em 20%;
+	width: auto;
+}
+
+#credits {
+	background-color: transparent;
+}
+
+#credits a:hover {
+	background-color: rgb( 170, 180, 240 );
+}

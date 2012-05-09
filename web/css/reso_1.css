@@ -1,0 +1,18 @@
+body {
+	background-color: rgb( 8, 8, 13 );
+	background-image: url('../images/Cold_Moon_by_sixwings.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	padding-top: 30px;
+}
+
+#downloads {
+	position: absolute;
+	left: 5em;
+	top: 23em;
+}
+
+#p1, #p2, #p3, #p4 {
+	margin: 40px 20% 40px 25em;
+	width: auto;
+}

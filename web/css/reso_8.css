@@ -1,0 +1,11 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/dark_water_stock_by_LeandrasStock.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+ 	background-position: 75% 60%;
+}
+
+#downloads {
+	margin: 20px auto 20px 50%;
+}

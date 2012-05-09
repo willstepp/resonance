@@ -1,0 +1,44 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/Fairie_Ring_by_Moonchilde_Stock.jpg');
+	background-repeat: no-repeat;
+ 	background-position: 50% 40%;
+	margin: auto;
+	padding-top: 6em;
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 255, 255, 255 );
+	border-color: rgb( 160, 0, 220 );
+	background-color: rgb( 40, 0, 80 );
+}
+
+#downloads {
+	margin: 2em auto 2em auto;
+	border-color: rgb( 160, 0, 220 );
+}
+
+#p1 {
+	margin: 2em auto 2em auto;
+	width: 20em;
+}
+
+#p2 {
+	margin: 2em auto 2em auto;
+	width: 26em;
+}
+
+#p3 {
+	margin: 2em auto 2em auto;
+	width: 35em;
+}
+
+#p4 {
+	margin: 2em auto 2em auto;
+	text-align: center;
+	width: 35em;
+}
+
+#credits {
+	border-color: rgb( 160, 0, 220 );
+}

@@ -1,0 +1,40 @@
+body {
+	background-color: rgb( 10, 10, 10 );
+	background-image: url('../images/sky_by_DianaFernandes_stock.jpg');
+	background-repeat: no-repeat;
+ 	background-position: 30% 50%;
+	background-attachment: fixed;
+	margin: auto;
+	padding-top: 7em;
+	color: rgb( 10, 10, 10 );
+}
+
+a {
+	color: rgb( 10, 10, 10 );
+}
+
+img.icon:hover, a:hover {
+	color: rgb( 20, 30, 0 );
+	border-color: rgb( 110, 80, 40 );
+	background-color: rgb( 240, 210, 180 );
+}
+
+#downloads {
+	margin: 2em auto;
+	border-color: rgb( 110, 80, 40 );
+}
+
+#p1, #p2, #p3 {
+	margin: 2em 20% 2em 20%;
+	width: auto;
+}
+
+#p4 {
+	margin: 4em 20% 4em 20%;
+	width: auto;
+}
+
+#credits {
+	border-color: rgb( 110, 80, 40 );
+	background-color: rgb( 254, 254, 251 );
+}

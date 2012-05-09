@@ -1,0 +1,30 @@
+body {
+	background-image: url('../images/Moon_Stock_XIII_by_grace_stock.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+ 	background-position: -20em 0%;
+	padding-top: 30px;	
+}
+
+#downloads {
+	position:absolute;
+	top: 25em;
+	left: 10em;
+	background-color: rgb( 0, 0, 0 );
+}
+
+#p1, #p2 {
+	margin: 3em auto 3em 15em;
+	width: 45em;
+}
+
+#p3 {
+	margin: 3em auto 3em 30em;
+	width: 30em;
+}
+
+#p4 {
+	margin: 8em auto 2em 40em;
+	width: 22em;
+}
+
