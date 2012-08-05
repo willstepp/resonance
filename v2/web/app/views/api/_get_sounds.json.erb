@@ -1,0 +1,10 @@
+[
+  <% @sounds.each do |s| %>
+  <% @counter += 1 %>
+  {
+    "name":"<%= s.name %>",
+    "description":"<%= s.description %>",
+    "app_id":"<%= s.app_id %>"
+  } <%= "," unless @counter == @sounds.count %>
+  <% end %>
+]

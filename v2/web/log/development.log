@@ -940,3 +940,172 @@ Started GET "/" for 127.0.0.1 at 2012-08-05 15:13:00 -0400
 Processing by HomeController#index as HTML
   Rendered home/index.html.erb (3.0ms)
 Completed 200 OK in 44ms (Views: 43.2ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.4462ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2792ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.8240ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={} flags=[] limit=0 skip=0 fields=nil (41.9950ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea17ccf57ff4374000001"} flags=[:remove_first] (0.2182ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea23ccf57ff8574000001"} flags=[:remove_first] (0.0780ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea299cf57ff8574000002"} flags=[:remove_first] (0.0699ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea2a7cf57ff8574000003"} flags=[:remove_first] (0.0651ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea2aacf57ff8574000004"} flags=[:remove_first] (0.0660ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea2accf57ff8574000005"} flags=[:remove_first] (0.0660ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea75acf57ff7558000001"} flags=[:remove_first] (0.0660ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ea75dcf57ff7558000002"} flags=[:remove_first] (0.0658ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ebbd3cf57ffc076000001"} flags=[:remove_first] (0.0660ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ebbd6cf57ffc076000002"} flags=[:remove_first] (0.0660ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=resoapp_development collection=sounds selector={"_id"=>"501ec0b2cf57ffc076000003"} flags=[:remove_first] (0.0651ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (1.4572ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.3108ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2632ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.3723ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2732ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.6732ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501effa6cf57ff857b000001", "name"=>"blah", "description"=>"blahblah", "updated_at"=>2012-08-05 23:20:19 UTC, "created_at"=>2012-08-05 23:20:19 UTC}] flags=[] (0.2780ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.3181ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=resoapp_development collection=sounds selector={"_id"=>"501effa6cf57ff857b000001"} update={"$set"=>{"name"=>"blah", "description"=>"blahblah", "updated_at"=>2012-08-05 23:20:19 UTC, "created_at"=>2012-08-05 23:20:19 UTC, "app_id"=>1}} flags=[] (0.2780ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501effbfcf57ff857b000002", "name"=>"ddldldl", "description"=>"lsafjsdfsa", "updated_at"=>2012-08-05 23:20:51 UTC, "created_at"=>2012-08-05 23:20:51 UTC}] flags=[] (0.2770ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.5310ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=resoapp_development collection=sounds selector={"_id"=>"501effbfcf57ff857b000002"} update={"$set"=>{"name"=>"ddldldl", "description"=>"lsafjsdfsa", "updated_at"=>2012-08-05 23:20:51 UTC, "created_at"=>2012-08-05 23:20:51 UTC, "app_id"=>2}} flags=[] (0.2499ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:31:02 -0400
+Processing by ApiController#get_sounds as */*
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.4060ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>{"$in"=>[:all, {:sort=>[[:updated_at, :desc]]}]}} flags=[] limit=0 skip=0 fields=nil (41.3749ms)
+Completed 500 Internal Server Error in 150ms
+
+Mongoid::Errors::DocumentNotFound (
+Problem:
+  Document(s) not found for class Sound with id(s) all, {:sort=>[[:updated_at, :desc]]}.
+Summary:
+  When calling Sound.find with an id or array of ids, each parameter must match a document in the database or this error will be raised. The search was for the id(s): all, {:sort=>[[:updated_at, :desc]]} ... (2 total) and the following ids were not found: all, {:sort=>[[:updated_at, :desc]]}.
+Resolution:
+  Search for an id that is in the database or set the Mongoid.raise_not_found_error configuration option to false, which will cause a nil to be returned instead of raising this error when searching for a single id, or only the matched documents when searching for multiples.):
+  app/controllers/api_controller.rb:3:in `get_sounds'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (4.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (27.1ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:31:19 -0400
+Processing by ApiController#get_sounds as */*
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.1280ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>{"$in"=>[:all, {:sort=>[[:updated_at, :desc]]}]}} flags=[] limit=0 skip=0 fields=nil (0.3910ms)
+Completed 500 Internal Server Error in 37ms
+
+Mongoid::Errors::DocumentNotFound (
+Problem:
+  Document(s) not found for class Sound with id(s) all, {:sort=>[[:updated_at, :desc]]}.
+Summary:
+  When calling Sound.find with an id or array of ids, each parameter must match a document in the database or this error will be raised. The search was for the id(s): all, {:sort=>[[:updated_at, :desc]]} ... (2 total) and the following ids were not found: all, {:sort=>[[:updated_at, :desc]]}.
+Resolution:
+  Search for an id that is in the database or set the Mongoid.raise_not_found_error configuration option to false, which will cause a nil to be returned instead of raising this error when searching for a single id, or only the matched documents when searching for multiples.):
+  app/controllers/api_controller.rb:3:in `get_sounds'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (4.5ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (28.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (45.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 19:31:37 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (0.6ms)
+Completed 200 OK in 8ms (Views: 7.1ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:31:46 -0400
+Processing by ApiController#get_sounds as HTML
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>{"$in"=>[:all, {:sort=>[[:updated_at, :desc]]}]}} flags=[] limit=0 skip=0 fields=nil (0.4900ms)
+Completed 500 Internal Server Error in 2ms
+
+Mongoid::Errors::DocumentNotFound (
+Problem:
+  Document(s) not found for class Sound with id(s) all, {:sort=>[[:updated_at, :desc]]}.
+Summary:
+  When calling Sound.find with an id or array of ids, each parameter must match a document in the database or this error will be raised. The search was for the id(s): all, {:sort=>[[:updated_at, :desc]]} ... (2 total) and the following ids were not found: all, {:sort=>[[:updated_at, :desc]]}.
+Resolution:
+  Search for an id that is in the database or set the Mongoid.raise_not_found_error configuration option to false, which will cause a nil to be returned instead of raising this error when searching for a single id, or only the matched documents when searching for multiples.):
+  app/controllers/api_controller.rb:3:in `get_sounds'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (4.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.4ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (15.2ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.3592ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>{"$in"=>[:all, {:sort=>[[:updated_at, :desc]]}]}} flags=[] limit=0 skip=0 fields=nil (0.4089ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (1.1437ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.5412ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"$query"=>{}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (1.1127ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:34:40 -0400
+Processing by ApiController#get_sounds as HTML
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>:all} flags=[] limit=0 skip=0 fields=nil (0.4790ms)
+Completed 500 Internal Server Error in 19ms
+
+Mongoid::Errors::DocumentNotFound (
+Problem:
+  Document(s) not found for class Sound with id(s) all.
+Summary:
+  When calling Sound.find with an id or array of ids, each parameter must match a document in the database or this error will be raised. The search was for the id(s): all ... (1 total) and the following ids were not found: all.
+Resolution:
+  Search for an id that is in the database or set the Mongoid.raise_not_found_error configuration option to false, which will cause a nil to be returned instead of raising this error when searching for a single id, or only the matched documents when searching for multiples.):
+  app/controllers/api_controller.rb:3:in `get_sounds'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (4.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.3ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (14.6ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>:all} flags=[] limit=0 skip=0 fields=nil (0.5012ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:35:51 -0400
+Processing by ApiController#get_sounds as HTML
+Completed 406 Not Acceptable in 51ms
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:35:57 -0400
+Processing by ApiController#get_sounds as */*
+DEPRECATION WARNING: Passing the format in the template name is deprecated. Please pass render with :formats => [:json] instead. (called from realtime at /Users/Daniel/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/benchmark.rb:295)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"sort"=>{"$all"=>[[:updated_at, :desc]]}} flags=[] limit=100 skip=0 fields=nil (14.0522ms)
+  Rendered api/_get_sounds.json.erb (15.5ms)
+Completed 200 OK in 43ms (Views: 42.7ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.6630ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"$query"=>{"sort"=>{"$all"=>[[:updated_at, :desc]]}}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (73.7529ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{"sort"=>{"$all"=>[[:updated_at, :desc]]}}} (1.4701ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{"sort"=>{"$all"=>[[:updated_at, :desc]]}}} (1.1101ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.9310ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={"_id"=>:all} flags=[] limit=0 skip=0 fields=nil (0.7191ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:41:05 -0400
+Processing by ApiController#get_sounds as */*
+DEPRECATION WARNING: Passing the format in the template name is deprecated. Please pass render with :formats => [:json] instead. (called from realtime at /Users/Daniel/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/benchmark.rb:295)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.4327ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={} flags=[] limit=0 skip=0 fields=nil (0.3552ms)
+  Rendered api/_get_sounds.json.erb (1.9ms)
+Completed 200 OK in 20ms (Views: 4.3ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:42:17 -0400
+Processing by ApiController#get_sounds as */*
+DEPRECATION WARNING: Passing the format in the template name is deprecated. Please pass render with :formats => [:json] instead. (called from realtime at /Users/Daniel/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/benchmark.rb:295)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={} flags=[] limit=0 skip=0 fields=nil (0.5012ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2620ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2089ms)
+  Rendered api/_get_sounds.json.erb (2.8ms)
+Completed 200 OK in 5ms (Views: 4.2ms)
+
+
+Started GET "/api/get_sounds" for 127.0.0.1 at 2012-08-05 19:42:51 -0400
+Processing by ApiController#get_sounds as */*
+DEPRECATION WARNING: Passing the format in the template name is deprecated. Please pass render with :formats => [:json] instead. (called from realtime at /Users/Daniel/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/benchmark.rb:295)
+  MOPED: 127.0.0.1:27017 QUERY        database=resoapp_development collection=sounds selector={} flags=[] limit=0 skip=0 fields=nil (0.6859ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2949ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2060ms)
+  Rendered api/_get_sounds.json.erb (2.4ms)
+Completed 200 OK in 4ms (Views: 3.9ms)
