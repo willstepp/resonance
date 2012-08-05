@@ -1,0 +1,942 @@
+
+
+Started GET "/assets/rails.png" for 127.0.0.1 at 2012-08-05 01:31:44 -0400
+Connecting to database specified by database.yml
+Served asset /rails.png - 200 OK (9ms)
+
+
+Started GET "/rails/info/properties" for 127.0.0.1 at 2012-08-05 01:31:47 -0400
+Processing by Rails::InfoController#properties as */*
+  Rendered inline template (45.2ms)
+Completed 200 OK in 98ms (Views: 96.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/rails.png" for 127.0.0.1 at 2012-08-05 03:40:49 -0400
+Connecting to database specified by database.yml
+Served asset /rails.png - 200 OK (3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 03:41:08 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (12.9ms)
+Compiled home.css  (0ms)  (pid 10026)
+Compiled application.css  (41ms)  (pid 10026)
+Completed 500 Internal Server Error in 159ms
+
+ActionView::Template::Error (couldn't find file 'jquery'
+  (in /Users/Daniel/Workspace/resoapp/app/assets/javascripts/application.js:13)):
+    3: <head>
+    4:   <title>Resoapp</title>
+    5:   <%= stylesheet_link_tag    "application", :media => "all" %>
+    6:   <%= javascript_include_tag "application" %>
+    7:   <%= csrf_meta_tags %>
+    8: </head>
+    9: <body>
+  app/views/layouts/application.html.erb:6:in `_app_views_layouts_application_html_erb___3630924205058256486_70173356291020'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (9.2ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (22.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 03:42:48 -0400
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (14.7ms)
+Compiled jquery.js  (3ms)  (pid 10042)
+Compiled jquery_ujs.js  (0ms)  (pid 10042)
+Compiled home.js  (0ms)  (pid 10042)
+Compiled application.js  (160ms)  (pid 10042)
+Completed 200 OK in 305ms (Views: 304.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /home.css - 200 OK (6ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /jquery.js - 200 OK (5ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /jquery_ujs.js - 200 OK (3ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /application.js - 200 OK (8ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /application.css - 200 OK (4ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 03:42:49 -0400
+Served asset /home.js - 200 OK (5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 10:44:04 -0400
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+Completed 500 Internal Server Error in 84ms
+
+ActionView::MissingTemplate (Missing layout /layouts with {:locale=>[:en], :formats=>[:html], :handlers=>[:erb, :builder, :coffee]}. Searched in:
+  * "/Users/Daniel/Workspace/resoapp/app/views"
+):
+  actionpack (3.2.7) lib/action_view/path_set.rb:58:in `find'
+  actionpack (3.2.7) lib/action_view/lookup_context.rb:109:in `find'
+  actionpack (3.2.7) lib/action_view/renderer/abstract_renderer.rb:3:in `find_template'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:79:in `resolve_layout'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:86:in `resolve_layout'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:69:in `block in find_layout'
+  actionpack (3.2.7) lib/action_view/lookup_context.rb:228:in `with_layout_format'
+  actionpack (3.2.7) lib/action_view/renderer/abstract_renderer.rb:3:in `with_layout_format'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:69:in `find_layout'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:53:in `render_with_layout'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:45:in `render_template'
+  actionpack (3.2.7) lib/action_view/renderer/template_renderer.rb:18:in `render'
+  actionpack (3.2.7) lib/action_view/renderer/renderer.rb:36:in `render_template'
+  actionpack (3.2.7) lib/action_view/renderer/renderer.rb:17:in `render'
+  actionpack (3.2.7) lib/abstract_controller/rendering.rb:110:in `_render_template'
+  actionpack (3.2.7) lib/action_controller/metal/streaming.rb:225:in `_render_template'
+  actionpack (3.2.7) lib/abstract_controller/rendering.rb:103:in `render_to_body'
+  actionpack (3.2.7) lib/action_controller/metal/renderers.rb:28:in `render_to_body'
+  actionpack (3.2.7) lib/action_controller/metal/compatibility.rb:50:in `render_to_body'
+  actionpack (3.2.7) lib/abstract_controller/rendering.rb:88:in `render'
+  actionpack (3.2.7) lib/action_controller/metal/rendering.rb:16:in `render'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:40:in `block (2 levels) in render'
+  activesupport (3.2.7) lib/active_support/core_ext/benchmark.rb:5:in `block in ms'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/benchmark.rb:310:in `realtime'
+  activesupport (3.2.7) lib/active_support/core_ext/benchmark.rb:5:in `ms'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:40:in `block in render'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:83:in `cleanup_view_runtime'
+  activerecord (3.2.7) lib/active_record/railties/controller_runtime.rb:24:in `cleanup_view_runtime'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:39:in `render'
+  actionpack (3.2.7) lib/action_controller/metal/implicit_render.rb:10:in `default_render'
+  actionpack (3.2.7) lib/action_controller/metal/implicit_render.rb:5:in `send_action'
+  actionpack (3.2.7) lib/abstract_controller/base.rb:167:in `process_action'
+  actionpack (3.2.7) lib/action_controller/metal/rendering.rb:10:in `process_action'
+  actionpack (3.2.7) lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:414:in `_run__3889213464829812232__process_action__2696963723974571465__callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.7) lib/abstract_controller/callbacks.rb:17:in `process_action'
+  actionpack (3.2.7) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+  activesupport (3.2.7) lib/active_support/notifications.rb:123:in `block in instrument'
+  activesupport (3.2.7) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (3.2.7) lib/active_support/notifications.rb:123:in `instrument'
+  actionpack (3.2.7) lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+  actionpack (3.2.7) lib/action_controller/metal/params_wrapper.rb:207:in `process_action'
+  activerecord (3.2.7) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  actionpack (3.2.7) lib/abstract_controller/base.rb:121:in `process'
+  actionpack (3.2.7) lib/abstract_controller/rendering.rb:45:in `process'
+  actionpack (3.2.7) lib/action_controller/metal.rb:203:in `dispatch'
+  actionpack (3.2.7) lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+  actionpack (3.2.7) lib/action_controller/metal.rb:246:in `block in action'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:73:in `call'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:36:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.1) lib/rack/etag.rb:23:in `call'
+  rack (1.4.1) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:205:in `context'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:200:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/cookies.rb:338:in `call'
+  activerecord (3.2.7) lib/active_record/query_cache.rb:64:in `call'
+  activerecord (3.2.7) lib/active_record/connection_adapters/abstract/connection_pool.rb:473:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `_run__4520059096968986365__call__1901752232590916922__callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/missing_template.erb within rescues/layout (47.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 10:44:29 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (0.4ms)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/v2_logo.png" for 127.0.0.1 at 2012-08-05 10:44:29 -0400
+
+ActionController::RoutingError (No route matches [GET] "/v2_logo.png"):
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/v2_logo.png" for 127.0.0.1 at 2012-08-05 10:44:46 -0400
+
+ActionController::RoutingError (No route matches [GET] "/v2_logo.png"):
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/images/v2_logo.png" for 127.0.0.1 at 2012-08-05 10:44:58 -0400
+
+ActionController::RoutingError (No route matches [GET] "/images/v2_logo.png"):
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/assets/images/v2_logo.png" for 127.0.0.1 at 2012-08-05 10:45:12 -0400
+Served asset /images/v2_logo.png - 404 Not Found (4ms)
+
+ActionController::RoutingError (No route matches [GET] "/assets/images/v2_logo.png"):
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.9ms)
+
+
+Started GET "/v2_logo.png" for 127.0.0.1 at 2012-08-05 10:46:12 -0400
+
+ActionController::RoutingError (No route matches [GET] "/v2_logo.png"):
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /Users/Daniel/.rvm/rubies/ruby-1.9.2-p290/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 10:49:26 -0400
+Connecting to database specified by database.yml
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (14.9ms)
+Completed 200 OK in 60ms (Views: 59.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 11:56:37 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (51.9ms)
+Completed 200 OK in 105ms (Views: 104.6ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 11:56:40 -0400
+
+ActionController::RoutingError (uninitialized constant SoundsController):
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:230:in `block in constantize'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `each'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `constantize'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:69:in `controller_reference'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:54:in `controller'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:32:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `block in call'
+  mongoid (3.0.3) lib/mongoid/unit_of_work.rb:39:in `unit_of_work'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.1) lib/rack/etag.rb:23:in `call'
+  rack (1.4.1) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:205:in `context'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:200:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/cookies.rb:338:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `_run__79410542244867660__call__1180355745694922053__callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  thin (1.4.1) lib/thin/connection.rb:80:in `block in pre_process'
+  thin (1.4.1) lib/thin/connection.rb:78:in `catch'
+  thin (1.4.1) lib/thin/connection.rb:78:in `pre_process'
+  thin (1.4.1) lib/thin/connection.rb:53:in `process'
+  thin (1.4.1) lib/thin/connection.rb:38:in `receive_data'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run_machine'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run'
+  thin (1.4.1) lib/thin/backends/base.rb:63:in `start'
+  thin (1.4.1) lib/thin/server.rb:159:in `start'
+  rack (1.4.1) lib/rack/handler/thin.rb:13:in `run'
+  rack (1.4.1) lib/rack/server.rb:265:in `start'
+  railties (3.2.7) lib/rails/commands/server.rb:70:in `start'
+  railties (3.2.7) lib/rails/commands.rb:55:in `block in <top (required)>'
+  railties (3.2.7) lib/rails/commands.rb:50:in `tap'
+  railties (3.2.7) lib/rails/commands.rb:50:in `<top (required)>'
+  script/rails:6:in `require'
+  script/rails:6:in `<main>'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 11:57:33 -0400
+
+ActionController::RoutingError (uninitialized constant SoundsController):
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:230:in `block in constantize'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `each'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `constantize'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:69:in `controller_reference'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:54:in `controller'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:32:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `block in call'
+  mongoid (3.0.3) lib/mongoid/unit_of_work.rb:39:in `unit_of_work'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.1) lib/rack/etag.rb:23:in `call'
+  rack (1.4.1) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:205:in `context'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:200:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/cookies.rb:338:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `_run__79410542244867660__call__1180355745694922053__callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  thin (1.4.1) lib/thin/connection.rb:80:in `block in pre_process'
+  thin (1.4.1) lib/thin/connection.rb:78:in `catch'
+  thin (1.4.1) lib/thin/connection.rb:78:in `pre_process'
+  thin (1.4.1) lib/thin/connection.rb:53:in `process'
+  thin (1.4.1) lib/thin/connection.rb:38:in `receive_data'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run_machine'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run'
+  thin (1.4.1) lib/thin/backends/base.rb:63:in `start'
+  thin (1.4.1) lib/thin/server.rb:159:in `start'
+  rack (1.4.1) lib/rack/handler/thin.rb:13:in `run'
+  rack (1.4.1) lib/rack/server.rb:265:in `start'
+  railties (3.2.7) lib/rails/commands/server.rb:70:in `start'
+  railties (3.2.7) lib/rails/commands.rb:55:in `block in <top (required)>'
+  railties (3.2.7) lib/rails/commands.rb:50:in `tap'
+  railties (3.2.7) lib/rails/commands.rb:50:in `<top (required)>'
+  script/rails:6:in `require'
+  script/rails:6:in `<main>'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.8ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 11:57:56 -0400
+
+ActionController::RoutingError (uninitialized constant SoundsController):
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:230:in `block in constantize'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `each'
+  activesupport (3.2.7) lib/active_support/inflector/methods.rb:229:in `constantize'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:69:in `controller_reference'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:54:in `controller'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:32:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.7) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `block in call'
+  mongoid (3.0.3) lib/mongoid/unit_of_work.rb:39:in `unit_of_work'
+  mongoid (3.0.3) lib/rack/mongoid/middleware/identity_map.rb:33:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.1) lib/rack/etag.rb:23:in `call'
+  rack (1.4.1) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:205:in `context'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:200:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/cookies.rb:338:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `_run__4186034574428420581__call__1114359118527369308__callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.7) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.7) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.7) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.7) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.7) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.7) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.7) lib/rails/engine.rb:479:in `call'
+  railties (3.2.7) lib/rails/application.rb:220:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.7) lib/rails/rack/log_tailer.rb:17:in `call'
+  thin (1.4.1) lib/thin/connection.rb:80:in `block in pre_process'
+  thin (1.4.1) lib/thin/connection.rb:78:in `catch'
+  thin (1.4.1) lib/thin/connection.rb:78:in `pre_process'
+  thin (1.4.1) lib/thin/connection.rb:53:in `process'
+  thin (1.4.1) lib/thin/connection.rb:38:in `receive_data'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run_machine'
+  eventmachine (0.12.10) lib/eventmachine.rb:256:in `run'
+  thin (1.4.1) lib/thin/backends/base.rb:63:in `start'
+  thin (1.4.1) lib/thin/server.rb:159:in `start'
+  rack (1.4.1) lib/rack/handler/thin.rb:13:in `run'
+  rack (1.4.1) lib/rack/server.rb:265:in `start'
+  railties (3.2.7) lib/rails/commands/server.rb:70:in `start'
+  railties (3.2.7) lib/rails/commands.rb:55:in `block in <top (required)>'
+  railties (3.2.7) lib/rails/commands.rb:50:in `tap'
+  railties (3.2.7) lib/rails/commands.rb:50:in `<top (required)>'
+  script/rails:6:in `require'
+  script/rails:6:in `<main>'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (18.2ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 11:58:49 -0400
+Processing by SoundsController#index as HTML
+  Rendered sounds/index.html.erb within layouts/application (0.4ms)
+Compiled home.css  (0ms)  (pid 1443)
+Compiled sound.css  (46ms)  (pid 1443)
+Compiled application.css  (64ms)  (pid 1443)
+Compiled jquery.js  (3ms)  (pid 1443)
+Compiled jquery_ujs.js  (0ms)  (pid 1443)
+Compiled home.js  (0ms)  (pid 1443)
+Compiled sound.js  (249ms)  (pid 1443)
+Compiled application.js  (329ms)  (pid 1443)
+Completed 200 OK in 505ms (Views: 504.3ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /sound.css - 200 OK (2ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /home.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /sound.js - 200 OK (2ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /jquery.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (3ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 11:58:50 -0400
+Served asset /home.js - 304 Not Modified (2ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 11:59:53 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (2.1701ms)
+Completed 500 Internal Server Error in 6ms
+
+NoMethodError (undefined method `[]' for nil:NilClass):
+  app/controllers/sounds_controller.rb:5:in `index'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (6.2ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.2-p290@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (20.5ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.5869ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.5991ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.3170ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.5619ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.2817ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.4174ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.7009ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea17ccf57ff4374000001", "filename"=>"sim.mp3", "updated_at"=>2012-08-05 16:38:30 UTC, "created_at"=>2012-08-05 16:38:30 UTC}] flags=[] (0.4020ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 12:41:24 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (3.1ms)
+Completed 200 OK in 31ms (Views: 30.4ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 12:41:31 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.1652ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea23ccf57ff8574000001", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 16:41:32 UTC, "created_at"=>2012-08-05 16:41:32 UTC}] flags=[] (0.1979ms)
+  Rendered sounds/index.html.erb within layouts/application (0.8ms)
+Compiled jquery.js  (2ms)  (pid 29829)
+Compiled jquery_ujs.js  (0ms)  (pid 29829)
+Compiled application.js  (81ms)  (pid 29829)
+Completed 200 OK in 211ms (Views: 205.3ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /home.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /sound.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /jquery.js - 304 Not Modified (3ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (7ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /home.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 12:41:32 -0400
+Served asset /sound.js - 304 Not Modified (2ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.2269ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.3531ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.4640ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 12:43:05 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea299cf57ff8574000002", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 16:43:05 UTC, "created_at"=>2012-08-05 16:43:05 UTC}] flags=[] (0.2310ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (8.9741ms)
+  Rendered sounds/index.html.erb within layouts/application (39.3ms)
+Completed 500 Internal Server Error in 54ms
+
+ActionView::Template::Error (can't convert Fixnum into String):
+    1: <h2>hi from sounds index</h2>
+    2: <p><%= @s.filename %></p>
+    3: <p><%= "Sound count: " + @count %>
+  app/views/sounds/index.html.erb:3:in `+'
+  app/views/sounds/index.html.erb:3:in `_app_views_sounds_index_html_erb__2489656346514951580_70239747859880'
+
+
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_trace.erb (5.7ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.6ms)
+  Rendered /Users/Daniel/.rvm/gems/ruby-1.9.3-p0@rails327/gems/actionpack-3.2.7/lib/action_dispatch/middleware/templates/rescues/template_error.erb within rescues/layout (19.5ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea2a7cf57ff8574000003", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 16:43:19 UTC, "created_at"=>2012-08-05 16:43:19 UTC}] flags=[] (0.2420ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.3190ms)
+  Rendered sounds/index.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 12ms (Views: 9.7ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:19 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea2aacf57ff8574000004", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 16:43:22 UTC, "created_at"=>2012-08-05 16:43:22 UTC}] flags=[] (0.2229ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.4992ms)
+  Rendered sounds/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 10ms (Views: 7.5ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:22 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ea2accf57ff8574000005", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 16:43:24 UTC, "created_at"=>2012-08-05 16:43:24 UTC}] flags=[] (0.2680ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2811ms)
+  Rendered sounds/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 9ms (Views: 7.1ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 12:43:24 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+MONGODB [DEBUG] Logging level is currently :debug which could negatively impact client-side performance. You should set your logging level no lower than :info in production.
+MONGODB (0ms) admin['$cmd'].find({:ismaster=>1}).limit(-1)
+MONGODB (0ms) resoapp_development['system.namespaces'].find({})
+MONGODB (0ms) resoapp_development['$cmd'].find({"count"=>"sounds", "query"=>{}, "fields"=>nil}).limit(-1)
+MONGODB [DEBUG] Logging level is currently :debug which could negatively impact client-side performance. You should set your logging level no lower than :info in production.
+MONGODB (0ms) admin['$cmd'].find({:ismaster=>1}).limit(-1)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 13:03:22 -0400
+Processing by SoundsController#index as HTML
+MONGODB (0ms) resoapp_development['system.namespaces'].find({})
+MONGODB (0ms) resoapp_development['sounds'].insert([{"_id"=>BSON::ObjectId('501ea75acf57ff7558000001'), "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 17:03:22 UTC, "created_at"=>2012-08-05 17:03:22 UTC}])
+MONGODB (0ms) resoapp_development['$cmd'].find({"count"=>"sounds", "query"=>{}, "fields"=>nil}).limit(-1)
+  Rendered sounds/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 92ms (Views: 85.4ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /home.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /sound.css - 304 Not Modified (36ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /jquery.js - 304 Not Modified (3ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /home.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:23 -0400
+Served asset /sound.js - 304 Not Modified (8ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Processing by SoundsController#index as HTML
+MONGODB (0ms) resoapp_development['sounds'].insert([{"_id"=>BSON::ObjectId('501ea75dcf57ff7558000002'), "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 17:03:25 UTC, "created_at"=>2012-08-05 17:03:25 UTC}])
+MONGODB (0ms) resoapp_development['$cmd'].find({"count"=>"sounds", "query"=>{}, "fields"=>nil}).limit(-1)
+  Rendered sounds/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 10ms (Views: 6.9ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 13:03:25 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 14:30:39 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (3.6ms)
+Completed 200 OK in 39ms (Views: 38.3ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 14:30:43 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (3.1149ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ebbd3cf57ffc076000001", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 18:30:43 UTC, "created_at"=>2012-08-05 18:30:43 UTC}] flags=[] (0.2639ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (437.5579ms)
+  Rendered sounds/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 632ms (Views: 186.8ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /home.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /sound.css - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /jquery.js - 304 Not Modified (6ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (3ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /home.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:44 -0400
+Served asset /sound.js - 304 Not Modified (1ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ebbd6cf57ffc076000002", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 18:30:46 UTC, "created_at"=>2012-08-05 18:30:46 UTC}] flags=[] (0.2623ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.3080ms)
+  Rendered sounds/index.html.erb within layouts/application (0.1ms)
+Completed 200 OK in 9ms (Views: 7.1ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 14:30:46 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+
+
+Started GET "/sounds" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Processing by SoundsController#index as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.3910ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=resoapp_development collection=sounds documents=[{"_id"=>"501ec0b2cf57ffc076000003", "filename"=>"steam_in_a_forest.mp3", "updated_at"=>2012-08-05 18:51:30 UTC, "created_at"=>2012-08-05 18:51:30 UTC}] flags=[] (0.1731ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=resoapp_development command={:count=>:sounds, :query=>{}} (0.2596ms)
+  Rendered sounds/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 11ms (Views: 7.8ms)
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /home.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.css?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /sound.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /home.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sound.js?body=1" for 127.0.0.1 at 2012-08-05 14:51:30 -0400
+Served asset /sound.js - 304 Not Modified (0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-08-05 15:13:00 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb (3.0ms)
+Completed 200 OK in 44ms (Views: 43.2ms)
