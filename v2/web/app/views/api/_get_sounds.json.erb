@@ -3,7 +3,7 @@
   <% @counter += 1 %>
   {
     "name":"<%= s.name %>",
-    "description":"<%= s.description %>",
+    "description":"<%= s.desc %>",
     "app_id":"<%= s.app_id %>"
   } <%= "," unless @counter == @sounds.count %>
   <% end %>
