@@ -1,14 +1,14 @@
 development:
   sessions:
     default:
-      uri: <%= ENV['MONGOID_URI'] %>
-      
+      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
+
 test:
   sessions:
     default:
-      uri: <%= ENV['MONGOID_URI'] %>
+      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
 
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGOID_URI'] %>
+      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
