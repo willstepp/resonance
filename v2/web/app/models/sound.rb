@@ -4,16 +4,14 @@ class Sound
 
   field :name
   field :desc
-  field :app_id, :type => Integer
 
+  field :app_id
   after_create :set_app_id
 
   private 
 
-  #note: in a highly concurrent system this might fail,
-  #but I don't think we should worry about that for creating sounds
   def set_app_id
-  	self.app_id = Sound.count
+  	self.app_id = "#{self.created_at.strftime("%Y%m%d%H%M")}_#{self.name.gsub(/[^0-9a-z ]/i, '').gsub(' ', '_').downcase}"
   	self.save
   end
 end

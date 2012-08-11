@@ -1,0 +1,12 @@
+#rails
+.bundle
+db/*.sqlite3
+log/*.log
+tmp/*
+config/initializers/env_vars.rb
+
+#generic
+*~
+*.DS_Store
+*.swp
+*.out
