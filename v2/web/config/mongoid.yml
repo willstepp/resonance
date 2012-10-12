@@ -1,14 +1,14 @@
 development:
   sessions:
     default:
-      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
+      uri: mongodb://app:ResoApp2012@alex.mongohq.com:10018/resonance
 
 test:
   sessions:
     default:
-      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
+      uri: mongodb://app:ResoApp2012@alex.mongohq.com:10018/resonance
 
 production:
   sessions:
     default:
-      uri: mongodb://un:pw@alex.mongohq.com:10018/resonance
+      uri: mongodb://app:ResoApp2012@alex.mongohq.com:10018/resonance
