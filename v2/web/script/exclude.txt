@@ -1,7 +1,0 @@
-log
-tmp
-test
-public/system
-.bundle
-.DS_STORE
-*.sqlite3
