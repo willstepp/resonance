@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: resonance_development
+  host: localhost
+  pool: 5
+  username: postgres
+  password: thisisapasswordmotherfucker
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: resonance_production
+  host: localhost
+  pool: 5
+  username: <username>
+  password: <password>
