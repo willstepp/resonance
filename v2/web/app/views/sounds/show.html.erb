@@ -1,0 +1,14 @@
+<div class="sound-container">
+  <p id="notice"><%= notice %></p>
+  <fieldset>
+    <legend><%= @sound.name %></legend>
+    <p><%= @sound.description %></p>
+    <p><%= @sound.filename %></p>
+    <p><%= @sound.filetype %></p>
+    <p>Created: <%= @sound.created_at %></p>
+    <p>Last Updated: <%= @sound.updated_at %></p>
+  </fieldset>
+
+  <%= link_to 'Edit', edit_sound_path(@sound) %> |
+  <%= link_to 'Back', sounds_path %>
+</div>
