@@ -5,7 +5,7 @@ init=""
 if [ "$#" -ge 1 ]; then init=$1; fi
 rsync_args="-arvuz $script_dir/../ prod@monomyth.io:/home/prod/public/resonance.monomyth.io --exclude-from $script_dir/exclude.txt"
 site_dir="resonance.monomyth.io"
-error_output = "error: deploymen aborted"
+error_output = "error: deployment aborted"
 
 #deploy
 cd $script_dir
