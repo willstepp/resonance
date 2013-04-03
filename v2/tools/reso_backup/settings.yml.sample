@@ -1,3 +1,28 @@
 db:
+  name: resonance_development
   host: localhost
   username: postgres
+  password: <password>
+
+S3:
+  bucket: resonance
+  public_key:
+  private_key:
+  
+mailer:
+  to: notify@monomyth.io
+  from: notify@monomyth.io
+  port:
+  enable_starttls_auto:
+  user_name:
+  password:
+  authentication:
+  domain:
+
+#if you need to authenticate pg_dump
+#echo "localhost:*:super_whammadyne:joe_user:secret_password" > .pgpass
+#sudo chmod 0600 .pgpass
+
+#restore from pg_dump
+#createdb -T template0 resonance_backup
+#psql resonance_backup < /Users/Daniel/Workspace/resonance/v2/tools/reso_backup/db/resonance_2013-04-02_20-12-00_dump.sql
