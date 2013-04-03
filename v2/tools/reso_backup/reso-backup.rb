@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'bundler/setup'
-
 require 'date'
 require 'aws/s3'
 require 'pony'
@@ -84,5 +81,3 @@ module ResoBackup
     AWS::S3::S3Object.store(file_name, File.open(file_path), bucket)
   end
 end
-
-ResoBackup.run

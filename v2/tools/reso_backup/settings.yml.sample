@@ -8,7 +8,7 @@ S3:
   bucket: resonance
   public_key:
   private_key:
-  
+
 mailer:
   to: notify@monomyth.io
   from: notify@monomyth.io
@@ -26,3 +26,7 @@ mailer:
 #restore from pg_dump
 #createdb -T template0 resonance_backup
 #psql resonance_backup < /Users/Daniel/Workspace/resonance/v2/tools/reso_backup/db/resonance_2013-04-02_20-12-00_dump.sql
+
+/etc/rc.local - startup daemon process in this file, so it will run upon reboot (cd /opt/reso_backup;/path/to/ruby /path/to/daemon.rb start)
+
+#su prod -c "cd /opt/reso_backup && /usr/local/rvm/rubies/ruby-1.9.3-p0/bin/ruby /opt/reso_backup/reso-backup-daemon.rb start"
