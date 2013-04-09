@@ -8,6 +8,8 @@ module ResoBackup
   def self.run
     message = ""
     success = false
+    backup_file = ""
+    file_name = ""
     begin
       $RESO_BACKUP_ROOT = File.expand_path(File.dirname(__FILE__))
 
@@ -15,13 +17,13 @@ module ResoBackup
       datestamp = Time.now.strftime("%Y%m%d-%H%M%S")
 
       #drop it in the db/backups directory temporarily
-      backup_file = "#{$RESO_BACKUP_ROOT}/db/resonance_#{datestamp}_dump.sql.gz"
+      file_name = "resonance_#{datestamp}_dump.sql.gz"
+      backup_file = "#{$RESO_BACKUP_ROOT}/db/#{file_name}"
 
       #dump the backup and zip it up
       `pg_dump -h #{Settings.db.host} -U #{Settings.db.username} #{Settings.db.name} | gzip -c > #{backup_file}`
 
       upload_to_s3 backup_file
-      File.delete backup_file
 
       remove_old_backups(10)
 
@@ -37,6 +39,9 @@ module ResoBackup
         :from => Settings.mailer.from,
         :subject => "ResoBackup (#{result})",
         :body => message,
+        :attachments => {
+          file_name => File.read(backup_file)
+        },
         :via => :smtp,
         :via_options => {
           :address              => Settings.mailer.address,
@@ -48,6 +53,7 @@ module ResoBackup
           :domain               => Settings.mailer.domain
         }
       })
+      File.delete backup_file
     end
   end
 
