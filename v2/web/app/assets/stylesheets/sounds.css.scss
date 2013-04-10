@@ -2,8 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.sound-container {
-  background-color:#ccc;
-  padding:10px;
-  border-radius:.3em;
+.panel-container {
+  background-color:#272727;
+  border-bottom:1px solid #333;
+  padding:20px;
+  border-radius:.5em;
+  color:#FFFAFA;
+  color:#efefef;
+  max-width:600px;
+  min-width:400px;
+  margin:0 auto;
 }
