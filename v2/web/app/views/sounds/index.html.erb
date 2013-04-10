@@ -1,29 +1,33 @@
-<div class="panel-container">
-  <h1>Sounds</h1>
+<div style="max-width:600px;min-width:400px;margin:0 auto;text-align:right">
+  <img style="width:100px" src="/assets/reso-logo.png"/>
+  <br><br>
+  <div class="panel-container">
+    <h1>Sounds</h1>
 
-  <table>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Filename</th>
-      <th>Actions</th>
-    </tr>
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Filename</th>
+        <th>Actions</th>
+      </tr>
 
-  <% @sounds.each do |s| %>
-    <tr>
-      <td><%= s.id %></td>
-      <td><%= s.name %></td>
-      <td><%= s.filename %></td>
-      <td>
-        <%= link_to 'Show', s %>&nbsp;|&nbsp;
-        <%= link_to 'Edit', edit_sound_path(s) %>&nbsp;|&nbsp;
-        <%= link_to 'Destroy', s, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </td>
-    </tr>
-  <% end %>
-  </table>
+    <% @sounds.each do |s| %>
+      <tr>
+        <td><%= s.id %></td>
+        <td><%= s.name %></td>
+        <td><%= s.filename %></td>
+        <td>
+          <%= link_to 'Show', s %>&nbsp;|&nbsp;
+          <%= link_to 'Edit', edit_sound_path(s) %>&nbsp;|&nbsp;
+          <%= link_to 'Destroy', s, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
 
-  <br />
+    <br />
 
-  <%= link_to 'New Sound', new_sound_path %>
+    <%= link_to 'New Sound', new_sound_path %>
+  </div>
 </div>
