@@ -1,33 +1,35 @@
-<div style="max-width:600px;min-width:400px;margin:0 auto;text-align:right">
-  <img style="width:100px" src="/assets/reso-logo.png"/>
-  <br><br>
+<div style="max-width:600px;min-width:400px;margin:0 auto">
+  <div style="width:100%;text-align:center">
+  <img style="height:35px;float:right" src="/assets/reso-sphere.png"/>
+  <img style="height:35px;float:left" src="/assets/reso-title.png"/>
+  <div style="clear:both"/>
+  </div>
   <div class="panel-container">
-    <h1>Sounds</h1>
+      <div>
+        <%= link_to '..', root_path, :class => "back-link" %>
+      </div>
+      <br><br>
+      <div>
+        <%= link_to '&nbsp;+&nbsp;'.html_safe, new_sound_path, :class => "button highlight-green" %>
+      </div>
+      <br>
+      <div>
+       <table>
 
-    <table>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Filename</th>
-        <th>Actions</th>
-      </tr>
-
-    <% @sounds.each do |s| %>
-      <tr>
-        <td><%= s.id %></td>
-        <td><%= s.name %></td>
-        <td><%= s.filename %></td>
-        <td>
-          <%= link_to 'Show', s %>&nbsp;|&nbsp;
-          <%= link_to 'Edit', edit_sound_path(s) %>&nbsp;|&nbsp;
-          <%= link_to 'Destroy', s, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-    </table>
-
-    <br />
-
-    <%= link_to 'New Sound', new_sound_path %>
+      <% @sounds.each do |s| %>
+        <tr>
+          <td><%= s.id %></td>
+          <td><%= s.name %></td>
+          <td><%= s.filename %></td>
+          <td>
+            <%= link_to 'Show', s %>&nbsp;|&nbsp;
+            <%= link_to 'Edit', edit_sound_path(s) %>&nbsp;|&nbsp;
+            <%= link_to 'Destroy', s, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+   
   </div>
 </div>

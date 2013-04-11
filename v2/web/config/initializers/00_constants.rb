@@ -1,0 +1,1 @@
+MEDIA_TYPES = ["sound", "image"]

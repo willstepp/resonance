@@ -1,4 +1,6 @@
 Resonance::Application.routes.draw do
-  resources :sounds
+  resources :sounds do
+    resources :media
+  end
   root :to => 'home#index'
 end

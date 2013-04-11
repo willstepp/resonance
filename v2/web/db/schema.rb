@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402005739) do
+ActiveRecord::Schema.define(:version => 20130411011001) do
+
+  create_table "media", :force => true do |t|
+    t.string   "filename"
+    t.string   "type"
+    t.integer  "sound_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "sounds", :force => true do |t|
     t.string   "name"
