@@ -151,42 +151,42 @@ enum
     _stateInTransition = false;
     _touchEnabled = false;
   
-    _imageName = @"oceanblue@2.jpg";
-    _blurImageName = @"oceanblue-blur@2.jpg";
+    _imageName = @"space@2.png";
+    _blurImageName = @"space-blur@2.png";
 
     //customize module buttons
   
     //one
     [mirButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75]];
+    [mirButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     [mirButton setTag:1];
     mirButton.layer.borderColor = [UIColor blackColor].CGColor;
-    mirButton.layer.borderWidth = 0.5f;
-    mirButton.layer.cornerRadius = 5.0f;
+    mirButton.layer.borderWidth = 0.0f;
+    mirButton.layer.cornerRadius = 4.0f;
   
     //two
     [mirButton2 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton2 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75]];
+    [mirButton2 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     [mirButton2 setTag:2];
     mirButton2.layer.borderColor = [UIColor blackColor].CGColor;
-    mirButton2.layer.borderWidth = 0.5f;
-    mirButton2.layer.cornerRadius = 5.0f;
+    mirButton2.layer.borderWidth = 0.0f;
+    mirButton2.layer.cornerRadius = 4.0f;
   
     //three
     [mirButton3 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton3 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75]];
+    [mirButton3 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     [mirButton3 setTag:3];
     mirButton3.layer.borderColor = [UIColor blackColor].CGColor;
-    mirButton3.layer.borderWidth = 0.5f;
-    mirButton3.layer.cornerRadius = 5.0f;
+    mirButton3.layer.borderWidth = 0.0f;
+    mirButton3.layer.cornerRadius = 4.0f;
   
     //visual button
     [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+    [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.10]];
     
     visualButton.layer.borderColor = [UIColor blackColor].CGColor;
     visualButton.layer.borderWidth = 0.0f;
-    visualButton.layer.cornerRadius = 5.0f;
+    visualButton.layer.cornerRadius = 4.0f;
   
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
@@ -322,7 +322,8 @@ enum
                                rect = _moduleOnscreenFrame1;
                            }
                            m.frame = rect;
-                           m.layer.cornerRadius = 7.0f;
+                           [m setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+                           m.layer.cornerRadius = 4.0f;
                          } completion:NULL];
         
       } else {
@@ -443,6 +444,7 @@ enum
                          animations:^{
                            UIButton * m = (UIButton*)obj;
                            [visualButton setAlpha:0.0f];
+                           [m setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
                            m.frame = _fullScreenRect;
                            m.layer.cornerRadius = 0.0f;
                          } completion:NULL];
