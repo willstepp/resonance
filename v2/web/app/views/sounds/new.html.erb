@@ -1,14 +1,16 @@
 <div style="max-width:600px;min-width:400px;margin:0 auto;text-align:right">
-  <div style="width:100%">
-  <img style="height:50px;float:right" src="/assets/reso-sphere.png"/>
-  <img style="height:50px;float:left" src="/assets/reso-title.png"/>
+  <div style="width:100%;text-align:center">
+  <img style="height:35px;float:right" src="/assets/reso-sphere.png"/>
+  <img style="height:35px;float:left" src="/assets/reso-title.png"/>
   <div style="clear:both"/>
   </div>
 <div class="panel-container">
+  <div>
+    <%= link_to '..', sounds_path, :class => "back-link" %>
+  </div>
+  <br>
   <h1>New sound</h1>
-
+  <br>
   <%= render 'form' %>
-
-  <%= link_to 'Back', sounds_path %>
 </div>
 </div>

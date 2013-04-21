@@ -1,21 +1,26 @@
 <div style="max-width:600px;min-width:400px;margin:0 auto;text-align:right">
-  <div style="width:100%">
-  <img style="height:50px;float:right" src="/assets/reso-sphere.png"/>
-  <img style="height:50px;float:left" src="/assets/reso-title.png"/>
+  <div style="width:100%;text-align:center">
+  <img style="height:35px;float:right" src="/assets/reso-sphere.png"/>
+  <img style="height:35px;float:left" src="/assets/reso-title.png"/>
   <div style="clear:both"/>
   </div>
 <div class="panel-container">
-  <p id="notice"><%= notice %></p>
-  <fieldset>
-    <legend><%= @sound.name %></legend>
+  <div>
+    <%= link_to '..', sounds_path, :class => "back-link" %>
+  </div>
+    <br>
+      <h1><%= @sound.name %></h1>
+    <br>
+    <div class="panel-container-light">
     <p><%= @sound.description %></p>
-    <p><%= @sound.filename %></p>
-    <p><%= @sound.filetype %></p>
-    <p>Created: <%= @sound.created_at %></p>
-    <p>Last Updated: <%= @sound.updated_at %></p>
-  </fieldset>
-
-  <%= link_to 'Edit', edit_sound_path(@sound) %> |
-  <%= link_to 'Back', sounds_path %>
+    <br>
+    <br>
+    <p class="blue-highlight"><%= @sound.uuid %></p>
+    <br>
+    <br>
+    <p class="gray-highlight small">Created: <%= @sound.created_at.localtime.strftime('%B %e, %Y - %l:%M %P') %></p>
+    <br>
+    <p class="gray-highlight small">Updated: <%= @sound.updated_at.localtime.strftime('%B %e, %Y - %l:%M %P') %></p>
+</div>
 </div>
 </div>

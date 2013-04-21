@@ -36,7 +36,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     padding:10px;
   }
 
-table { 
+table {
   width:100%;
   background-color:#383838;
   border-radius:.4em;
@@ -48,14 +48,26 @@ th {
 }
 
 td { 
+  font-size:0.9em;
   padding:10px;
+}
+
+input[type='text'], textarea {
+  background-color:#efefef;
+  border:none;
+  outline:none;
+  padding:5px;
+  border-radius:0.25em;
 }
 
   .button {
     padding:7px;
     border-radius:.4em;
     background-color:#383838;
+    border:none;
     border-bottom:1px solid #121212;
+    outline:none;
+    color:#efefef;
   }
 
   .no-padding {
@@ -84,4 +96,47 @@ td {
     min-width:400px;
     margin:0 auto;
     text-align:left;
+}
+
+ .panel-container-light {
+  background-color:#383838;
+  border-radius:.4em;
+  border-bottom:1px solid #121212;
+  padding:20px;
+  color:#efefef;
+  margin:0 auto;
+  text-align:left;
+ }
+
+.form-table {
+
+}
+
+.form-table td {
+  vertical-align:top;
+  text-align:left;
+}
+
+.form-table textarea, input {
+  width:300px;
+}
+
+.form-table textarea {
+  height:150px;
+}
+
+.full-width {
+  width:100%;
+}
+
+.blue-highlight {
+  color:lightblue;
+}
+
+.gray-highlight {
+  color:lightgray;
+}
+
+.small {
+  font-size:0.8em;
 }

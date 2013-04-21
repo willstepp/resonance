@@ -1,4 +1,4 @@
-<div style="max-width:600px;min-width:400px;margin:0 auto">
+<div style="max-width:600px;min-width:400px;margin:0 auto;text-align:right">
   <div style="width:100%;text-align:center">
   <img style="height:35px;float:right" src="/assets/reso-sphere.png"/>
   <img style="height:35px;float:left" src="/assets/reso-title.png"/>
@@ -8,27 +8,28 @@
       <div>
         <%= link_to '..', root_path, :class => "back-link" %>
       </div>
+      <br>
+      <h1>Sounds</h1>
       <br><br>
       <div>
         <%= link_to '&nbsp;+&nbsp;'.html_safe, new_sound_path, :class => "button highlight-green" %>
       </div>
       <br>
       <div>
-       <table>
-
-      <% @sounds.each do |s| %>
-        <tr>
-          <td><%= s.id %></td>
-          <td><%= s.name %></td>
-          <td><%= s.filename %></td>
-          <td>
-            <%= link_to 'Show', s %>&nbsp;|&nbsp;
-            <%= link_to 'Edit', edit_sound_path(s) %>&nbsp;|&nbsp;
-            <%= link_to 'Destroy', s, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
+      <% if @sounds.count > 0 %>
+        <table>
+          <% @sounds.each do |s| %>
+            <tr>
+              <td><%= link_to s.name, s %></td>
+              <td><%= s.uuid %></td>
+              <td>
+                <%= link_to 'Edit', edit_sound_path(s), :style => "color:lightgray" %>&nbsp;|&nbsp;
+                <%= link_to 'Delete', s, method: :delete, :style => "color:#715151", data: { confirm: 'Are you sure?' } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       <% end %>
-      </table>
     </div>
    
   </div>

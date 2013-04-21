@@ -10,16 +10,34 @@
       </ul>
     </div>
   <% end %>
-  <%= f.label :name, 'Name' %>:
-  <%= f.text_field :name %><br>
-  <%= f.label :filename, 'File Name' %>:
-  <%= f.text_field :filename %><br>
-  <%= f.label :filetype, 'File Type' %>:
-  <%= f.text_field :filetype %><br>
-  <%= f.label :description, 'Description' %>:
-  <%= f.text_area :description %><br>
-
+  <table class="form-table">
+    <tr>
+      <td>
+        <%= f.label :name, 'Name' %> :
+      </td>
+      <td>
+        <%= f.text_field :name %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :uuid, 'UUID' %> :
+      </td>
+      <td>
+        <%= f.text_field :uuid %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :description, 'Description' %> :
+      </td>
+      <td>
+        <%= f.text_area :description %>
+      </td>
+    </tr>
+  </table>
+  <br>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, :class => "button highlight-green full-width" %>
   </div>
 <% end %>
