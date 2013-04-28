@@ -5,6 +5,7 @@ log/*.log
 tmp/*
 config/initializers/env_vars.rb
 config/database.yml
+config/newrelic.yml
 
 #generic
 *~

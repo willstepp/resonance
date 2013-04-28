@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #import "RESOViewController.h"
 #import "RippleModel.h"
+#import "ResoSlider.h"
 
 // Uniform index.
 enum
@@ -160,20 +161,29 @@ enum
   _imageName = @"pattern_blue.jpg";
   _blurImageName = @"pattern_blue_blur.jpg";
   
-  _imageName = @"ranier-snow@2.jpg";
-  _blurImageName = @"ranier-snow-blur@2.jpg";
-  
-  _imageName = @"nebula_orange.jpg";
-  _blurImageName = @"nebula_orange_blur.jpg";
-  
-  _imageName = @"nebula_blue.jpg";
-  _blurImageName = @"nebula_blue_blur.jpg";
-  
   _imageName = @"iphone5_sitf.jpg";
   _blurImageName = @"iphone5_sitf_blur.jpg";
   
   _imageName = @"pink-blossoms@2.jpg";
   _blurImageName = @"pink-blossoms-blur@2.jpg";
+  
+  _imageName = @"nebula_blue.jpg";
+  _blurImageName = @"nebula_blue_blur.jpg";
+  
+  _imageName = @"ranier-snow@2.jpg";
+  _blurImageName = @"ranier-snow-blur@2.jpg";
+  
+  _imageName = @"oceanblue@2.jpg";
+  _blurImageName = @"oceanblue-blur@2.jpg";
+  
+  _imageName = @"nebula_orange.jpg";
+  _blurImageName = @"nebula_orange_blur.jpg";
+  
+  _imageName = @"reso_space.jpg";
+  _blurImageName = @"reso_space_blur.jpg";
+  
+  _imageName = @"reso_galaxy.png";
+  _blurImageName = @"reso_galaxy_blur.png";
 
     //customize module buttons
     _buttonAlpha = 0.4;
@@ -201,6 +211,15 @@ enum
     mirButton3.layer.borderColor = [UIColor blackColor].CGColor;
     mirButton3.layer.borderWidth = 0.0f;
     mirButton3.layer.cornerRadius = 4.0f;
+  
+    int width = self.view.bounds.size.width;
+    int height = 44;
+    ResoSlider * slider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height)-height, width, height)];
+    slider.minValue = 0;
+    slider.maxValue = 100;
+    [slider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:slider];
+
   
     //visual button
     [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
@@ -291,6 +310,10 @@ enum
   [_modules setValue:mirButton3 forKey:[NSString stringWithFormat:@"%i",mirButton3.tag]];
   
   [self changeAppToState:Module];
+}
+
+-(void)updateRangeLabel:(ResoSlider *)slider{
+  NSLog(@"Slider: %i", slider.value);
 }
 
 - (void) changeAppToState:(ResoAppState)state
