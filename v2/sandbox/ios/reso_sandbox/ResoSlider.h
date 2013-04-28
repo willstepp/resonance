@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoTypes.h"
 
 @interface ResoSlider : UIControl
 
@@ -15,4 +16,5 @@
 @property (nonatomic,assign) int value;
 
 -(void)updateValue:(int)value;
+- (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o;
 @end

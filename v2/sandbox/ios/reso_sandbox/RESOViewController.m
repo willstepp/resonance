@@ -161,20 +161,11 @@ enum
   _imageName = @"pattern_blue.jpg";
   _blurImageName = @"pattern_blue_blur.jpg";
   
-  _imageName = @"iphone5_sitf.jpg";
-  _blurImageName = @"iphone5_sitf_blur.jpg";
-  
   _imageName = @"pink-blossoms@2.jpg";
   _blurImageName = @"pink-blossoms-blur@2.jpg";
   
   _imageName = @"nebula_blue.jpg";
   _blurImageName = @"nebula_blue_blur.jpg";
-  
-  _imageName = @"ranier-snow@2.jpg";
-  _blurImageName = @"ranier-snow-blur@2.jpg";
-  
-  _imageName = @"oceanblue@2.jpg";
-  _blurImageName = @"oceanblue-blur@2.jpg";
   
   _imageName = @"nebula_orange.jpg";
   _blurImageName = @"nebula_orange_blur.jpg";
@@ -184,6 +175,18 @@ enum
   
   _imageName = @"reso_galaxy.png";
   _blurImageName = @"reso_galaxy_blur.png";
+  
+  _imageName = @"oceanblue@2.jpg";
+  _blurImageName = @"oceanblue-blur@2.jpg";
+  
+  _imageName = @"ranier-snow@2.jpg";
+  _blurImageName = @"ranier-snow-blur@2.jpg";
+  
+  _imageName = @"starlight@2.jpg";
+  _blurImageName = @"starlight-blur@2.jpg";
+  
+  _imageName = @"iphone5_sitf.jpg";
+  _blurImageName = @"iphone5_sitf_blur.jpg";
 
     //customize module buttons
     _buttonAlpha = 0.4;
@@ -214,13 +217,12 @@ enum
   
     int width = self.view.bounds.size.width;
     int height = 44;
-    ResoSlider * slider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height)-height, width, height)];
+  ResoSlider * slider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height)-height, width, height) withOrientation:Horizontal];
     slider.minValue = 0;
     slider.maxValue = 100;
     [slider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:slider];
 
-  
     //visual button
     [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];

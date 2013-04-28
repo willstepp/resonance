@@ -19,4 +19,9 @@ typedef enum {
   Share
 } ResoAppState;
 
+typedef enum {
+  Horizontal,
+  Vertical
+} ResoOrientation;
+
 #endif

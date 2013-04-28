@@ -16,8 +16,6 @@
 			<array>
 				<string>reso-57.png</string>
 				<string>reso-114.png</string>
-				<string>reso_galaxy_57.png</string>
-				<string>reso_galaxy_114.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
