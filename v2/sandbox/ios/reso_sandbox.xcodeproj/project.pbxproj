@@ -121,7 +121,7 @@
 		65B111641728F00400E81BDF /* reso_space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reso_space.jpg; sourceTree = "<group>"; };
 		65D4092F172DB09B00026905 /* ResoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSlider.h; sourceTree = "<group>"; };
 		65D40930172DB09B00026905 /* ResoSlider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSlider.mm; sourceTree = "<group>"; };
-		65EADA0A1703F784007CB200 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		65EADA0A1703F784007CB200 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPortalViewController.h; sourceTree = "<group>"; };
 		65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPortalViewController.mm; sourceTree = "<group>"; };
 		65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSoundViewController.h; sourceTree = "<group>"; };
@@ -170,16 +170,7 @@
 		651002B915F2E3BA00B38890 = {
 			isa = PBXGroup;
 			children = (
-				65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */,
-				65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */,
-				65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */,
-				65FE9EB9172EF5BF00E8E1EF /* CoreAudio.framework */,
 				65A2B6F71721CEBA00404340 /* reso_sandbox */,
-				65EADA0A1703F784007CB200 /* Default-568h@2x.png */,
-				6510034D15F3F2B000B38890 /* CoreVideo.framework */,
-				651002E315F2E5AA00B38890 /* GLKit.framework */,
-				651002E115F2E59F00B38890 /* OpenGLES.framework */,
-				651002DF15F2E59700B38890 /* QuartzCore.framework */,
 				651002C715F2E3BA00B38890 /* Frameworks */,
 				651002C515F2E3BA00B38890 /* Products */,
 			);
@@ -196,6 +187,14 @@
 		651002C715F2E3BA00B38890 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */,
+				65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */,
+				65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */,
+				65FE9EB9172EF5BF00E8E1EF /* CoreAudio.framework */,
+				6510034D15F3F2B000B38890 /* CoreVideo.framework */,
+				651002E315F2E5AA00B38890 /* GLKit.framework */,
+				651002E115F2E59F00B38890 /* OpenGLES.framework */,
+				651002DF15F2E59700B38890 /* QuartzCore.framework */,
 				651002C815F2E3BA00B38890 /* UIKit.framework */,
 				651002CA15F2E3BA00B38890 /* Foundation.framework */,
 				651002CC15F2E3BA00B38890 /* CoreGraphics.framework */,
@@ -206,19 +205,32 @@
 		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				65FE9ED6172F03AF00E8E1EF /* resources */,
+				65FE9ED8172F049A00E8E1EF /* sound_engine */,
+				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
+				65FE9ED7172F043E00E8E1EF /* supporting */,
+				65A2B7061721CEBA00404340 /* RESOAppDelegate.h */,
+				65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */,
+				65A2B7081721CEBA00404340 /* ResoTypes.h */,
+				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
+				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
+				65A2B70B1721CEBA00404340 /* RippleModel.h */,
+				65A2B70C1721CEBA00404340 /* RippleModel.mm */,
+				65D4092F172DB09B00026905 /* ResoSlider.h */,
+				65D40930172DB09B00026905 /* ResoSlider.mm */,
+				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
+				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
+				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
+				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
+			);
+			path = reso_sandbox;
+			sourceTree = "<group>";
+		};
+		65FE9ED6172F03AF00E8E1EF /* resources */ = {
+			isa = PBXGroup;
+			children = (
 				65FE9ED2172F009C00E8E1EF /* drumloop.wav */,
 				65FE9ED3172F009D00E8E1EF /* swish.wav */,
-				65FE9EC3172EFC6900E8E1EF /* FMODSound.h */,
-				65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */,
-				65FE9EC5172EFC6900E8E1EF /* FMODSoundEngine.h */,
-				65FE9EC6172EFC6A00E8E1EF /* FMODSoundEngine.mm */,
-				65FE9EC7172EFC6A00E8E1EF /* FMODTone.h */,
-				65FE9EC8172EFC6A00E8E1EF /* FMODTone.mm */,
-				65FE9EC9172EFC6A00E8E1EF /* IRecorder.h */,
-				65FE9ECA172EFC6A00E8E1EF /* ISound.h */,
-				65FE9ECB172EFC6B00E8E1EF /* ISoundEngine.h */,
-				65FE9ECC172EFC6B00E8E1EF /* ITone.h */,
-				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
 				65007A571729939C000FBFA5 /* reso_galaxy_blur.png */,
 				65007A581729939C000FBFA5 /* reso_galaxy.png */,
 				65B111631728F00400E81BDF /* reso_space_blur.jpg */,
@@ -231,27 +243,14 @@
 				659E4D0A172233E400B3D32D /* nebula_orange.jpg */,
 				659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */,
 				659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */,
-				652C3A941721D35100D585D0 /* Shader.fsh */,
-				652C3A951721D35100D585D0 /* Shader.vsh */,
-				65A2B6F81721CEBA00404340 /* InfoPlist.strings */,
 				65A2B6FA1721CEBA00404340 /* k-blur@2.jpg */,
 				65A2B6FB1721CEBA00404340 /* k@2.jpg */,
-				65A2B6FC1721CEBA00404340 /* main.m */,
 				65A2B6FE1721CEBA00404340 /* oceanblue-blur@2.jpg */,
 				65A2B6FF1721CEBA00404340 /* oceanblue@2.jpg */,
 				65A2B7001721CEBA00404340 /* pink-blossoms-blur@2.jpg */,
 				65A2B7011721CEBA00404340 /* pink-blossoms@2.jpg */,
 				65A2B7021721CEBA00404340 /* ranier-snow-blur@2.jpg */,
 				65A2B7031721CEBA00404340 /* ranier-snow@2.jpg */,
-				65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */,
-				65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */,
-				65A2B7061721CEBA00404340 /* RESOAppDelegate.h */,
-				65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */,
-				65A2B7081721CEBA00404340 /* ResoTypes.h */,
-				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
-				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
-				65A2B70B1721CEBA00404340 /* RippleModel.h */,
-				65A2B70C1721CEBA00404340 /* RippleModel.mm */,
 				65A2B70F1721CEBA00404340 /* space-blur@2.png */,
 				65A2B7101721CEBA00404340 /* space.png */,
 				65A2B7111721CEBA00404340 /* space@2.png */,
@@ -262,14 +261,39 @@
 				65A2B7161721CEBA00404340 /* waterfall-blur@2.png */,
 				65A2B7171721CEBA00404340 /* waterfall.png */,
 				65A2B7181721CEBA00404340 /* waterfall@2.png */,
-				65D4092F172DB09B00026905 /* ResoSlider.h */,
-				65D40930172DB09B00026905 /* ResoSlider.mm */,
-				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
-				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
-				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
-				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
 			);
-			path = reso_sandbox;
+			name = resources;
+			sourceTree = "<group>";
+		};
+		65FE9ED7172F043E00E8E1EF /* supporting */ = {
+			isa = PBXGroup;
+			children = (
+				65EADA0A1703F784007CB200 /* Default-568h@2x.png */,
+				652C3A941721D35100D585D0 /* Shader.fsh */,
+				652C3A951721D35100D585D0 /* Shader.vsh */,
+				65A2B6F81721CEBA00404340 /* InfoPlist.strings */,
+				65A2B6FC1721CEBA00404340 /* main.m */,
+				65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */,
+				65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */,
+			);
+			name = supporting;
+			sourceTree = "<group>";
+		};
+		65FE9ED8172F049A00E8E1EF /* sound_engine */ = {
+			isa = PBXGroup;
+			children = (
+				65FE9EC3172EFC6900E8E1EF /* FMODSound.h */,
+				65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */,
+				65FE9EC5172EFC6900E8E1EF /* FMODSoundEngine.h */,
+				65FE9EC6172EFC6A00E8E1EF /* FMODSoundEngine.mm */,
+				65FE9EC7172EFC6A00E8E1EF /* FMODTone.h */,
+				65FE9EC8172EFC6A00E8E1EF /* FMODTone.mm */,
+				65FE9EC9172EFC6A00E8E1EF /* IRecorder.h */,
+				65FE9ECA172EFC6A00E8E1EF /* ISound.h */,
+				65FE9ECB172EFC6B00E8E1EF /* ISoundEngine.h */,
+				65FE9ECC172EFC6B00E8E1EF /* ITone.h */,
+			);
+			name = sound_engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
