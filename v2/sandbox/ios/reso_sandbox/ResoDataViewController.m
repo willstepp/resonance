@@ -8,17 +8,37 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ResoDataViewController.h"
+#import "ResoAppDelegate.h"
 
 @interface ResoDataViewController ()
 @end
 
 @implementation ResoDataViewController
 @synthesize backButton;
+@synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+      
+      ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+      NSURL * url = [ad applicationDocumentsDirectory];
+      NSLog(@"%s", [[url absoluteString] UTF8String]);
+      
+      NSManagedObjectContext * context = [ad managedObjectContext];
+      NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+      NSEntityDescription *entity = [NSEntityDescription
+                                     entityForName:@"Sound" inManagedObjectContext:context];
+      [fetchRequest setEntity:entity];
+      NSError * error;
+      NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+      for (NSManagedObject *info in fetchedObjects) {
+        NSLog(@"Name: %@", [info valueForKey:@"name"]);
+        NSLog(@"Description: %@", [info valueForKey:@"desc"]);
+        NSLog(@"Length: %@", [info valueForKey:@"length"]);
+      }
+      
       [self.view setBackgroundColor:[UIColor brownColor]];
       
       //back button

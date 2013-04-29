@@ -10,4 +10,5 @@
 
 @interface ResoDataViewController : UIViewController
   @property (nonatomic, retain) UIButton * backButton;
+  @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end

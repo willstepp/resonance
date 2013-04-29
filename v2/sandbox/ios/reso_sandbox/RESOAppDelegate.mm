@@ -33,6 +33,21 @@
   
   [self.window makeKeyAndVisible];
   
+  
+  //core data test
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSManagedObject * failedBankInfo = [NSEntityDescription
+                                     insertNewObjectForEntityForName:@"Sound"
+                                     inManagedObjectContext:context];
+  [failedBankInfo setValue:@"Streams in the Forest" forKey:@"name"];
+  [failedBankInfo setValue:@"Deep in the forest a creek trickles over the rocks and fallen limbs. The birds too add their peaceful, joyful music." forKey:@"desc"];
+  [failedBankInfo setValue:[NSNumber numberWithInt:300] forKey:@"length"];
+ 
+  NSError * error;
+  if (![context save:&error]) {
+    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+  }
+  
   return YES;
 }
 
@@ -103,7 +118,7 @@
   if (_managedObjectModel != nil) {
     return _managedObjectModel;
   }
-  NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"reso_sandbox" withExtension:@"momd"];
+  NSURL * modelURL = [[NSBundle mainBundle] URLForResource:@"reso_sandbox" withExtension:@"momd"];
   _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
   return _managedObjectModel;
 }
@@ -116,9 +131,9 @@
     return _persistentStoreCoordinator;
   }
   
-  NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"reso_sandbox.sqlite"];
+  NSURL * storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"reso_sandbox.sqlite"];
   
-  NSError *error = nil;
+  NSError * error = nil;
   _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
   if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
     /*
