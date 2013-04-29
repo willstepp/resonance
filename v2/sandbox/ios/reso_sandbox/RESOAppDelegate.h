@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class RESOViewController;
 
 @interface RESOAppDelegate : UIResponder <UIApplicationDelegate>
 
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) RESOViewController *viewController;
 
 @end

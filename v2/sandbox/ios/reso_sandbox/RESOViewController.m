@@ -108,6 +108,7 @@ enum
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+      NSLog(@"hi");
     }
     return self;
 }
@@ -154,7 +155,6 @@ enum
     _stateInTransition = false;
     _touchEnabled = false;
   
-  
     _imageName = @"space@2.png";
     _blurImageName = @"space-blur@2.png";
   
@@ -187,16 +187,21 @@ enum
   
   _imageName = @"iphone5_sitf.jpg";
   _blurImageName = @"iphone5_sitf_blur.jpg";
+  
+  _imageName = @"nebula_orange.jpg";
+  _blurImageName = @"nebula_orange_blur.jpg";
 
     //customize module buttons
     _buttonAlpha = 0.4;
   
     //one
+    mirButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [mirButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [mirButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
     [mirButton setTag:1];
 
     mirButton.layer.cornerRadius = 4.0f;
+    [self.view addSubview:mirButton];
 
   
     //two
@@ -224,12 +229,16 @@ enum
     [self.view addSubview:slider];
 
     //visual button
+    visualButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [visualButton addTarget:self action:@selector(toggleVisualState) forControlEvents:UIControlEventTouchUpInside];
     [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     
     visualButton.layer.borderColor = [UIColor blackColor].CGColor;
     visualButton.layer.borderWidth = 0.0f;
     visualButton.layer.cornerRadius = 4.0f;
+    visualButton.frame = CGRectMake(self.view.bounds.size.width - 44, 10, 44, 44);
+    [self.view addSubview:visualButton];
   
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
@@ -283,7 +292,7 @@ enum
   UIImage * overlayImage = [UIImage imageNamed:_blurImageName];
   [_overlay setImage:overlayImage];
 
-    //start rain drp on 30 second timer
+    //start rain drop on 30 second timer
   timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
   
   _mirX = mirButton.frame.origin.x;

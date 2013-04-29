@@ -7,15 +7,28 @@
 //
 
 #import "RESOAppDelegate.h"
+#import "RESOViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @implementation RESOAppDelegate
+@synthesize window = _window;
+@synthesize viewController = _viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
-    
-    return YES;
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+  RESOViewController * rvc = [[RESOViewController alloc] init];
+  UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rvc];
+  [navController setNavigationBarHidden:YES];
+  
+  [self.window addSubview:navController.view];
+  [self.window makeKeyAndVisible];
+  
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

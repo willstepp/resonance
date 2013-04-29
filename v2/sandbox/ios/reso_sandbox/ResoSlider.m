@@ -40,7 +40,6 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   float _animationStep;
   float _animationDuration;
   float _animationStepValue;
-  bool _handleMaxed;
   NSTimer * _handleAnimationTimer;
   
   ResoOrientation orientation;
@@ -91,7 +90,6 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
     _animationDuration = 0.4f;
     
     _animationStepValue = 0.0f;
-    _handleMaxed = false;
   }
   
   return self;
@@ -226,7 +224,6 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
     } else {
       _animationStepValue = -(ABS(_currHandleSize - _minHandleSize) / steps);
     }
-    _handleMaxed = false;
     _handleAnimating = true;
   }
   
@@ -237,7 +234,6 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   if (up && _currHandleSize >= _maxHandleSize) {
     _currHandleSize = _maxHandleSize;
     _handleAnimating = false;
-    _handleMaxed = true;
     [_handleAnimationTimer invalidate];
   } else if(!up && _currHandleSize <= _minHandleSize) {
     _currHandleSize = _minHandleSize;
