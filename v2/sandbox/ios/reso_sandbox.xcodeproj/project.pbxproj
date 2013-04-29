@@ -36,9 +36,9 @@
 		65A2B7211721CEBA00404340 /* pink-blossoms@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7011721CEBA00404340 /* pink-blossoms@2.jpg */; };
 		65A2B7221721CEBA00404340 /* ranier-snow-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7021721CEBA00404340 /* ranier-snow-blur@2.jpg */; };
 		65A2B7231721CEBA00404340 /* ranier-snow@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7031721CEBA00404340 /* ranier-snow@2.jpg */; };
-		65A2B7251721CEBA00404340 /* RESOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B7071721CEBA00404340 /* RESOAppDelegate.m */; };
-		65A2B7261721CEBA00404340 /* RESOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70A1721CEBA00404340 /* RESOViewController.m */; };
-		65A2B7271721CEBA00404340 /* RippleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70C1721CEBA00404340 /* RippleModel.m */; };
+		65A2B7251721CEBA00404340 /* RESOAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */; };
+		65A2B7261721CEBA00404340 /* ResoUiViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */; };
+		65A2B7271721CEBA00404340 /* RippleModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70C1721CEBA00404340 /* RippleModel.mm */; };
 		65A2B72A1721CEBA00404340 /* space-blur@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B70F1721CEBA00404340 /* space-blur@2.png */; };
 		65A2B72B1721CEBA00404340 /* space.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7101721CEBA00404340 /* space.png */; };
 		65A2B72C1721CEBA00404340 /* space@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7111721CEBA00404340 /* space@2.png */; };
@@ -51,8 +51,20 @@
 		65A2B7331721CEBA00404340 /* waterfall@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7181721CEBA00404340 /* waterfall@2.png */; };
 		65B111651728F00400E81BDF /* reso_space_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B111631728F00400E81BDF /* reso_space_blur.jpg */; };
 		65B111661728F00400E81BDF /* reso_space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B111641728F00400E81BDF /* reso_space.jpg */; };
-		65D40931172DB09B00026905 /* ResoSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D40930172DB09B00026905 /* ResoSlider.m */; };
+		65D40931172DB09B00026905 /* ResoSlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65D40930172DB09B00026905 /* ResoSlider.mm */; };
 		65EADA0B1703F784007CB200 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EADA0A1703F784007CB200 /* Default-568h@2x.png */; };
+		65FE9EB3172EE35200E8E1EF /* ResoPortalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */; };
+		65FE9EB6172EE39500E8E1EF /* ResoSoundViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */; };
+		65FE9EBA172EF5BF00E8E1EF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */; };
+		65FE9EBB172EF5BF00E8E1EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */; };
+		65FE9EBC172EF5BF00E8E1EF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9EB9172EF5BF00E8E1EF /* CoreAudio.framework */; };
+		65FE9EC2172EFAE400E8E1EF /* libfmodex_iphoneos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */; };
+		65FE9ECE172EFC6B00E8E1EF /* FMODSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */; };
+		65FE9ECF172EFC6B00E8E1EF /* FMODSoundEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EC6172EFC6A00E8E1EF /* FMODSoundEngine.mm */; };
+		65FE9ED0172EFC6B00E8E1EF /* FMODTone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EC8172EFC6A00E8E1EF /* FMODTone.mm */; };
+		65FE9ED1172EFC6B00E8E1EF /* ResoSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */; };
+		65FE9ED4172F009D00E8E1EF /* drumloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED2172F009C00E8E1EF /* drumloop.wav */; };
+		65FE9ED5172F009D00E8E1EF /* swish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED3172F009D00E8E1EF /* swish.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,12 +101,12 @@
 		65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "reso_sandbox-Info.plist"; sourceTree = "<group>"; };
 		65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "reso_sandbox-Prefix.pch"; sourceTree = "<group>"; };
 		65A2B7061721CEBA00404340 /* RESOAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESOAppDelegate.h; sourceTree = "<group>"; };
-		65A2B7071721CEBA00404340 /* RESOAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESOAppDelegate.m; sourceTree = "<group>"; };
+		65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RESOAppDelegate.mm; sourceTree = "<group>"; };
 		65A2B7081721CEBA00404340 /* ResoTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTypes.h; sourceTree = "<group>"; };
-		65A2B7091721CEBA00404340 /* RESOViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESOViewController.h; sourceTree = "<group>"; };
-		65A2B70A1721CEBA00404340 /* RESOViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESOViewController.m; sourceTree = "<group>"; };
+		65A2B7091721CEBA00404340 /* ResoUiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoUiViewController.h; sourceTree = "<group>"; };
+		65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoUiViewController.mm; sourceTree = "<group>"; };
 		65A2B70B1721CEBA00404340 /* RippleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RippleModel.h; sourceTree = "<group>"; };
-		65A2B70C1721CEBA00404340 /* RippleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RippleModel.m; sourceTree = "<group>"; };
+		65A2B70C1721CEBA00404340 /* RippleModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RippleModel.mm; sourceTree = "<group>"; };
 		65A2B70F1721CEBA00404340 /* space-blur@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space-blur@2.png"; sourceTree = "<group>"; };
 		65A2B7101721CEBA00404340 /* space.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = space.png; sourceTree = "<group>"; };
 		65A2B7111721CEBA00404340 /* space@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "space@2.png"; sourceTree = "<group>"; };
@@ -108,8 +120,29 @@
 		65B111631728F00400E81BDF /* reso_space_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reso_space_blur.jpg; sourceTree = "<group>"; };
 		65B111641728F00400E81BDF /* reso_space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reso_space.jpg; sourceTree = "<group>"; };
 		65D4092F172DB09B00026905 /* ResoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSlider.h; sourceTree = "<group>"; };
-		65D40930172DB09B00026905 /* ResoSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoSlider.m; sourceTree = "<group>"; };
+		65D40930172DB09B00026905 /* ResoSlider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSlider.mm; sourceTree = "<group>"; };
 		65EADA0A1703F784007CB200 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPortalViewController.h; sourceTree = "<group>"; };
+		65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPortalViewController.mm; sourceTree = "<group>"; };
+		65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSoundViewController.h; sourceTree = "<group>"; };
+		65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSoundViewController.mm; sourceTree = "<group>"; };
+		65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		65FE9EB9172EF5BF00E8E1EF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfmodex_iphoneos.a; path = ../../../../../Library/FMOD/api/lib/libfmodex_iphoneos.a; sourceTree = "<group>"; };
+		65FE9EC3172EFC6900E8E1EF /* FMODSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODSound.h; sourceTree = "<group>"; };
+		65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODSound.mm; sourceTree = "<group>"; };
+		65FE9EC5172EFC6900E8E1EF /* FMODSoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODSoundEngine.h; sourceTree = "<group>"; };
+		65FE9EC6172EFC6A00E8E1EF /* FMODSoundEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODSoundEngine.mm; sourceTree = "<group>"; };
+		65FE9EC7172EFC6A00E8E1EF /* FMODTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODTone.h; sourceTree = "<group>"; };
+		65FE9EC8172EFC6A00E8E1EF /* FMODTone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODTone.mm; sourceTree = "<group>"; };
+		65FE9EC9172EFC6A00E8E1EF /* IRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRecorder.h; sourceTree = "<group>"; };
+		65FE9ECA172EFC6A00E8E1EF /* ISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISound.h; sourceTree = "<group>"; };
+		65FE9ECB172EFC6B00E8E1EF /* ISoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISoundEngine.h; sourceTree = "<group>"; };
+		65FE9ECC172EFC6B00E8E1EF /* ITone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITone.h; sourceTree = "<group>"; };
+		65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResoSoundViewController.xib; sourceTree = "<group>"; };
+		65FE9ED2172F009C00E8E1EF /* drumloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drumloop.wav; sourceTree = "<group>"; };
+		65FE9ED3172F009D00E8E1EF /* swish.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = swish.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,10 +150,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FE9EBA172EF5BF00E8E1EF /* AudioToolbox.framework in Frameworks */,
+				65FE9EBB172EF5BF00E8E1EF /* AVFoundation.framework in Frameworks */,
+				65FE9EBC172EF5BF00E8E1EF /* CoreAudio.framework in Frameworks */,
 				6510034E15F3F2B000B38890 /* CoreVideo.framework in Frameworks */,
 				651002E415F2E5AA00B38890 /* GLKit.framework in Frameworks */,
 				651002E215F2E59F00B38890 /* OpenGLES.framework in Frameworks */,
 				651002E015F2E59700B38890 /* QuartzCore.framework in Frameworks */,
+				65FE9EC2172EFAE400E8E1EF /* libfmodex_iphoneos.a in Frameworks */,
 				651002C915F2E3BA00B38890 /* UIKit.framework in Frameworks */,
 				651002CB15F2E3BA00B38890 /* Foundation.framework in Frameworks */,
 				651002CD15F2E3BA00B38890 /* CoreGraphics.framework in Frameworks */,
@@ -133,6 +170,10 @@
 		651002B915F2E3BA00B38890 = {
 			isa = PBXGroup;
 			children = (
+				65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */,
+				65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */,
+				65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */,
+				65FE9EB9172EF5BF00E8E1EF /* CoreAudio.framework */,
 				65A2B6F71721CEBA00404340 /* reso_sandbox */,
 				65EADA0A1703F784007CB200 /* Default-568h@2x.png */,
 				6510034D15F3F2B000B38890 /* CoreVideo.framework */,
@@ -165,6 +206,19 @@
 		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				65FE9ED2172F009C00E8E1EF /* drumloop.wav */,
+				65FE9ED3172F009D00E8E1EF /* swish.wav */,
+				65FE9EC3172EFC6900E8E1EF /* FMODSound.h */,
+				65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */,
+				65FE9EC5172EFC6900E8E1EF /* FMODSoundEngine.h */,
+				65FE9EC6172EFC6A00E8E1EF /* FMODSoundEngine.mm */,
+				65FE9EC7172EFC6A00E8E1EF /* FMODTone.h */,
+				65FE9EC8172EFC6A00E8E1EF /* FMODTone.mm */,
+				65FE9EC9172EFC6A00E8E1EF /* IRecorder.h */,
+				65FE9ECA172EFC6A00E8E1EF /* ISound.h */,
+				65FE9ECB172EFC6B00E8E1EF /* ISoundEngine.h */,
+				65FE9ECC172EFC6B00E8E1EF /* ITone.h */,
+				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
 				65007A571729939C000FBFA5 /* reso_galaxy_blur.png */,
 				65007A581729939C000FBFA5 /* reso_galaxy.png */,
 				65B111631728F00400E81BDF /* reso_space_blur.jpg */,
@@ -192,12 +246,12 @@
 				65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */,
 				65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */,
 				65A2B7061721CEBA00404340 /* RESOAppDelegate.h */,
-				65A2B7071721CEBA00404340 /* RESOAppDelegate.m */,
+				65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */,
 				65A2B7081721CEBA00404340 /* ResoTypes.h */,
-				65A2B7091721CEBA00404340 /* RESOViewController.h */,
-				65A2B70A1721CEBA00404340 /* RESOViewController.m */,
+				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
+				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
 				65A2B70B1721CEBA00404340 /* RippleModel.h */,
-				65A2B70C1721CEBA00404340 /* RippleModel.m */,
+				65A2B70C1721CEBA00404340 /* RippleModel.mm */,
 				65A2B70F1721CEBA00404340 /* space-blur@2.png */,
 				65A2B7101721CEBA00404340 /* space.png */,
 				65A2B7111721CEBA00404340 /* space@2.png */,
@@ -209,7 +263,11 @@
 				65A2B7171721CEBA00404340 /* waterfall.png */,
 				65A2B7181721CEBA00404340 /* waterfall@2.png */,
 				65D4092F172DB09B00026905 /* ResoSlider.h */,
-				65D40930172DB09B00026905 /* ResoSlider.m */,
+				65D40930172DB09B00026905 /* ResoSlider.mm */,
+				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
+				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
+				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
+				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
 			);
 			path = reso_sandbox;
 			sourceTree = "<group>";
@@ -300,6 +358,9 @@
 				65B111661728F00400E81BDF /* reso_space.jpg in Resources */,
 				65007A591729939C000FBFA5 /* reso_galaxy_blur.png in Resources */,
 				65007A5A1729939C000FBFA5 /* reso_galaxy.png in Resources */,
+				65FE9ED1172EFC6B00E8E1EF /* ResoSoundViewController.xib in Resources */,
+				65FE9ED4172F009D00E8E1EF /* drumloop.wav in Resources */,
+				65FE9ED5172F009D00E8E1EF /* swish.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,10 +372,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				65A2B71C1721CEBA00404340 /* main.m in Sources */,
-				65A2B7251721CEBA00404340 /* RESOAppDelegate.m in Sources */,
-				65A2B7261721CEBA00404340 /* RESOViewController.m in Sources */,
-				65A2B7271721CEBA00404340 /* RippleModel.m in Sources */,
-				65D40931172DB09B00026905 /* ResoSlider.m in Sources */,
+				65A2B7251721CEBA00404340 /* RESOAppDelegate.mm in Sources */,
+				65A2B7261721CEBA00404340 /* ResoUiViewController.mm in Sources */,
+				65A2B7271721CEBA00404340 /* RippleModel.mm in Sources */,
+				65D40931172DB09B00026905 /* ResoSlider.mm in Sources */,
+				65FE9EB3172EE35200E8E1EF /* ResoPortalViewController.mm in Sources */,
+				65FE9EB6172EE39500E8E1EF /* ResoSoundViewController.mm in Sources */,
+				65FE9ECE172EFC6B00E8E1EF /* FMODSound.mm in Sources */,
+				65FE9ECF172EFC6B00E8E1EF /* FMODSoundEngine.mm in Sources */,
+				65FE9ED0172EFC6B00E8E1EF /* FMODTone.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +463,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William Stepp (3CUFZE35KR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "reso_sandbox/reso_sandbox-Prefix.pch";
+				HEADER_SEARCH_PATHS = "../../../../../Library/FMOD/api/inc/**";
 				INFOPLIST_FILE = "reso_sandbox/reso_sandbox-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/FMOD/api/lib\"",
+					"../../../../../Library/FMOD/api/lib/**",
+				);
+				"OTHER_LDFLAGS[arch=armv7]" = "-lfmodex_iphoneos";
+				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = "-lfmodex_iphonesimulator";
 				PRODUCT_NAME = reso_sandbox;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -412,7 +486,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: William Stepp (3CUFZE35KR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "reso_sandbox/reso_sandbox-Prefix.pch";
+				HEADER_SEARCH_PATHS = "../../../../../Library/FMOD/api/inc/**";
 				INFOPLIST_FILE = "reso_sandbox/reso_sandbox-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../../Library/FMOD/api/lib\"",
+					"../../../../../Library/FMOD/api/lib/**",
+				);
+				OTHER_LDFLAGS = "";
+				"OTHER_LDFLAGS[arch=*]" = "-lfmodex_iphoneos";
 				PRODUCT_NAME = reso_sandbox;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

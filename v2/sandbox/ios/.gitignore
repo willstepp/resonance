@@ -4,4 +4,7 @@
 
 reso_sandbox/*.jpg
 reso_sandbox/*.png
+reso_sandbox/*.wav
+reso_sandbox/*.mp3
+reso_sandbox/*.ogg
 reso_sandbox/.DS_Store

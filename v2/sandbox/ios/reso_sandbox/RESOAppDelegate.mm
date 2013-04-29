@@ -7,13 +7,12 @@
 //
 
 #import "RESOAppDelegate.h"
-#import "RESOViewController.h"
+#import "ResoPortalViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 
 @implementation RESOAppDelegate
 @synthesize window = _window;
-@synthesize viewController = _viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -21,11 +20,13 @@
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-  RESOViewController * rvc = [[RESOViewController alloc] init];
+  ResoPortalViewController * rvc = [[ResoPortalViewController alloc] init];
   UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rvc];
   [navController setNavigationBarHidden:YES];
   
+  [self.window setRootViewController:navController];
   [self.window addSubview:navController.view];
+  
   [self.window makeKeyAndVisible];
   
   return YES;

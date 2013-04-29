@@ -9,7 +9,7 @@
 #import <CoreVideo/CVOpenGLESTextureCache.h>
 #import <QuartzCore/QuartzCore.h>
 #include <stdlib.h>
-#import "RESOViewController.h"
+#import "ResoUiViewController.h"
 #import "RippleModel.h"
 #import "ResoSlider.h"
 
@@ -32,7 +32,7 @@ enum
     NUM_ATTRIBUTES
 };
 
-@interface RESOViewController (){
+@interface ResoUiViewController (){
     CGFloat _screenWidth;
     CGFloat _screenHeight;
     
@@ -94,12 +94,13 @@ enum
 - (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle;
 @end
 
-@implementation RESOViewController
+@implementation ResoUiViewController
 @synthesize context = _context;
 
 @synthesize mirButton;
 @synthesize mirButton2;
 @synthesize mirButton3;
+@synthesize backButton;
 
 @synthesize visualButton;
 
@@ -107,8 +108,184 @@ enum
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-      NSLog(@"hi");
+      _currAppState = PlayerMain;
+      _stateInTransition = false;
+      _touchEnabled = false;
+      
+      _imageName = @"space@2.png";
+      _blurImageName = @"space-blur@2.png";
+      
+      _imageName = @"pattern_blue.jpg";
+      _blurImageName = @"pattern_blue_blur.jpg";
+      
+      _imageName = @"pink-blossoms@2.jpg";
+      _blurImageName = @"pink-blossoms-blur@2.jpg";
+      
+      _imageName = @"nebula_blue.jpg";
+      _blurImageName = @"nebula_blue_blur.jpg";
+      
+      _imageName = @"nebula_orange.jpg";
+      _blurImageName = @"nebula_orange_blur.jpg";
+      
+      _imageName = @"reso_space.jpg";
+      _blurImageName = @"reso_space_blur.jpg";
+      
+      _imageName = @"reso_galaxy.png";
+      _blurImageName = @"reso_galaxy_blur.png";
+      
+      _imageName = @"oceanblue@2.jpg";
+      _blurImageName = @"oceanblue-blur@2.jpg";
+      
+      _imageName = @"ranier-snow@2.jpg";
+      _blurImageName = @"ranier-snow-blur@2.jpg";
+      
+      _imageName = @"starlight@2.jpg";
+      _blurImageName = @"starlight-blur@2.jpg";
+      
+      _imageName = @"iphone5_sitf.jpg";
+      _blurImageName = @"iphone5_sitf_blur.jpg";
+      
+      _imageName = @"nebula_orange.jpg";
+      _blurImageName = @"nebula_orange_blur.jpg";
+      
+      //customize module buttons
+      _buttonAlpha = 0.4;
+      
+      //back button
+      backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [backButton setTitle:@"<" forState:UIControlStateNormal];
+      [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+      [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [backButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      backButton.layer.borderColor = [UIColor blackColor].CGColor;
+      backButton.layer.borderWidth = 0.0f;
+      backButton.layer.cornerRadius = 4.0f;
+      backButton.frame = CGRectMake(10, 10, 44, 44);
+      [self.view addSubview:backButton];
+      
+      //one
+      mirButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+      [mirButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mirButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
+      [mirButton setTag:1];
+      
+      mirButton.layer.cornerRadius = 4.0f;
+      [self.view addSubview:mirButton];
+      
+      
+      //two
+      [mirButton2 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mirButton2 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
+      [mirButton2 setTag:2];
+      mirButton2.layer.borderColor = [UIColor blackColor].CGColor;
+      mirButton2.layer.borderWidth = 0.0f;
+      mirButton2.layer.cornerRadius = 4.0f;
+      
+      //three
+      [mirButton3 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mirButton3 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
+      [mirButton3 setTag:3];
+      mirButton3.layer.borderColor = [UIColor blackColor].CGColor;
+      mirButton3.layer.borderWidth = 0.0f;
+      mirButton3.layer.cornerRadius = 4.0f;
+      
+      int width = self.view.bounds.size.width;
+      int height = 44;
+      ResoSlider * slider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height)-height, width, height) withOrientation:Horizontal];
+      slider.minValue = 0;
+      slider.maxValue = 100;
+      [slider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
+      [self.view addSubview:slider];
+      
+      //visual button
+      visualButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [visualButton addTarget:self action:@selector(toggleVisualState) forControlEvents:UIControlEventTouchUpInside];
+      [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      visualButton.layer.borderColor = [UIColor blackColor].CGColor;
+      visualButton.layer.borderWidth = 0.0f;
+      visualButton.layer.cornerRadius = 4.0f;
+      visualButton.frame = CGRectMake(self.view.bounds.size.width - 44, 10, 44, 44);
+      [self.view addSubview:visualButton];
+      
+      self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+      
+      if (!self.context) {
+        NSLog(@"Failed to create ES context");
+      }
+      
+      GLKView *view = (GLKView *)self.view;
+      view.context = self.context;
+      self.preferredFramesPerSecond = 60;
+      
+      _screenWidth = [UIScreen mainScreen].bounds.size.width;
+      _screenHeight = [UIScreen mainScreen].bounds.size.height;
+      view.contentScaleFactor = [UIScreen mainScreen].scale;
+      
+      if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      {
+        // meshFactor controls the ending ripple mesh size.
+        // For example mesh width = screenWidth / meshFactor.
+        // It's chosen based on both screen resolution and device size.
+        _meshFactor = 8;
+      }
+      else
+      {
+        _meshFactor = 4;
+      }
+      
+      [self setupGL];
+      
+      UIImage * myImage = [UIImage imageNamed:_imageName];
+      CGImageRef imageRef = [myImage CGImage];
+      imageRef = [self CGImageRotatedByAngle:imageRef angle:90.0f];
+      _pixelBuffer = [self pixelBufferFromCGImage:imageRef];
+      _width = CVPixelBufferGetWidth(_pixelBuffer);
+      _height = CVPixelBufferGetHeight(_pixelBuffer);
+      
+      //-- Create CVOpenGLESTextureCacheRef for optimal CVImageBufferRef to GLES texture conversion.
+      CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, (__bridge CVEAGLContext)((__bridge void *)_context), NULL, &_textureCache);
+      if (err)  {
+        NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
+        return nil;
+      }
+      
+      _newSize = CGSizeMake(_width, _height);
+      _rect = CGRectMake(0,0,_width,_height);
+      
+      //load overlay view
+      _overlay.alpha = 0.0f;
+      _overlay.frame = self.view.bounds;
+      
+      UIImage * overlayImage = [UIImage imageNamed:_blurImageName];
+      [_overlay setImage:overlayImage];
+      
+      _mirX = mirButton.frame.origin.x;
+      _mirY = mirButton.frame.origin.y;
+      _mirW = mirButton.frame.size.width;
+      _mirH = mirButton.frame.size.height;
+      
+      _moduleOnscreenFrame1 = mirButton.frame;
+      _moduleOnscreenFrame2 = mirButton2.frame;
+      _moduleOnscreenFrame3 = mirButton3.frame;
+      
+      _moduleOffscreenFrameTop = CGRectMake(mirButton.frame.origin.x, -100.0f, mirButton.frame.size.width, mirButton.frame.size.height);
+      _moduleOffscreenFrameBottom = CGRectMake(mirButton.frame.origin.x, _screenHeight + 100.0f, mirButton.frame.size.width, mirButton.frame.size.height);
+      
+      _fullScreenRect = CGRectMake(0.0, 0.0, _screenWidth, _screenHeight);
+      
+      [mirButton setFrame:_moduleOffscreenFrameTop];
+      [mirButton2 setFrame:_moduleOffscreenFrameTop];
+      [mirButton3 setFrame:_moduleOffscreenFrameTop];
+      
+      _currModule = 0;
+      
+      _modules = [[NSMutableDictionary alloc] init];
+      [_modules setValue:mirButton forKey:[NSString stringWithFormat:@"%i",mirButton.tag]];
+      [_modules setValue:mirButton2 forKey:[NSString stringWithFormat:@"%i",mirButton2.tag]];
+      [_modules setValue:mirButton3 forKey:[NSString stringWithFormat:@"%i",mirButton3.tag]];
     }
     return self;
 }
@@ -151,176 +328,18 @@ enum
 {
     [super viewDidLoad];
   
-    _currAppState = Module;
-    _stateInTransition = false;
-    _touchEnabled = false;
-  
-    _imageName = @"space@2.png";
-    _blurImageName = @"space-blur@2.png";
-  
-  _imageName = @"pattern_blue.jpg";
-  _blurImageName = @"pattern_blue_blur.jpg";
-  
-  _imageName = @"pink-blossoms@2.jpg";
-  _blurImageName = @"pink-blossoms-blur@2.jpg";
-  
-  _imageName = @"nebula_blue.jpg";
-  _blurImageName = @"nebula_blue_blur.jpg";
-  
-  _imageName = @"nebula_orange.jpg";
-  _blurImageName = @"nebula_orange_blur.jpg";
-  
-  _imageName = @"reso_space.jpg";
-  _blurImageName = @"reso_space_blur.jpg";
-  
-  _imageName = @"reso_galaxy.png";
-  _blurImageName = @"reso_galaxy_blur.png";
-  
-  _imageName = @"oceanblue@2.jpg";
-  _blurImageName = @"oceanblue-blur@2.jpg";
-  
-  _imageName = @"ranier-snow@2.jpg";
-  _blurImageName = @"ranier-snow-blur@2.jpg";
-  
-  _imageName = @"starlight@2.jpg";
-  _blurImageName = @"starlight-blur@2.jpg";
-  
-  _imageName = @"iphone5_sitf.jpg";
-  _blurImageName = @"iphone5_sitf_blur.jpg";
-  
-  _imageName = @"nebula_orange.jpg";
-  _blurImageName = @"nebula_orange_blur.jpg";
-
-    //customize module buttons
-    _buttonAlpha = 0.4;
-  
-    //one
-    mirButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [mirButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
-    [mirButton setTag:1];
-
-    mirButton.layer.cornerRadius = 4.0f;
-    [self.view addSubview:mirButton];
 
   
-    //two
-    [mirButton2 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton2 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
-    [mirButton2 setTag:2];
-    mirButton2.layer.borderColor = [UIColor blackColor].CGColor;
-    mirButton2.layer.borderWidth = 0.0f;
-    mirButton2.layer.cornerRadius = 4.0f;
-  
-    //three
-    [mirButton3 setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mirButton3 setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:_buttonAlpha]];
-    [mirButton3 setTag:3];
-    mirButton3.layer.borderColor = [UIColor blackColor].CGColor;
-    mirButton3.layer.borderWidth = 0.0f;
-    mirButton3.layer.cornerRadius = 4.0f;
-  
-    int width = self.view.bounds.size.width;
-    int height = 44;
-  ResoSlider * slider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, (self.view.bounds.size.height)-height, width, height) withOrientation:Horizontal];
-    slider.minValue = 0;
-    slider.maxValue = 100;
-    [slider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:slider];
-
-    //visual button
-    visualButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [visualButton addTarget:self action:@selector(toggleVisualState) forControlEvents:UIControlEventTouchUpInside];
-    [visualButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [visualButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-    
-    visualButton.layer.borderColor = [UIColor blackColor].CGColor;
-    visualButton.layer.borderWidth = 0.0f;
-    visualButton.layer.cornerRadius = 4.0f;
-    visualButton.frame = CGRectMake(self.view.bounds.size.width - 44, 10, 44, 44);
-    [self.view addSubview:visualButton];
-  
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
-    if (!self.context) {
-        NSLog(@"Failed to create ES context");
-    }
-    
-    GLKView *view = (GLKView *)self.view;
-    view.context = self.context;
-    self.preferredFramesPerSecond = 60;
-    
-    _screenWidth = [UIScreen mainScreen].bounds.size.width;
-    _screenHeight = [UIScreen mainScreen].bounds.size.height;
-    view.contentScaleFactor = [UIScreen mainScreen].scale;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        // meshFactor controls the ending ripple mesh size.
-        // For example mesh width = screenWidth / meshFactor.
-        // It's chosen based on both screen resolution and device size.
-        _meshFactor = 8;
-    }
-    else
-    {
-        _meshFactor = 4;
-    }
-    
-    [self setupGL];
-    
-    UIImage * myImage = [UIImage imageNamed:_imageName];
-    CGImageRef imageRef = [myImage CGImage];
-    imageRef = [self CGImageRotatedByAngle:imageRef angle:90.0f];
-    _pixelBuffer = [self pixelBufferFromCGImage:imageRef];
-    _width = CVPixelBufferGetWidth(_pixelBuffer);
-    _height = CVPixelBufferGetHeight(_pixelBuffer);
-    
-    //-- Create CVOpenGLESTextureCacheRef for optimal CVImageBufferRef to GLES texture conversion.
-    CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, (__bridge CVEAGLContext)((__bridge void *)_context), NULL, &_textureCache);
-    if (err)  {
-        NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
-        return;
-    }
-  
-  _newSize = CGSizeMake(_width, _height);
-  _rect = CGRectMake(0,0,_width,_height);
-  
-  //load overlay view
-  _overlay.alpha = 0.0f;
-  _overlay.frame = self.view.bounds;
-  
-  UIImage * overlayImage = [UIImage imageNamed:_blurImageName];
-  [_overlay setImage:overlayImage];
-
-    //start rain drop on 30 second timer
+  //start rain drop on 30 second timer
   timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
   
-  _mirX = mirButton.frame.origin.x;
-  _mirY = mirButton.frame.origin.y;
-  _mirW = mirButton.frame.size.width;
-  _mirH = mirButton.frame.size.height;
-  
-  _moduleOnscreenFrame1 = mirButton.frame;
-  _moduleOnscreenFrame2 = mirButton2.frame;
-  _moduleOnscreenFrame3 = mirButton3.frame;
-  
-  _moduleOffscreenFrameTop = CGRectMake(mirButton.frame.origin.x, -100.0f, mirButton.frame.size.width, mirButton.frame.size.height);
-  _moduleOffscreenFrameBottom = CGRectMake(mirButton.frame.origin.x, _screenHeight + 100.0f, mirButton.frame.size.width, mirButton.frame.size.height);
-  
-  _fullScreenRect = CGRectMake(0.0, 0.0, _screenWidth, _screenHeight);
-  
-  [mirButton setFrame:_moduleOffscreenFrameTop];
-  [mirButton2 setFrame:_moduleOffscreenFrameTop];
-  [mirButton3 setFrame:_moduleOffscreenFrameTop];
-  
-  _currModule = 0;
-  
-  _modules = [[NSMutableDictionary alloc] init];
-  [_modules setValue:mirButton forKey:[NSString stringWithFormat:@"%i",mirButton.tag]];
-  [_modules setValue:mirButton2 forKey:[NSString stringWithFormat:@"%i",mirButton2.tag]];
-  [_modules setValue:mirButton3 forKey:[NSString stringWithFormat:@"%i",mirButton3.tag]];
-  
-  [self changeAppToState:Module];
+  [self changeAppToState:PlayerMain];
+}
+
+-(void)goBack:(id)sender
+{
+  // goes back to the last view controller in the stack
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)updateRangeLabel:(ResoSlider *)slider{
@@ -345,7 +364,7 @@ enum
   if (_currAppState == Visual) {
     NSLog(@"unloadCurrentState : Visual");
     
-  } else if (_currAppState == Module) {
+  } else if (_currAppState == PlayerMain) {
     NSLog(@"unloadCurrentState : Module");
     
         
@@ -443,7 +462,7 @@ enum
     
     _loadPondImageTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(resetPond:) userInfo:[NSNumber numberWithBool:false] repeats:NO];
     _touchEnabled = true;
-  } else if (ns == Module) {
+  } else if (ns == PlayerMain) {
     _touchEnabled = false;
     
     NSLog(@"loadNewState : Module");
@@ -763,10 +782,10 @@ enum
   NSLog(@"%i", _currModule);
 
   if (!_stateInTransition) {
-    if (_currAppState == Module) {
+    if (_currAppState == PlayerMain) {
       [self changeAppToState:ModuleExpand];
     } else if (_currAppState == ModuleExpand) {
-      [self changeAppToState:Module];
+      [self changeAppToState:PlayerMain];
     }
   }
 }
@@ -775,8 +794,8 @@ enum
 {
   if (!_stateInTransition) {
     if (_currAppState == Visual) {
-      [self changeAppToState:Module];
-    } else if (_currAppState == Module) {
+      [self changeAppToState:PlayerMain];
+    } else if (_currAppState == PlayerMain) {
       [self changeAppToState:Visual];
     }
   }
