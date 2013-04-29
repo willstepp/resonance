@@ -36,7 +36,7 @@
 		65A2B7211721CEBA00404340 /* pink-blossoms@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7011721CEBA00404340 /* pink-blossoms@2.jpg */; };
 		65A2B7221721CEBA00404340 /* ranier-snow-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7021721CEBA00404340 /* ranier-snow-blur@2.jpg */; };
 		65A2B7231721CEBA00404340 /* ranier-snow@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7031721CEBA00404340 /* ranier-snow@2.jpg */; };
-		65A2B7251721CEBA00404340 /* RESOAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */; };
+		65A2B7251721CEBA00404340 /* ResoAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */; };
 		65A2B7261721CEBA00404340 /* ResoUiViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */; };
 		65A2B7271721CEBA00404340 /* RippleModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65A2B70C1721CEBA00404340 /* RippleModel.mm */; };
 		65A2B72A1721CEBA00404340 /* space-blur@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B70F1721CEBA00404340 /* space-blur@2.png */; };
@@ -65,6 +65,9 @@
 		65FE9ED1172EFC6B00E8E1EF /* ResoSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */; };
 		65FE9ED4172F009D00E8E1EF /* drumloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED2172F009C00E8E1EF /* drumloop.wav */; };
 		65FE9ED5172F009D00E8E1EF /* swish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED3172F009D00E8E1EF /* swish.wav */; };
+		65FE9EDC172F097300E8E1EF /* ResoDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EDB172F097300E8E1EF /* ResoDataViewController.m */; };
+		65FE9F0C172F0CA800E8E1EF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9F0B172F0CA800E8E1EF /* CoreData.framework */; };
+		65FE9F0F172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,8 +103,8 @@
 		65A2B7031721CEBA00404340 /* ranier-snow@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ranier-snow@2.jpg"; sourceTree = "<group>"; };
 		65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "reso_sandbox-Info.plist"; sourceTree = "<group>"; };
 		65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "reso_sandbox-Prefix.pch"; sourceTree = "<group>"; };
-		65A2B7061721CEBA00404340 /* RESOAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESOAppDelegate.h; sourceTree = "<group>"; };
-		65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RESOAppDelegate.mm; sourceTree = "<group>"; };
+		65A2B7061721CEBA00404340 /* ResoAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoAppDelegate.h; sourceTree = "<group>"; };
+		65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoAppDelegate.mm; sourceTree = "<group>"; };
 		65A2B7081721CEBA00404340 /* ResoTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTypes.h; sourceTree = "<group>"; };
 		65A2B7091721CEBA00404340 /* ResoUiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoUiViewController.h; sourceTree = "<group>"; };
 		65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoUiViewController.mm; sourceTree = "<group>"; };
@@ -143,6 +146,10 @@
 		65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResoSoundViewController.xib; sourceTree = "<group>"; };
 		65FE9ED2172F009C00E8E1EF /* drumloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drumloop.wav; sourceTree = "<group>"; };
 		65FE9ED3172F009D00E8E1EF /* swish.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = swish.wav; sourceTree = "<group>"; };
+		65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoDataViewController.h; sourceTree = "<group>"; };
+		65FE9EDB172F097300E8E1EF /* ResoDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoDataViewController.m; sourceTree = "<group>"; };
+		65FE9F0B172F0CA800E8E1EF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		65FE9F0E172F0D6E00E8E1EF /* reso_sandbox.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = reso_sandbox.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65FE9F0C172F0CA800E8E1EF /* CoreData.framework in Frameworks */,
 				65FE9EBA172EF5BF00E8E1EF /* AudioToolbox.framework in Frameworks */,
 				65FE9EBB172EF5BF00E8E1EF /* AVFoundation.framework in Frameworks */,
 				65FE9EBC172EF5BF00E8E1EF /* CoreAudio.framework in Frameworks */,
@@ -187,6 +195,7 @@
 		651002C715F2E3BA00B38890 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65FE9F0B172F0CA800E8E1EF /* CoreData.framework */,
 				65FE9EC1172EFAE400E8E1EF /* libfmodex_iphoneos.a */,
 				65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */,
 				65FE9EB8172EF5BE00E8E1EF /* AVFoundation.framework */,
@@ -205,23 +214,25 @@
 		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
 			isa = PBXGroup;
 			children = (
+				65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */,
 				65FE9ED6172F03AF00E8E1EF /* resources */,
 				65FE9ED8172F049A00E8E1EF /* sound_engine */,
 				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
-				65FE9ED7172F043E00E8E1EF /* supporting */,
-				65A2B7061721CEBA00404340 /* RESOAppDelegate.h */,
-				65A2B7071721CEBA00404340 /* RESOAppDelegate.mm */,
+				65FE9ED7172F043E00E8E1EF /* support */,
+				65A2B7061721CEBA00404340 /* ResoAppDelegate.h */,
+				65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */,
 				65A2B7081721CEBA00404340 /* ResoTypes.h */,
 				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
 				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
-				65A2B70B1721CEBA00404340 /* RippleModel.h */,
-				65A2B70C1721CEBA00404340 /* RippleModel.mm */,
+				65FE9ED9172F08F800E8E1EF /* visualizer */,
 				65D4092F172DB09B00026905 /* ResoSlider.h */,
 				65D40930172DB09B00026905 /* ResoSlider.mm */,
 				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
 				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
 				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
 				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
+				65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */,
+				65FE9EDB172F097300E8E1EF /* ResoDataViewController.m */,
 			);
 			path = reso_sandbox;
 			sourceTree = "<group>";
@@ -265,18 +276,16 @@
 			name = resources;
 			sourceTree = "<group>";
 		};
-		65FE9ED7172F043E00E8E1EF /* supporting */ = {
+		65FE9ED7172F043E00E8E1EF /* support */ = {
 			isa = PBXGroup;
 			children = (
 				65EADA0A1703F784007CB200 /* Default-568h@2x.png */,
-				652C3A941721D35100D585D0 /* Shader.fsh */,
-				652C3A951721D35100D585D0 /* Shader.vsh */,
 				65A2B6F81721CEBA00404340 /* InfoPlist.strings */,
 				65A2B6FC1721CEBA00404340 /* main.m */,
 				65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */,
 				65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */,
 			);
-			name = supporting;
+			name = support;
 			sourceTree = "<group>";
 		};
 		65FE9ED8172F049A00E8E1EF /* sound_engine */ = {
@@ -294,6 +303,17 @@
 				65FE9ECC172EFC6B00E8E1EF /* ITone.h */,
 			);
 			name = sound_engine;
+			sourceTree = "<group>";
+		};
+		65FE9ED9172F08F800E8E1EF /* visualizer */ = {
+			isa = PBXGroup;
+			children = (
+				652C3A951721D35100D585D0 /* Shader.vsh */,
+				652C3A941721D35100D585D0 /* Shader.fsh */,
+				65A2B70B1721CEBA00404340 /* RippleModel.h */,
+				65A2B70C1721CEBA00404340 /* RippleModel.mm */,
+			);
+			name = visualizer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65A2B71C1721CEBA00404340 /* main.m in Sources */,
-				65A2B7251721CEBA00404340 /* RESOAppDelegate.mm in Sources */,
+				65A2B7251721CEBA00404340 /* ResoAppDelegate.mm in Sources */,
 				65A2B7261721CEBA00404340 /* ResoUiViewController.mm in Sources */,
 				65A2B7271721CEBA00404340 /* RippleModel.mm in Sources */,
 				65D40931172DB09B00026905 /* ResoSlider.mm in Sources */,
@@ -405,6 +425,8 @@
 				65FE9ECE172EFC6B00E8E1EF /* FMODSound.mm in Sources */,
 				65FE9ECF172EFC6B00E8E1EF /* FMODSoundEngine.mm in Sources */,
 				65FE9ED0172EFC6B00E8E1EF /* FMODTone.mm in Sources */,
+				65FE9EDC172F097300E8E1EF /* ResoDataViewController.m in Sources */,
+				65FE9F0F172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +570,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				65FE9F0E172F0D6E00E8E1EF /* reso_sandbox.xcdatamodel */,
+			);
+			currentVersion = 65FE9F0E172F0D6E00E8E1EF /* reso_sandbox.xcdatamodel */;
+			path = reso_sandbox.xcdatamodeld;
+			sourceTree = SOURCE_ROOT;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 651002BB15F2E3BA00B38890 /* Project object */;
 }

@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RESOAppDelegate.h"
+#import "ResoAppDelegate.h"
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([RESOAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([ResoAppDelegate class]));
     }
 }

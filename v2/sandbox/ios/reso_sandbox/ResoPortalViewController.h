@@ -11,4 +11,5 @@
 @interface ResoPortalViewController : UIViewController
   @property (nonatomic, retain) UIButton * uiButton;
   @property (nonatomic, retain) UIButton * soundButton;
+  @property (nonatomic, retain) UIButton * dataButton;
 @end

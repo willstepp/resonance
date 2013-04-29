@@ -11,13 +11,14 @@
 #import "ResoPortalViewController.h"
 #import "ResoUiViewController.h"
 #import "ResoSoundViewController.h"
+#import "ResoDataViewController.h"
 #import "ResoTypes.h"
 
 @interface ResoPortalViewController ()
 @end
 
 @implementation ResoPortalViewController
-@synthesize uiButton, soundButton;
+@synthesize uiButton, soundButton, dataButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,6 +51,19 @@
       soundButton.layer.cornerRadius = 4.0f;
       soundButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:soundButton];
+      
+      //data button
+      dataButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [dataButton setTitle:@"Data" forState:UIControlStateNormal];
+      [dataButton addTarget:self action:@selector(showData:) forControlEvents:UIControlEventTouchUpInside];
+      [dataButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [dataButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      dataButton.layer.borderColor = [UIColor blackColor].CGColor;
+      dataButton.layer.borderWidth = 0.0f;
+      dataButton.layer.cornerRadius = 4.0f;
+      dataButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:dataButton];
     }
     return self;
 }
@@ -70,6 +84,15 @@
   ResoUiViewController * ruvc = [[ResoUiViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:ruvc animated:YES];
+}
+
+-(void)showData:(id)sender
+{
+  NSLog(@"showData()");
+  
+  ResoDataViewController * rdvc = [[ResoDataViewController alloc] initWithNibName:nil bundle:nil];
+  //push it onto the 'navigation stack'
+  [self.navigationController pushViewController:rdvc animated:YES];
 }
 
 - (void)viewDidLoad
