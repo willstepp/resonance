@@ -10,6 +10,9 @@
 #import "ResoDataViewController.h"
 #import "ResoAppDelegate.h"
 
+#define bgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+#define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
+
 @interface ResoDataViewController ()
 @end
 
@@ -23,9 +26,29 @@
     if (self) {
       
       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-      NSURL * url = [ad applicationDocumentsDirectory];
-      NSLog(@"%s", [[url absoluteString] UTF8String]);
+      NSURL * appUrl = [ad applicationDocumentsDirectory];
+      NSURL * cacheUrl = [ad applicationCachesDirectory];
+      NSLog(@"%s", [[appUrl absoluteString] UTF8String]);
+      NSLog(@"%s", [[cacheUrl absoluteString] UTF8String]);
       
+      //get list of sounds on background thread
+      dispatch_async(bgQueue, ^{
+        NSData * data = [NSData dataWithContentsOfURL:
+                        soundsUrl];
+        
+        //parse into json array
+        //iterate through list
+        //create new managed object context, retrieve whether sound already exists
+        //if not
+          //create directory for sound files
+            //check to see if directory for current sound exists
+          //download preview and thumbnail, here in a separate thread
+          //add sound model, on main thread
+          [self performSelectorOnMainThread:@selector(fetchedData:)
+                               withObject:data waitUntilDone:YES];
+      });
+      
+      /*
       NSManagedObjectContext * context = [ad managedObjectContext];
       NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
       NSEntityDescription *entity = [NSEntityDescription
@@ -38,6 +61,7 @@
         NSLog(@"Description: %@", [info valueForKey:@"desc"]);
         NSLog(@"Length: %@", [info valueForKey:@"length"]);
       }
+       */
       
       [self.view setBackgroundColor:[UIColor brownColor]];
       
@@ -67,6 +91,20 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)fetchedData:(NSData *)responseData {
+  //parse out the json data
+  NSError * error;
+  NSArray * sounds = [NSJSONSerialization
+                        JSONObjectWithData:responseData //1
+                        options:kNilOptions
+                        error:&error];
+  
+  NSDictionary * sound = [sounds objectAtIndex:0];
+  
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  [ad addSoundFromData:sound];
 }
 
 -(void)goBack:(id)sender

@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "ResoAppDelegate.h"
 #import "ResoPortalViewController.h"
-#import <QuartzCore/QuartzCore.h>
-
+#import "ResoTypes.h"
 
 @implementation ResoAppDelegate
 
@@ -33,20 +33,12 @@
   
   [self.window makeKeyAndVisible];
   
+  [self ensureResonanceAppDirectoryExists];
+  [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
+  [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"mixes"]];
   
-  //core data test
-  NSManagedObjectContext * context = [self managedObjectContext];
-  NSManagedObject * failedBankInfo = [NSEntityDescription
-                                     insertNewObjectForEntityForName:@"Sound"
-                                     inManagedObjectContext:context];
-  [failedBankInfo setValue:@"Streams in the Forest" forKey:@"name"];
-  [failedBankInfo setValue:@"Deep in the forest a creek trickles over the rocks and fallen limbs. The birds too add their peaceful, joyful music." forKey:@"desc"];
-  [failedBankInfo setValue:[NSNumber numberWithInt:300] forKey:@"length"];
- 
-  NSError * error;
-  if (![context save:&error]) {
-    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-  }
+  //core data, clean out any existing sounds
+  [self clearSounds];
   
   return YES;
 }
@@ -131,7 +123,7 @@
     return _persistentStoreCoordinator;
   }
   
-  NSURL * storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"reso_sandbox.sqlite"];
+  NSURL * storeURL = [[self resonanceAppDirectory] URLByAppendingPathComponent:@"reso_sandbox.sqlite"];
   
   NSError * error = nil;
   _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -166,12 +158,126 @@
   return _persistentStoreCoordinator;
 }
 
-#pragma mark - Application's Documents directory
+#pragma mark - Application directories
+
+-(void)ensureResonanceAppDirectoryExists
+{
+  NSURL * rad = [self resonanceAppDirectory];
+  if (![[NSFileManager defaultManager] fileExistsAtPath:[rad path]]) {
+    BOOL success = [self ensureDirectoryExists:rad];
+    NSLog(@"Resonance App Directory Created: %i", success);
+    if (success) {
+      success = [self addSkipBackupAttributeToItemAtURL:rad];
+      NSLog(@"Add Skip Backup Attribute: %i", success);
+    }
+  }
+}
+
+-(BOOL)ensureDirectoryExists:(NSURL*)path
+{
+  return [[NSFileManager defaultManager] createDirectoryAtURL:path withIntermediateDirectories:YES attributes:nil error:nil];
+}
+
+-(NSURL*)resonanceAppDirectory
+{
+  NSURL * url = [[self applicationCachesDirectory] URLByAppendingPathComponent:@"resonance"];
+  return url;
+}
+
+-(NSURL*)resonanceAppSubDirectory:(NSString*)subdir
+{
+  NSURL * url = [[self resonanceAppDirectory] URLByAppendingPathComponent:subdir];
+  return url;
+}
 
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory
 {
   return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+// Returns the URL to the application's Caches directory.
+- (NSURL *)applicationCachesDirectory
+{
+  return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (void)clearSounds
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSFetchRequest * allSounds = [[NSFetchRequest alloc] init];
+  [allSounds setEntity:[NSEntityDescription entityForName:@"Sound" inManagedObjectContext:context]];
+  [allSounds setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+  
+  NSError * error = nil;
+  NSArray * sounds = [context executeFetchRequest:allSounds error:&error];
+
+  //error handling goes here
+  for (NSManagedObject * sound in sounds) {
+    [context deleteObject:sound];
+    NSLog(@"Deleted Sound");
+  }
+  NSError * saveError = nil;
+  [context save:&saveError];
+  //more error handling here
+}
+
+- (void)addSoundFromData:(NSDictionary*)d
+{
+  NSString * name = [d objectForKey:@"name"];
+  NSString * desc = [d objectForKey:@"description"];
+  NSString * uuid = [d objectForKey:@"uuid"];
+  
+  if (![self soundExists:uuid]) {
+    NSLog(@"Sound does not yet exist!");
+    
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSManagedObject * sound = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Sound"
+                               inManagedObjectContext:context];
+    [sound setValue:name forKey:@"name"];
+    [sound setValue:desc forKey:@"desc"];
+    [sound setValue:uuid forKey:@"uuid"];
+    [sound setValue:[NSNumber numberWithInt:(int)Cloud] forKey:@"state"];
+    
+    NSError * error;
+    if (![context save:&error]) {
+      NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+  } else {
+    NSLog(@"Sound exists!");
+  }
+}
+
+-(BOOL)soundExists:(NSString*)uuid
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSEntityDescription * ed = [NSEntityDescription
+                                            entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  NSLog(@"%i",[array count]);
+  return [array count] > 0;
+}
+
+- (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
+{
+  assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
+  
+  NSError *error = nil;
+  BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                forKey: NSURLIsExcludedFromBackupKey error: &error];
+  if(!success){
+    NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
+  }
+  return success;
 }
 
 @end

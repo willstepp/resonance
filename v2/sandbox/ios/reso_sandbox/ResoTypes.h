@@ -9,6 +9,12 @@
 #ifndef gl_sandbox_ResoTypes_h
 #define gl_sandbox_ResoTypes_h
 
+typedef enum {
+  Cloud,
+  Queued,
+  Downloading,
+  Device
+} SoundState;
 
 typedef enum {
   PlayerMain,

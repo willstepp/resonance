@@ -18,4 +18,8 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+- (NSURL *)applicationCachesDirectory;
+
+- (void)clearSounds;
+- (void)addSoundFromData:(NSDictionary*)d;
 @end
