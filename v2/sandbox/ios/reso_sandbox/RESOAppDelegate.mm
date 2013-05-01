@@ -37,7 +37,7 @@
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"mixes"]];
   
-  //core data, clean out any existing sounds
+  //clean out any existing sounds
   [self clearSounds];
   
   return YES;
@@ -214,6 +214,9 @@
 
   //error handling goes here
   for (NSManagedObject * sound in sounds) {
+    NSString * uuid = [sound valueForKey:@"uuid"];
+    [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path] error:nil];
+    NSLog(@"%@ deleted", uuid);
     [context deleteObject:sound];
     NSLog(@"Deleted Sound");
   }
@@ -228,7 +231,7 @@
   NSString * desc = [d objectForKey:@"description"];
   NSString * uuid = [d objectForKey:@"uuid"];
   
-  if (![self soundExists:uuid]) {
+  if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
     NSLog(@"Sound does not yet exist!");
     
     NSManagedObjectContext * context = [self managedObjectContext];
@@ -249,9 +252,8 @@
   }
 }
 
--(BOOL)soundExists:(NSString*)uuid
+-(BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context
 {
-  NSManagedObjectContext * context = [self managedObjectContext];
   NSEntityDescription * ed = [NSEntityDescription
                                             entityForName:@"Sound" inManagedObjectContext:context];
   NSFetchRequest * request = [[NSFetchRequest alloc] init];
@@ -265,6 +267,32 @@
   
   NSLog(@"%i",[array count]);
   return [array count] > 0;
+}
+
+-(NSArray*)soundsWithState:(int)s
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i)", s];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  NSMutableArray * sounds  = [[NSMutableArray alloc] init];
+  for (NSManagedObject * sound in array) {
+    NSMutableDictionary * s = [[NSMutableDictionary alloc] init];
+    [s setValue:[sound valueForKey:@"name"] forKey:@"name"];
+    [s setValue:[sound valueForKey:@"desc"] forKey:@"desc"];
+    [s setValue:[sound valueForKey:@"uuid"] forKey:@"uuid"];
+    [sounds addObject:s];
+  }
+  return sounds;
 }
 
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL

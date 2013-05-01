@@ -22,4 +22,9 @@
 
 - (void)clearSounds;
 - (void)addSoundFromData:(NSDictionary*)d;
+- (BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
+- (NSArray*)soundsWithState:(int)s;
+
+- (BOOL)ensureDirectoryExists:(NSURL*)path;
+- (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;
 @end

@@ -9,11 +9,16 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoDataViewController.h"
 #import "ResoAppDelegate.h"
+#import "ResoTypes.h"
 
 #define bgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
 @interface ResoDataViewController ()
+{
+  UITableView * soundsView;
+  NSMutableArray * soundsData;
+}
 @end
 
 @implementation ResoDataViewController
@@ -26,42 +31,68 @@
     if (self) {
       
       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-      NSURL * appUrl = [ad applicationDocumentsDirectory];
-      NSURL * cacheUrl = [ad applicationCachesDirectory];
-      NSLog(@"%s", [[appUrl absoluteString] UTF8String]);
-      NSLog(@"%s", [[cacheUrl absoluteString] UTF8String]);
+      
+      soundsData = [[NSMutableArray alloc] init];
+      [self loadAvailableSoundsFromDevice];
+      
+      //set up table view
+      soundsView = [[UITableView alloc] initWithFrame:CGRectMake(10, 60, self.view.bounds.size.width - 20, self.view.bounds.size.height - 70) style:UITableViewStylePlain];
+      
+      soundsView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+      soundsView.delegate = self;
+      soundsView.dataSource = self;
+      [soundsView reloadData];
+      
+      [self.view addSubview:soundsView];
+      
+      //initiate background queue to retreive list of sounds
+      dispatch_queue_t thumbnail_queue;
+      thumbnail_queue = dispatch_queue_create("com.resonance.thumbnail_fetch", NULL);
       
       //get list of sounds on background thread
       dispatch_async(bgQueue, ^{
-        NSData * data = [NSData dataWithContentsOfURL:
-                        soundsUrl];
         
-        //parse into json array
-        //iterate through list
-        //create new managed object context, retrieve whether sound already exists
-        //if not
-          //create directory for sound files
-            //check to see if directory for current sound exists
-          //download preview and thumbnail, here in a separate thread
-          //add sound model, on main thread
-          [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES];
+        //init
+        NSManagedObjectContext * context;
+        NSPersistentStoreCoordinator * coordinator = [ad persistentStoreCoordinator];
+        if (coordinator != nil) {
+          context = [[NSManagedObjectContext alloc] init];
+          [context setPersistentStoreCoordinator:coordinator];
+        }
+
+        //1) fetch sounds from server
+        NSData * data = [NSData dataWithContentsOfURL:soundsUrl];
+        
+        //2) parse into json array
+        NSArray * sounds = [NSJSONSerialization
+                            JSONObjectWithData:data
+                            options:kNilOptions
+                            error:nil];
+        
+        //3) iterate sounds and create new record if needed
+        for(NSDictionary * sound in sounds) {
+          NSString * uuid = [sound objectForKey:@"uuid"];
+          if(![ad soundExists:uuid withContext:context]) {
+            
+            //create sound directory under resonance/sounds
+            [ad ensureDirectoryExists:[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
+            
+            //save sound record on main thread
+            [self performSelectorOnMainThread:@selector(saveSound:)
+                                   withObject:sound waitUntilDone:YES];
+            
+            //download preview and thumbnail, in a separate thread
+            dispatch_async(thumbnail_queue, ^{
+              NSString * url = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.thumb", uuid, uuid];
+              NSData * thumb = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+              NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path];
+              [thumb writeToFile:file_path atomically:NO];
+              [self performSelectorOnMainThread:@selector(addSoundToTable:)
+                                     withObject:sound waitUntilDone:YES];
+            });
+          }
+        }
       });
-      
-      /*
-      NSManagedObjectContext * context = [ad managedObjectContext];
-      NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-      NSEntityDescription *entity = [NSEntityDescription
-                                     entityForName:@"Sound" inManagedObjectContext:context];
-      [fetchRequest setEntity:entity];
-      NSError * error;
-      NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-      for (NSManagedObject *info in fetchedObjects) {
-        NSLog(@"Name: %@", [info valueForKey:@"name"]);
-        NSLog(@"Description: %@", [info valueForKey:@"desc"]);
-        NSLog(@"Length: %@", [info valueForKey:@"length"]);
-      }
-       */
       
       [self.view setBackgroundColor:[UIColor brownColor]];
       
@@ -84,33 +115,62 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (void)fetchedData:(NSData *)responseData {
-  //parse out the json data
-  NSError * error;
-  NSArray * sounds = [NSJSONSerialization
-                        JSONObjectWithData:responseData //1
-                        options:kNilOptions
-                        error:&error];
-  
-  NSDictionary * sound = [sounds objectAtIndex:0];
-  
+- (void)saveSound:(NSDictionary*)sound {
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   [ad addSoundFromData:sound];
 }
 
+- (void)addSoundToTable:(NSDictionary*)sound
+{
+  [soundsData addObject:sound];
+  [soundsView reloadData];
+}
+
 -(void)goBack:(id)sender
 {
-  // goes back to the last view controller in the stack
   [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)loadAvailableSoundsFromDevice
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  NSArray * sounds = [ad soundsWithState:Cloud];
+  [soundsData addObjectsFromArray:sounds];
+}
+
+#pragma mark - TableView DataSource Implementation
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return soundsData.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  NSDictionary * sound = [soundsData objectAtIndex:indexPath.row];
+  
+  static NSString * cellIdentifier = @"";
+  NSString * uuid = [sound objectForKey:@"uuid"];
+  cellIdentifier = uuid;
+  
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  if (cell == nil)
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+  
+  cell.backgroundView = [[UIView alloc] init];
+  [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
+  //[[[cell contentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+  
+  cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path]];
+  
+  return cell;
 }
 
 @end

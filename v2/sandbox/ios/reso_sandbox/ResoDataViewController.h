@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ResoDataViewController : UIViewController
+@interface ResoDataViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
   @property (nonatomic, retain) UIButton * backButton;
   @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end
