@@ -1,5 +1,3 @@
-#import <AVFoundation/AVFoundation.h>
-
 #import "ResoSoundViewController.h"
 #import "ResoAppDelegate.h"
 #import "FMODSoundEngine.h"
@@ -46,10 +44,6 @@
   [volumeSlider setMinimumValue:0.0f];
   [volumeSlider setMaximumValue:100.0f];
   [volumeSlider setValue:50.0f];
-  
-  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-  [[AVAudioSession sharedInstance] setActive: YES error: nil];
-  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 }
 
 - (void)viewDidUnload

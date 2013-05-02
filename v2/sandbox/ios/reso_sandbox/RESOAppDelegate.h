@@ -28,9 +28,11 @@
 - (void)addSoundFromData:(NSDictionary*)d;
 - (BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
 - (NSArray*)soundsWithState:(int)s;
+- (int)getStateForSound:(NSString*)uuid;
+- (void)setStateforSound:(NSString*)uuid newState:(int)s;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;
 
--(void)playPreview:(NSString*)filePath;
+-(NSString*)iosVersionForDownload;
 @end

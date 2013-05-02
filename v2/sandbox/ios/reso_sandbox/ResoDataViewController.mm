@@ -8,12 +8,15 @@
 
 
 #import <QuartzCore/QuartzCore.h>
+#import "SSZipArchive.h"
 
 #import "ResoDataViewController.h"
 #import "ResoAppDelegate.h"
 #import "ResoTypes.h"
 
-#define bgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+#import "FMODSoundEngine.h"
+#import "ResoFileTransfer.h"
+
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
 @interface ResoDataViewController ()
@@ -21,8 +24,11 @@
   UITableView * soundsView;
   NSMutableArray * soundsData;
   
+  dispatch_queue_t global_queue;
   dispatch_queue_t thumbnail_queue;
   dispatch_queue_t preview_queue;
+  
+  ResoFileTransfer * fileTransfer;
 }
 @end
 
@@ -35,6 +41,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
       
+      fileTransfer = nil;
       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
       
       soundsData = [[NSMutableArray alloc] init];
@@ -49,13 +56,15 @@
       
       [self.view addSubview:soundsView];
       
+      //initate background queue for global tasks
+      global_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
       //initiate background queue to retreive thumbnails
       thumbnail_queue = dispatch_queue_create("com.resonance.thumbnail_fetch", NULL);
       //initiate background queue to retreive preview clips
       preview_queue = dispatch_queue_create("com.resonance.preview_fetch", NULL);
       
       //get list of sounds on background thread
-      dispatch_async(bgQueue, ^{
+      dispatch_async(global_queue, ^{
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         //init
         NSManagedObjectContext * context;
@@ -84,7 +93,7 @@
             
             //save sound record on main thread
             [self performSelectorOnMainThread:@selector(saveSound:)
-                                   withObject:sound waitUntilDone:YES];
+                                   withObject:sound waitUntilDone:NO];
             
             //download preview and thumbnail, in a separate thread
             dispatch_async(thumbnail_queue, ^{
@@ -94,7 +103,7 @@
               NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path];
               [thumb writeToFile:file_path atomically:NO];
               [self performSelectorOnMainThread:@selector(addSoundToTable:)
-                                     withObject:sound waitUntilDone:YES];
+                                     withObject:sound waitUntilDone:NO];
               [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             });
           }
@@ -206,7 +215,7 @@
         NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
         [preview writeToFile:file_path atomically:NO];
         [self performSelectorOnMainThread:@selector(playPreview:)
-                               withObject:file_path waitUntilDone:YES];
+                               withObject:file_path waitUntilDone:NO];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
       });
     }
@@ -215,15 +224,78 @@
 
 -(void)playPreview:(NSString*)filePath
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  [ad playPreview:filePath];
+  id<ISoundEngine> player = [FMODSoundEngine instance];
+  id<ISound> sound = [player getSoundForId:Preview];
+  [sound load:filePath looped:false];
+  [sound play];
   
   NSLog(@"playing %s", [filePath UTF8String]);
 }
 
 -(void)downloadSound:(id)sender
 {
-  NSLog(@"downloadSound()");
+  //get currently selected row index
+  NSIndexPath * path = [soundsView indexPathForSelectedRow];
+  int row = path ? [path row] : -1;
+  NSLog(@"selected row: %i", row);
+  
+  if (row >= 0) {
+    
+    //get uuid for currently selected row
+    NSDictionary * sound = [soundsData objectAtIndex:[path row]];
+    NSString * uuid = [sound objectForKey:@"uuid"];
+    NSLog(@"download uuid: %s", [uuid UTF8String]);
+    
+    ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+    SoundState ss = (SoundState)[ad getStateForSound:uuid];
+    if (ss != Device) {
+      
+      //sound is not downloaded to device, so begin download process
+      NSLog(@"Download started: %s", [uuid UTF8String]);
+      
+      //1) set sound state to downloading
+      [ad setStateforSound:uuid newState:Downloading];
+      
+      fileTransfer = nil;
+      NSString * version = [ad iosVersionForDownload];
+      fileTransfer = [[ResoFileTransfer alloc] initWithUrl:[NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version]];
+      fileTransfer.uuid = uuid;
+      [fileTransfer start];
+      
+      /*
+      //2) download file on main background queue
+      dispatch_async(global_queue, ^{
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        NSString * version = [ad iosVersionForDownload];
+        NSString * url = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version];
+        NSData * soundFile = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
+        [soundFile writeToFile:file_path atomically:NO];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self performSelectorOnMainThread:@selector(downloadComplete:)
+                               withObject:uuid waitUntilDone:NO];
+      });
+       */
+      
+    } else {
+      NSLog(@"Sound is already downloaded to device");
+    }
+  }
+
+}
+
+-(void)downloadComplete:(NSString*)uuid
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  [ad setStateforSound:uuid newState:Device];
+  
+  NSString * installFilePath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
+  NSString * destinationPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path];
+  [SSZipArchive unzipFileAtPath:installFilePath toDestination:destinationPath];
+  
+  [[NSFileManager defaultManager] removeItemAtPath:installFilePath error:nil];
+  
+  NSLog(@"Download complete: %s", [uuid UTF8String]);
 }
 
 #pragma mark - TableView DataSource Implementation
@@ -245,7 +317,6 @@
   
   cell.backgroundView = [[UIView alloc] init];
   [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
-  //[[[cell contentView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
   
   cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];

@@ -8,12 +8,12 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <sys/utsname.h>
 
 #import "ResoAppDelegate.h"
 #import "ResoPortalViewController.h"
 #import "ResoTypes.h"
-
-#import "FMODSoundEngine.h"
+#import "ResoFileTransfer.h"
 
 @implementation ResoAppDelegate
 
@@ -303,6 +303,51 @@
   return sounds;
 }
 
+- (int)getStateForSound:(NSString*)uuid
+{
+  int state = -1;
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * sound = [array objectAtIndex:0];
+    state = [[sound valueForKey:@"state"] intValue];
+  }
+  return state;
+}
+
+- (void)setStateforSound:(NSString*)uuid newState:(int)s
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSEntityDescription * ed = [NSEntityDescription entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * sound = [array objectAtIndex:0];
+    [sound setValue:[NSNumber numberWithInt:s] forKey:@"state"];
+    NSError * error;
+    if (![context save:&error]) {
+      NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+  }
+}
+
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
   assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
@@ -316,14 +361,59 @@
   return success;
 }
 
--(void)playPreview:(NSString*)filePath
+NSString * deviceName()
 {
-  id<ISoundEngine> player = [FMODSoundEngine instance];
-  id<ISound> sound = [player getSoundForId:Preview];
-  [sound load:filePath looped:false];
-  [sound play];
+  struct utsname systemInfo;
+  uname(&systemInfo);
   
-  NSLog(@"playing %s", [filePath UTF8String]);
+  return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+}
+
+/*
+ @"i386"      on the simulator
+ @"iPod1,1"   on iPod Touch
+ @"iPod2,1"   on iPod Touch Second Generation
+ @"iPod3,1"   on iPod Touch Third Generation
+ @"iPod4,1"   on iPod Touch Fourth Generation
+ @"iPod5,1"   on iPod Touch Fifth Generation
+ @"iPhone1,1" on iPhone
+ @"iPhone1,2" on iPhone 3G
+ @"iPhone2,1" on iPhone 3GS
+ @"iPad1,1"   on iPad
+ @"iPad2,1"   on iPad 2
+ @"iPad3,1"   on 3rd Generation iPad
+ @"iPhone3,1" on iPhone 4
+ @"iPhone4,1" on iPhone 4S
+ @"iPhone5,1" on iPhone 5 (model A1428, AT&T/Canada)
+ @"iPhone5,2" on iPhone 5 (model A1429, everything else)
+ @"iPad3,4" on 4th Generation iPad
+ @"iPad2,5" on iPad Mini
+ */
+
+-(NSString*)iosVersionForDownload
+{
+  NSString * version;
+  NSString * deviceVersion = deviceName();
+  NSLog(@"deviceVersion: %s", [deviceVersion UTF8String]);
+  
+  if(([deviceVersion rangeOfString:@"iPhone5"].location != NSNotFound) ||
+     ([deviceVersion rangeOfString:@"iPod5"].location != NSNotFound) ) {
+    version = @"iphone5";
+  } else if (([deviceVersion rangeOfString:@"iPhone4,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone3,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPod4"].location != NSNotFound)) {
+    version = @"iphone4";
+  } else if (([deviceVersion rangeOfString:@"iPhone1,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone1,2"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone2,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPod"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"86"].location != NSNotFound)) {
+    version = @"iphone";
+  } else {
+    version = @"";
+  }
+  
+  return version;
 }
 
 @end
