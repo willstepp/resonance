@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'date'
 require 'aws/s3'
 require 'pony'
@@ -62,12 +65,12 @@ module ResoBackup
   def self.remove_old_backups(num_to_keep)
     AWS::S3::Base.establish_connection!(:access_key_id => Settings.S3.public_key, :secret_access_key => Settings.S3.private_key)
     reso_bucket = AWS::S3::Bucket.find(Settings.S3.bucket)
-    backups = reso_bucket.objects("db_backups/resonance*")
+    backups = reso_bucket.objects(:prefix => 'db_backups/resonance')
     if backups.count > num_to_keep
       bu = []
       backups.each do |b|
         last_modified = b.about["last-modified"].nil? ? nil : b.about["last-modified"]
-        if last_modified
+        if last_modified and b.key.include? 'dump.sql.gz'
           time = DateTime.parse(last_modified)
           bu << { :time => time, :backup => b }
         end
@@ -87,3 +90,5 @@ module ResoBackup
     AWS::S3::S3Object.store(file_name, File.open(file_path), bucket)
   end
 end
+
+ResoBackup.output_bucket_files
