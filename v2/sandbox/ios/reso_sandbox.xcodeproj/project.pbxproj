@@ -51,6 +51,7 @@
 		65A2B7331721CEBA00404340 /* waterfall@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 65A2B7181721CEBA00404340 /* waterfall@2.png */; };
 		65B111651728F00400E81BDF /* reso_space_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B111631728F00400E81BDF /* reso_space_blur.jpg */; };
 		65B111661728F00400E81BDF /* reso_space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B111641728F00400E81BDF /* reso_space.jpg */; };
+		65C153031731E3F90082897E /* ResoSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C153021731E3F80082897E /* ResoSoundManager.m */; };
 		65D40931172DB09B00026905 /* ResoSlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65D40930172DB09B00026905 /* ResoSlider.mm */; };
 		65EADA0B1703F784007CB200 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EADA0A1703F784007CB200 /* Default-568h@2x.png */; };
 		65FE9EB3172EE35200E8E1EF /* ResoPortalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */; };
@@ -122,6 +123,8 @@
 		65A2B7181721CEBA00404340 /* waterfall@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterfall@2.png"; sourceTree = "<group>"; };
 		65B111631728F00400E81BDF /* reso_space_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reso_space_blur.jpg; sourceTree = "<group>"; };
 		65B111641728F00400E81BDF /* reso_space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reso_space.jpg; sourceTree = "<group>"; };
+		65C153011731E3F80082897E /* ResoSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSoundManager.h; sourceTree = "<group>"; };
+		65C153021731E3F80082897E /* ResoSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoSoundManager.m; sourceTree = "<group>"; };
 		65D4092F172DB09B00026905 /* ResoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSlider.h; sourceTree = "<group>"; };
 		65D40930172DB09B00026905 /* ResoSlider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSlider.mm; sourceTree = "<group>"; };
 		65EADA0A1703F784007CB200 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -233,6 +236,8 @@
 				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
 				65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */,
 				65FE9EDB172F097300E8E1EF /* ResoDataViewController.m */,
+				65C153011731E3F80082897E /* ResoSoundManager.h */,
+				65C153021731E3F80082897E /* ResoSoundManager.m */,
 			);
 			path = reso_sandbox;
 			sourceTree = "<group>";
@@ -427,6 +432,7 @@
 				65FE9ED0172EFC6B00E8E1EF /* FMODTone.mm in Sources */,
 				65FE9EDC172F097300E8E1EF /* ResoDataViewController.m in Sources */,
 				65FE9F0F172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld in Sources */,
+				65C153031731E3F90082897E /* ResoSoundManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

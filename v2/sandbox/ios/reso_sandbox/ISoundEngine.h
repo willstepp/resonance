@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "RESOTypes.h"
-
 @protocol ISound;
 @protocol ITone;
 

@@ -138,12 +138,12 @@ typedef enum {
 } ToneProperty;
 
 typedef enum {
+  Preview,
   One,
   Two,
   Three,
   Four,
-  Five,
-  ModuleCount
+  Five
 } Module;
 
 #endif

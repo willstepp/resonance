@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ISound.h"
+#import "ITone.h"
+#import "ISoundEngine.h"
+
 @interface ResoAppDelegate : UIResponder <UIApplicationDelegate>
 @property (strong, nonatomic) UIWindow *window;
 
@@ -27,4 +31,6 @@
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;
+
+-(void)playPreview:(NSString*)filePath;
 @end

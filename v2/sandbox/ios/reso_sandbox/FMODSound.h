@@ -16,6 +16,8 @@
 -(id)initWithFMODSystem:(FMOD::System*)s;
 
 -(void)load:(NSString*)newUrl;
+-(void)load:(NSString*)newUrl looped:(BOOL)l;
+
 -(void)unload;
 
 -(NSString*)url;

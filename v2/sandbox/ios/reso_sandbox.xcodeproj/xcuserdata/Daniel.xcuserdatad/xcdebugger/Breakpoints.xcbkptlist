@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoDataViewController.m"
-         timestampString = "389121800.434868"
+         timestampString = "389147463.3155"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
          landmarkName = "-loadAvailableSoundsFromDevice"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,12 +151,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoAppDelegate.mm"
-         timestampString = "389121959.239574"
+         timestampString = "389146806.346618"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "281"
-         endingLineNumber = "281"
+         startingLineNumber = "289"
+         endingLineNumber = "289"
          landmarkName = "-soundsWithState:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoDataViewController.m"
+         timestampString = "389147463.3155"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "186"
+         endingLineNumber = "186"
+         landmarkName = "-previewSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoAppDelegate.mm"
+         timestampString = "389146806.346618"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "321"
+         endingLineNumber = "321"
+         landmarkName = "-playPreview:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

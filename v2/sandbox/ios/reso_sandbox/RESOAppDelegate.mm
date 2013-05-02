@@ -6,10 +6,14 @@
 //  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import <QuartzCore/QuartzCore.h>
+
 #import "ResoAppDelegate.h"
 #import "ResoPortalViewController.h"
 #import "ResoTypes.h"
+
+#import "FMODSoundEngine.h"
 
 @implementation ResoAppDelegate
 
@@ -39,6 +43,10 @@
   
   //clean out any existing sounds
   [self clearSounds];
+  
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+  [[AVAudioSession sharedInstance] setActive: YES error: nil];
+  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
   
   return YES;
 }
@@ -306,6 +314,16 @@
     NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
   }
   return success;
+}
+
+-(void)playPreview:(NSString*)filePath
+{
+  id<ISoundEngine> player = [FMODSoundEngine instance];
+  id<ISound> sound = [player getSoundForId:Preview];
+  [sound load:filePath looped:false];
+  [sound play];
+  
+  NSLog(@"playing %s", [filePath UTF8String]);
 }
 
 @end

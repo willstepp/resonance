@@ -350,19 +350,26 @@
 
 -(void)load:(NSString*)newUrl
 {
-    [self ensureSoundReleased];
-    
-    FMOD_RESULT result = FMOD_OK;
-    char buffer[200] = {0};
+  [self load:newUrl looped:YES];
+}
 
-    [newUrl getCString:buffer maxLength:200 encoding:NSASCIIStringEncoding];
-    result = system->createStream(buffer, FMOD_SOFTWARE | FMOD_LOOP_NORMAL, NULL, &sound);
-    
-    url = newUrl;
-    loaded = true;
-    [self loadEffectMappings];
-    
-    if (listener) [listener load:newUrl];
+-(void)load:(NSString*)newUrl looped:(BOOL)l
+{
+  [self ensureSoundReleased];
+  
+  FMOD_RESULT result = FMOD_OK;
+  char buffer[200] = {0};
+  
+  int loop_type = l ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+  
+  [newUrl getCString:buffer maxLength:200 encoding:NSASCIIStringEncoding];
+  result = system->createStream(buffer, FMOD_SOFTWARE | loop_type, NULL, &sound);
+  
+  url = newUrl;
+  loaded = true;
+  [self loadEffectMappings];
+  
+  if (listener) [listener load:newUrl];
 }
 
 -(void)unload

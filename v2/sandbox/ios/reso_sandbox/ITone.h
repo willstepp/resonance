@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ISoundEngine.h"
+#import "ResoTypes.h"
+
+@protocol ISoundEngine;
 
 @protocol ITone <NSObject>
 

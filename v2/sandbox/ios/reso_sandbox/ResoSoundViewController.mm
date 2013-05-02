@@ -1,9 +1,8 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "ResoSoundViewController.h"
+#import "ResoAppDelegate.h"
 #import "FMODSoundEngine.h"
-#import "ISound.h"
-#import "ITone.h"
 
 #define __PACKED __attribute__((packed))    /* gcc packed */
 

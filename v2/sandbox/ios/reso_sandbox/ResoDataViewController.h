@@ -10,5 +10,8 @@
 
 @interface ResoDataViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
   @property (nonatomic, retain) UIButton * backButton;
+  @property (nonatomic, retain) UIButton * previewButton;
+  @property (nonatomic, retain) UIButton * downloadButton;
+
   @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @end

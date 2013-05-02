@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ISoundEngine.h"
+#import "ResoTypes.h"
+
+@protocol ISoundEngine;
 
 @protocol ISound <NSObject>
 
 -(id)initWithSoundEngine:(id<ISoundEngine>)ise;
 
 -(void)load:(NSString*)newUrl;
+-(void)load:(NSString*)newUrl looped:(BOOL)l;
+
 -(void)unload;
 
 -(NSString*)url;
