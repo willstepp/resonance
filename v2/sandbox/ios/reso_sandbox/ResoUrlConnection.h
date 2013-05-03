@@ -1,5 +1,5 @@
 //
-//  ResoMediaTransferOptions.h
+//  ResoUrlConnection.h
 //  reso_sandbox
 //
 //  Created by Daniel Stepp on 5/3/13.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ResoMediaTransferOptions : NSObject
-
+@interface ResoUrlConnection : NSURLConnection
+@property (nonatomic, readwrite) int tag;
 @end

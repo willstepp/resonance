@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoMediaTransfer.h"
 
-@interface ResoDataViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface ResoDataViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferDelegate>
   @property (nonatomic, retain) UIButton * backButton;
   @property (nonatomic, retain) UIButton * previewButton;
   @property (nonatomic, retain) UIButton * downloadButton;
 
   @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+
+#pragma mark -
+#pragma mark ResoMediaTransfer Delegates
+-(void) transferStarted:(ResoMediaTransfer*)t;
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t;
+-(void) transferFinished:(ResoMediaTransfer*)t;
+-(void) transferError:(ResoMediaTransfer*)t;
 @end

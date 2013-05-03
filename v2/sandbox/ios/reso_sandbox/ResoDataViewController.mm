@@ -15,7 +15,9 @@
 #import "ResoTypes.h"
 
 #import "FMODSoundEngine.h"
+
 #import "ResoMediaTransfer.h"
+#import "ResoMediaTransferItem.h"
 
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
@@ -258,8 +260,26 @@
       
       mediaTransfer = nil;
       NSString * version = [ad iosVersionForDownload];
-      mediaTransfer = [[ResoMediaTransfer alloc] initWithUrl:[NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version]];
+      
+      ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
+      rmti.transferType = Download;
+      NSString * source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%i/%i.iphone", 1, 1];
+      rmti.sourceUrl = source;
+      NSString * dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%i/%i.iphone", 1, 1]] path];
+      rmti.destinationUrl = dest;
+      
+      ResoMediaTransferItem * rmti2 = [[ResoMediaTransferItem alloc] init];
+      rmti2.transferType = Download;
+      source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%i/%i.iphone5", 1, 1];
+      rmti2.sourceUrl = source;
+      dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%i/%i.iphone5", 1, 1]] path];
+      rmti2.destinationUrl = dest;
+      
+      mediaTransfer = [[ResoMediaTransfer alloc] init];
+      [mediaTransfer setDelegate:self];
       mediaTransfer.uuid = uuid;
+      [mediaTransfer addItem:rmti];
+      [mediaTransfer addItem:rmti2];
       [mediaTransfer start];
       
       /*
@@ -323,6 +343,28 @@
   cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path]];
   
   return cell;
+}
+
+#pragma mark -
+#pragma mark ResoMediaTransfer Delegates
+-(void) transferStarted:(ResoMediaTransfer*)t
+{
+  NSLog(@"transferStarted for: (%@)", t.uuid);
+}
+
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t
+{
+  NSLog(@"transferProgressUpdated for: (%@)", t.uuid);
+}
+
+-(void) transferFinished:(ResoMediaTransfer*)t
+{
+  NSLog(@"transferFinished for: (%@)", t.uuid);
+}
+
+-(void) transferError:(ResoMediaTransfer*)t
+{
+  NSLog(@"transferError for: (%@)", t.uuid);
 }
 
 @end

@@ -7,16 +7,34 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResoMediaTransferItem.h"
 
-//this class is meant to be instantiated and set with a uuid.
-//It instantiates an NSUrlConnection with the url and download / upload
-//and publishes events when it has a progress update / error / finished
-//needs to have an associated protocol which publishes upon progress and finished and error
+@class ResoMediaTransfer;
 
-@interface ResoMediaTransfer : NSObject
-  @property (nonatomic,assign) NSString * uuid;
+@protocol ResoMediaTransferDelegate <NSObject>
 
-  - (id)initWithUrl:(NSString*)url;
+-(void) transferStarted:(ResoMediaTransfer*)t;
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t;
+-(void) transferFinished:(ResoMediaTransfer*)t;
+-(void) transferError:(ResoMediaTransfer*)t;
+
+@end
+
+@interface ResoMediaTransfer : NSObject {
+  id delegate;
+}
+  - (id<ResoMediaTransferDelegate>)delegate;
+  - (void)setDelegate:(id<ResoMediaTransferDelegate>)newDelegate;
+
+  @property (nonatomic, readwrite) NSString * uuid;
+
+  @property (readonly) bool transferring;
+  @property (readonly) bool finished;
+  @property (readonly) long long totalByteCount;
+  @property (readonly) long long currentByteCount;
+  @property (readonly) long long totalByteCountReceived;
+
+  - (void)addItem:(ResoMediaTransferItem*)rmti;
   - (void)start;
 
   #pragma mark -
