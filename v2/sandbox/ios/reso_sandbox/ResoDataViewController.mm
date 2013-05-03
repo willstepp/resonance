@@ -18,6 +18,7 @@
 
 #import "ResoMediaTransfer.h"
 #import "ResoMediaTransferItem.h"
+#import "ResoMediaTransferManager.h"
 
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
@@ -276,11 +277,13 @@
       rmti2.destinationUrl = dest;
       
       mediaTransfer = [[ResoMediaTransfer alloc] init];
-      [mediaTransfer setDelegate:self];
+      [mediaTransfer addDelegate:self];
       mediaTransfer.uuid = uuid;
       [mediaTransfer addItem:rmti];
       [mediaTransfer addItem:rmti2];
-      [mediaTransfer start];
+      
+      ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
+      [rmtm enqueueWithMediaTransfer:mediaTransfer forQueue:SoundQueue];
       
       /*
       //2) download file on main background queue
@@ -359,7 +362,7 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  NSLog(@"transferFinished for: (%@)", t.uuid);
+  NSLog(@"ResoDataViewController::transferFinished for: (%@)", t.uuid);
 }
 
 -(void) transferError:(ResoMediaTransfer*)t

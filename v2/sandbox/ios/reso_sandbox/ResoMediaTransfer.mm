@@ -24,14 +24,19 @@
 @implementation ResoMediaTransfer
 @synthesize uuid, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished;
 
-- (id<ResoMediaTransferDelegate>)delegate
+- (NSMutableArray*)delegates
 {
-  return delegate;
+  return delegates;
 }
 
-- (void)setDelegate:(id<ResoMediaTransferDelegate>)newDelegate
+- (void)addDelegate:(id<ResoMediaTransferDelegate>)d
 {
-  delegate = newDelegate;
+  [delegates addObject:d];
+}
+
+- (void)removeDelegate:(id<ResoMediaTransferDelegate>)d
+{
+  [delegates removeObject:d];
 }
 
 - (void)addItem:(ResoMediaTransferItem*)rmti
@@ -64,6 +69,7 @@
   totalByteCountReceived = false;
   totalByteCount = 0;
   currentByteCount = 0;
+  delegates = [[NSMutableArray alloc] init];
   media = [[NSMutableDictionary alloc] init];
   
   return self;
@@ -203,29 +209,37 @@
 
 - (void) notifyStarted
 {
-  if ( [delegate respondsToSelector:@selector(transferStarted:)] ) {
-    [delegate performSelector:@selector(transferStarted:) withObject:self];
+  for(id<ResoMediaTransferDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferStarted:)] ) {
+      [delegate performSelector:@selector(transferStarted:) withObject:self];
+    }
   }
 }
 
 - (void) notifyProgressUpdated
 {
-  if ( [delegate respondsToSelector:@selector(transferProgressUpdated:)] ) {
-    [delegate performSelector:@selector(transferProgressUpdated:) withObject:self];
+  for(id<ResoMediaTransferDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferProgressUpdated:)] ) {
+      [delegate performSelector:@selector(transferProgressUpdated:) withObject:self];
+    }
   }
 }
 
 - (void) notifyError
 {
-  if ( [delegate respondsToSelector:@selector(transferError:)] ) {
-    [delegate performSelector:@selector(transferError:) withObject:self];
+  for(id<ResoMediaTransferDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferError:)] ) {
+      [delegate performSelector:@selector(transferError:) withObject:self];
+    }
   }
 }
 
 - (void) notifyFinished
 {
-  if ( [delegate respondsToSelector:@selector(transferFinished:)] ) {
-    [delegate performSelector:@selector(transferFinished:) withObject:self];
+  for(id<ResoMediaTransferDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferFinished:)] ) {
+      [delegate performSelector:@selector(transferFinished:) withObject:self];
+    }
   }
 }
 @end

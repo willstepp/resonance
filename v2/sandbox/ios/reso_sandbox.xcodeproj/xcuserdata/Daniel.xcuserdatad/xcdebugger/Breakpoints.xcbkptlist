@@ -190,12 +190,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoDataViewController.mm"
-         timestampString = "389297855.555298"
+         timestampString = "389311824.254133"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "362"
-         endingLineNumber = "362"
+         startingLineNumber = "365"
+         endingLineNumber = "365"
          landmarkName = "-transferFinished:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoMediaTransferManager.mm"
+         timestampString = "389311977.591439"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
+         landmarkName = "-initForSingleton"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoMediaTransferManager.mm"
+         timestampString = "389311994.441479"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "64"
+         endingLineNumber = "64"
+         landmarkName = "-enqueueWithMediaTransfer:forQueue:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

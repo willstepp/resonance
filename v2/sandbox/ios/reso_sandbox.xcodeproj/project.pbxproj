@@ -18,6 +18,8 @@
 		6510034E15F3F2B000B38890 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6510034D15F3F2B000B38890 /* CoreVideo.framework */; };
 		651479651733FF4E00003287 /* ResoMediaTransferItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 651479641733FF4E00003287 /* ResoMediaTransferItem.mm */; };
 		651479681734249000003287 /* ResoUrlConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 651479671734249000003287 /* ResoUrlConnection.mm */; };
+		6514796E173458E800003287 /* ResoMediaTransferManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6514796D173458E800003287 /* ResoMediaTransferManager.mm */; };
+		651479711734662200003287 /* NSMutableArray+QueueAdditions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 651479701734662200003287 /* NSMutableArray+QueueAdditions.mm */; };
 		6525B1451732F6B000EFED90 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6525B1441732F6B000EFED90 /* libz.dylib */; };
 		6525B1521732F70100EFED90 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 6525B1481732F70100EFED90 /* ioapi.c */; };
 		6525B1531732F70100EFED90 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 6525B14A1732F70100EFED90 /* mztools.c */; };
@@ -96,6 +98,10 @@
 		651479641733FF4E00003287 /* ResoMediaTransferItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferItem.mm; sourceTree = "<group>"; };
 		651479661734249000003287 /* ResoUrlConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoUrlConnection.h; sourceTree = "<group>"; };
 		651479671734249000003287 /* ResoUrlConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoUrlConnection.mm; sourceTree = "<group>"; };
+		6514796C173458E800003287 /* ResoMediaTransferManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransferManager.h; sourceTree = "<group>"; };
+		6514796D173458E800003287 /* ResoMediaTransferManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferManager.mm; sourceTree = "<group>"; };
+		6514796F1734662200003287 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		651479701734662200003287 /* NSMutableArray+QueueAdditions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSMutableArray+QueueAdditions.mm"; sourceTree = "<group>"; };
 		6525B1441732F6B000EFED90 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6525B1471732F70100EFED90 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		6525B1481732F70100EFED90 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
@@ -283,6 +289,8 @@
 				651479641733FF4E00003287 /* ResoMediaTransferItem.mm */,
 				651479661734249000003287 /* ResoUrlConnection.h */,
 				651479671734249000003287 /* ResoUrlConnection.mm */,
+				6514796C173458E800003287 /* ResoMediaTransferManager.h */,
+				6514796D173458E800003287 /* ResoMediaTransferManager.mm */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -386,6 +394,8 @@
 				65A2B6FC1721CEBA00404340 /* main.m */,
 				65A2B7041721CEBA00404340 /* reso_sandbox-Info.plist */,
 				65A2B7051721CEBA00404340 /* reso_sandbox-Prefix.pch */,
+				6514796F1734662200003287 /* NSMutableArray+QueueAdditions.h */,
+				651479701734662200003287 /* NSMutableArray+QueueAdditions.mm */,
 			);
 			name = support;
 			sourceTree = "<group>";
@@ -541,6 +551,8 @@
 				6525B15D1733172800EFED90 /* ResoMediaTransferQueue.mm in Sources */,
 				651479651733FF4E00003287 /* ResoMediaTransferItem.mm in Sources */,
 				651479681734249000003287 /* ResoUrlConnection.mm in Sources */,
+				6514796E173458E800003287 /* ResoMediaTransferManager.mm in Sources */,
+				651479711734662200003287 /* NSMutableArray+QueueAdditions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

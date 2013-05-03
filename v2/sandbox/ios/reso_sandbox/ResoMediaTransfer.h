@@ -13,6 +13,7 @@
 
 @protocol ResoMediaTransferDelegate <NSObject>
 
+@optional
 -(void) transferStarted:(ResoMediaTransfer*)t;
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t;
 -(void) transferFinished:(ResoMediaTransfer*)t;
@@ -21,10 +22,12 @@
 @end
 
 @interface ResoMediaTransfer : NSObject {
-  id delegate;
+  NSMutableArray * delegates;
 }
-  - (id<ResoMediaTransferDelegate>)delegate;
-  - (void)setDelegate:(id<ResoMediaTransferDelegate>)newDelegate;
+
+  - (NSMutableArray*)delegates;
+  - (void)addDelegate:(id<ResoMediaTransferDelegate>)d;
+  - (void)removeDelegate:(id<ResoMediaTransferDelegate>)d;
 
   @property (nonatomic, readwrite) NSString * uuid;
 

@@ -15,6 +15,13 @@ typedef enum {
 } MediaTransfer;
 
 typedef enum {
+  ThumbnailQueue,
+  PreviewQueue,
+  SoundQueue,
+  MixQueue
+} MediaTransferQueue;
+
+typedef enum {
   Cloud,
   Queued,
   Downloading,

@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResoMediaTransfer.h"
 
-@interface ResoMediaTransferQueue : NSObject
+@interface ResoMediaTransferQueue : NSObject <ResoMediaTransferDelegate>
+
+@property (nonatomic, assign) int maxBatchCount;
+
+-(id)init;
+-(void)enqueueWithMediaTransfer:(ResoMediaTransfer*)mt;
 
 @end
