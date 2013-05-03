@@ -10,6 +10,14 @@
 #define gl_sandbox_ResoTypes_h
 
 typedef enum {
+  DownloadThumb,
+  DownloadPreview,
+  DownloadSound,
+  DownloadMix,
+  UploadMix
+} MediaTransfer;
+
+typedef enum {
   Cloud,
   Queued,
   Downloading,

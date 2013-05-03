@@ -15,7 +15,7 @@
 #import "ResoTypes.h"
 
 #import "FMODSoundEngine.h"
-#import "ResoFileTransfer.h"
+#import "ResoMediaTransfer.h"
 
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
@@ -28,7 +28,7 @@
   dispatch_queue_t thumbnail_queue;
   dispatch_queue_t preview_queue;
   
-  ResoFileTransfer * fileTransfer;
+  ResoMediaTransfer * mediaTransfer;
 }
 @end
 
@@ -41,7 +41,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
       
-      fileTransfer = nil;
+      mediaTransfer = nil;
       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
       
       soundsData = [[NSMutableArray alloc] init];
@@ -256,11 +256,11 @@
       //1) set sound state to downloading
       [ad setStateforSound:uuid newState:Downloading];
       
-      fileTransfer = nil;
+      mediaTransfer = nil;
       NSString * version = [ad iosVersionForDownload];
-      fileTransfer = [[ResoFileTransfer alloc] initWithUrl:[NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version]];
-      fileTransfer.uuid = uuid;
-      [fileTransfer start];
+      mediaTransfer = [[ResoMediaTransfer alloc] initWithUrl:[NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version]];
+      mediaTransfer.uuid = uuid;
+      [mediaTransfer start];
       
       /*
       //2) download file on main background queue

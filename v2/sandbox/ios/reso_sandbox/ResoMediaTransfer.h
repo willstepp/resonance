@@ -1,5 +1,5 @@
 //
-//  ResoFileTransfer.h
+//  ResoMediaTransfer.h
 //  reso_sandbox
 //
 //  Created by Daniel Stepp on 5/2/13.
@@ -13,7 +13,7 @@
 //and publishes events when it has a progress update / error / finished
 //needs to have an associated protocol which publishes upon progress and finished and error
 
-@interface ResoFileTransfer : NSObject
+@interface ResoMediaTransfer : NSObject
   @property (nonatomic,assign) NSString * uuid;
 
   - (id)initWithUrl:(NSString*)url;

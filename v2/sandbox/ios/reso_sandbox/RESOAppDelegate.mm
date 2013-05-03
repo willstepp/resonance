@@ -13,7 +13,6 @@
 #import "ResoAppDelegate.h"
 #import "ResoPortalViewController.h"
 #import "ResoTypes.h"
-#import "ResoFileTransfer.h"
 
 @implementation ResoAppDelegate
 

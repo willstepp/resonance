@@ -22,8 +22,10 @@
 		6525B1541732F70100EFED90 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 6525B14C1732F70100EFED90 /* unzip.c */; };
 		6525B1551732F70100EFED90 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 6525B14E1732F70100EFED90 /* zip.c */; };
 		6525B1561732F70100EFED90 /* SSZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B1511732F70100EFED90 /* SSZipArchive.mm */; };
-		6525B15A1732FC8400EFED90 /* ResoFileTransfer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B1591732FC8400EFED90 /* ResoFileTransfer.mm */; };
-		6525B15D1733172800EFED90 /* ResoFileTransferQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B15C1733172800EFED90 /* ResoFileTransferQueue.mm */; };
+		6525B15A1732FC8400EFED90 /* ResoMediaTransfer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B1591732FC8400EFED90 /* ResoMediaTransfer.mm */; };
+		6525B15D1733172800EFED90 /* ResoMediaTransferQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */; };
+		6525B16017335CAF00EFED90 /* NSURLConnection+Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525B15F17335CAF00EFED90 /* NSURLConnection+Tag.m */; };
+		6525B16317336FB500EFED90 /* ResoMediaTransferOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B16217336FB500EFED90 /* ResoMediaTransferOptions.mm */; };
 		652C3A981721D44A00D585D0 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A941721D35100D585D0 /* Shader.fsh */; };
 		652C3A991721D44A00D585D0 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A951721D35100D585D0 /* Shader.vsh */; };
 		659E4D0517222D6B00B3D32D /* iphone5_sitf_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */; };
@@ -102,10 +104,14 @@
 		6525B14F1732F70100EFED90 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		6525B1501732F70100EFED90 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		6525B1511732F70100EFED90 /* SSZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SSZipArchive.mm; sourceTree = "<group>"; };
-		6525B1581732FC8400EFED90 /* ResoFileTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoFileTransfer.h; sourceTree = "<group>"; };
-		6525B1591732FC8400EFED90 /* ResoFileTransfer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoFileTransfer.mm; sourceTree = "<group>"; };
-		6525B15B1733172800EFED90 /* ResoFileTransferQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoFileTransferQueue.h; sourceTree = "<group>"; };
-		6525B15C1733172800EFED90 /* ResoFileTransferQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoFileTransferQueue.mm; sourceTree = "<group>"; };
+		6525B1581732FC8400EFED90 /* ResoMediaTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransfer.h; sourceTree = "<group>"; };
+		6525B1591732FC8400EFED90 /* ResoMediaTransfer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransfer.mm; sourceTree = "<group>"; };
+		6525B15B1733172800EFED90 /* ResoMediaTransferQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransferQueue.h; sourceTree = "<group>"; };
+		6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferQueue.mm; sourceTree = "<group>"; };
+		6525B15E17335CAF00EFED90 /* NSURLConnection+Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+Tag.h"; sourceTree = "<group>"; };
+		6525B15F17335CAF00EFED90 /* NSURLConnection+Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+Tag.m"; sourceTree = "<group>"; };
+		6525B16117336FB500EFED90 /* ResoMediaTransferOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransferOptions.h; sourceTree = "<group>"; };
+		6525B16217336FB500EFED90 /* ResoMediaTransferOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferOptions.mm; sourceTree = "<group>"; };
 		652C3A941721D35100D585D0 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		652C3A951721D35100D585D0 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf_blur.jpg; sourceTree = "<group>"; };
@@ -266,35 +272,66 @@
 			name = zip;
 			sourceTree = "<group>";
 		};
-		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
+		6525B16417336FC800EFED90 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				6525B1571732F72D00EFED90 /* zip */,
-				65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */,
-				65FE9ED6172F03AF00E8E1EF /* resources */,
-				65FE9ED8172F049A00E8E1EF /* sound_engine */,
-				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
-				65FE9ED7172F043E00E8E1EF /* support */,
-				65A2B7061721CEBA00404340 /* ResoAppDelegate.h */,
-				65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */,
-				65A2B7081721CEBA00404340 /* ResoTypes.h */,
-				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
-				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
-				65FE9ED9172F08F800E8E1EF /* visualizer */,
-				65D4092F172DB09B00026905 /* ResoSlider.h */,
+				6525B1581732FC8400EFED90 /* ResoMediaTransfer.h */,
+				6525B1591732FC8400EFED90 /* ResoMediaTransfer.mm */,
+				6525B15B1733172800EFED90 /* ResoMediaTransferQueue.h */,
+				6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */,
+				6525B16117336FB500EFED90 /* ResoMediaTransferOptions.h */,
+				6525B16217336FB500EFED90 /* ResoMediaTransferOptions.mm */,
+			);
+			name = network;
+			sourceTree = "<group>";
+		};
+		6525B1651733702E00EFED90 /* ui */ = {
+			isa = PBXGroup;
+			children = (
 				65D40930172DB09B00026905 /* ResoSlider.mm */,
+				65D4092F172DB09B00026905 /* ResoSlider.h */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		6525B1661733708100EFED90 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		6525B1671733709800EFED90 /* mvc */ = {
+			isa = PBXGroup;
+			children = (
 				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
 				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
 				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
 				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
 				65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */,
 				65FE9EDB172F097300E8E1EF /* ResoDataViewController.mm */,
-				65C153011731E3F80082897E /* ResoSoundManager.h */,
-				65C153021731E3F80082897E /* ResoSoundManager.mm */,
-				6525B1581732FC8400EFED90 /* ResoFileTransfer.h */,
-				6525B1591732FC8400EFED90 /* ResoFileTransfer.mm */,
-				6525B15B1733172800EFED90 /* ResoFileTransferQueue.h */,
-				6525B15C1733172800EFED90 /* ResoFileTransferQueue.mm */,
+				65A2B7061721CEBA00404340 /* ResoAppDelegate.h */,
+				65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */,
+				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
+				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
+				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
+			);
+			name = mvc;
+			sourceTree = "<group>";
+		};
+		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
+			isa = PBXGroup;
+			children = (
+				6525B1671733709800EFED90 /* mvc */,
+				6525B1661733708100EFED90 /* data */,
+				6525B1651733702E00EFED90 /* ui */,
+				6525B1571732F72D00EFED90 /* zip */,
+				65FE9ED6172F03AF00E8E1EF /* resources */,
+				65FE9ED8172F049A00E8E1EF /* sound */,
+				65FE9ED7172F043E00E8E1EF /* support */,
+				65FE9ED9172F08F800E8E1EF /* visualizer */,
+				6525B16417336FC800EFED90 /* network */,
 			);
 			path = reso_sandbox;
 			sourceTree = "<group>";
@@ -341,6 +378,9 @@
 		65FE9ED7172F043E00E8E1EF /* support */ = {
 			isa = PBXGroup;
 			children = (
+				65A2B7081721CEBA00404340 /* ResoTypes.h */,
+				6525B15E17335CAF00EFED90 /* NSURLConnection+Tag.h */,
+				6525B15F17335CAF00EFED90 /* NSURLConnection+Tag.m */,
 				65EADA0A1703F784007CB200 /* Default-568h@2x.png */,
 				65A2B6F81721CEBA00404340 /* InfoPlist.strings */,
 				65A2B6FC1721CEBA00404340 /* main.m */,
@@ -350,9 +390,11 @@
 			name = support;
 			sourceTree = "<group>";
 		};
-		65FE9ED8172F049A00E8E1EF /* sound_engine */ = {
+		65FE9ED8172F049A00E8E1EF /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				65C153021731E3F80082897E /* ResoSoundManager.mm */,
+				65C153011731E3F80082897E /* ResoSoundManager.h */,
 				65FE9EC3172EFC6900E8E1EF /* FMODSound.h */,
 				65FE9EC4172EFC6900E8E1EF /* FMODSound.mm */,
 				65FE9EC5172EFC6900E8E1EF /* FMODSoundEngine.h */,
@@ -364,7 +406,7 @@
 				65FE9ECB172EFC6B00E8E1EF /* ISoundEngine.h */,
 				65FE9ECC172EFC6B00E8E1EF /* ITone.h */,
 			);
-			name = sound_engine;
+			name = sound;
 			sourceTree = "<group>";
 		};
 		65FE9ED9172F08F800E8E1EF /* visualizer */ = {
@@ -495,8 +537,10 @@
 				6525B1541732F70100EFED90 /* unzip.c in Sources */,
 				6525B1551732F70100EFED90 /* zip.c in Sources */,
 				6525B1561732F70100EFED90 /* SSZipArchive.mm in Sources */,
-				6525B15A1732FC8400EFED90 /* ResoFileTransfer.mm in Sources */,
-				6525B15D1733172800EFED90 /* ResoFileTransferQueue.mm in Sources */,
+				6525B15A1732FC8400EFED90 /* ResoMediaTransfer.mm in Sources */,
+				6525B15D1733172800EFED90 /* ResoMediaTransferQueue.mm in Sources */,
+				6525B16017335CAF00EFED90 /* NSURLConnection+Tag.m in Sources */,
+				6525B16317336FB500EFED90 /* ResoMediaTransferOptions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
