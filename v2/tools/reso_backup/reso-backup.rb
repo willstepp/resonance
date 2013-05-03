@@ -90,5 +90,3 @@ module ResoBackup
     AWS::S3::S3Object.store(file_name, File.open(file_path), bucket)
   end
 end
-
-ResoBackup.output_bucket_files
