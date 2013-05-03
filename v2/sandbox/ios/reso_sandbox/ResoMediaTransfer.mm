@@ -22,7 +22,7 @@
 @end
 
 @implementation ResoMediaTransfer
-@synthesize uuid, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished;
+@synthesize uuid, transferType, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished;
 
 - (NSMutableArray*)delegates
 {

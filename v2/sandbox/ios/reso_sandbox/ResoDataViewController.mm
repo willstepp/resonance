@@ -260,17 +260,17 @@
       [ad setStateforSound:uuid newState:Downloading];
       
       mediaTransfer = nil;
-      NSString * version = [ad iosVersionForDownload];
+      //NSString * version = [ad iosVersionForDownload];
       
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
-      rmti.transferType = Download;
+      rmti.transferType = SoundTransfer;
       NSString * source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%i/%i.iphone", 1, 1];
       rmti.sourceUrl = source;
       NSString * dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%i/%i.iphone", 1, 1]] path];
       rmti.destinationUrl = dest;
       
       ResoMediaTransferItem * rmti2 = [[ResoMediaTransferItem alloc] init];
-      rmti2.transferType = Download;
+      rmti2.transferType = SoundTransfer;
       source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%i/%i.iphone5", 1, 1];
       rmti2.sourceUrl = source;
       dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%i/%i.iphone5", 1, 1]] path];
@@ -279,6 +279,7 @@
       mediaTransfer = [[ResoMediaTransfer alloc] init];
       [mediaTransfer addDelegate:self];
       mediaTransfer.uuid = uuid;
+      mediaTransfer.transferType = SoundTransfer;
       [mediaTransfer addItem:rmti];
       [mediaTransfer addItem:rmti2];
       

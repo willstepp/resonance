@@ -10,8 +10,10 @@
 #define gl_sandbox_ResoTypes_h
 
 typedef enum {
-  Download,
-  Upload
+  ThumbnailTransfer,
+  PreviewTransfer,
+  SoundTransfer,
+  MixTransfer
 } MediaTransfer;
 
 typedef enum {
