@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoAppDelegate.mm"
-         timestampString = "389222958.128164"
+         timestampString = "389321371.919445"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "289"
-         endingLineNumber = "289"
+         startingLineNumber = "291"
+         endingLineNumber = "291"
          landmarkName = "-soundsWithState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoDataViewController.mm"
-         timestampString = "389311824.254133"
+         timestampString = "389322744.506054"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "365"
-         endingLineNumber = "365"
+         startingLineNumber = "404"
+         endingLineNumber = "404"
          landmarkName = "-transferFinished:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -222,6 +222,45 @@
          startingLineNumber = "64"
          endingLineNumber = "64"
          landmarkName = "-enqueueWithMediaTransfer:forQueue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoDataViewController.mm"
+         timestampString = "389322392.665839"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "287"
+         endingLineNumber = "287"
+         landmarkName = "-downloadSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoDataViewController.mm"
+         timestampString = "389322392.665839"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "310"
+         endingLineNumber = "310"
+         landmarkName = "-downloadSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoDataViewController.mm"
+         timestampString = "389322392.665839"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "309"
+         endingLineNumber = "309"
+         landmarkName = "-downloadSound:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

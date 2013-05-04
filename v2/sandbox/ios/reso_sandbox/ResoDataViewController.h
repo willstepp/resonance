@@ -13,6 +13,7 @@
   @property (nonatomic, retain) UIButton * backButton;
   @property (nonatomic, retain) UIButton * previewButton;
   @property (nonatomic, retain) UIButton * downloadButton;
+  @property (nonatomic, retain) UIProgressView * progressBar;
 
   @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 

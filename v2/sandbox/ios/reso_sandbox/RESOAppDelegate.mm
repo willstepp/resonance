@@ -211,6 +211,8 @@
 
 - (void)clearSounds
 {
+  [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds"]] path] error:nil];
+  
   NSManagedObjectContext * context = [self managedObjectContext];
   NSFetchRequest * allSounds = [[NSFetchRequest alloc] init];
   [allSounds setEntity:[NSEntityDescription entityForName:@"Sound" inManagedObjectContext:context]];
