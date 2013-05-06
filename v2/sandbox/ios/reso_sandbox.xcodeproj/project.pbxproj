@@ -30,6 +30,7 @@
 		6525B15D1733172800EFED90 /* ResoMediaTransferQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */; };
 		652C3A981721D44A00D585D0 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A941721D35100D585D0 /* Shader.fsh */; };
 		652C3A991721D44A00D585D0 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A951721D35100D585D0 /* Shader.vsh */; };
+		654D206D17380BA400B9DAA6 /* ResoMediaTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */; };
 		659E4D0517222D6B00B3D32D /* iphone5_sitf_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */; };
 		659E4D0617222D6B00B3D32D /* iphone5_sitf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */; };
 		659E4D0B172233E400B3D32D /* nebula_blue_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */; };
@@ -120,6 +121,8 @@
 		6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferQueue.mm; sourceTree = "<group>"; };
 		652C3A941721D35100D585D0 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		652C3A951721D35100D585D0 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		654D206B17380BA400B9DAA6 /* ResoMediaTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransferViewController.h; sourceTree = "<group>"; };
+		654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoMediaTransferViewController.m; sourceTree = "<group>"; };
 		659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf_blur.jpg; sourceTree = "<group>"; };
 		659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf.jpg; sourceTree = "<group>"; };
 		659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nebula_blue_blur.jpg; sourceTree = "<group>"; };
@@ -326,6 +329,8 @@
 				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
 				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
 				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
+				654D206B17380BA400B9DAA6 /* ResoMediaTransferViewController.h */,
+				654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */,
 			);
 			name = mvc;
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 				651479681734249000003287 /* ResoUrlConnection.mm in Sources */,
 				6514796E173458E800003287 /* ResoMediaTransferManager.mm in Sources */,
 				651479711734662200003287 /* NSMutableArray+QueueAdditions.mm in Sources */,
+				654D206D17380BA400B9DAA6 /* ResoMediaTransferViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

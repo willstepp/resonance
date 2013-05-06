@@ -24,10 +24,9 @@ typedef enum {
 } MediaTransferQueue;
 
 typedef enum {
-  Cloud,
-  Queued,
+  Failed,
   Downloading,
-  Device
+  Completed
 } SoundState;
 
 typedef enum {

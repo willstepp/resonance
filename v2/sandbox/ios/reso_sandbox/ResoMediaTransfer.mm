@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "ResoMediaTransfer.h"
 #import "ResoUrlConnection.h"
 
@@ -22,7 +24,7 @@
 @end
 
 @implementation ResoMediaTransfer
-@synthesize uuid, transferType, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished;
+@synthesize uuid, transferType, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished, backgroundTaskId;
 
 - (NSMutableArray*)delegates
 {
@@ -81,8 +83,14 @@
     NSMutableDictionary * dict = [media objectForKey:tag];
     ResoUrlConnection * conn = [dict objectForKey:@"connection"];
     [conn start];
-    NSLog(@"start() for connection (%@)", [NSNumber numberWithInt:conn.tag]);
+    NSLog(@"starting RMT (%@)", tag);
   }
+  
+  self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    //cancel media transfer here
+    NSLog(@"beginBackgroundTaskWithExpirationHandler called()");
+  }];
+  
   transferring = true;
   [self notifyStarted];
 }
@@ -105,7 +113,7 @@
   
   if ([self allTotalByteCountsReceived]) {
     totalByteCountReceived = true;
-    NSLog(@"ALL BYTE COUNTS RECEIVED");
+    NSLog(@"ResoMediaTransfer->allTotalByteCountsReceived");
   }
   
   NSLog(@"didReceiveResponse() for connection (%@) Expected Length: %@", [NSNumber numberWithInt:c.tag], totalBytes);
@@ -178,13 +186,14 @@
   //set state to finished
   [dict setObject:[NSNumber numberWithBool:YES] forKey:@"finished"];
   
+  NSLog(@"Transfer finished for connection (%@): %lld of %lld", [NSNumber numberWithInt:c.tag], currentByteCount, totalByteCount);
+  
   if ([self allFinished]) {
     finished = true;
     [self notifyFinished];
-    NSLog(@"ALL FINISHED");
+    NSLog(@"notifyFinished()");
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
   }
-  
-	NSLog(@"Transfer finished for connection (%@): %lld of %lld", [NSNumber numberWithInt:c.tag], currentByteCount, totalByteCount);
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
@@ -201,6 +210,8 @@
   
   transferring = false;
   [self notifyError];
+  
+  [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
   
   NSLog(@"Transfer error for connection (%@): %s", [NSNumber numberWithInt:c.tag], [[error localizedDescription] UTF8String]);
 }

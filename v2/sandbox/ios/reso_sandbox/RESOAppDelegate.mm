@@ -13,6 +13,7 @@
 #import "ResoAppDelegate.h"
 #import "ResoPortalViewController.h"
 #import "ResoTypes.h"
+#import "ResoMediaTransferManager.h"
 
 @implementation ResoAppDelegate
 
@@ -43,6 +44,8 @@
   //clean out any existing sounds
   [self clearSounds];
   
+  [self resumeMediaTransfers];
+  
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   [[AVAudioSession sharedInstance] setActive: YES error: nil];
   [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
@@ -54,27 +57,32 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+  NSLog(@"App State: applicationWillResignActive()");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+  NSLog(@"App State: applicationDidEnterBackground()");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+  NSLog(@"App State: applicationWillEnterForeground()");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+ NSLog(@"App State: applicationDidBecomeActive()");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
   // Saves changes in the application's managed object context before the application terminates.
+  NSLog(@"App State: applicationWillTerminate()");
   [self saveContext];
 }
 
@@ -86,7 +94,6 @@
     if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
       // Replace this implementation with code to handle the error appropriately.
       // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-      NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
       abort();
     }
   }
@@ -158,7 +165,6 @@
      Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
      
      */
-    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     abort();
   }
   
@@ -172,10 +178,8 @@
   NSURL * rad = [self resonanceAppDirectory];
   if (![[NSFileManager defaultManager] fileExistsAtPath:[rad path]]) {
     BOOL success = [self ensureDirectoryExists:rad];
-    NSLog(@"Resonance App Directory Created: %i", success);
     if (success) {
       success = [self addSkipBackupAttributeToItemAtURL:rad];
-      NSLog(@"Add Skip Backup Attribute: %i", success);
     }
   }
 }
@@ -225,9 +229,7 @@
   for (NSManagedObject * sound in sounds) {
     NSString * uuid = [sound valueForKey:@"uuid"];
     [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path] error:nil];
-    NSLog(@"%@ deleted", uuid);
     [context deleteObject:sound];
-    NSLog(@"Deleted Sound");
   }
   NSError * saveError = nil;
   [context save:&saveError];
@@ -241,7 +243,6 @@
   NSString * uuid = [d objectForKey:@"uuid"];
   
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
-    NSLog(@"Sound does not yet exist!");
     
     NSManagedObjectContext * context = [self managedObjectContext];
     NSManagedObject * sound = [NSEntityDescription
@@ -250,14 +251,24 @@
     [sound setValue:name forKey:@"name"];
     [sound setValue:desc forKey:@"desc"];
     [sound setValue:uuid forKey:@"uuid"];
-    [sound setValue:[NSNumber numberWithInt:(int)Cloud] forKey:@"state"];
+    [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
     
     NSError * error;
     if (![context save:&error]) {
-      NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
   } else {
-    NSLog(@"Sound exists!");
+  }
+}
+
+- (void)addSoundWithIdentifier:(NSString*)uuid
+{
+  if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSManagedObject * sound = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Sound"
+                               inManagedObjectContext:context];
+    [sound setValue:uuid forKey:@"uuid"];
+    [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
   }
 }
 
@@ -274,7 +285,6 @@
   NSError * error;
   NSArray * array = [context executeFetchRequest:request error:&error];
   
-  NSLog(@"%i",[array count]);
   return [array count] > 0;
 }
 
@@ -344,7 +354,6 @@
     [sound setValue:[NSNumber numberWithInt:s] forKey:@"state"];
     NSError * error;
     if (![context save:&error]) {
-      NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
   }
 }
@@ -357,7 +366,6 @@
   BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
                                 forKey: NSURLIsExcludedFromBackupKey error: &error];
   if(!success){
-    NSLog(@"Error excluding %@ from backup %@", [URL lastPathComponent], error);
   }
   return success;
 }
@@ -395,7 +403,6 @@ NSString * deviceName()
 {
   NSString * version;
   NSString * deviceVersion = deviceName();
-  NSLog(@"deviceVersion: %s", [deviceVersion UTF8String]);
   
   if(([deviceVersion rangeOfString:@"iPhone5"].location != NSNotFound) ||
      ([deviceVersion rangeOfString:@"iPod5"].location != NSNotFound) ) {
@@ -415,6 +422,13 @@ NSString * deviceName()
   }
   
   return version;
+}
+
+-(void)resumeMediaTransfers
+{
+  //read all sounds with a state of downloading or failed
+  //iterate through, clean out old directory
+  //enqueu new sound transfer
 }
 
 @end

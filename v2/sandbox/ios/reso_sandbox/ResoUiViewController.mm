@@ -213,7 +213,6 @@ enum
       self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
       
       if (!self.context) {
-        NSLog(@"Failed to create ES context");
       }
       
       GLKView *view = (GLKView *)self.view;
@@ -248,7 +247,6 @@ enum
       //-- Create CVOpenGLESTextureCacheRef for optimal CVImageBufferRef to GLES texture conversion.
       CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, (__bridge CVEAGLContext)((__bridge void *)_context), NULL, &_textureCache);
       if (err)  {
-        NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
         return nil;
       }
       
@@ -343,14 +341,11 @@ enum
 }
 
 -(void)updateRangeLabel:(ResoSlider *)slider{
-  NSLog(@"Slider: %i", slider.value);
 }
 
 - (void) changeAppToState:(ResoAppState)state
 {
   _stateInTransition = true;
-  
-  NSLog(@"changeAppToState");
   
   [self unloadCurrentState];
   [self loadNewState:state];
@@ -362,14 +357,10 @@ enum
 - (void) unloadCurrentState
 {
   if (_currAppState == Visual) {
-    NSLog(@"unloadCurrentState : Visual");
     
-  } else if (_currAppState == PlayerMain) {
-    NSLog(@"unloadCurrentState : Module");
-    
+  } else if (_currAppState == PlayerMain) {    
         
   } else if (_currAppState == ModuleExpand) {
-    NSLog(@"unloadCurrentState : ModuleExpand");
 
     [_modules enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
       NSString * k = (NSString*)key;
@@ -420,7 +411,6 @@ enum
 - (void) loadNewState:(ResoAppState) ns
 {
   if (ns == Visual) {
-    NSLog(@"loadNewState : Visual");
     [visualButton setTitle:@"M" forState:UIControlStateNormal];
     
     //modules (animate offscreen)
@@ -465,7 +455,6 @@ enum
   } else if (ns == PlayerMain) {
     _touchEnabled = false;
     
-    NSLog(@"loadNewState : Module");
     [visualButton setTitle:@"V" forState:UIControlStateNormal];
     
     //modules (animate onscreen)
@@ -507,7 +496,6 @@ enum
     
     _loadPondImageTimer = [NSTimer scheduledTimerWithTimeInterval:1.00 target:self selector:@selector(resetPond:) userInfo:[NSNumber numberWithBool:true] repeats:NO];
   } else if (ns == ModuleExpand) {
-    NSLog(@"loadNewState : ModuleExpand");
 
     [_modules enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
       NSString * k = (NSString*)key;
@@ -668,7 +656,6 @@ enum
 {
     if (!_textureCache)
     {
-        NSLog(@"No video texture cache");
         return;
     }
   
@@ -712,7 +699,6 @@ enum
   CGImageRef spriteImage = image.CGImage;
   spriteImage = [self CGImageRotatedByAngle:spriteImage angle:90.0f];
   if (!spriteImage) {
-    NSLog(@"Failed to load image %@", @"image");
     exit(1);
   }
   
@@ -749,13 +735,10 @@ enum
   NSNumber * ui = [currTimer userInfo];
   BOOL blurred = [ui boolValue];
   if (blurred) {
-    NSLog(@"BLURRED");
-    
     //load blurred curr image into pond
     [self loadImageIntoPond:_blurImageName];
 
   } else {
-    NSLog(@"UNBLURRED");
     //load unblurred curr image into pond
     [self loadImageIntoPond:_imageName];
   }
@@ -767,10 +750,8 @@ enum
   NSNumber * ui = [currTimer userInfo];
   BOOL show = [ui boolValue];
   if (show){
-    NSLog(@"SHOW OVERLAY");
     _overlay.alpha = 1.0f;
   } else {
-    NSLog(@"HIDE OVERLAY");
     _overlay.alpha = 0.0f;
   }
   [mirButton setEnabled:true];
@@ -779,7 +760,6 @@ enum
 -(IBAction)toggleModule:(id)sender
 {
   _currModule = [sender tag];
-  NSLog(@"%i", _currModule);
 
   if (!_stateInTransition) {
     if (_currAppState == PlayerMain) {
@@ -826,14 +806,12 @@ enum
     // Create and compile vertex shader.
     vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"vsh"];
     if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
-        NSLog(@"Failed to compile vertex shader");
         return NO;
     }
     
     // Create and compile fragment shader.
     fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Shader" ofType:@"fsh"];
     if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
-        NSLog(@"Failed to compile fragment shader");
         return NO;
     }
     
@@ -850,8 +828,7 @@ enum
     
     // Link program.
     if (![self linkProgram:_program]) {
-        NSLog(@"Failed to link program: %d", _program);
-        
+      
         if (vertShader) {
             glDeleteShader(vertShader);
             vertShader = 0;
@@ -891,7 +868,6 @@ enum
     
     source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
     if (!source) {
-        NSLog(@"Failed to load vertex shader");
         return NO;
     }
     
@@ -905,7 +881,6 @@ enum
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetShaderInfoLog(*shader, logLength, &logLength, log);
-        NSLog(@"Shader compile log:\n%s", log);
         free(log);
     }
 #endif
@@ -930,7 +905,6 @@ enum
     if (logLength > 0) {
         GLchar *log = (GLchar *)malloc(logLength);
         glGetProgramInfoLog(prog, logLength, &logLength, log);
-        NSLog(@"Program link log:\n%s", log);
         free(log);
     }
 #endif

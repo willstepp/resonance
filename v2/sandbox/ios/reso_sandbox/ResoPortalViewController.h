@@ -12,4 +12,5 @@
   @property (nonatomic, retain) UIButton * uiButton;
   @property (nonatomic, retain) UIButton * soundButton;
   @property (nonatomic, retain) UIButton * dataButton;
+  @property (nonatomic, retain) UIButton * mediaTransferButton;
 @end

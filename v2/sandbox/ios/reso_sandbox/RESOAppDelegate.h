@@ -25,6 +25,7 @@
 - (NSURL *)applicationCachesDirectory;
 
 - (void)clearSounds;
+- (void)addSoundWithIdentifier:(NSString*)uuid;
 - (void)addSoundFromData:(NSDictionary*)d;
 - (BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
 - (NSArray*)soundsWithState:(int)s;

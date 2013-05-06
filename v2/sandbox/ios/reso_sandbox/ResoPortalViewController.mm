@@ -12,13 +12,14 @@
 #import "ResoUiViewController.h"
 #import "ResoSoundViewController.h"
 #import "ResoDataViewController.h"
+#import "ResoMediaTransferViewController.h"
 #import "ResoTypes.h"
 
 @interface ResoPortalViewController ()
 @end
 
 @implementation ResoPortalViewController
-@synthesize uiButton, soundButton, dataButton;
+@synthesize uiButton, soundButton, dataButton, mediaTransferButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,14 +66,25 @@
       dataButton.layer.cornerRadius = 4.0f;
       dataButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:dataButton];
+      
+      //media transfer button
+      mediaTransferButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [mediaTransferButton setTitle:@"Media Transfer" forState:UIControlStateNormal];
+      [mediaTransferButton addTarget:self action:@selector(showMediaTransfer:) forControlEvents:UIControlEventTouchUpInside];
+      [mediaTransferButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mediaTransferButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      mediaTransferButton.layer.borderColor = [UIColor blackColor].CGColor;
+      mediaTransferButton.layer.borderWidth = 0.0f;
+      mediaTransferButton.layer.cornerRadius = 4.0f;
+      mediaTransferButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:mediaTransferButton];
     }
     return self;
 }
 
 -(void)showSound:(id)sender
 {
-  NSLog(@"showSound()");
-  
   ResoSoundViewController * rsvc = [[ResoSoundViewController alloc] initWithNibName:@"ResoSoundViewController" bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rsvc animated:YES];
@@ -80,20 +92,23 @@
 
 -(void)showUI:(id)sender
 {
-  NSLog(@"showUI()");
-  
   ResoUiViewController * ruvc = [[ResoUiViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:ruvc animated:YES];
 }
 
 -(void)showData:(id)sender
-{
-  NSLog(@"showData()");
-  
+{  
   ResoDataViewController * rdvc = [[ResoDataViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rdvc animated:YES];
+}
+
+-(void)showMediaTransfer:(id)sender
+{
+  ResoMediaTransferViewController * rmtvc = [[ResoMediaTransferViewController alloc] initWithNibName:nil bundle:nil];
+  //push it onto the 'navigation stack'
+  [self.navigationController pushViewController:rmtvc animated:YES];
 }
 
 - (void)viewDidLoad

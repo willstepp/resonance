@@ -38,6 +38,8 @@
   @property (readonly) long long currentByteCount;
   @property (readonly) long long totalByteCountReceived;
 
+  @property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskId;
+
   - (void)addItem:(ResoMediaTransferItem*)rmti;
   - (void)start;
 

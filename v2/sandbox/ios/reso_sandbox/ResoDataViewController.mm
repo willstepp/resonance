@@ -179,26 +179,11 @@
 }
 
 - (void)saveSound:(NSDictionary*)sound {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   NSString * uuid = [sound objectForKey:@"uuid"];
-  //[ad addSoundFromData:sound];
   
-  //enqueue preview image download
-  ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
-  rmti.transferType = ThumbnailTransfer;
-  NSString * source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.thumb", uuid, uuid];
-  rmti.sourceUrl = source;
-  NSString * dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path];
-  rmti.destinationUrl = dest;
-  
-  ResoMediaTransfer * rmt = [[ResoMediaTransfer alloc] init];
-  [rmt addDelegate:self];
-  rmt.uuid = uuid;
-  rmt.transferType = ThumbnailTransfer;
-  [rmt addItem:rmti];
-  
+  //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm enqueueWithMediaTransfer:rmt forQueue:ThumbnailQueue];
+  [rmtm initTransferOfType:ThumbnailTransfer withIdentifier:uuid];
   
   [soundsData addObject:sound];
   [soundsView reloadData];
@@ -218,7 +203,7 @@
 -(void)loadAvailableSoundsFromDevice
 {
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSArray * sounds = [ad soundsWithState:Cloud];
+  NSArray * sounds = [ad soundsWithState:Completed];
   [soundsData addObjectsFromArray:sounds];
 }
 
@@ -227,49 +212,21 @@
   //get currently selected row index
   NSIndexPath * path = [soundsView indexPathForSelectedRow];
   int row = path ? [path row] : -1;
-  NSLog(@"selected row: %i", row);
   
   if (row >= 0) {
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
-    NSLog(@"preview uuid: %s", [uuid UTF8String]);
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
     bool exists = [[NSFileManager defaultManager] fileExistsAtPath:pp];
     if (exists) {
-      NSLog(@"preview file exists");
       [self playPreview:pp];
     } else {
-      NSLog(@"preview file does not exist");
       
       //enqueue preview download
-      ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
-      rmti.transferType = PreviewTransfer;
-      NSString * source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.preview", uuid, uuid];
-      rmti.sourceUrl = source;
-      NSString * dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
-      rmti.destinationUrl = dest;
-      
-      ResoMediaTransfer * rmt = [[ResoMediaTransfer alloc] init];
-      [rmt addDelegate:self];
-      rmt.uuid = uuid;
-      rmt.transferType = PreviewTransfer;
-      [rmt addItem:rmti];
-      
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm enqueueWithMediaTransfer:rmt forQueue:PreviewQueue];
-      /*
-      dispatch_async(thumbnail_queue, ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        NSString * url = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.preview", uuid, uuid];
-        NSData * preview = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
-        [preview writeToFile:file_path atomically:NO];
-        [self performSelectorOnMainThread:@selector(playPreview:)
-                               withObject:file_path waitUntilDone:NO];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-      });
-       */
+      [rmtm initTransferOfType:PreviewTransfer withIdentifier:uuid];
+      
     }
   }
 }
@@ -280,8 +237,6 @@
   id<ISound> sound = [player getSoundForId:Preview];
   [sound load:filePath looped:false];
   [sound play];
-  
-  NSLog(@"playing %s", [filePath UTF8String]);
 }
 
 -(void)downloadSound:(id)sender
@@ -289,14 +244,12 @@
   //get currently selected row index
   NSIndexPath * path = [soundsView indexPathForSelectedRow];
   int row = path ? [path row] : -1;
-  NSLog(@"selected row: %i", row);
   
   if (row >= 0) {
     
     //get uuid for currently selected row
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
-    NSLog(@"download uuid: %s", [uuid UTF8String]);
     
     //first test if sound already exists
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
@@ -304,29 +257,15 @@
       
       //create sound in database
       [ad addSoundFromData:sound];
+      
       //set sound state to downloading
       [ad setStateforSound:uuid newState:Downloading];
-      //download using RTM
-      NSString * version = [ad iosVersionForDownload];
-      ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
-      rmti.transferType = SoundTransfer;
-      NSString * source = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version];
-      rmti.sourceUrl = source;
-      NSString * dest = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
-      rmti.destinationUrl = dest;
       
-      ResoMediaTransfer * rmt = [[ResoMediaTransfer alloc] init];
-      [rmt addDelegate:self];
-      rmt.uuid = uuid;
-      rmt.transferType = SoundTransfer;
-      [rmt addItem:rmti];
-      
+      //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm enqueueWithMediaTransfer:rmt forQueue:SoundQueue];
+      [rmtm initTransferOfType:SoundTransfer withIdentifier:uuid];
       
     } else {
-      
-      NSLog(@"Sound is already downloaded to device");
       
     }
 
@@ -337,15 +276,13 @@
 -(void)downloadComplete:(NSString*)uuid
 {
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  [ad setStateforSound:uuid newState:Device];
+  [ad setStateforSound:uuid newState:Completed];
   
   NSString * installFilePath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
   NSString * destinationPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path];
   [SSZipArchive unzipFileAtPath:installFilePath toDestination:destinationPath];
   
   [[NSFileManager defaultManager] removeItemAtPath:installFilePath error:nil];
-  
-  NSLog(@"Download complete: %s", [uuid UTF8String]);
 }
 
 #pragma mark - TableView DataSource Implementation
@@ -379,14 +316,11 @@
 #pragma mark ResoMediaTransfer Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
-  NSLog(@"transferStarted for: (%@)", t.uuid);
   progressBar.progress = 0.0f;
 }
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
 {
-  NSLog(@"transferProgressUpdated for: (%@)", t.uuid);
-  
   if (t.transferType == SoundTransfer) {
     long long tbc = t.totalByteCount;
     long long cbc = t.currentByteCount;
@@ -398,14 +332,12 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  NSLog(@"ResoDataViewController::transferFinished for: (%@)", t.uuid);
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   
   if (t.transferType == ThumbnailTransfer) {
     [soundsView reloadData];
   } else if (t.transferType == PreviewTransfer) {
     NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", t.uuid, t.uuid]] path];
-    NSLog(@"Preview file playing now: %@", file_path);
     [self playPreview:file_path];
   } else if (t.transferType == SoundTransfer) {
     [self downloadComplete:t.uuid];
@@ -414,7 +346,6 @@
 
 -(void) transferError:(ResoMediaTransfer*)t
 {
-  NSLog(@"transferError for: (%@)", t.uuid);
 }
 
 @end

@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "ResoTypes.h"
+#import "ResoMediaTransfer.h"
 
 @class ResoMediaTransfer;
 
-@interface ResoMediaTransferManager : NSObject
+@interface ResoMediaTransferManager : NSObject <ResoMediaTransferDelegate>
 
 +(ResoMediaTransferManager*)instance;
--(void)enqueueWithMediaTransfer:(ResoMediaTransfer*)mt forQueue:(MediaTransferQueue)mtq;
+-(void)initTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid;
 
+@property (readonly) NSMutableDictionary * transfers;
 @end
