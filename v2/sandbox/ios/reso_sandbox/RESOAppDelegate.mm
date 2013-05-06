@@ -314,6 +314,29 @@
   return sounds;
 }
 
+-(NSArray*)soundTransfersToBeResumed
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i)", Downloading, Failed];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  NSMutableArray * sounds  = [[NSMutableArray alloc] init];
+  for (NSManagedObject * sound in array) {
+    NSString * s = [sound valueForKey:@"uuid"];
+    [sounds addObject:s];
+  }
+  return sounds;
+}
+
 - (int)getStateForSound:(NSString*)uuid
 {
   int state = -1;
@@ -426,9 +449,20 @@ NSString * deviceName()
 
 -(void)resumeMediaTransfers
 {
-  //read all sounds with a state of downloading or failed
-  //iterate through, clean out old directory
-  //enqueu new sound transfer
+  NSArray * sounds = [self soundTransfersToBeResumed];
+  for(NSString * s in sounds) {
+    
+    //update state of sound
+    [self setStateforSound:s newState:Downloading];
+    
+    //remove install directory
+    [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", s]] path] error:nil];
+    
+    //enqueue transfer of sound
+    ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
+    [rmtm initTransferOfType:SoundTransfer withIdentifier:s];
+    
+  }
 }
 
 @end

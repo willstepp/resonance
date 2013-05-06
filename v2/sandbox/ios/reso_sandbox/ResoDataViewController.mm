@@ -68,7 +68,6 @@
       
       //get list of sounds on background thread
       dispatch_async(global_queue, ^{
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         //init
         NSManagedObjectContext * context;
         NSPersistentStoreCoordinator * coordinator = [ad persistentStoreCoordinator];
@@ -91,30 +90,11 @@
           NSString * uuid = [sound objectForKey:@"uuid"];
           if(![ad soundExists:uuid withContext:context]) {
             
-            //create sound directory under resonance/sounds
-            [ad ensureDirectoryExists:[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
-            
             //save sound record on main thread
             [self performSelectorOnMainThread:@selector(saveSound:)
                                    withObject:sound waitUntilDone:NO];
-            
-            /*
-            //download preview and thumbnail, in a separate thread
-            dispatch_async(thumbnail_queue, ^{
-              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-              NSString * url = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.thumb", uuid, uuid];
-              NSData * thumb = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-              NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path];
-              [thumb writeToFile:file_path atomically:NO];
-              [self performSelectorOnMainThread:@selector(addSoundToTable:)
-                                     withObject:sound waitUntilDone:NO];
-             
-              [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            });
-             */
           }
         }
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
       });
       
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
@@ -185,6 +165,10 @@
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
   [rmtm initTransferOfType:ThumbnailTransfer withIdentifier:uuid];
   
+  //hook up to delegate
+  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
+  [rtm addDelegate:self];
+  
   [soundsData addObject:sound];
   [soundsView reloadData];
 }
@@ -227,6 +211,10 @@
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
       [rmtm initTransferOfType:PreviewTransfer withIdentifier:uuid];
       
+      //hook up to delegate
+      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
+      [rtm addDelegate:self];
+      
     }
   }
 }
@@ -246,7 +234,6 @@
   int row = path ? [path row] : -1;
   
   if (row >= 0) {
-    
     //get uuid for currently selected row
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
@@ -255,34 +242,21 @@
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     if (![ad soundExists:uuid withContext:[ad managedObjectContext]]) {
       
-      //create sound in database
-      [ad addSoundFromData:sound];
-      
-      //set sound state to downloading
-      [ad setStateforSound:uuid newState:Downloading];
-      
       //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
       [rmtm initTransferOfType:SoundTransfer withIdentifier:uuid];
       
-    } else {
-      
+      //hook up to delegate
+      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
+      [rtm addDelegate:self];
     }
-
   }
 
 }
 
 -(void)downloadComplete:(NSString*)uuid
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  [ad setStateforSound:uuid newState:Completed];
-  
-  NSString * installFilePath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
-  NSString * destinationPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path];
-  [SSZipArchive unzipFileAtPath:installFilePath toDestination:destinationPath];
-  
-  [[NSFileManager defaultManager] removeItemAtPath:installFilePath error:nil];
+  progressBar.progress = 0.0f;
 }
 
 #pragma mark - TableView DataSource Implementation
