@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SSZipArchive.h"
 
-#import "ResoDataViewController.h"
+#import "ResoCloudSoundsViewController.h"
 #import "ResoAppDelegate.h"
 #import "ResoTypes.h"
 
@@ -22,7 +22,7 @@
 
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
-@interface ResoDataViewController ()
+@interface ResoCloudSoundsViewController ()
 {
   UITableView * soundsView;
   NSMutableArray * soundsData;
@@ -35,7 +35,7 @@
 }
 @end
 
-@implementation ResoDataViewController
+@implementation ResoCloudSoundsViewController
 @synthesize backButton, previewButton, downloadButton, progressBar;
 @synthesize managedObjectContext;
 
@@ -122,7 +122,7 @@
       previewButton.layer.borderColor = [UIColor blackColor].CGColor;
       previewButton.layer.borderWidth = 0.0f;
       previewButton.layer.cornerRadius = 4.0f;
-      previewButton.frame = CGRectMake(5, self.view.bounds.size.height - 55, (self.view.bounds.size.width / 2) - 5, 44);
+      previewButton.frame = CGRectMake(5, self.view.bounds.size.height - 50, (self.view.bounds.size.width / 2) - 10, 44);
       [self.view addSubview:previewButton];
       
       //download
@@ -135,13 +135,13 @@
       downloadButton.layer.borderColor = [UIColor blackColor].CGColor;
       downloadButton.layer.borderWidth = 0.0f;
       downloadButton.layer.cornerRadius = 4.0f;
-      downloadButton.frame = CGRectMake(previewButton.frame.size.width + 10, self.view.bounds.size.height - 55, (self.view.bounds.size.width / 2) - 5, 44);
+      downloadButton.frame = CGRectMake(previewButton.frame.size.width + 15, self.view.bounds.size.height - 50, (self.view.bounds.size.width / 2) - 10, 44);
       [self.view addSubview:downloadButton];
       
       //progress bar
       progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-      progressBar.progress = 0.5f;
-      progressBar.frame = CGRectMake(10, 60, self.view.bounds.size.width - 10, 25);
+      progressBar.progress = 0.0f;
+      progressBar.frame = CGRectMake(10, 65, self.view.bounds.size.width - 20, 25);
       [self.view addSubview:progressBar];
       
     }
@@ -201,7 +201,7 @@
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-    NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
+    NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
     bool exists = [[NSFileManager defaultManager] fileExistsAtPath:pp];
     if (exists) {
       [self playPreview:pp];
@@ -214,7 +214,6 @@
       //hook up to delegate
       ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
       [rtm addDelegate:self];
-      
     }
   }
 }
@@ -257,6 +256,18 @@
 -(void)downloadComplete:(NSString*)uuid
 {
   progressBar.progress = 0.0f;
+
+  //remove downloaded item from list
+  NSDictionary * soundToRemove = nil;
+  for(NSDictionary * sound in soundsData) {
+    NSString * soundUUID = [sound objectForKey:@"uuid"];
+    if (soundUUID == uuid) {
+      soundToRemove = sound;
+      break;
+    }
+  }
+  [soundsData removeObject:soundToRemove];
+  [soundsView reloadData];
 }
 
 #pragma mark - TableView DataSource Implementation
@@ -281,7 +292,7 @@
   
   cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path]];
+  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
   
   return cell;
 }
@@ -311,7 +322,7 @@
   if (t.transferType == ThumbnailTransfer) {
     [soundsView reloadData];
   } else if (t.transferType == PreviewTransfer) {
-    NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", t.uuid, t.uuid]] path];
+    NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
     [self playPreview:file_path];
   } else if (t.transferType == SoundTransfer) {
     [self downloadComplete:t.uuid];

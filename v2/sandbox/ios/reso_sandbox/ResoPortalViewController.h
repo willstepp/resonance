@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoPortalViewController : UIViewController
-  @property (nonatomic, retain) UIButton * uiButton;
-  @property (nonatomic, retain) UIButton * soundButton;
-  @property (nonatomic, retain) UIButton * dataButton;
-  @property (nonatomic, retain) UIButton * mediaTransferButton;
+  @property (nonatomic, retain) UIButton * playerButton;
+  @property (nonatomic, retain) UIButton * mixButton;
+  @property (nonatomic, retain) UIButton * cloudSoundsButton;
+  @property (nonatomic, retain) UIButton * deviceSoundsButton;
 @end

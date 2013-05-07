@@ -30,7 +30,9 @@
 		6525B15D1733172800EFED90 /* ResoMediaTransferQueue.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */; };
 		652C3A981721D44A00D585D0 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A941721D35100D585D0 /* Shader.fsh */; };
 		652C3A991721D44A00D585D0 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A951721D35100D585D0 /* Shader.vsh */; };
-		654D206D17380BA400B9DAA6 /* ResoMediaTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */; };
+		654D206D17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */; };
+		654D2070173992B600B9DAA6 /* ResoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */; };
+		654D20731739A00E00B9DAA6 /* ResoMixViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D20721739A00E00B9DAA6 /* ResoMixViewController.m */; };
 		659E4D0517222D6B00B3D32D /* iphone5_sitf_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */; };
 		659E4D0617222D6B00B3D32D /* iphone5_sitf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */; };
 		659E4D0B172233E400B3D32D /* nebula_blue_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */; };
@@ -79,7 +81,7 @@
 		65FE9ED1172EFC6B00E8E1EF /* ResoSoundViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */; };
 		65FE9ED4172F009D00E8E1EF /* drumloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED2172F009C00E8E1EF /* drumloop.wav */; };
 		65FE9ED5172F009D00E8E1EF /* swish.wav in Resources */ = {isa = PBXBuildFile; fileRef = 65FE9ED3172F009D00E8E1EF /* swish.wav */; };
-		65FE9EDC172F097300E8E1EF /* ResoDataViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EDB172F097300E8E1EF /* ResoDataViewController.mm */; };
+		65FE9EDC172F097300E8E1EF /* ResoCloudSoundsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EDB172F097300E8E1EF /* ResoCloudSoundsViewController.mm */; };
 		65FE9F0C172F0CA800E8E1EF /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9F0B172F0CA800E8E1EF /* CoreData.framework */; };
 		65FE9F0F172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9F0D172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -121,8 +123,12 @@
 		6525B15C1733172800EFED90 /* ResoMediaTransferQueue.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMediaTransferQueue.mm; sourceTree = "<group>"; };
 		652C3A941721D35100D585D0 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		652C3A951721D35100D585D0 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
-		654D206B17380BA400B9DAA6 /* ResoMediaTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransferViewController.h; sourceTree = "<group>"; };
-		654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoMediaTransferViewController.m; sourceTree = "<group>"; };
+		654D206B17380BA400B9DAA6 /* ResoDeviceSoundsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoDeviceSoundsViewController.h; sourceTree = "<group>"; };
+		654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoDeviceSoundsViewController.mm; sourceTree = "<group>"; };
+		654D206E173992B500B9DAA6 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
+		654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoPlayerViewController.m; sourceTree = "<group>"; };
+		654D20711739A00E00B9DAA6 /* ResoMixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixViewController.h; sourceTree = "<group>"; };
+		654D20721739A00E00B9DAA6 /* ResoMixViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoMixViewController.m; sourceTree = "<group>"; };
 		659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf_blur.jpg; sourceTree = "<group>"; };
 		659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf.jpg; sourceTree = "<group>"; };
 		659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nebula_blue_blur.jpg; sourceTree = "<group>"; };
@@ -188,8 +194,8 @@
 		65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResoSoundViewController.xib; sourceTree = "<group>"; };
 		65FE9ED2172F009C00E8E1EF /* drumloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drumloop.wav; sourceTree = "<group>"; };
 		65FE9ED3172F009D00E8E1EF /* swish.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = swish.wav; sourceTree = "<group>"; };
-		65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoDataViewController.h; sourceTree = "<group>"; };
-		65FE9EDB172F097300E8E1EF /* ResoDataViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoDataViewController.mm; sourceTree = "<group>"; };
+		65FE9EDA172F097300E8E1EF /* ResoCloudSoundsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoCloudSoundsViewController.h; sourceTree = "<group>"; };
+		65FE9EDB172F097300E8E1EF /* ResoCloudSoundsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoCloudSoundsViewController.mm; sourceTree = "<group>"; };
 		65FE9F0B172F0CA800E8E1EF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		65FE9F0E172F0D6E00E8E1EF /* reso_sandbox.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = reso_sandbox.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -322,15 +328,19 @@
 				65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */,
 				65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */,
 				65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */,
-				65FE9EDA172F097300E8E1EF /* ResoDataViewController.h */,
-				65FE9EDB172F097300E8E1EF /* ResoDataViewController.mm */,
+				65FE9EDA172F097300E8E1EF /* ResoCloudSoundsViewController.h */,
+				65FE9EDB172F097300E8E1EF /* ResoCloudSoundsViewController.mm */,
 				65A2B7061721CEBA00404340 /* ResoAppDelegate.h */,
 				65A2B7071721CEBA00404340 /* ResoAppDelegate.mm */,
 				65A2B7091721CEBA00404340 /* ResoUiViewController.h */,
 				65A2B70A1721CEBA00404340 /* ResoUiViewController.mm */,
 				65FE9ECD172EFC6B00E8E1EF /* ResoSoundViewController.xib */,
-				654D206B17380BA400B9DAA6 /* ResoMediaTransferViewController.h */,
-				654D206C17380BA400B9DAA6 /* ResoMediaTransferViewController.m */,
+				654D206B17380BA400B9DAA6 /* ResoDeviceSoundsViewController.h */,
+				654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */,
+				654D206E173992B500B9DAA6 /* ResoPlayerViewController.h */,
+				654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */,
+				654D20711739A00E00B9DAA6 /* ResoMixViewController.h */,
+				654D20721739A00E00B9DAA6 /* ResoMixViewController.m */,
 			);
 			name = mvc;
 			sourceTree = "<group>";
@@ -544,7 +554,7 @@
 				65FE9ECE172EFC6B00E8E1EF /* FMODSound.mm in Sources */,
 				65FE9ECF172EFC6B00E8E1EF /* FMODSoundEngine.mm in Sources */,
 				65FE9ED0172EFC6B00E8E1EF /* FMODTone.mm in Sources */,
-				65FE9EDC172F097300E8E1EF /* ResoDataViewController.mm in Sources */,
+				65FE9EDC172F097300E8E1EF /* ResoCloudSoundsViewController.mm in Sources */,
 				65FE9F0F172F0D6E00E8E1EF /* reso_sandbox.xcdatamodeld in Sources */,
 				65C153031731E3F90082897E /* ResoSoundManager.mm in Sources */,
 				6525B1521732F70100EFED90 /* ioapi.c in Sources */,
@@ -558,7 +568,9 @@
 				651479681734249000003287 /* ResoUrlConnection.mm in Sources */,
 				6514796E173458E800003287 /* ResoMediaTransferManager.mm in Sources */,
 				651479711734662200003287 /* NSMutableArray+QueueAdditions.mm in Sources */,
-				654D206D17380BA400B9DAA6 /* ResoMediaTransferViewController.m in Sources */,
+				654D206D17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm in Sources */,
+				654D2070173992B600B9DAA6 /* ResoPlayerViewController.m in Sources */,
+				654D20731739A00E00B9DAA6 /* ResoMixViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

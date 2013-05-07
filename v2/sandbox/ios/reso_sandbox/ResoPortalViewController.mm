@@ -9,17 +9,17 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "ResoPortalViewController.h"
-#import "ResoUiViewController.h"
-#import "ResoSoundViewController.h"
-#import "ResoDataViewController.h"
-#import "ResoMediaTransferViewController.h"
+#import "ResoMixViewController.h"
+#import "ResoPlayerViewController.h"
+#import "ResoCloudSoundsViewController.h"
+#import "ResoDeviceSoundsViewController.h"
 #import "ResoTypes.h"
 
 @interface ResoPortalViewController ()
 @end
 
 @implementation ResoPortalViewController
-@synthesize uiButton, soundButton, dataButton, mediaTransferButton;
+@synthesize playerButton, mixButton, cloudSoundsButton, deviceSoundsButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,87 +28,87 @@
 
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
       
-      //ui button
-      uiButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [uiButton setTitle:@"UI" forState:UIControlStateNormal];
-      [uiButton addTarget:self action:@selector(showUI:) forControlEvents:UIControlEventTouchUpInside];
-      [uiButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [uiButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      //player button
+      playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [playerButton setTitle:@"Player" forState:UIControlStateNormal];
+      [playerButton addTarget:self action:@selector(showPlayer:) forControlEvents:UIControlEventTouchUpInside];
+      [playerButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [playerButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      uiButton.layer.borderColor = [UIColor blackColor].CGColor;
-      uiButton.layer.borderWidth = 0.0f;
-      uiButton.layer.cornerRadius = 4.0f;
-      uiButton.frame = CGRectMake(10, 100, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:uiButton];
+      playerButton.layer.borderColor = [UIColor blackColor].CGColor;
+      playerButton.layer.borderWidth = 0.0f;
+      playerButton.layer.cornerRadius = 4.0f;
+      playerButton.frame = CGRectMake(10, 100, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:playerButton];
       
-      //sound button
-      soundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [soundButton setTitle:@"Sound" forState:UIControlStateNormal];
-      [soundButton addTarget:self action:@selector(showSound:) forControlEvents:UIControlEventTouchUpInside];
-      [soundButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [soundButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      //mix button
+      mixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [mixButton setTitle:@"Mix" forState:UIControlStateNormal];
+      [mixButton addTarget:self action:@selector(showMix:) forControlEvents:UIControlEventTouchUpInside];
+      [mixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      soundButton.layer.borderColor = [UIColor blackColor].CGColor;
-      soundButton.layer.borderWidth = 0.0f;
-      soundButton.layer.cornerRadius = 4.0f;
-      soundButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:soundButton];
+      mixButton.layer.borderColor = [UIColor blackColor].CGColor;
+      mixButton.layer.borderWidth = 0.0f;
+      mixButton.layer.cornerRadius = 4.0f;
+      mixButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:mixButton];
       
-      //data button
-      dataButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [dataButton setTitle:@"Data" forState:UIControlStateNormal];
-      [dataButton addTarget:self action:@selector(showData:) forControlEvents:UIControlEventTouchUpInside];
-      [dataButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [dataButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      //cloud sounds button
+      cloudSoundsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [cloudSoundsButton setTitle:@"Cloud Sounds" forState:UIControlStateNormal];
+      [cloudSoundsButton addTarget:self action:@selector(showCloudSounds:) forControlEvents:UIControlEventTouchUpInside];
+      [cloudSoundsButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [cloudSoundsButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      dataButton.layer.borderColor = [UIColor blackColor].CGColor;
-      dataButton.layer.borderWidth = 0.0f;
-      dataButton.layer.cornerRadius = 4.0f;
-      dataButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:dataButton];
+      cloudSoundsButton.layer.borderColor = [UIColor blackColor].CGColor;
+      cloudSoundsButton.layer.borderWidth = 0.0f;
+      cloudSoundsButton.layer.cornerRadius = 4.0f;
+      cloudSoundsButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:cloudSoundsButton];
       
-      //media transfer button
-      mediaTransferButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [mediaTransferButton setTitle:@"Media Transfer" forState:UIControlStateNormal];
-      [mediaTransferButton addTarget:self action:@selector(showMediaTransfer:) forControlEvents:UIControlEventTouchUpInside];
-      [mediaTransferButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [mediaTransferButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      //device sounds button
+      deviceSoundsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [deviceSoundsButton setTitle:@"Device Sounds" forState:UIControlStateNormal];
+      [deviceSoundsButton addTarget:self action:@selector(showDeviceSounds:) forControlEvents:UIControlEventTouchUpInside];
+      [deviceSoundsButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [deviceSoundsButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      mediaTransferButton.layer.borderColor = [UIColor blackColor].CGColor;
-      mediaTransferButton.layer.borderWidth = 0.0f;
-      mediaTransferButton.layer.cornerRadius = 4.0f;
-      mediaTransferButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:mediaTransferButton];
+      deviceSoundsButton.layer.borderColor = [UIColor blackColor].CGColor;
+      deviceSoundsButton.layer.borderWidth = 0.0f;
+      deviceSoundsButton.layer.cornerRadius = 4.0f;
+      deviceSoundsButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:deviceSoundsButton];
     }
     return self;
 }
 
--(void)showSound:(id)sender
+-(void)showMix:(id)sender
 {
-  ResoSoundViewController * rsvc = [[ResoSoundViewController alloc] initWithNibName:@"ResoSoundViewController" bundle:nil];
+  ResoMixViewController * rmvc = [[ResoMixViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
-  [self.navigationController pushViewController:rsvc animated:YES];
+  [self.navigationController pushViewController:rmvc animated:YES];
 }
 
--(void)showUI:(id)sender
+-(void)showPlayer:(id)sender
 {
-  ResoUiViewController * ruvc = [[ResoUiViewController alloc] initWithNibName:nil bundle:nil];
+  ResoPlayerViewController * rpvc = [[ResoPlayerViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
-  [self.navigationController pushViewController:ruvc animated:YES];
+  [self.navigationController pushViewController:rpvc animated:YES];
 }
 
--(void)showData:(id)sender
+-(void)showCloudSounds:(id)sender
 {  
-  ResoDataViewController * rdvc = [[ResoDataViewController alloc] initWithNibName:nil bundle:nil];
+  ResoCloudSoundsViewController * rdvc = [[ResoCloudSoundsViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rdvc animated:YES];
 }
 
--(void)showMediaTransfer:(id)sender
+-(void)showDeviceSounds:(id)sender
 {
-  ResoMediaTransferViewController * rmtvc = [[ResoMediaTransferViewController alloc] initWithNibName:nil bundle:nil];
+  ResoDeviceSoundsViewController * rdsvc = [[ResoDeviceSoundsViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
-  [self.navigationController pushViewController:rmtvc animated:YES];
+  [self.navigationController pushViewController:rdsvc animated:YES];
 }
 
 - (void)viewDidLoad

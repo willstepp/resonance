@@ -1,5 +1,5 @@
 //
-//  ResoDataViewController.h
+//  ResoCloudSoundsViewController.h
 //  reso_sandbox
 //
 //  Created by Daniel Stepp on 4/29/13.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ResoMediaTransfer.h"
 
-@interface ResoDataViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferDelegate>
+@interface ResoCloudSoundsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferDelegate>
   @property (nonatomic, retain) UIButton * backButton;
   @property (nonatomic, retain) UIButton * previewButton;
   @property (nonatomic, retain) UIButton * downloadButton;

@@ -128,8 +128,8 @@ static  ResoMediaTransferManager * rmtm = nil;
       NSString * version = [app iosVersionForDownload];
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
       rmti.transferType = mt;
-      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.%@", uuid, uuid, version];
-      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", uuid, uuid]] path];
+      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@", uuid, version];
+      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/install", uuid]] path];
       [rmt addItem:rmti];
       break;
     }
@@ -139,8 +139,8 @@ static  ResoMediaTransferManager * rmtm = nil;
     {
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
       rmti.transferType = mt;
-      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.thumb", uuid, uuid];
-      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.thumb", uuid, uuid]] path];
+      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/thumb", uuid];
+      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path];
       [rmt addItem:rmti];
       break;
     }
@@ -148,8 +148,8 @@ static  ResoMediaTransferManager * rmtm = nil;
     {
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
       rmti.transferType = mt;
-      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/%@.preview", uuid, uuid];
-      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.preview", uuid, uuid]] path];
+      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/preview", uuid];
+      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
       [rmt addItem:rmti];
       break;
     }
@@ -170,17 +170,34 @@ static  ResoMediaTransferManager * rmtm = nil;
   
   //if sound, unzip files
   if (t.transferType == SoundTransfer) {
-    NSString * installFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/%@.install", t.uuid, t.uuid]] path];
+    NSString * installFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/install", t.uuid]] path];
     NSString * destinationPath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", t.uuid]] path];
     [SSZipArchive unzipFileAtPath:installFilePath toDestination:destinationPath];
     
     [[NSFileManager defaultManager] removeItemAtPath:installFilePath error:nil];
+    
+    [self loadSoundMetadata:t.uuid];
     [app setStateforSound:t.uuid newState:Completed];
-  
-    //read in metadata from file, populate Sound record
     
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
   }
+}
+
+-(void)loadSoundMetadata:(NSString*)uuid
+{
+  //1) get path of metadata file
+  NSString * metadataFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/meta", uuid]] path];
+
+  //2) read json
+  NSData * metadata = [NSData dataWithContentsOfFile:metadataFilePath];
+  
+  //3) parse json
+  NSDictionary * sound = [NSJSONSerialization
+                          JSONObjectWithData:metadata
+                          options:kNilOptions
+                          error:nil];
+  //4) update sound data
+  [app setSoundFromData:sound];
 }
 
 -(void) transferError:(ResoMediaTransfer*)t

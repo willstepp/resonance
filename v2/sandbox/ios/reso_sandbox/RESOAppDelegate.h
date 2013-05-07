@@ -26,11 +26,12 @@
 
 - (void)clearSounds;
 - (void)addSoundWithIdentifier:(NSString*)uuid;
-- (void)addSoundFromData:(NSDictionary*)d;
+- (void)setSoundFromData:(NSDictionary*)d;
 - (BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
 - (NSArray*)soundsWithState:(int)s;
 - (int)getStateForSound:(NSString*)uuid;
 - (void)setStateforSound:(NSString*)uuid newState:(int)s;
+- (void)removeSoundWithIdentifier:(NSString*)uuid;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

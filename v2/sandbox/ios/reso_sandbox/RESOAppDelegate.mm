@@ -236,27 +236,51 @@
   //more error handling here
 }
 
-- (void)addSoundFromData:(NSDictionary*)d
+- (void)setSoundFromData:(NSDictionary*)d
 {
   NSString * name = [d objectForKey:@"name"];
   NSString * desc = [d objectForKey:@"description"];
   NSString * uuid = [d objectForKey:@"uuid"];
   
+  NSLog(@"setSoundFromData()");
+  NSLog(@"name: %s", [name UTF8String]);
+  NSLog(@"desc: %s", [desc UTF8String]);
+  NSLog(@"uuid: %s", [uuid UTF8String]);
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSManagedObject * sound;
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
     
-    NSManagedObjectContext * context = [self managedObjectContext];
-    NSManagedObject * sound = [NSEntityDescription
-                               insertNewObjectForEntityForName:@"Sound"
-                               inManagedObjectContext:context];
-    [sound setValue:name forKey:@"name"];
-    [sound setValue:desc forKey:@"desc"];
-    [sound setValue:uuid forKey:@"uuid"];
-    [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
+    sound = [NSEntityDescription
+             insertNewObjectForEntityForName:@"Sound"
+             inManagedObjectContext:context];
+
+  } else {
+    
+    //retrieve sound
+    NSEntityDescription * ed = [NSEntityDescription
+                                entityForName:@"Sound" inManagedObjectContext:context];
+    
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    [request setEntity:ed];
+    
+    NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+    [request setPredicate:p];
     
     NSError * error;
-    if (![context save:&error]) {
-    }
-  } else {
+    NSArray * array = [context executeFetchRequest:request error:&error];
+    
+    sound = [array objectAtIndex:0];
+    
+  }
+  
+  [sound setValue:name forKey:@"name"];
+  [sound setValue:desc forKey:@"desc"];
+  [sound setValue:uuid forKey:@"uuid"];
+  [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
+  
+  NSError * error;
+  if (![context save:&error]) {
   }
 }
 
@@ -378,6 +402,28 @@
     NSError * error;
     if (![context save:&error]) {
     }
+  }
+}
+
+- (void)removeSoundWithIdentifier:(NSString*)uuid
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * sound = [array objectAtIndex:0];
+    [context deleteObject:sound];
+    NSError * saveError = nil;
+    [context save:&saveError];
   }
 }
 
