@@ -32,6 +32,7 @@
 - (int)getStateForSound:(NSString*)uuid;
 - (void)setStateforSound:(NSString*)uuid newState:(int)s;
 - (void)removeSoundWithIdentifier:(NSString*)uuid;
+-(NSMutableDictionary*)soundWithIdentifier:(NSString*)uuid;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

@@ -10,31 +10,19 @@
 #import "ResoTypes.h"
 
 @protocol ISoundEngine;
+@protocol ISound;
+@protocol ITone;
 
 @interface ResoModule : NSObject
 @property (readonly) NSString * uuid;
 @property (readonly) int tag;
 
+@property (readonly) id<ISound> sound;
+@property (readonly) id<ITone> tone;
+
 -(id)initWithSoundEngine:(id<ISoundEngine>)ise tag:(int)t;
 
 -(void)loadSound:(NSString*)newUuid looped:(bool)l;
 -(void)loadPreview:(NSString*)newUuid looped:(bool)l;
--(bool)loaded;
 
--(void)unload;
-
--(void)play;
--(bool)playing;
-
--(void)setPaused:(bool)state;
--(bool)paused;
-
--(void)stop;
-
--(void)setVolume:(float)value;
--(float)volume;
-
--(void)addEffectOfType:(EffectType)et;
--(void)setEffectValueForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value;
--(void)removeEffectOfType:(EffectType)et;
 @end

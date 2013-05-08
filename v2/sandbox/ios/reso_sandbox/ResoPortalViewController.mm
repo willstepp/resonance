@@ -13,13 +13,14 @@
 #import "ResoPlayerViewController.h"
 #import "ResoCloudSoundsViewController.h"
 #import "ResoDeviceSoundsViewController.h"
+#import "ResoTimerViewController.h"
 #import "ResoTypes.h"
 
 @interface ResoPortalViewController ()
 @end
 
 @implementation ResoPortalViewController
-@synthesize playerButton, mixButton, cloudSoundsButton, deviceSoundsButton;
+@synthesize playerButton, mixButton, cloudSoundsButton, deviceSoundsButton, timerButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,6 +80,19 @@
       deviceSoundsButton.layer.cornerRadius = 4.0f;
       deviceSoundsButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:deviceSoundsButton];
+      
+      //timer button
+      timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [timerButton setTitle:@"Timer" forState:UIControlStateNormal];
+      [timerButton addTarget:self action:@selector(showTimer:) forControlEvents:UIControlEventTouchUpInside];
+      [timerButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [timerButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      timerButton.layer.borderColor = [UIColor blackColor].CGColor;
+      timerButton.layer.borderWidth = 0.0f;
+      timerButton.layer.cornerRadius = 4.0f;
+      timerButton.frame = CGRectMake(10, 380, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:timerButton];
     }
     return self;
 }
@@ -109,6 +123,13 @@
   ResoDeviceSoundsViewController * rdsvc = [[ResoDeviceSoundsViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rdsvc animated:YES];
+}
+
+-(void)showTimer:(id)sender
+{
+  ResoTimerViewController * rtvc = [[ResoTimerViewController alloc] initWithNibName:nil bundle:nil];
+  //push it onto the 'navigation stack'
+  [self.navigationController pushViewController:rtvc animated:YES];
 }
 
 - (void)viewDidLoad

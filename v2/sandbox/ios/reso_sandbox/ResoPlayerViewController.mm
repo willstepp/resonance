@@ -7,14 +7,17 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "ResoAppDelegate.h"
 #import "ResoPlayerViewController.h"
 
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
+#import "ISound.h"
 
 @interface ResoPlayerViewController ()
 {
   ResoModule * module;
+  UIImageView * backgroundImage;
 }
 @end
 
@@ -25,6 +28,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+      
+      //background image
+      backgroundImage = [[UIImageView alloc] initWithFrame:self.view.bounds];
+      [self.view addSubview:backgroundImage];
+      
       //back button
       backButton = [UIButton buttonWithType:UIButtonTypeCustom];
       [backButton setTitle:@"<" forState:UIControlStateNormal];
@@ -52,21 +60,44 @@
       [self.view addSubview:playButton];
       
       //reverb label
-      UILabel * reverbLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 250, 65, 26)];
+      UILabel * reverbLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width / 2) - 30, 250, 65, 26)];
       [reverbLabel setText:@"Reverb"];
       [reverbLabel setBackgroundColor:[UIColor clearColor]];
       [reverbLabel setTextColor:[UIColor whiteColor]];
       [self.view addSubview:reverbLabel];
       
       //reverb switch
-      CGRect frame = CGRectMake(80, 250, 60.0, 26.0);
+      CGRect frame = CGRectMake((self.view.bounds.size.width / 2) - 40, 280, 60.0, 26.0);
       reverbSwitch = [[UISwitch alloc] initWithFrame:frame];
+      [reverbSwitch setTintColor:[UIColor blackColor]];
+      [reverbSwitch setOnTintColor:[UIColor lightGrayColor]];
+      [reverbSwitch setThumbTintColor:[UIColor grayColor]];
       [reverbSwitch addTarget:self action:@selector(toggleReverb:) forControlEvents:UIControlEventTouchUpInside];
       
       [reverbSwitch setBackgroundColor:[UIColor clearColor]];
       [self.view addSubview:reverbSwitch];
       
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
+      
+      ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+      
+      ResoModuleManager * rmm = [ResoModuleManager instance];
+      module = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+      if ([module.sound loaded]) {
+        
+        //load background image
+        NSString * backgroundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/img_blur", module.uuid]] path];
+        [backgroundImage setImage:[UIImage imageWithContentsOfFile:backgroundPath]];
+        
+        //load sound title
+        NSMutableDictionary * sound = [ad soundWithIdentifier:module.uuid];
+        UILabel * soundLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 125, self.view.bounds.size.width - 20, 50)];
+        [soundLabel setText:[sound objectForKey:@"name"]];
+        [soundLabel setBackgroundColor:[UIColor clearColor]];
+        [soundLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:soundLabel];
+      }
+
     }
     return self;
 }
@@ -90,13 +121,14 @@
 {
   ResoModuleManager * rmm = [ResoModuleManager instance];
   module = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
-  if ([module loaded]) {
-    if ([module playing]) {
+  if ([module.sound loaded]) {
+    if ([module.sound playing]) {
       [playButton setTitle:@"Play Sound" forState:UIControlStateNormal];
-      [module stop];
+      [module.sound stop];
     } else {
       [playButton setTitle:@"Stop Sound" forState:UIControlStateNormal];
-      [module play];
+      [module.sound play];
+      NSLog(@"%f", [module.sound volume]);
     }
   }
 }
@@ -104,10 +136,10 @@
 -(void)toggleReverb:(id)sender
 {
   if ([reverbSwitch isOn]) {
-    [module addEffectOfType:Reverb];
-    [module setEffectValueForType:Reverb forParameter:Reverb_Room withValue:0.0f];
+    [module.sound addEffectOfType:Reverb];
+    [module.sound setEffectValueForType:Reverb forParameter:Reverb_Room withValue:0.0f];
   } else {
-    [module removeEffectOfType:Reverb];
+    [module.sound removeEffectOfType:Reverb];
   }
 }
 

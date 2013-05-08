@@ -340,6 +340,32 @@
   return sounds;
 }
 
+-(NSMutableDictionary*)soundWithIdentifier:(NSString*)uuid
+{
+  NSMutableDictionary * sound = nil;
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Sound" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * s = [array objectAtIndex:0];
+    sound = [[NSMutableDictionary alloc] init];
+    [sound setValue:[s valueForKey:@"name"] forKey:@"name"];
+    [sound setValue:[s valueForKey:@"desc"] forKey:@"desc"];
+    [sound setValue:[s valueForKey:@"uuid"] forKey:@"uuid"];
+  }
+  return sound;
+}
+
 -(NSArray*)soundTransfersToBeResumed
 {
   NSManagedObjectContext * context = [self managedObjectContext];

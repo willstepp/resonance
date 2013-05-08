@@ -16,15 +16,16 @@
 @interface ResoModule ()
 {
   id<ISoundEngine> soundEngine;
-  id<ISound> sound;
-  id<ITone> tone;
 }
 @property (nonatomic, readwrite) NSString *  uuid;
 @property (nonatomic, readwrite) int tag;
+
+@property (nonatomic, readwrite) id<ISound> sound;
+@property (nonatomic, readwrite) id<ITone> tone;
 @end
 
 @implementation ResoModule
-@synthesize uuid, tag;
+@synthesize uuid, tag, sound, tone;
 
 -(id)init
 {
@@ -71,63 +72,4 @@
   }
 }
 
--(bool)loaded
-{
-  return [sound loaded];
-}
-
--(void)unload
-{
-  [sound unload];
-}
-
--(void)play
-{
-  [sound play];
-}
-
--(bool)playing
-{
-  return [sound playing];
-}
-
--(void)setPaused:(bool)state
-{
-  [sound setPaused:state];
-}
-
--(bool)paused
-{
-  return [sound paused];
-}
-
--(void)stop
-{
-  [sound stop];
-}
-
--(void)setVolume:(float)value
-{
-  [sound setVolume:value];
-}
-
--(float)volume
-{
-  return [sound volume];
-}
-
--(void)addEffectOfType:(EffectType)et
-{
-  [sound addEffectOfType:et];
-}
-
--(void)removeEffectOfType:(EffectType)et
-{
-  [sound removeEffectOfType:et];
-}
-
--(void)setEffectValueForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value
-{
-  [sound setEffectValueForType:et forParameter:ep withValue:value];
-}
 @end

@@ -13,4 +13,5 @@
   @property (nonatomic, retain) UIButton * mixButton;
   @property (nonatomic, retain) UIButton * cloudSoundsButton;
   @property (nonatomic, retain) UIButton * deviceSoundsButton;
+  @property (nonatomic, retain) UIButton * timerButton;
 @end

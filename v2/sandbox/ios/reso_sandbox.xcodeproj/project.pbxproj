@@ -35,6 +35,9 @@
 		654D20731739A00E00B9DAA6 /* ResoMixViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654D20721739A00E00B9DAA6 /* ResoMixViewController.mm */; };
 		657735C6173A92FA008E5A2B /* ResoModuleManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735C5173A92FA008E5A2B /* ResoModuleManager.mm */; };
 		657735C9173A94CB008E5A2B /* ResoModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735C8173A94CB008E5A2B /* ResoModule.mm */; };
+		657735CC173AF28B008E5A2B /* ResoTimerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735CB173AF28B008E5A2B /* ResoTimerViewController.mm */; };
+		657735CF173AF4E6008E5A2B /* ResoTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735CE173AF4E6008E5A2B /* ResoTimer.mm */; };
+		657735D2173AF4FD008E5A2B /* ResoAlarm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735D1173AF4FC008E5A2B /* ResoAlarm.mm */; };
 		659E4D0517222D6B00B3D32D /* iphone5_sitf_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */; };
 		659E4D0617222D6B00B3D32D /* iphone5_sitf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */; };
 		659E4D0B172233E400B3D32D /* nebula_blue_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */; };
@@ -135,6 +138,12 @@
 		657735C5173A92FA008E5A2B /* ResoModuleManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleManager.mm; sourceTree = "<group>"; };
 		657735C7173A94CB008E5A2B /* ResoModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModule.h; sourceTree = "<group>"; };
 		657735C8173A94CB008E5A2B /* ResoModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModule.mm; sourceTree = "<group>"; };
+		657735CA173AF28B008E5A2B /* ResoTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTimerViewController.h; sourceTree = "<group>"; };
+		657735CB173AF28B008E5A2B /* ResoTimerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoTimerViewController.mm; sourceTree = "<group>"; };
+		657735CD173AF4E6008E5A2B /* ResoTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTimer.h; sourceTree = "<group>"; };
+		657735CE173AF4E6008E5A2B /* ResoTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoTimer.mm; sourceTree = "<group>"; };
+		657735D0173AF4FC008E5A2B /* ResoAlarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoAlarm.h; sourceTree = "<group>"; };
+		657735D1173AF4FC008E5A2B /* ResoAlarm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoAlarm.mm; sourceTree = "<group>"; };
 		659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf_blur.jpg; sourceTree = "<group>"; };
 		659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf.jpg; sourceTree = "<group>"; };
 		659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nebula_blue_blur.jpg; sourceTree = "<group>"; };
@@ -351,6 +360,12 @@
 				657735C5173A92FA008E5A2B /* ResoModuleManager.mm */,
 				657735C7173A94CB008E5A2B /* ResoModule.h */,
 				657735C8173A94CB008E5A2B /* ResoModule.mm */,
+				657735CA173AF28B008E5A2B /* ResoTimerViewController.h */,
+				657735CB173AF28B008E5A2B /* ResoTimerViewController.mm */,
+				657735CD173AF4E6008E5A2B /* ResoTimer.h */,
+				657735CE173AF4E6008E5A2B /* ResoTimer.mm */,
+				657735D0173AF4FC008E5A2B /* ResoAlarm.h */,
+				657735D1173AF4FC008E5A2B /* ResoAlarm.mm */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -583,6 +598,9 @@
 				654D20731739A00E00B9DAA6 /* ResoMixViewController.mm in Sources */,
 				657735C6173A92FA008E5A2B /* ResoModuleManager.mm in Sources */,
 				657735C9173A94CB008E5A2B /* ResoModule.mm in Sources */,
+				657735CC173AF28B008E5A2B /* ResoTimerViewController.mm in Sources */,
+				657735CF173AF4E6008E5A2B /* ResoTimer.mm in Sources */,
+				657735D2173AF4FD008E5A2B /* ResoAlarm.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

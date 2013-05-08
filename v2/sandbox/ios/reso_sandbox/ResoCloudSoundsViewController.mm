@@ -226,7 +226,7 @@
   ResoModuleManager * rmm = [ResoModuleManager instance];
   ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:Preview]];
   [rm loadPreview:uuid looped:false];
-  [rm play];
+  [rm.sound play];
 }
 
 -(void)downloadSound:(id)sender
