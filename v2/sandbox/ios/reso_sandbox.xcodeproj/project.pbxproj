@@ -31,8 +31,10 @@
 		652C3A981721D44A00D585D0 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A941721D35100D585D0 /* Shader.fsh */; };
 		652C3A991721D44A00D585D0 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 652C3A951721D35100D585D0 /* Shader.vsh */; };
 		654D206D17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */; };
-		654D2070173992B600B9DAA6 /* ResoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */; };
-		654D20731739A00E00B9DAA6 /* ResoMixViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D20721739A00E00B9DAA6 /* ResoMixViewController.m */; };
+		654D2070173992B600B9DAA6 /* ResoPlayerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654D206F173992B500B9DAA6 /* ResoPlayerViewController.mm */; };
+		654D20731739A00E00B9DAA6 /* ResoMixViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654D20721739A00E00B9DAA6 /* ResoMixViewController.mm */; };
+		657735C6173A92FA008E5A2B /* ResoModuleManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735C5173A92FA008E5A2B /* ResoModuleManager.mm */; };
+		657735C9173A94CB008E5A2B /* ResoModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657735C8173A94CB008E5A2B /* ResoModule.mm */; };
 		659E4D0517222D6B00B3D32D /* iphone5_sitf_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */; };
 		659E4D0617222D6B00B3D32D /* iphone5_sitf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */; };
 		659E4D0B172233E400B3D32D /* nebula_blue_blur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */; };
@@ -126,9 +128,13 @@
 		654D206B17380BA400B9DAA6 /* ResoDeviceSoundsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoDeviceSoundsViewController.h; sourceTree = "<group>"; };
 		654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoDeviceSoundsViewController.mm; sourceTree = "<group>"; };
 		654D206E173992B500B9DAA6 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
-		654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoPlayerViewController.m; sourceTree = "<group>"; };
+		654D206F173992B500B9DAA6 /* ResoPlayerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPlayerViewController.mm; sourceTree = "<group>"; };
 		654D20711739A00E00B9DAA6 /* ResoMixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixViewController.h; sourceTree = "<group>"; };
-		654D20721739A00E00B9DAA6 /* ResoMixViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoMixViewController.m; sourceTree = "<group>"; };
+		654D20721739A00E00B9DAA6 /* ResoMixViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixViewController.mm; sourceTree = "<group>"; };
+		657735C4173A92FA008E5A2B /* ResoModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleManager.h; sourceTree = "<group>"; };
+		657735C5173A92FA008E5A2B /* ResoModuleManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleManager.mm; sourceTree = "<group>"; };
+		657735C7173A94CB008E5A2B /* ResoModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModule.h; sourceTree = "<group>"; };
+		657735C8173A94CB008E5A2B /* ResoModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModule.mm; sourceTree = "<group>"; };
 		659E4D0317222D6B00B3D32D /* iphone5_sitf_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf_blur.jpg; sourceTree = "<group>"; };
 		659E4D0417222D6B00B3D32D /* iphone5_sitf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_sitf.jpg; sourceTree = "<group>"; };
 		659E4D07172233E400B3D32D /* nebula_blue_blur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nebula_blue_blur.jpg; sourceTree = "<group>"; };
@@ -321,7 +327,7 @@
 			name = data;
 			sourceTree = "<group>";
 		};
-		6525B1671733709800EFED90 /* mvc */ = {
+		6525B1671733709800EFED90 /* app */ = {
 			isa = PBXGroup;
 			children = (
 				65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */,
@@ -338,17 +344,21 @@
 				654D206B17380BA400B9DAA6 /* ResoDeviceSoundsViewController.h */,
 				654D206C17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm */,
 				654D206E173992B500B9DAA6 /* ResoPlayerViewController.h */,
-				654D206F173992B500B9DAA6 /* ResoPlayerViewController.m */,
+				654D206F173992B500B9DAA6 /* ResoPlayerViewController.mm */,
 				654D20711739A00E00B9DAA6 /* ResoMixViewController.h */,
-				654D20721739A00E00B9DAA6 /* ResoMixViewController.m */,
+				654D20721739A00E00B9DAA6 /* ResoMixViewController.mm */,
+				657735C4173A92FA008E5A2B /* ResoModuleManager.h */,
+				657735C5173A92FA008E5A2B /* ResoModuleManager.mm */,
+				657735C7173A94CB008E5A2B /* ResoModule.h */,
+				657735C8173A94CB008E5A2B /* ResoModule.mm */,
 			);
-			name = mvc;
+			name = app;
 			sourceTree = "<group>";
 		};
 		65A2B6F71721CEBA00404340 /* reso_sandbox */ = {
 			isa = PBXGroup;
 			children = (
-				6525B1671733709800EFED90 /* mvc */,
+				6525B1671733709800EFED90 /* app */,
 				6525B1661733708100EFED90 /* data */,
 				6525B1651733702E00EFED90 /* ui */,
 				6525B1571732F72D00EFED90 /* zip */,
@@ -569,8 +579,10 @@
 				6514796E173458E800003287 /* ResoMediaTransferManager.mm in Sources */,
 				651479711734662200003287 /* NSMutableArray+QueueAdditions.mm in Sources */,
 				654D206D17380BA400B9DAA6 /* ResoDeviceSoundsViewController.mm in Sources */,
-				654D2070173992B600B9DAA6 /* ResoPlayerViewController.m in Sources */,
-				654D20731739A00E00B9DAA6 /* ResoMixViewController.m in Sources */,
+				654D2070173992B600B9DAA6 /* ResoPlayerViewController.mm in Sources */,
+				654D20731739A00E00B9DAA6 /* ResoMixViewController.mm in Sources */,
+				657735C6173A92FA008E5A2B /* ResoModuleManager.mm in Sources */,
+				657735C9173A94CB008E5A2B /* ResoModule.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

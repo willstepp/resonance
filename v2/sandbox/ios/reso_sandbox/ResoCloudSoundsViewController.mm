@@ -20,6 +20,9 @@
 #import "ResoMediaTransferItem.h"
 #import "ResoMediaTransferManager.h"
 
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
+
 #define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
 @interface ResoCloudSoundsViewController ()
@@ -204,7 +207,7 @@
     NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
     bool exists = [[NSFileManager defaultManager] fileExistsAtPath:pp];
     if (exists) {
-      [self playPreview:pp];
+      [self playPreview:uuid];
     } else {
       
       //enqueue preview download
@@ -218,12 +221,12 @@
   }
 }
 
--(void)playPreview:(NSString*)filePath
+-(void)playPreview:(NSString*)uuid
 {
-  id<ISoundEngine> player = [FMODSoundEngine instance];
-  id<ISound> sound = [player getSoundForId:Preview];
-  [sound load:filePath looped:false];
-  [sound play];
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:Preview]];
+  [rm loadPreview:uuid looped:false];
+  [rm play];
 }
 
 -(void)downloadSound:(id)sender
@@ -317,13 +320,10 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  
   if (t.transferType == ThumbnailTransfer) {
     [soundsView reloadData];
   } else if (t.transferType == PreviewTransfer) {
-    NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
-    [self playPreview:file_path];
+    [self playPreview:t.uuid];
   } else if (t.transferType == SoundTransfer) {
     [self downloadComplete:t.uuid];
   }

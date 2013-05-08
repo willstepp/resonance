@@ -14,6 +14,7 @@
 #import "ResoPortalViewController.h"
 #import "ResoTypes.h"
 #import "ResoMediaTransferManager.h"
+#import "ResoModuleManager.h"
 
 @implementation ResoAppDelegate
 
@@ -41,9 +42,10 @@
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"mixes"]];
   
+  [self setupModules];
+  
   //clean out any existing sounds
   [self clearSounds];
-  
   [self resumeMediaTransfers];
   
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -509,6 +511,13 @@ NSString * deviceName()
     [rmtm initTransferOfType:SoundTransfer withIdentifier:s];
     
   }
+}
+
+-(void)setupModules
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  [rmm addModuleWithId:Preview];
+  [rmm addModuleWithId:One];
 }
 
 @end

@@ -10,4 +10,6 @@
 
 @interface ResoPlayerViewController : UIViewController
 @property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * playButton;
+@property (nonatomic, retain) UISwitch * reverbSwitch;
 @end

@@ -20,6 +20,9 @@
 #import "ResoMediaTransferItem.h"
 #import "ResoMediaTransferManager.h"
 
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
+
 @interface ResoDeviceSoundsViewController ()
 {
   UITableView * soundsView;
@@ -139,14 +142,11 @@
   if (row >= 0) {
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
-    ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-    NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", uuid]] path];
-    bool exists = [[NSFileManager defaultManager] fileExistsAtPath:pp];
-    if (exists) {
-      id<ISoundEngine> player = [FMODSoundEngine instance];
-      id<ISound> sound = [player getSoundForId:One];
-      [sound load:pp];
-    }
+    
+    ResoModuleManager * rmm = [ResoModuleManager instance];
+    ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+    [rm loadSound:uuid looped:true];
+    NSLog(@"sound loaded");
   }
 }
 
