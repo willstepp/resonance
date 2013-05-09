@@ -16,6 +16,9 @@
 {
   int totalSeconds;
   NSTimer * timer;
+  NSTimer * fadeOutTimer;
+  float step;
+  bool fading;
 }
 @property (nonatomic, readwrite) int secondsRemaining;
 @property (nonatomic, readwrite) bool running;
@@ -49,6 +52,8 @@ static ResoTimer * rt = nil;
     running = false;
     secondsRemaining = 0;
     totalSeconds = 0;
+    step = 0.0f;
+    fading = false;
   }
   return self;
 }
@@ -80,26 +85,32 @@ static ResoTimer * rt = nil;
 -(void)stop
 {
   [timer invalidate];
+  [fadeOutTimer invalidate];
+  step = 0.0f;
   running = false;
+  fading = false;
   [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
 }
 
 -(void)updateTimer
 {
   secondsRemaining--;
-  NSLog(@"timer secondsRemaining: %i", secondsRemaining);
+
   ResoModuleManager * rmm = [ResoModuleManager instance];
   ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+  
   if (secondsRemaining < 30) {
-    //TODO: fade out global volume
-    NSLog(@"module: %s", [rm.uuid UTF8String]);
-    if ([rm.sound playing]) {
+    if ([rm.sound playing] && !fading) {
+      
       float currVolume = [rm.sound volume];
-      NSLog(@"curr vol: %f", currVolume);
-      float step = currVolume / (float)secondsRemaining;
-      float newVolume = currVolume - step;
-      NSLog(@"new vol: %f", newVolume);
-      [rm.sound setVolume:newVolume];
+      step = currVolume / ((float)secondsRemaining * 10);
+      
+      fadeOutTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f
+                              target:self
+                              selector:@selector(updateFadeOut)
+                              userInfo:nil
+                              repeats:YES];
+      fading = true;
     }
   }
   
@@ -113,6 +124,16 @@ static ResoTimer * rt = nil;
   }
   
   [self notifySecondsRemaining];
+}
+
+-(void)updateFadeOut
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+  float currVolume = [rm.sound volume];
+  float newVolume = currVolume - step;
+  [rm.sound setVolume:newVolume];
+
 }
 
 - (NSMutableArray*)delegates

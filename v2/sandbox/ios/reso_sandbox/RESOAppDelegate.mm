@@ -15,6 +15,8 @@
 #import "ResoTypes.h"
 #import "ResoMediaTransferManager.h"
 #import "ResoModuleManager.h"
+#import "ResoModule.h"
+#import "ISound.h"
 
 @implementation ResoAppDelegate
 
@@ -45,7 +47,7 @@
   [self setupModules];
   
   //clean out any existing sounds
-  [self clearSounds];
+  //[self clearSounds];
   [self resumeMediaTransfers];
   
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -86,6 +88,22 @@
   // Saves changes in the application's managed object context before the application terminates.
   NSLog(@"App State: applicationWillTerminate()");
   [self saveContext];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+   
+  NSLog(@"didReceiveLocalNotification()");
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+  [rm.sound stop];
+  
+  //[super application:application didReceiveLocalNotification:notification];
+  UIApplicationState state = [application applicationState];
+  if (state == UIApplicationStateInactive) {
+    // Application was in the background when notification was delivered.
+  } else {
+    
+  }
 }
 
 - (void)saveContext
