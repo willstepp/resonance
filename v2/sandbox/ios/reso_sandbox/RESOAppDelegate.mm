@@ -40,14 +40,15 @@
   
   [self.window makeKeyAndVisible];
   
+  //[self clearSounds];
+  //[self clearMixes];
+  
   [self ensureResonanceAppDirectoryExists];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"mixes"]];
   
   [self setupModules];
   
-  //clean out any existing sounds
-  //[self clearSounds];
   [self resumeMediaTransfers];
   
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
@@ -256,6 +257,29 @@
   //more error handling here
 }
 
+- (void)clearMixes
+{
+  [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes"]] path] error:nil];
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSFetchRequest * allMixes = [[NSFetchRequest alloc] init];
+  [allMixes setEntity:[NSEntityDescription entityForName:@"Mix" inManagedObjectContext:context]];
+  [allMixes setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+  
+  NSError * error = nil;
+  NSArray * mixes = [context executeFetchRequest:allMixes error:&error];
+  
+  //error handling goes here
+  for (NSManagedObject * mix in mixes) {
+    NSString * uuid = [mix valueForKey:@"uuid"];
+    [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]] path] error:nil];
+    [context deleteObject:mix];
+  }
+  NSError * saveError = nil;
+  [context save:&saveError];
+  //more error handling here
+}
+
 - (void)setSoundFromData:(NSDictionary*)d
 {
   NSString * name = [d objectForKey:@"name"];
@@ -313,7 +337,42 @@
                                inManagedObjectContext:context];
     [sound setValue:uuid forKey:@"uuid"];
     [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
+    NSError * error;
+    if (![context save:&error]) {
+    }
   }
+}
+
+- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)s
+{
+  if (![self mixExists:uuid withContext:[self managedObjectContext]]) {
+    NSManagedObjectContext * context = [self managedObjectContext];
+    NSManagedObject * mix = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Mix"
+                               inManagedObjectContext:context];
+    [mix setValue:uuid forKey:@"uuid"];
+    [mix setValue:n forKey:@"name"];
+    [mix setValue:[NSNumber numberWithInt:s] forKey:@"state"];
+    NSError * error;
+    if (![context save:&error]) {
+    }
+  }
+}
+
+-(BOOL)mixExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context
+{
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  return [array count] > 0;
 }
 
 -(BOOL)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context
@@ -473,6 +532,28 @@
   }
 }
 
+- (void)removeMixWithIdentifier:(NSString*)uuid
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * mix = [array objectAtIndex:0];
+    [context deleteObject:mix];
+    NSError * saveError = nil;
+    [context save:&saveError];
+  }
+}
+
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
   assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
@@ -553,7 +634,6 @@ NSString * deviceName()
     //enqueue transfer of sound
     ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
     [rmtm initTransferOfType:SoundTransfer withIdentifier:s];
-    
   }
 }
 

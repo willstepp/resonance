@@ -14,6 +14,7 @@
 @protocol ITone;
 
 @interface ResoModule : NSObject
+@property (readonly) ModuleType type;
 @property (readonly) NSString * uuid;
 @property (readonly) int tag;
 

@@ -99,7 +99,7 @@ static ResoTimer * rt = nil;
   ResoModuleManager * rmm = [ResoModuleManager instance];
   ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
   
-  if (secondsRemaining < 30) {
+  if (secondsRemaining < 60) {
     if ([rm.sound playing] && !fading) {
       
       float currVolume = [rm.sound volume];

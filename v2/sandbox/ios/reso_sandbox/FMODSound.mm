@@ -362,7 +362,7 @@
   
   int loop_type = l ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
   
-  [newUrl getCString:buffer maxLength:200 encoding:NSASCIIStringEncoding];
+  [newUrl getCString:buffer maxLength:256 encoding:NSASCIIStringEncoding];
   result = system->createStream(buffer, FMOD_SOFTWARE | loop_type, NULL, &sound);
   
   url = newUrl;
@@ -418,7 +418,7 @@
     for (id em in ems)
     {
         //first release the effect
-        NSNumber * effectType = em;
+        NSNumber * effectType = [NSNumber numberWithInteger:[em integerValue]];
         EffectType et = (EffectType)[effectType intValue];
         FMOD::DSP * effect = [self getDSPWithEffectType:(EffectType)et];
         if (effect) effect->remove(); effect = NULL;
@@ -433,7 +433,7 @@
         NSArray * epms = [effectParams allKeys];
         for (id epm in epms)
         {
-            NSNumber * effectParam = epm;
+            NSNumber * effectParam = [NSNumber numberWithInteger:[epm integerValue]];
             EffectParameter ep = (EffectParameter)[effectParam intValue];
             NSNumber * paramValue = [effectParams objectForKey:epm];
             float value = [paramValue floatValue];
@@ -445,7 +445,6 @@
 -(void)setPaused:(bool)state
 {
     if (channel) channel->setPaused(state);
-    
     if (listener) [listener setPaused:state];
 }
 
@@ -459,7 +458,6 @@
 -(void)setVolume:(float)value
 {
     if (channel) channel->setVolume(value);
-    
     if (listener) [listener setVolume:value];
 }
 
@@ -534,23 +532,23 @@
         float param = 0.0f;
         effect->getParameter(i, &param, NULL, 0);
         EffectParameter ep = [self getEffectParameterFromDSPParameter:i withType:et];
-        [mappings setObject:[NSNumber numberWithFloat:param] forKey:[NSNumber numberWithInt:ep]];
+        [mappings setObject:[NSNumber numberWithFloat:param] forKey:[NSString stringWithFormat:@"%i", ep]];
     }
     if ([mappings count] > 0)
-        [effectMappings setObject:mappings forKey:[NSNumber numberWithInt:et]];
+      [effectMappings setObject:mappings forKey:[NSString stringWithFormat:@"%i", et]];
     else
         mappings = nil;
 }
 
 -(void)updateEffectMappingsForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value
 {
-    NSMutableDictionary * mappings = [effectMappings objectForKey:[NSNumber numberWithInt:et]];
-    if (mappings) [mappings setObject:[NSNumber numberWithFloat:value] forKey:[NSNumber numberWithInt:ep]];
+    NSMutableDictionary * mappings = [effectMappings objectForKey:[NSString stringWithFormat:@"%i", et]];
+    if (mappings) [mappings setObject:[NSNumber numberWithFloat:value] forKey:[NSString stringWithFormat:@"%i", ep]];
 }
 
 -(void)removeEffectMappingsForType:(EffectType)et
 {
-    NSMutableDictionary * mappings = [effectMappings objectForKey:[NSNumber numberWithInt:et]];
+    NSMutableDictionary * mappings = [effectMappings objectForKey:[NSString stringWithFormat:@"%i", et]];
     if (mappings) { [mappings removeAllObjects]; mappings = nil; }
 }
 

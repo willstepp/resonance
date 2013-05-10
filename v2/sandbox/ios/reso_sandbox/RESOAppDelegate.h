@@ -24,6 +24,7 @@
 - (NSURL *)applicationDocumentsDirectory;
 - (NSURL *)applicationCachesDirectory;
 
+//sound data methods
 - (void)clearSounds;
 - (void)addSoundWithIdentifier:(NSString*)uuid;
 - (void)setSoundFromData:(NSDictionary*)d;
@@ -33,6 +34,12 @@
 - (void)setStateforSound:(NSString*)uuid newState:(int)s;
 - (void)removeSoundWithIdentifier:(NSString*)uuid;
 -(NSMutableDictionary*)soundWithIdentifier:(NSString*)uuid;
+
+//mix data methods
+- (void)clearMixes;
+- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)s;
+- (BOOL)mixExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
+- (void)removeMixWithIdentifier:(NSString*)uuid;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

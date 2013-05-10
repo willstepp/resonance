@@ -51,7 +51,7 @@
       
       //timer label
       timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 75, 65, 26)];
-      [timerLabel setText:@"30"];
+      [timerLabel setText:@"60"];
       [timerLabel setBackgroundColor:[UIColor clearColor]];
       [timerLabel setTextColor:[UIColor whiteColor]];
       [self.view addSubview:timerLabel];
@@ -71,7 +71,7 @@
       
       //alarm label
       alarmLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 175, 65, 26)];
-      [alarmLabel setText:@"30"];
+      [alarmLabel setText:@"900"];
       [alarmLabel setBackgroundColor:[UIColor clearColor]];
       [alarmLabel setTextColor:[UIColor whiteColor]];
       [self.view addSubview:alarmLabel];
@@ -107,7 +107,7 @@
   } else {
     [timerButton setTitle:@"Stop Timer" forState:UIControlStateNormal];
     [rt addDelegate:self];
-    [rt setTimeout:30];
+    [rt setTimeout:60];
     [rt start];
   }
 }
@@ -122,7 +122,7 @@
   } else {
     [alarmButton setTitle:@"Stop Alarm" forState:UIControlStateNormal];
     [ra addDelegate:self];
-    [ra setTimeout:30];
+    [ra setTimeout:900];
     [ra start];
   }
 }
@@ -139,7 +139,7 @@
 {
   NSLog(@"timerFinished()");
   [timerButton setTitle:@"Start Timer" forState:UIControlStateNormal];
-  [timerLabel setText:@"30"];
+  [timerLabel setText:@"60"];
 }
 
 #pragma mark resoalarmdelegate
@@ -154,7 +154,7 @@
 {
   NSLog(@"alarmFinished()");
   [alarmButton setTitle:@"Start Alarm" forState:UIControlStateNormal];
-  [alarmLabel setText:@"30"];
+  [alarmLabel setText:@"900"];
 }
 
 

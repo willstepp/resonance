@@ -1,0 +1,18 @@
+//
+//  ResoMixManager.h
+//  reso_sandbox
+//
+//  Created by Daniel Stepp on 5/10/13.
+//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface ResoMixManager : NSObject
++(ResoMixManager*)instance;
+
+-(void)saveMix:(NSString*)name;
+-(void)loadMix:(NSString*)uuid;
+-(void)removeMix:(NSString*)uuid;
+-(void)shareMix:(NSString*)uuid;
+@end

@@ -16,6 +16,8 @@
 			<array>
 				<string>reso-57.png</string>
 				<string>reso-114.png</string>
+				<string>reso_icon_sun_57.png</string>
+				<string>reso_icon_sun_114.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
@@ -37,6 +39,10 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -47,10 +53,6 @@
 	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackTranslucent</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

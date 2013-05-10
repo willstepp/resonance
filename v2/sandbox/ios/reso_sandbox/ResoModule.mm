@@ -17,6 +17,7 @@
 {
   id<ISoundEngine> soundEngine;
 }
+@property (nonatomic, readwrite) ModuleType type;
 @property (nonatomic, readwrite) NSString *  uuid;
 @property (nonatomic, readwrite) int tag;
 
@@ -25,7 +26,7 @@
 @end
 
 @implementation ResoModule
-@synthesize uuid, tag, sound, tone;
+@synthesize type, uuid, tag, sound, tone;
 
 -(id)init
 {
@@ -44,6 +45,8 @@
     soundEngine = ise;
     sound = [soundEngine getSoundForId:tag];
     tone = [soundEngine getToneForId:tag];
+    type = ModuleType_Unloaded;
+    uuid = @"";
   }
   return self;
 }
@@ -57,6 +60,7 @@
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:soundPath];
   if (exists) {
     [sound load:soundPath looped:l];
+    type = ModuleType_Sound;
   }
 }
 
@@ -69,6 +73,7 @@
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:previewPath];
   if (exists) {
     [sound load:previewPath looped:l];
+    type = ModuleType_Sound;
   }
 }
 

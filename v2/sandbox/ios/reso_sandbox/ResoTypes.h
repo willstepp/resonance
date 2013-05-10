@@ -160,4 +160,10 @@ typedef enum {
   ModuleCount
 } Module;
 
+typedef enum {
+  ModuleType_Sound,
+  ModuleType_Tone,
+  ModuleType_Unloaded
+} ModuleType;
+
 #endif

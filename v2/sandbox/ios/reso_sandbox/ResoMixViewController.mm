@@ -7,14 +7,16 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+
 #import "ResoMixViewController.h"
+#import "ResoMixManager.h"
 
 @interface ResoMixViewController ()
 
 @end
 
 @implementation ResoMixViewController
-@synthesize backButton;
+@synthesize backButton, saveMixButton, loadMixButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,21 +35,45 @@
       backButton.frame = CGRectMake(10, 10, 44, 44);
       [self.view addSubview:backButton];
       
-      [self.view setBackgroundColor:[UIColor greenColor]];
+      //save mix button
+      saveMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [saveMixButton setTitle:@"Save Mix" forState:UIControlStateNormal];
+      [saveMixButton addTarget:self action:@selector(initSaveMix:) forControlEvents:UIControlEventTouchUpInside];
+      [saveMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [saveMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      saveMixButton.layer.borderColor = [UIColor blackColor].CGColor;
+      saveMixButton.layer.borderWidth = 0.0f;
+      saveMixButton.layer.cornerRadius = 4.0f;
+      saveMixButton.frame = CGRectMake(10, 100, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:saveMixButton];
+      
+      //load mix button
+      loadMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [loadMixButton setTitle:@"Load Mix" forState:UIControlStateNormal];
+      [loadMixButton addTarget:self action:@selector(loadMix:) forControlEvents:UIControlEventTouchUpInside];
+      [loadMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [loadMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      loadMixButton.layer.borderColor = [UIColor blackColor].CGColor;
+      loadMixButton.layer.borderWidth = 0.0f;
+      loadMixButton.layer.cornerRadius = 4.0f;
+      loadMixButton.frame = CGRectMake(10, 175, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:loadMixButton];
+      
+      [self.view setBackgroundColor:[UIColor darkGrayColor]];
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+  [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
 }
 
 -(void)goBack:(id)sender
@@ -55,4 +81,31 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)initSaveMix:(id)sender
+{
+  //prompt for name of mix
+  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mix Name" message:@"Enter a name for your mix" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+  alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+  alertView.delegate = self;
+  [alertView show];
+}
+
+-(void)saveMixWithName:(NSString*)name
+{
+  ResoMixManager * rmm = [ResoMixManager instance];
+  [rmm saveMix:name];
+}
+
+-(void)loadMix:(id)sender
+{
+  NSLog(@"loadMix");
+}
+
+#pragma uialertviewdelegate methods
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+  if (buttonIndex == 1) {
+    [self saveMixWithName:[alertView textFieldAtIndex:0].text];
+  }
+}
 @end

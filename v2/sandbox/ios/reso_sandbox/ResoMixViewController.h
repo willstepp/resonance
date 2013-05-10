@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ResoMixViewController : UIViewController
+@interface ResoMixViewController : UIViewController <UIAlertViewDelegate>
 @property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * saveMixButton;
+@property (nonatomic, retain) UIButton * loadMixButton;
 @end
