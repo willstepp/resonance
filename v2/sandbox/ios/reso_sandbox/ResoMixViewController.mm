@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "ResoAppDelegate.h"
 #import "ResoMixViewController.h"
 #import "ResoMixManager.h"
 
@@ -98,7 +99,12 @@
 
 -(void)loadMix:(id)sender
 {
-  NSLog(@"loadMix");
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  NSString * uuid = [ad getMixUUID];
+  if (uuid != nil) {
+    ResoMixManager * rmm = [ResoMixManager instance];
+    [rmm loadMix:uuid];
+  }
 }
 
 #pragma uialertviewdelegate methods

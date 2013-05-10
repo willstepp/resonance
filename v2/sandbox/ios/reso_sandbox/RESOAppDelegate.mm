@@ -280,6 +280,23 @@
   //more error handling here
 }
 
+- (NSString*)getMixUUID
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSFetchRequest * allMixes = [[NSFetchRequest alloc] init];
+  [allMixes setEntity:[NSEntityDescription entityForName:@"Mix" inManagedObjectContext:context]];
+  [allMixes setIncludesPropertyValues:NO];
+  
+  NSError * error = nil;
+  NSArray * mixes = [context executeFetchRequest:allMixes error:&error];
+  NSString * uuid = nil;
+  if ([mixes count] > 0) {
+    NSManagedObject * mix = [mixes objectAtIndex:0];
+    uuid = [mix valueForKey:@"uuid"];
+  }
+  return uuid;
+}
+
 - (void)setSoundFromData:(NSDictionary*)d
 {
   NSString * name = [d objectForKey:@"name"];

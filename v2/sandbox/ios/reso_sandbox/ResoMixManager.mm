@@ -97,7 +97,67 @@ static ResoMixManager * rmm = nil;
 
 -(void)loadMix:(NSString*)uuid
 {
+  ResoModuleManager * moduleManager = [ResoModuleManager instance];
   
+  //read in json data from file
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  NSData * mixJson = [NSData dataWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path]];
+  
+  //construct dictionary
+  NSDictionary * mix = [NSJSONSerialization
+                      JSONObjectWithData:mixJson
+                      options:kNilOptions
+                      error:nil];
+  
+  //iterate over dictionary and recreate modules
+  NSString * name = [mix objectForKey:@"name"];
+  NSString * mixUuid = [mix objectForKey:@"uuid"];
+  
+  NSArray * modules = [mix objectForKey:@"modules"];
+  for(NSDictionary * module in modules) {
+    
+    Module moduleNumber = (Module)[[module objectForKey:@"number"] intValue];
+    ResoModule * m = [moduleManager.modules objectForKey:[NSNumber numberWithInt:moduleNumber]];
+    
+    ModuleType type = (ModuleType)[[module objectForKey:@"type"] intValue];
+    float moduleVolume = [[module objectForKey:@"volume"] floatValue];
+    if (type == ModuleType_Sound) {
+      NSString * moduleUuid = [module objectForKey:@"uuid"];
+      [m loadSound:moduleUuid looped:false];
+      [m.sound play];
+      [m.sound stop];
+      
+      NSDictionary * effectTypes = [module objectForKey:@"effects"];
+      NSArray * effectTypeKeys = [effectTypes allKeys];
+      for(NSString * et in effectTypeKeys) {
+        
+        EffectType effectType = (EffectType)[et intValue];
+        [m.sound addEffectOfType:effectType];
+        
+        NSDictionary * effectParameters = [effectTypes objectForKey:et];
+        NSArray * effectParameterKeys = [effectParameters allKeys];
+        for(NSString * ep in effectParameterKeys) {
+          
+          EffectParameter effectParameter = (EffectParameter)[ep intValue];
+          float effectParameterValue = [[effectParameters objectForKey:ep] floatValue];
+          [m.sound setEffectValueForType:effectType forParameter:effectParameter withValue:effectParameterValue];
+        }
+      }
+      
+      [m.sound setVolume:moduleVolume];
+      [m.sound play];
+      
+    }
+    if (type == ModuleType_Tone) {
+      float bg = [[module objectForKey:@"binaural_gap"] floatValue];
+      float fq = [[module objectForKey:@"frequency"] floatValue];
+      
+      [m.tone setPropertyOfType:BinauralGap withValue:bg];
+      [m.tone setPropertyOfType:Frequency withValue:fq];
+      [m.tone setVolume:moduleVolume];
+      [m.tone play];
+    }
+  }
 }
 
 -(void)removeMix:(NSString*)uuid

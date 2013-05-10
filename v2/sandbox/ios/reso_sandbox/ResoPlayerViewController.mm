@@ -85,6 +85,10 @@
       module = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
       if ([module.sound loaded]) {
         
+        if ([module.sound playing]) {
+          [playButton setTitle:@"Stop Sound" forState:UIControlStateNormal];
+        }
+        
         //load background image
         NSString * backgroundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/img_blur", module.uuid]] path];
         [backgroundImage setImage:[UIImage imageWithContentsOfFile:backgroundPath]];
@@ -96,6 +100,8 @@
         [soundLabel setBackgroundColor:[UIColor clearColor]];
         [soundLabel setTextColor:[UIColor whiteColor]];
         [self.view addSubview:soundLabel];
+        
+        [reverbSwitch setOn:[module.sound hasEffectOfType:Reverb]];
       }
 
     }

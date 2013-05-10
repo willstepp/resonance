@@ -37,6 +37,7 @@
 -(void)addEffectOfType:(EffectType)et;
 -(void)setEffectValueForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value;
 -(void)removeEffectOfType:(EffectType)et;
+-(bool)hasEffectOfType:(EffectType)et;
 
 -(NSMutableDictionary*)effectMappings;
 

@@ -552,6 +552,12 @@
     if (mappings) { [mappings removeAllObjects]; mappings = nil; }
 }
 
+-(bool)hasEffectOfType:(EffectType)et
+{
+  NSMutableDictionary * mappings = [effectMappings objectForKey:[NSString stringWithFormat:@"%i", et]];
+  return mappings != nil;
+}
+
 -(void)unloadEffectMappings
 {
     NSArray * effects = [effectMappings allKeys];
