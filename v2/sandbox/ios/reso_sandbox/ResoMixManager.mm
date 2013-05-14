@@ -19,6 +19,8 @@
 
 #import "FMODSoundEngine.h"
 
+#import "ResoThumbnailGenerator.h"
+
 @interface ResoMixManager ()
 {
   id<ISoundEngine> soundEngine;
@@ -59,6 +61,7 @@ static ResoMixManager * rmm = nil;
 -(void)saveMix:(NSString*)name
 {
   NSString * uuid = [[[NSUUID UUID] UUIDString] lowercaseString];
+  currentMixUuid = uuid;
   
   //1) create coredata record
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
@@ -69,6 +72,7 @@ static ResoMixManager * rmm = nil;
   [mix setObject:name forKey:@"name"];
   [mix setObject:uuid forKey:@"uuid"];
 
+  NSMutableArray * mixUuids = [[NSMutableArray alloc] init];
   NSMutableArray * modules = [[NSMutableArray alloc] init];
   for(id key in [ResoModuleManager instance].modules) {
     ResoModule * rm = [[ResoModuleManager instance].modules objectForKey:key];
@@ -97,7 +101,7 @@ static ResoMixManager * rmm = nil;
         [module setObject:[NSNumber numberWithFloat:volume] forKey:@"volume"];
         
         [modules addObject:module];
-        
+        [mixUuids addObject:rm.uuid];
       }
     }
   }
@@ -126,9 +130,21 @@ static ResoMixManager * rmm = nil;
   self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     [self finishPreviewRecording];
   }];
-  
-  currentMixUuid = uuid;
+
   NSLog(@"preview mix recording started");
+  
+  //5) generate mix thumbnail
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+    ResoThumbnailGenerator * rtg = [[ResoThumbnailGenerator alloc] init];
+    UIImage * thumb = [rtg generateMixThumbnail:mixUuids];
+    
+    //write thumb to file
+    [UIImageJPEGRepresentation(thumb, 1.0) writeToFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/thumb", uuid]] path] atomically:YES];
+    
+    [self performSelectorOnMainThread:@selector(mixThumbnailDone)
+                           withObject:nil waitUntilDone:NO];
+  });
 }
 
 -(void)loadMix:(NSString*)uuid
@@ -217,6 +233,11 @@ static ResoMixManager * rmm = nil;
   [soundEngine stopRecording];
   
   NSLog(@"preview mix recording finished");
+}
+
+-(void)mixThumbnailDone
+{
+  
 }
 
 @end

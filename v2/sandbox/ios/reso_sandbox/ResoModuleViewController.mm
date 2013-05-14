@@ -1,5 +1,5 @@
 //
-//  ResoModuleViewController.m
+//  ResoModuleViewController.mm
 //  reso_sandbox
 //
 //  Created by Daniel Stepp on 5/14/13.
