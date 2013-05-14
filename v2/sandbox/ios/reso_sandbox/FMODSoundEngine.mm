@@ -97,7 +97,7 @@ static FMODSoundEngine * player = nil;
     return t;
 }
 
--(void)startRecording:(NSString*)fileName
+-(void)startRecording:(NSString*)fileName dynamicInput:(bool)di;
 {
     //cleanup any old recordings
     [self stopRecording];
@@ -160,7 +160,10 @@ static FMODSoundEngine * player = nil;
             
             //save
             [recordingSounds setObject:rs forKey:sk];
-            [s addListener:rs];
+            if (di) {
+              [s addListener:rs];
+            }
+          
         }
     }
     
@@ -193,7 +196,9 @@ static FMODSoundEngine * player = nil;
             
             //save
             [recordingTones setObject:rt forKey:tk];
-            [t addListener:rt];
+            if (di) {
+              [t addListener:rt];
+            }
         }
     }
 

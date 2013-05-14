@@ -187,7 +187,7 @@
   {
     NSString * filename = [NSString stringWithFormat:@"%@/test_%@.wav", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0], [NSNumber numberWithInt:recordingNumber]];
         
-    [player startRecording:filename];
+    [player startRecording:filename dynamicInput:true];
     
     recordingNumber++;
     recording = true;

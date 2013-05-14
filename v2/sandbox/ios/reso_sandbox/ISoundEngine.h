@@ -19,7 +19,7 @@
 -(id<ISound>)getSoundForId:(int)identifier;
 -(id<ITone>)getToneForId:(int)identifier;
 
--(void)startRecording:(NSString*)fileName;
+-(void)startRecording:(NSString*)fileName dynamicInput:(bool)di;
 -(void)stopRecording;
 
 @end

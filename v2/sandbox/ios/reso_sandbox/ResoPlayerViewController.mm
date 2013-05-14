@@ -14,6 +14,8 @@
 #import "ResoModule.h"
 #import "ISound.h"
 
+#import "ResoModuleViewController.h"
+
 @interface ResoPlayerViewController ()
 {
   ResoModule * module;
@@ -22,7 +24,8 @@
 @end
 
 @implementation ResoPlayerViewController
-@synthesize backButton, playButton, reverbSwitch;
+@synthesize backButton;
+@synthesize moduleOneButton, moduleTwoButton, moduleThreeButton, moduleFourButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,63 +49,63 @@
       backButton.frame = CGRectMake(10, 10, 44, 44);
       [self.view addSubview:backButton];
       
-      //player button
-      playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [playButton setTitle:@"Play Sound" forState:UIControlStateNormal];
-      [playButton addTarget:self action:@selector(playSound:) forControlEvents:UIControlEventTouchUpInside];
-      [playButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [playButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      //module one
+      moduleOneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      moduleOneButton.tag = One;
+      [moduleOneButton setTitle:@"Module One" forState:UIControlStateNormal];
+      [moduleOneButton addTarget:self action:@selector(showModule:) forControlEvents:UIControlEventTouchUpInside];
+      [moduleOneButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [moduleOneButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      playButton.layer.borderColor = [UIColor blackColor].CGColor;
-      playButton.layer.borderWidth = 0.0f;
-      playButton.layer.cornerRadius = 4.0f;
-      playButton.frame = CGRectMake(10, 180, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:playButton];
+      moduleOneButton.layer.borderColor = [UIColor blackColor].CGColor;
+      moduleOneButton.layer.borderWidth = 0.0f;
+      moduleOneButton.layer.cornerRadius = 4.0f;
+      moduleOneButton.frame = CGRectMake(10, 100, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:moduleOneButton];
       
-      //reverb label
-      UILabel * reverbLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width / 2) - 30, 250, 65, 26)];
-      [reverbLabel setText:@"Reverb"];
-      [reverbLabel setBackgroundColor:[UIColor clearColor]];
-      [reverbLabel setTextColor:[UIColor whiteColor]];
-      [self.view addSubview:reverbLabel];
+      //module two
+      moduleTwoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      moduleTwoButton.tag = Two;
+      [moduleTwoButton setTitle:@"Module Two" forState:UIControlStateNormal];
+      [moduleTwoButton addTarget:self action:@selector(showModule:) forControlEvents:UIControlEventTouchUpInside];
+      [moduleTwoButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [moduleTwoButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      //reverb switch
-      CGRect frame = CGRectMake((self.view.bounds.size.width / 2) - 40, 280, 60.0, 26.0);
-      reverbSwitch = [[UISwitch alloc] initWithFrame:frame];
-      [reverbSwitch setTintColor:[UIColor blackColor]];
-      [reverbSwitch setOnTintColor:[UIColor lightGrayColor]];
-      [reverbSwitch setThumbTintColor:[UIColor grayColor]];
-      [reverbSwitch addTarget:self action:@selector(toggleReverb:) forControlEvents:UIControlEventTouchUpInside];
+      moduleTwoButton.layer.borderColor = [UIColor blackColor].CGColor;
+      moduleTwoButton.layer.borderWidth = 0.0f;
+      moduleTwoButton.layer.cornerRadius = 4.0f;
+      moduleTwoButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:moduleTwoButton];
       
-      [reverbSwitch setBackgroundColor:[UIColor clearColor]];
-      [self.view addSubview:reverbSwitch];
+      //module three
+      moduleThreeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      moduleThreeButton.tag = Three;
+      [moduleThreeButton setTitle:@"Module Three" forState:UIControlStateNormal];
+      [moduleThreeButton addTarget:self action:@selector(showModule:) forControlEvents:UIControlEventTouchUpInside];
+      [moduleThreeButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [moduleThreeButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      moduleThreeButton.layer.borderColor = [UIColor blackColor].CGColor;
+      moduleThreeButton.layer.borderWidth = 0.0f;
+      moduleThreeButton.layer.cornerRadius = 4.0f;
+      moduleThreeButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:moduleThreeButton];
+      
+      //module four
+      moduleFourButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      moduleFourButton.tag = Four;
+      [moduleFourButton setTitle:@"Module Four" forState:UIControlStateNormal];
+      [moduleFourButton addTarget:self action:@selector(showModule:) forControlEvents:UIControlEventTouchUpInside];
+      [moduleFourButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [moduleFourButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      moduleFourButton.layer.borderColor = [UIColor blackColor].CGColor;
+      moduleFourButton.layer.borderWidth = 0.0f;
+      moduleFourButton.layer.cornerRadius = 4.0f;
+      moduleFourButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:moduleFourButton];
       
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
-      
-      ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-      
-      ResoModuleManager * rmm = [ResoModuleManager instance];
-      module = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
-      if ([module.sound loaded]) {
-        
-        if ([module.sound playing]) {
-          [playButton setTitle:@"Stop Sound" forState:UIControlStateNormal];
-        }
-        
-        //load background image
-        NSString * backgroundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/img_blur", module.uuid]] path];
-        [backgroundImage setImage:[UIImage imageWithContentsOfFile:backgroundPath]];
-        
-        //load sound title
-        NSMutableDictionary * sound = [ad soundWithIdentifier:module.uuid];
-        UILabel * soundLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 125, self.view.bounds.size.width - 20, 50)];
-        [soundLabel setText:[sound objectForKey:@"name"]];
-        [soundLabel setBackgroundColor:[UIColor clearColor]];
-        [soundLabel setTextColor:[UIColor whiteColor]];
-        [self.view addSubview:soundLabel];
-        
-        [reverbSwitch setOn:[module.sound hasEffectOfType:Reverb]];
-      }
 
     }
     return self;
@@ -118,35 +121,21 @@
   [super didReceiveMemoryWarning];
 }
 
+-(void)showModule:(id)sender
+{
+  UIButton * moduleButton = (UIButton*)sender;
+  NSLog(@"showing module: %i", moduleButton.tag);
+  
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ad.currentModule = (Module)moduleButton.tag;
+  
+  ResoModuleViewController * rmvc = [[ResoModuleViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmvc animated:YES];
+}
+
 -(void)goBack:(id)sender
 {
   [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)playSound:(id)sender
-{
-  ResoModuleManager * rmm = [ResoModuleManager instance];
-  module = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
-  if ([module.sound loaded]) {
-    if ([module.sound playing]) {
-      [playButton setTitle:@"Play Sound" forState:UIControlStateNormal];
-      [module.sound stop];
-    } else {
-      [playButton setTitle:@"Stop Sound" forState:UIControlStateNormal];
-      [module.sound play];
-      NSLog(@"%f", [module.sound volume]);
-    }
-  }
-}
-
--(void)toggleReverb:(id)sender
-{
-  if ([reverbSwitch isOn]) {
-    [module.sound addEffectOfType:Reverb];
-    [module.sound setEffectValueForType:Reverb forParameter:Reverb_Room withValue:0.0f];
-  } else {
-    [module.sound removeEffectOfType:Reverb];
-  }
 }
 
 @end

@@ -156,7 +156,6 @@ typedef enum {
   Two,
   Three,
   Four,
-  Five,
   ModuleCount
 } Module;
 

@@ -11,6 +11,8 @@
 @interface ResoMixManager : NSObject
 +(ResoMixManager*)instance;
 
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskId;
+
 -(void)saveMix:(NSString*)name;
 -(void)loadMix:(NSString*)uuid;
 -(void)removeMix:(NSString*)uuid;

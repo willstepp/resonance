@@ -50,6 +50,9 @@
     soundsData = [[NSMutableArray alloc] init];
     [self loadAvailableSoundsFromDevice];
     
+    ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+    NSLog(@"sound library for module: %i", ad.currentModule);
+    
     //set up table view
     soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 210) style:UITableViewStylePlain];
     soundsView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -144,9 +147,10 @@
     NSString * uuid = [sound objectForKey:@"uuid"];
     
     ResoModuleManager * rmm = [ResoModuleManager instance];
-    ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+    ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+    ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:ad.currentModule]];
     [rm loadSound:uuid looped:true];
-    NSLog(@"sound loaded");
+    NSLog(@"sound loaded for module: %i", ad.currentModule);
   }
 }
 

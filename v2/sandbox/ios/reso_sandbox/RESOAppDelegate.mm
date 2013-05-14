@@ -24,6 +24,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize currentModule = _currentModule;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -657,8 +658,9 @@ NSString * deviceName()
 -(void)setupModules
 {
   ResoModuleManager * rmm = [ResoModuleManager instance];
-  [rmm addModuleWithId:Preview];
-  [rmm addModuleWithId:One];
+  for(int i = 0; i < ModuleCount; i++) {
+    [rmm addModuleWithId:i];
+  }
 }
 
 @end

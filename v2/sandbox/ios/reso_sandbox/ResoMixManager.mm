@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "ResoAppDelegate.h"
 #import "ResoMixManager.h"
 #import "ResoTypes.h"
@@ -15,7 +17,19 @@
 #import "ISound.h"
 #import "ITone.h"
 
+#import "FMODSoundEngine.h"
+
+@interface ResoMixManager ()
+{
+  id<ISoundEngine> soundEngine;
+  NSTimer * recordingTimer;
+  NSString * currentMixUuid;
+}
+@end
+
 @implementation ResoMixManager
+@synthesize backgroundTaskId;
+
 static ResoMixManager * rmm = nil;
 
 -(id)init
@@ -37,6 +51,7 @@ static ResoMixManager * rmm = nil;
 {
   if (self = [super init])
   {
+    soundEngine = [FMODSoundEngine instance];
   }
   return self;
 }
@@ -53,20 +68,20 @@ static ResoMixManager * rmm = nil;
   NSMutableDictionary * mix = [[NSMutableDictionary alloc] init];
   [mix setObject:name forKey:@"name"];
   [mix setObject:uuid forKey:@"uuid"];
-  //global volume
 
   NSMutableArray * modules = [[NSMutableArray alloc] init];
   for(id key in [ResoModuleManager instance].modules) {
     ResoModule * rm = [[ResoModuleManager instance].modules objectForKey:key];
     
-    if (rm.tag != Preview) {
-      NSMutableDictionary * module = [[NSMutableDictionary alloc] init];
-      [module setObject:[NSNumber numberWithInt:rm.tag] forKey:@"number"];
-      [module setObject:rm.uuid forKey:@"uuid"];
-      
-      float volume = 0.0f;
+    if (rm.tag != Preview && rm.tag != ModuleCount) {
       ModuleType type = rm.type;
       if (type != ModuleType_Unloaded) {
+        
+        NSMutableDictionary * module = [[NSMutableDictionary alloc] init];
+        [module setObject:[NSNumber numberWithInt:rm.tag] forKey:@"number"];
+        [module setObject:rm.uuid forKey:@"uuid"];
+        
+        float volume = 0.0f;
         if (rm.type == ModuleType_Sound) {
           volume = [rm.sound volume];
           NSDictionary * effects = [rm.sound effectMappings];
@@ -77,12 +92,13 @@ static ResoMixManager * rmm = nil;
           [module setObject:[NSNumber numberWithFloat:[rm.tone getPropertyOfType:BinauralGap]] forKey:@"binaural_gap"];
           [module setObject:[NSNumber numberWithFloat:[rm.tone getPropertyOfType:Frequency]] forKey:@"frequency"];
         }
+        
+        [module setObject:[NSNumber numberWithInt:type] forKey:@"type"];
+        [module setObject:[NSNumber numberWithFloat:volume] forKey:@"volume"];
+        
+        [modules addObject:module];
+        
       }
-      
-      [module setObject:[NSNumber numberWithInt:type] forKey:@"type"];
-      [module setObject:[NSNumber numberWithFloat:volume] forKey:@"volume"];
-      
-      [modules addObject:module];
     }
   }
   [mix setObject:modules forKey:@"modules"];
@@ -92,7 +108,27 @@ static ResoMixManager * rmm = nil;
   
   NSError * error = nil;
   NSData * mixJson = [NSJSONSerialization dataWithJSONObject:mix options:NSJSONWritingPrettyPrinted error:&error];
+  
+  NSString *strData = [[NSString alloc]initWithData:mixJson encoding:NSUTF8StringEncoding];
+  NSLog(@"mixJson: %@", strData);
+  
   [mixJson writeToFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path] atomically:YES];
+  
+  //4) record 15 second mix preview clip
+  [soundEngine startRecording:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/preview", uuid]] path] dynamicInput:false];
+  
+  recordingTimer = [NSTimer scheduledTimerWithTimeInterval:15
+                            target:self
+                            selector:@selector(finishPreviewRecording)
+                            userInfo:nil
+                            repeats:NO];
+  
+  self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    [self finishPreviewRecording];
+  }];
+  
+  currentMixUuid = uuid;
+  NSLog(@"preview mix recording started");
 }
 
 -(void)loadMix:(NSString*)uuid
@@ -102,6 +138,9 @@ static ResoMixManager * rmm = nil;
   //read in json data from file
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   NSData * mixJson = [NSData dataWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path]];
+  
+  NSString *strData = [[NSString alloc]initWithData:mixJson encoding:NSUTF8StringEncoding];
+  NSLog(@"loading mixJson: %@", strData);
   
   //construct dictionary
   NSDictionary * mix = [NSJSONSerialization
@@ -123,7 +162,7 @@ static ResoMixManager * rmm = nil;
     float moduleVolume = [[module objectForKey:@"volume"] floatValue];
     if (type == ModuleType_Sound) {
       NSString * moduleUuid = [module objectForKey:@"uuid"];
-      [m loadSound:moduleUuid looped:false];
+      [m loadSound:moduleUuid looped:true];
       [m.sound play];
       [m.sound stop];
       
@@ -170,6 +209,14 @@ static ResoMixManager * rmm = nil;
 -(void)shareMix:(NSString*)uuid
 {
   
+}
+
+-(void)finishPreviewRecording
+{
+  [recordingTimer invalidate];
+  [soundEngine stopRecording];
+  
+  NSLog(@"preview mix recording finished");
 }
 
 @end

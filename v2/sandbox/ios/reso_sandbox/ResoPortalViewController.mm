@@ -12,7 +12,6 @@
 #import "ResoMixViewController.h"
 #import "ResoPlayerViewController.h"
 #import "ResoCloudSoundsViewController.h"
-#import "ResoDeviceSoundsViewController.h"
 #import "ResoTimerViewController.h"
 #import "ResoTypes.h"
 
@@ -20,7 +19,7 @@
 @end
 
 @implementation ResoPortalViewController
-@synthesize playerButton, mixButton, cloudSoundsButton, deviceSoundsButton, timerButton;
+@synthesize playerButton, mixButton, cloudSoundsButton, timerButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,19 +67,6 @@
       cloudSoundsButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:cloudSoundsButton];
       
-      //device sounds button
-      deviceSoundsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [deviceSoundsButton setTitle:@"Device Sounds" forState:UIControlStateNormal];
-      [deviceSoundsButton addTarget:self action:@selector(showDeviceSounds:) forControlEvents:UIControlEventTouchUpInside];
-      [deviceSoundsButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [deviceSoundsButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-      
-      deviceSoundsButton.layer.borderColor = [UIColor blackColor].CGColor;
-      deviceSoundsButton.layer.borderWidth = 0.0f;
-      deviceSoundsButton.layer.cornerRadius = 4.0f;
-      deviceSoundsButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:deviceSoundsButton];
-      
       //timer button
       timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
       [timerButton setTitle:@"Timer" forState:UIControlStateNormal];
@@ -91,7 +77,7 @@
       timerButton.layer.borderColor = [UIColor blackColor].CGColor;
       timerButton.layer.borderWidth = 0.0f;
       timerButton.layer.cornerRadius = 4.0f;
-      timerButton.frame = CGRectMake(10, 380, self.view.bounds.size.width - 20, 50);
+      timerButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:timerButton];
     }
     return self;
@@ -116,13 +102,6 @@
   ResoCloudSoundsViewController * rdvc = [[ResoCloudSoundsViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rdvc animated:YES];
-}
-
--(void)showDeviceSounds:(id)sender
-{
-  ResoDeviceSoundsViewController * rdsvc = [[ResoDeviceSoundsViewController alloc] initWithNibName:nil bundle:nil];
-  //push it onto the 'navigation stack'
-  [self.navigationController pushViewController:rdsvc animated:YES];
 }
 
 -(void)showTimer:(id)sender
