@@ -1,0 +1,15 @@
+{
+  "uuid" : "963a90e6-491e-46e5-a33c-10578e6abc4c",
+  "name" : "MyCoolMix",
+  "modules" : [
+    {
+      "type" : 0,
+      "effects" : {
+
+      },
+      "uuid" : "f151d77f-c453-4c74-86d0-2f47eb792b56",
+      "volume" : 0,
+      "number" : 1
+    }
+  ]
+}
