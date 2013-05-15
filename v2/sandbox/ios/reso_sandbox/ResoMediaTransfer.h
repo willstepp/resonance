@@ -36,7 +36,7 @@
   @property (readonly) bool finished;
   @property (readonly) long long totalByteCount;
   @property (readonly) long long currentByteCount;
-  @property (readonly) long long totalByteCountReceived;
+  @property (readonly) bool totalByteCountReceived;
 
   @property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskId;
 
@@ -49,4 +49,5 @@
   - (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data;
   - (void)connectionDidFinishLoading:(NSURLConnection *)conn;
   - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error;
+  - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 @end

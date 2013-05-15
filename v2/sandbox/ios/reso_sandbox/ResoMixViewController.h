@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoMediaTransferManager.h"
 
-@interface ResoMixViewController : UIViewController <UIAlertViewDelegate>
+@interface ResoMixViewController : UIViewController <UIAlertViewDelegate, ResoMediaTransferDelegate>
 @property (nonatomic, retain) UIButton * backButton;
 @property (nonatomic, retain) UIButton * saveMixButton;
 @property (nonatomic, retain) UIButton * loadMixButton;
+@property (nonatomic, retain) UIButton * shareMixButton;
 @end

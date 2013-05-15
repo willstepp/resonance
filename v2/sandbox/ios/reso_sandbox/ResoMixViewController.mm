@@ -11,13 +11,14 @@
 #import "ResoAppDelegate.h"
 #import "ResoMixViewController.h"
 #import "ResoMixManager.h"
+#import "ResoMediaTransferManager.h"
 
 @interface ResoMixViewController ()
 
 @end
 
 @implementation ResoMixViewController
-@synthesize backButton, saveMixButton, loadMixButton;
+@synthesize backButton, saveMixButton, loadMixButton, shareMixButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +62,19 @@
       loadMixButton.layer.cornerRadius = 4.0f;
       loadMixButton.frame = CGRectMake(10, 175, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:loadMixButton];
+      
+      //share mix button
+      shareMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [shareMixButton setTitle:@"Share Mix" forState:UIControlStateNormal];
+      [shareMixButton addTarget:self action:@selector(shareMix:) forControlEvents:UIControlEventTouchUpInside];
+      [shareMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [shareMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      
+      shareMixButton.layer.borderColor = [UIColor blackColor].CGColor;
+      shareMixButton.layer.borderWidth = 0.0f;
+      shareMixButton.layer.cornerRadius = 4.0f;
+      shareMixButton.frame = CGRectMake(10, 250, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:shareMixButton];
       
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
     }
@@ -107,11 +121,65 @@
   }
 }
 
+-(void)shareMix:(id)sender
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  NSString * uuid = [ad getMixUUID];
+  if (uuid != nil && ![ad mixAlreadyShared:uuid]) {
+    NSLog(@"sharing mix");
+    
+    //transfer with rtm
+    ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
+    [rmtm initTransferOfType:MixTransferUpload withIdentifier:uuid];
+    
+    //hook up to delegate
+    ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
+    [rtm addDelegate:self];
+  }
+}
+
 #pragma uialertviewdelegate methods
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
   if (buttonIndex == 1) {
     [self saveMixWithName:[alertView textFieldAtIndex:0].text];
   }
+}
+
+#pragma mark -
+#pragma mark ResoMediaTransfer Delegates
+-(void) transferStarted:(ResoMediaTransfer*)t
+{
+  //progressBar.progress = 0.0f;
+}
+
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t
+{
+  /*
+  if (t.transferType == SoundTransferDownload) {
+    long long tbc = t.totalByteCount;
+    long long cbc = t.currentByteCount;
+    float p = (float)cbc / (float)tbc;
+    progressBar.progress = p;
+  }
+   */
+  
+}
+
+-(void) transferFinished:(ResoMediaTransfer*)t
+{
+  /*
+  if (t.transferType == ThumbnailTransfer) {
+    [soundsView reloadData];
+  } else if (t.transferType == PreviewTransfer) {
+    [self playPreview:t.uuid];
+  } else if (t.transferType == SoundTransferDownload) {
+    [self downloadComplete:t.uuid];
+  }
+   */
+}
+
+-(void) transferError:(ResoMediaTransfer*)t
+{
 }
 @end

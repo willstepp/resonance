@@ -19,7 +19,7 @@
 @property (nonatomic, readwrite) bool finished;
 @property (nonatomic, readwrite) long long totalByteCount;
 @property (nonatomic, readwrite) long long currentByteCount;
-@property (nonatomic, readwrite) long long totalByteCountReceived;
+@property (nonatomic, readwrite) bool totalByteCountReceived;
 
 @end
 
@@ -43,25 +43,46 @@
 
 - (void)addItem:(ResoMediaTransferItem*)rmti
 {
-  NSURL * sourceUrl = [NSURL URLWithString:[rmti sourceUrl]];
-  NSURLRequest * request = [NSURLRequest requestWithURL:sourceUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-  ResoUrlConnection * connection = [[ResoUrlConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-  connection.tag = [media count];
-  NSMutableData * data = [[NSMutableData alloc] init];
-  
+  NSMutableDictionary * item;
+  ResoUrlConnection * connection;
   long long totalBytes = 0;
   long long currentBytes = 0;
-  
   bool currFinished = false;
   
-  NSMutableDictionary * item = [[NSMutableDictionary alloc] initWithCapacity:6];
-  [item setObject:connection forKey:@"connection"];
-  [item setObject:data forKey:@"data"];
-  [item setObject:rmti forKey:@"transferItem"];
-  [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
-  [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
-  [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
+  if (rmti.transferType == SoundTransferDownload) {
+    NSURL * sourceUrl = [NSURL URLWithString:[rmti sourceUrl]];
+    NSURLRequest * request = [NSURLRequest requestWithURL:sourceUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+    connection = [[ResoUrlConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    connection.tag = [media count];
+    NSMutableData * data = [[NSMutableData alloc] init];
+    
+    item = [[NSMutableDictionary alloc] initWithCapacity:6];
+    [item setObject:connection forKey:@"connection"];
+    [item setObject:data forKey:@"data"];
+    [item setObject:rmti forKey:@"transferItem"];
+    [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
+    [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
+    [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
+  }
   
+  if (rmti.transferType == MixTransferUpload) {
+
+    NSData * mixData = [[NSFileManager defaultManager] contentsAtPath:[rmti sourceUrl]];
+    NSURLRequest * request = [self createMixUploadRequest:mixData fileName:@"mix.zip"];
+    connection = [[ResoUrlConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    
+    NSMutableData * data = [[NSMutableData alloc] init];
+    connection.tag = [media count];
+    
+    item = [[NSMutableDictionary alloc] initWithCapacity:6];
+    [item setObject:connection forKey:@"connection"];
+    [item setObject:rmti forKey:@"transferItem"];
+    [item setObject:data forKey:@"data"];
+    [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
+    [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
+    [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
+  }
+
   [media setObject:item forKey:[NSNumber numberWithInt:connection.tag]];
 }
 
@@ -95,13 +116,47 @@
   [self notifyStarted];
 }
 
+- (NSURLRequest *)createMixUploadRequest:(NSData *)mixData fileName:(NSString *)name
+{
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+  NSURL * url = [NSURL URLWithString:@"http://localhost:3000/mixes.json"];
+  [request setURL:url];
+  [request setHTTPMethod:@"POST"];
+  
+  NSString *boundary = @"0xReS0bOuNdArY";
+  NSString *endBoundary = [NSString stringWithFormat:@"\r\n--%@\r\n", boundary];
+  
+  NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=%@; boundary=%@", charset, boundary];
+  [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+  
+  NSMutableData *tempPostData = [NSMutableData data];
+  [tempPostData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+  
+  // Sample Key Value for data
+  [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"uuid"] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[self.uuid dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+  
+  // Sample file to send as data
+  [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"userfile\"; filename=\"%@\"\r\n", name] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:mixData];
+  [tempPostData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+
+  [request setHTTPBody:tempPostData];
+  
+  return request;
+}
+
 #pragma mark -
 #pragma mark NSURLConnection Delegates
 - (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)response
 {
   ResoUrlConnection * c = (ResoUrlConnection*)conn;
-  
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
+  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
+  
   NSNumber * totalBytes = [dict objectForKey:@"totalBytes"];
   totalBytes = [NSNumber numberWithLongLong:[response expectedContentLength]];
   [dict setObject:totalBytes forKey:@"totalBytes"];
@@ -152,8 +207,8 @@
 - (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data
 {
   ResoUrlConnection * c = (ResoUrlConnection*)conn;
-  
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
+  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
   //update byte counts
   NSNumber * currBytes = [dict objectForKey:@"currentBytes"];
@@ -176,11 +231,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
   ResoUrlConnection * c = (ResoUrlConnection*)conn;
+  NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
+  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
   //write to file
-  NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
   NSMutableData * currData = [dict objectForKey:@"data"];
-  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   [currData writeToFile:rmti.destinationUrl atomically:YES];
   
   //set state to finished
@@ -199,9 +254,10 @@
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error
 {
   ResoUrlConnection * c = (ResoUrlConnection*)conn;
+  NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
+  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
   for(id tag in media) {
-    NSMutableDictionary * dict = [media objectForKey:tag];
     NSMutableData * data = [dict objectForKey:@"data"];
     [data setLength:0];
   }
@@ -214,6 +270,18 @@
   [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
   
   NSLog(@"Transfer error for connection (%@): %s", [NSNumber numberWithInt:c.tag], [[error localizedDescription] UTF8String]);
+}
+
+- (void)connection:(NSURLConnection *)conn didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+  ResoUrlConnection * c = (ResoUrlConnection*)conn;
+  NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
+  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
+  
+  NSLog(@"didSendBodyData()");
+  NSLog(@"bytesWritten: %i", bytesWritten);
+  NSLog(@"totalBytesWritten: %i", totalBytesWritten);
+  NSLog(@"totalBytesExpectedToWrite: %i", totalBytesExpectedToWrite);
 }
 
 #pragma mark delegate notifications

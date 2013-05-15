@@ -118,10 +118,10 @@ static ResoMixManager * rmm = nil;
   
   [mixJson writeToFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path] atomically:YES];
   
-  //4) record 15 second mix preview clip
+  //4) record 20 second mix preview clip
   [soundEngine startRecording:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/preview", uuid]] path] dynamicInput:false];
   
-  recordingTimer = [NSTimer scheduledTimerWithTimeInterval:15
+  recordingTimer = [NSTimer scheduledTimerWithTimeInterval:20
                             target:self
                             selector:@selector(finishPreviewRecording)
                             userInfo:nil

@@ -42,7 +42,10 @@
 - (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)s;
 - (BOOL)mixExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
 - (void)removeMixWithIdentifier:(NSString*)uuid;
+- (BOOL)mixAlreadyShared:(NSString*)uuid;
 - (NSString*)getMixUUID;
+- (void)setStateforMix:(NSString*)uuid newState:(int)s;
+- (void)setSharedforMix:(NSString*)uuid shared:(BOOL)s;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

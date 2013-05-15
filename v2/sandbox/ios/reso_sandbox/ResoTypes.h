@@ -12,8 +12,8 @@
 typedef enum {
   ThumbnailTransfer,
   PreviewTransfer,
-  SoundTransfer,
-  MixTransfer
+  SoundTransferDownload,
+  MixTransferUpload
 } MediaTransfer;
 
 typedef enum {
@@ -25,7 +25,7 @@ typedef enum {
 
 typedef enum {
   Failed,
-  Downloading,
+  Transferring,
   Completed
 } SoundState;
 

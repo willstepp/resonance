@@ -42,7 +42,7 @@
   [self.window makeKeyAndVisible];
   
   //[self clearSounds];
-  //[self clearMixes];
+  [self clearMixes];
   
   [self ensureResonanceAppDirectoryExists];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
@@ -298,6 +298,48 @@
   return uuid;
 }
 
+- (void)setStateforMix:(NSString*)uuid newState:(int)s
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSEntityDescription * ed = [NSEntityDescription entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * mix = [array objectAtIndex:0];
+    [mix setValue:[NSNumber numberWithInt:s] forKey:@"state"];
+    NSError * error;
+    if (![context save:&error]) {
+    }
+  }
+}
+
+- (void)setSharedforMix:(NSString*)uuid shared:(BOOL)s
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSEntityDescription * ed = [NSEntityDescription entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * mix = [array objectAtIndex:0];
+    [mix setValue:[NSNumber numberWithBool:s] forKey:@"shared"];
+    NSError * error;
+    if (![context save:&error]) {
+    }
+  }
+}
+
 - (void)setSoundFromData:(NSDictionary*)d
 {
   NSString * name = [d objectForKey:@"name"];
@@ -339,7 +381,7 @@
   [sound setValue:name forKey:@"name"];
   [sound setValue:desc forKey:@"desc"];
   [sound setValue:uuid forKey:@"uuid"];
-  [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
+  [sound setValue:[NSNumber numberWithInt:(int)Transferring] forKey:@"state"];
   
   NSError * error;
   if (![context save:&error]) {
@@ -354,7 +396,7 @@
                                insertNewObjectForEntityForName:@"Sound"
                                inManagedObjectContext:context];
     [sound setValue:uuid forKey:@"uuid"];
-    [sound setValue:[NSNumber numberWithInt:(int)Downloading] forKey:@"state"];
+    [sound setValue:[NSNumber numberWithInt:(int)Transferring] forKey:@"state"];
     NSError * error;
     if (![context save:&error]) {
     }
@@ -470,7 +512,7 @@
   NSFetchRequest * request = [[NSFetchRequest alloc] init];
   [request setEntity:ed];
   
-  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i)", Downloading, Failed];
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i)", Transferring, Failed];
   [request setPredicate:p];
   
   NSError * error;
@@ -572,6 +614,29 @@
   }
 }
 
+- (BOOL)mixAlreadyShared:(NSString*)uuid
+{
+  BOOL shared = NO;
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * mix = [array objectAtIndex:0];
+    shared = [[mix valueForKey:@"shared"] boolValue];
+  }
+  return shared;
+}
+
 - (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
   assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
@@ -644,14 +709,14 @@ NSString * deviceName()
   for(NSString * s in sounds) {
     
     //update state of sound
-    [self setStateforSound:s newState:Downloading];
+    [self setStateforSound:s newState:Transferring];
     
     //remove install directory
     [[NSFileManager defaultManager] removeItemAtPath:[[self resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", s]] path] error:nil];
     
     //enqueue transfer of sound
     ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-    [rmtm initTransferOfType:SoundTransfer withIdentifier:s];
+    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:s];
   }
 }
 

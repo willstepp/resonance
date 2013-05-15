@@ -242,7 +242,7 @@
     
     //download using rtm
     ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-    [rmtm initTransferOfType:SoundTransfer withIdentifier:uuid];
+    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid];
     
     //hook up to delegate
     ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -293,7 +293,7 @@
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
 {
-  if (t.transferType == SoundTransfer) {
+  if (t.transferType == SoundTransferDownload) {
     long long tbc = t.totalByteCount;
     long long cbc = t.currentByteCount;
     float p = (float)cbc / (float)tbc;
@@ -311,7 +311,7 @@
   } else if (t.transferType == PreviewTransfer) {
     NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
     [self playPreview:file_path];
-  } else if (t.transferType == SoundTransfer) {
+  } else if (t.transferType == SoundTransferDownload) {
     [self downloadComplete:t.uuid];
   }
 }
