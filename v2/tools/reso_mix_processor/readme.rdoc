@@ -1,0 +1,10 @@
+RESO MIX PROCESSOR SERVER TOOLS
+=============================================================================================
+
+UNZIP
+sudo apt-get install unzip
+  unzip a5f1d965-6b5f-46d2-ae90-caf3dd13555b.zip -d ./a5f1d965-6b5f-46d2-ae90-caf3dd13555b
+
+WAV->OGG ENCODING
+sudo apt-get install vorbis-tools
+  oggenc ./preview.wav -q 5 -o preview.ogg
