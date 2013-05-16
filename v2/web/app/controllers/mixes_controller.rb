@@ -1,5 +1,5 @@
 class MixesController < ApplicationController
-  protect_from_forgery :except => [:create]
+  skip_before_filter :verify_authenticity_token
   
   # GET /mixes
   # GET /mixes.json

@@ -49,22 +49,6 @@
   long long currentBytes = 0;
   bool currFinished = false;
   
-  if (rmti.transferType == SoundTransferDownload) {
-    NSURL * sourceUrl = [NSURL URLWithString:[rmti sourceUrl]];
-    NSURLRequest * request = [NSURLRequest requestWithURL:sourceUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-    connection = [[ResoUrlConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
-    connection.tag = [media count];
-    NSMutableData * data = [[NSMutableData alloc] init];
-    
-    item = [[NSMutableDictionary alloc] initWithCapacity:6];
-    [item setObject:connection forKey:@"connection"];
-    [item setObject:data forKey:@"data"];
-    [item setObject:rmti forKey:@"transferItem"];
-    [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
-    [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
-    [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
-  }
-  
   if (rmti.transferType == MixTransferUpload) {
 
     NSData * mixData = [[NSFileManager defaultManager] contentsAtPath:[rmti sourceUrl]];
@@ -81,6 +65,23 @@
     [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
     [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
     [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
+    
+  } else {
+    
+    NSURL * sourceUrl = [NSURL URLWithString:[rmti sourceUrl]];
+    NSURLRequest * request = [NSURLRequest requestWithURL:sourceUrl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
+    connection = [[ResoUrlConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    connection.tag = [media count];
+    NSMutableData * data = [[NSMutableData alloc] init];
+    
+    item = [[NSMutableDictionary alloc] initWithCapacity:6];
+    [item setObject:connection forKey:@"connection"];
+    [item setObject:data forKey:@"data"];
+    [item setObject:rmti forKey:@"transferItem"];
+    [item setObject:[NSNumber numberWithLongLong:totalBytes] forKey:@"totalBytes"];
+    [item setObject:[NSNumber numberWithLongLong:currentBytes] forKey:@"currentBytes"];
+    [item setObject:[NSNumber numberWithBool:currFinished] forKey:@"finished"];
+    
   }
 
   [media setObject:item forKey:[NSNumber numberWithInt:connection.tag]];
@@ -103,6 +104,8 @@
   for(id tag in media) {
     NSMutableDictionary * dict = [media objectForKey:tag];
     ResoUrlConnection * conn = [dict objectForKey:@"connection"];
+    NSLog(@"REQUEST URL: %@", [conn.currentRequest.URL absoluteString]);
+    NSLog(@"REQUEST METHOD: %@", conn.currentRequest.HTTPMethod);
     [conn start];
     NSLog(@"starting RMT (%@)", tag);
   }
@@ -120,7 +123,7 @@
 {
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
   NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
-  NSURL * url = [NSURL URLWithString:@"http://localhost:3000/mixes.json"];
+  NSURL * url = [NSURL URLWithString:@"http://resoapp.com/mixes.json"];
   [request setURL:url];
   [request setHTTPMethod:@"POST"];
   

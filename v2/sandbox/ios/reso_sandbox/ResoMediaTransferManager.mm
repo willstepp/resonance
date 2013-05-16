@@ -77,7 +77,17 @@ static  ResoMediaTransferManager * rmtm = nil;
     [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
   }
   
-  //2) mix transfer prep
+  //2) thumbnail transfer prep
+  if (mt == ThumbnailTransfer) {
+    [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
+  }
+  
+  //3) preview transfer prep
+  if (mt == PreviewTransfer) {
+    [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
+  }
+  
+  //4) mix transfer prep
   if (mt == MixTransferUpload) {
 
     //generate mix zip file for transfer

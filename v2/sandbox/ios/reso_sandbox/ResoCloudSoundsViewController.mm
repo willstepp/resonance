@@ -321,6 +321,7 @@
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
   if (t.transferType == ThumbnailTransfer) {
+    NSLog(@"thumbnailTransfer finished");
     [soundsView reloadData];
   } else if (t.transferType == PreviewTransfer) {
     [self playPreview:t.uuid];

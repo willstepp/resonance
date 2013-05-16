@@ -48,13 +48,12 @@
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"mixes"]];
   
-  [self setupModules];
-  
-  [self resumeMediaTransfers];
-  
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   [[AVAudioSession sharedInstance] setActive: YES error: nil];
   [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  
+  [self setupModules];
+  [self resumeMediaTransfers];
   
   return YES;
 }
