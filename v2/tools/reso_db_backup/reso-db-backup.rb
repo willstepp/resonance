@@ -7,7 +7,7 @@ require 'pony'
 
 require_relative 'settings'
 
-module ResoBackup
+module ResoDbBackup
   def self.run
     message = ""
     success = false
@@ -40,7 +40,7 @@ module ResoBackup
       Pony.mail({
         :to => Settings.mailer.to,
         :from => Settings.mailer.from,
-        :subject => "ResoBackup (#{result})",
+        :subject => "ResoDbBackup (#{result})",
         :body => message,
         :attachments => {
           file_name => File.read(backup_file)
