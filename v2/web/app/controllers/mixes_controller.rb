@@ -1,10 +1,30 @@
 class MixesController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  UNPROCESSED = 0
+  PROCESSED = 1
   
   # GET /mixes
   # GET /mixes.json
   def index
     @mixes = Mix.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @mixes }
+    end
+  end
+
+  def unprocessed
+    @mixes = Mix.where(:state => UNPROCESSED)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @mixes }
+    end
+  end
+
+  def processed
+    @mixes = Mix.where(:state => PROCESSED)
 
     respond_to do |format|
       format.html # index.html.erb

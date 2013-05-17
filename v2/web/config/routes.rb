@@ -1,5 +1,8 @@
 Resonance::Application.routes.draw do
-  resources :mixes
+  resources :mixes do
+    get :processed, :on => :collection
+    get :unprocessed, :on => :collection
+  end
 
   resources :sounds do
     resources :media
