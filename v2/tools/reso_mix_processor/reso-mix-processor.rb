@@ -28,9 +28,11 @@ module ResoMixProcessor
                        Settings.db.username, 
                        Settings.db.password)
     mixes = conn.exec("select * from mixes where state = #{UNPROCESSED}")
+    mix_processed = false
     if mixes.count > 0
       mixes.each do |mix|
         uuid = mix['uuid']
+        name = mix['name']
 
         mix_zip_file = "#{$RESO_MIX_PROCESSOR_ROOT}/mixes/#{uuid}.zip"
         mix_tmp_dir = "#{$RESO_MIX_PROCESSOR_ROOT}/mixes/#{uuid}"
@@ -59,35 +61,40 @@ module ResoMixProcessor
               AWS::S3::S3Object.store(thumb, File.open(mix_thumb_file), bucket, :access => :public_read)
               mix = "mixes/#{uuid}/mix"
               AWS::S3::S3Object.store(mix, File.open(mix_json_file), bucket, :access => :public_read)
+
+              #we actually processed a mix, so set the state
+              mix_processed = true
             end
           end
         end
 
         #4) update mix record to processed
         updated = conn.exec("update mixes set state = #{PROCESSED} where uuid = '#{uuid}'")
-        output += "\n#{uuid}"
+        output += "\n#{name} : #{uuid}"
 
         #5) cleanup
         if File.exists? mix_tmp_dir then FileUtils.rm_rf(mix_tmp_dir) end
         if File.exists? mix_zip_file then File.delete mix_zip_file end
       end
 
-      Pony.mail({
-          :to => Settings.mailer.to,
-          :from => Settings.mailer.from,
-          :subject => "ResoMixProcessor (Finished)",
-          :body => output,
-          :via => :smtp,
-          :via_options => {
-            :address              => Settings.mailer.address,
-            :port                 => Settings.mailer.port,
-            :enable_starttls_auto => Settings.mailer.enable_starttls_auto,
-            :user_name            => Settings.mailer.user_name,
-            :password             => Settings.mailer.password,
-            :authentication       => Settings.mailer.authentication,
-            :domain               => Settings.mailer.domain
-          }
-      })
+      if mix_processed
+        Pony.mail({
+            :to => Settings.mailer.to,
+            :from => Settings.mailer.from,
+            :subject => "ResoMixProcessor (Finished)",
+            :body => output,
+            :via => :smtp,
+            :via_options => {
+              :address              => Settings.mailer.address,
+              :port                 => Settings.mailer.port,
+              :enable_starttls_auto => Settings.mailer.enable_starttls_auto,
+              :user_name            => Settings.mailer.user_name,
+              :password             => Settings.mailer.password,
+              :authentication       => Settings.mailer.authentication,
+              :domain               => Settings.mailer.domain
+            }
+        })
+      end
     end
   end
 end

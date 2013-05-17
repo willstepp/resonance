@@ -125,7 +125,6 @@
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
   NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
   NSURL * url = [NSURL URLWithString:@"http://resoapp.com/mixes.json"];
-  //NSURL * url = [NSURL URLWithString:@"http://localhost:3000/mixes.json"];
   [request setURL:url];
   [request setHTTPMethod:@"POST"];
   
@@ -157,7 +156,7 @@
   [tempPostData appendData:[self.uuid dataUsingEncoding:NSUTF8StringEncoding]];
   [tempPostData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
   
-  // Sample file to send as data
+  //attach mix zip file
   [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"userfile\"; filename=\"%@\"\r\n", name] dataUsingEncoding:NSUTF8StringEncoding]];
   [tempPostData appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
   [tempPostData appendData:mixData];
