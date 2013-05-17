@@ -78,13 +78,19 @@ static  ResoMediaTransferManager * rmtm = nil;
   }
   
   //2) thumbnail transfer prep
-  if (mt == ThumbnailTransfer) {
+  if (mt == SoundThumbnailTransfer) {
     [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
+  }
+  if (mt == MixThumbnailTransfer) {
+    [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
   }
   
   //3) preview transfer prep
-  if (mt == PreviewTransfer) {
+  if (mt == SoundPreviewTransfer) {
     [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
+  }
+  if (mt == MixPreviewTransfer) {
+    [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
   }
   
   //4) mix transfer prep
@@ -113,6 +119,10 @@ static  ResoMediaTransferManager * rmtm = nil;
     [app setStateforMix:uuid newState:Transferring];
     [app setSharedforMix:uuid shared:YES];
   }
+  if (mt == MixTransferDownload) {
+    [app addMixWithId:uuid name:@"" state:Transferring sounds:nil];
+    [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
+  }
   
   //3) setup transfer object
   ResoMediaTransfer * rmt = [self setupTransferOfType:mt withIdentifier:uuid];
@@ -137,10 +147,19 @@ static  ResoMediaTransferManager * rmtm = nil;
     case MixTransferUpload:
       mtq = MixQueue;
       break;
-    case ThumbnailTransfer:
+    case MixTransferDownload:
+      mtq = MixQueue;
+      break;
+    case SoundThumbnailTransfer:
       mtq = ThumbnailQueue;
       break;
-    case PreviewTransfer:
+    case MixThumbnailTransfer:
+      mtq = ThumbnailQueue;
+      break;
+    case SoundPreviewTransfer:
+      mtq = PreviewQueue;
+      break;
+    case MixPreviewTransfer:
       mtq = PreviewQueue;
       break;
     default:
@@ -167,6 +186,31 @@ static  ResoMediaTransferManager * rmtm = nil;
       [rmt addItem:rmti];
       break;
     }
+    case MixTransferDownload:
+    {
+      //mix
+      ResoMediaTransferItem * mixItem = [[ResoMediaTransferItem alloc] init];
+      mixItem.transferType = mt;
+      mixItem.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/mixes/%@/mix", uuid];
+      mixItem.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path];
+      [rmt addItem:mixItem];
+      
+      //preview
+      ResoMediaTransferItem * previewItem = [[ResoMediaTransferItem alloc] init];
+      previewItem.transferType = mt;
+      previewItem.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/mixes/%@/preview", uuid];
+      previewItem.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/preview", uuid]] path];
+      [rmt addItem:previewItem];
+
+      //thumb
+      ResoMediaTransferItem * thumbItem = [[ResoMediaTransferItem alloc] init];
+      thumbItem.transferType = mt;
+      thumbItem.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/mixes/%@/thumb", uuid];
+      thumbItem.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/thumb", uuid]] path];
+      [rmt addItem:thumbItem];
+      
+      break;
+    }
     case MixTransferUpload:
     {
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
@@ -176,7 +220,7 @@ static  ResoMediaTransferManager * rmtm = nil;
       [rmt addItem:rmti];
       break;
     }
-    case ThumbnailTransfer:
+    case SoundThumbnailTransfer:
     {
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
       rmti.transferType = mt;
@@ -185,12 +229,30 @@ static  ResoMediaTransferManager * rmtm = nil;
       [rmt addItem:rmti];
       break;
     }
-    case PreviewTransfer:
+    case MixThumbnailTransfer:
+    {
+      ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
+      rmti.transferType = mt;
+      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/mixes/%@/thumb", uuid];
+      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/thumb", uuid]] path];
+      [rmt addItem:rmti];
+      break;
+    }
+    case SoundPreviewTransfer:
     {
       ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
       rmti.transferType = mt;
       rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/sounds/%@/preview", uuid];
       rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
+      [rmt addItem:rmti];
+      break;
+    }
+    case MixPreviewTransfer:
+    {
+      ResoMediaTransferItem * rmti = [[ResoMediaTransferItem alloc] init];
+      rmti.transferType = mt;
+      rmti.sourceUrl = [NSString stringWithFormat:@"https://s3.amazonaws.com/resoapp/mixes/%@/preview", uuid];
+      rmti.destinationUrl = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/preview", uuid]] path];
       [rmt addItem:rmti];
       break;
     }
@@ -221,7 +283,13 @@ static  ResoMediaTransferManager * rmtm = nil;
     [self loadSoundMetadata:t.uuid];
     [app setStateforSound:t.uuid newState:Completed];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    
+  }
+  
+  //if mix download, unzip files
+  if (t.transferType == MixTransferDownload) {
+    [self loadMixMetadata:t.uuid];
+    [app setStateforMix:t.uuid newState:Completed];
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
   }
   
   //if mix, remove transfer files, update state
@@ -242,6 +310,23 @@ static  ResoMediaTransferManager * rmtm = nil;
     [app setStateforMix:t.uuid newState:Completed];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
   }
+}
+
+-(void)loadMixMetadata:(NSString*)uuid
+{
+  //1) get path of mix file
+  NSString * mixFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path];
+  
+  //2) read json
+  NSData * mixFile = [NSData dataWithContentsOfFile:mixFilePath];
+  
+  //3) parse json
+  NSDictionary * mix = [NSJSONSerialization
+                        JSONObjectWithData:mixFile
+                        options:kNilOptions
+                        error:nil];
+  //4) update mix data
+  [app setMixFromData:mix];
 }
 
 -(void)loadSoundMetadata:(NSString*)uuid
@@ -267,7 +352,7 @@ static  ResoMediaTransferManager * rmtm = nil;
   if (t.transferType == SoundTransferDownload) {
     [app setStateforSound:t.uuid newState:Failed];
   }
-  if (t.transferType == MixTransferUpload) {
+  if (t.transferType == MixTransferUpload || t.transferType == MixTransferDownload) {
     [app setStateforMix:t.uuid newState:Failed];
   }
 }

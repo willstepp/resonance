@@ -387,6 +387,61 @@
   }
 }
 
+- (void)setMixFromData:(NSDictionary*)d
+{
+  NSString * name = [d objectForKey:@"name"];
+  NSString * uuid = [d objectForKey:@"uuid"];
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSManagedObject * mix;
+  if (![self mixExists:uuid withContext:[self managedObjectContext]]) {
+    
+    mix = [NSEntityDescription
+             insertNewObjectForEntityForName:@"Mix"
+             inManagedObjectContext:context];
+    
+  } else {
+    
+    //retrieve mix
+    NSEntityDescription * ed = [NSEntityDescription
+                                entityForName:@"Mix" inManagedObjectContext:context];
+    
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    [request setEntity:ed];
+    
+    NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+    [request setPredicate:p];
+    
+    NSError * error;
+    NSArray * array = [context executeFetchRequest:request error:&error];
+    
+    mix = [array objectAtIndex:0];
+    
+  }
+  
+  [mix setValue:name forKey:@"name"];
+  [mix setValue:uuid forKey:@"uuid"];
+  
+  //this method is called upon mix download, so state will always be shared
+  [mix setValue:[NSNumber numberWithBool:YES] forKey:@"shared"];
+  
+  //add sounds
+  NSArray * modules = [d objectForKey:@"modules"];
+  NSMutableArray * soundUUIDs = [[NSMutableArray alloc] init];
+  for(NSDictionary * module in modules) {
+    ModuleType type = (ModuleType)[[module objectForKey:@"type"] intValue];
+    if (type == ModuleType_Sound) {
+      NSString * moduleUUID = [module objectForKey:@"uuid"];
+      [soundUUIDs addObject:moduleUUID];
+    }
+  }
+  [mix setValue:[soundUUIDs componentsJoinedByString:@";"] forKey:@"sounds"];
+  
+  NSError * error;
+  if (![context save:&error]) {
+  }
+}
+
 - (void)addSoundWithIdentifier:(NSString*)uuid
 {
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
@@ -412,7 +467,9 @@
     [mix setValue:uuid forKey:@"uuid"];
     [mix setValue:n forKey:@"name"];
     [mix setValue:[NSNumber numberWithInt:state] forKey:@"state"];
-    [mix setValue:[sounds componentsJoinedByString:@";"] forKey:@"sounds"];
+    if (sounds != nil) {
+      [mix setValue:[sounds componentsJoinedByString:@";"] forKey:@"sounds"];
+    }
     NSError * error;
     if (![context save:&error]) {
     }

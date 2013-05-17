@@ -159,7 +159,7 @@
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:ThumbnailTransfer withIdentifier:uuid];
+  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid];
   
   //hook up to delegate
   ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -306,9 +306,9 @@
 {
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   
-  if (t.transferType == ThumbnailTransfer) {
+  if (t.transferType == SoundThumbnailTransfer) {
     [soundsView reloadData];
-  } else if (t.transferType == PreviewTransfer) {
+  } else if (t.transferType == SoundPreviewTransfer) {
     NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
     [self playPreview:file_path];
   } else if (t.transferType == SoundTransferDownload) {

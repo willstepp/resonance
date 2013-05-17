@@ -48,6 +48,7 @@
 - (NSArray*)mixesWithState:(int)s;
 - (void)removeMixWithIdentifier:(NSString*)uuid;
 -(NSMutableDictionary*)mixWithIdentifier:(NSString*)uuid;
+- (void)setMixFromData:(NSDictionary*)d;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

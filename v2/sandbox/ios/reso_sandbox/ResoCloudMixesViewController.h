@@ -15,8 +15,6 @@
 @property (nonatomic, retain) UIButton * downloadButton;
 @property (nonatomic, retain) UIProgressView * progressBar;
 
-@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
-
 #pragma mark -
 #pragma mark ResoMediaTransfer Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t;

@@ -166,7 +166,7 @@
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:ThumbnailTransfer withIdentifier:uuid];
+  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid];
   
   //hook up to delegate
   ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -212,7 +212,7 @@
       
       //enqueue preview download
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:PreviewTransfer withIdentifier:uuid];
+      [rmtm initTransferOfType:SoundPreviewTransfer withIdentifier:uuid];
       
       //hook up to delegate
       ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -225,7 +225,7 @@
 {
   ResoModuleManager * rmm = [ResoModuleManager instance];
   ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:Preview]];
-  [rm loadPreview:uuid looped:false];
+  [rm loadPreview:uuid looped:false mediaType:MediaType_Sound];
   [rm.sound play];
 }
 
@@ -320,10 +320,10 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  if (t.transferType == ThumbnailTransfer) {
+  if (t.transferType == SoundThumbnailTransfer) {
     NSLog(@"thumbnailTransfer finished");
     [soundsView reloadData];
-  } else if (t.transferType == PreviewTransfer) {
+  } else if (t.transferType == SoundPreviewTransfer) {
     [self playPreview:t.uuid];
   } else if (t.transferType == SoundTransferDownload) {
     [self downloadComplete:t.uuid];

@@ -10,10 +10,18 @@
 #define gl_sandbox_ResoTypes_h
 
 typedef enum {
-  ThumbnailTransfer,
-  PreviewTransfer,
+  MediaType_Sound,
+  MediaType_Mix
+} MediaType;
+
+typedef enum {
+  MixThumbnailTransfer,
+  SoundThumbnailTransfer,
+  MixPreviewTransfer,
+  SoundPreviewTransfer,
   SoundTransferDownload,
-  MixTransferUpload
+  MixTransferUpload,
+  MixTransferDownload
 } MediaTransfer;
 
 typedef enum {

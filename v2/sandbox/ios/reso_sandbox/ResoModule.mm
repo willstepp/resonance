@@ -64,12 +64,13 @@
   }
 }
 
--(void)loadPreview:(NSString*)newUuid looped:(bool)l
+-(void)loadPreview:(NSString*)newUuid looped:(bool)l mediaType:(int)t
 {
   uuid = newUuid;
   
+  NSString * mediaType = (t == MediaType_Sound ? @"sounds" : @"mixes");
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * previewPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
+  NSString * previewPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"%@/%@/preview", mediaType, uuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:previewPath];
   if (exists) {
     [sound load:previewPath looped:l];

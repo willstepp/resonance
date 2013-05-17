@@ -24,6 +24,6 @@
 -(id)initWithSoundEngine:(id<ISoundEngine>)ise tag:(int)t;
 
 -(void)loadSound:(NSString*)newUuid looped:(bool)l;
--(void)loadPreview:(NSString*)newUuid looped:(bool)l;
+-(void)loadPreview:(NSString*)newUuid looped:(bool)l mediaType:(int)t;
 
 @end

@@ -7,13 +7,10 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "SSZipArchive.h"
 
 #import "ResoCloudMixesViewController.h"
 #import "ResoAppDelegate.h"
 #import "ResoTypes.h"
-
-#import "FMODSoundEngine.h"
 
 #import "ResoMediaTransfer.h"
 #import "ResoMediaTransferItem.h"
@@ -22,16 +19,12 @@
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
 
-#define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
+#define mixesUrl [NSURL URLWithString:@"http://resoapp.com/mixes/processed.json"]
 
 @interface ResoCloudMixesViewController ()
 {
-  UITableView * soundsView;
-  NSMutableArray * soundsData;
-  
-  dispatch_queue_t global_queue;
-  dispatch_queue_t thumbnail_queue;
-  dispatch_queue_t preview_queue;
+  UITableView * mixesView;
+  NSMutableArray * mixesData;
   
   ResoMediaTransfer * mediaTransfer;
 }
@@ -39,7 +32,6 @@
 
 @implementation ResoCloudMixesViewController
 @synthesize backButton, previewButton, downloadButton, progressBar;
-@synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,27 +41,18 @@
     mediaTransfer = nil;
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     
-    soundsData = [[NSMutableArray alloc] init];
-    //[self loadAvailableSoundsFromDevice];
+    mixesData = [[NSMutableArray alloc] init];
     
     //set up table view
-    soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 150) style:UITableViewStylePlain];
-    soundsView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    soundsView.delegate = self;
-    soundsView.dataSource = self;
-    //[soundsView reloadData];
+    mixesView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 150) style:UITableViewStylePlain];
+    mixesView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    mixesView.delegate = self;
+    mixesView.dataSource = self;
     
-    [self.view addSubview:soundsView];
-    
-    //initate background queue for global tasks
-    global_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    //initiate background queue to retreive thumbnails
-    thumbnail_queue = dispatch_queue_create("com.resonance.thumbnail_fetch", NULL);
-    //initiate background queue to retreive preview clips
-    preview_queue = dispatch_queue_create("com.resonance.preview_fetch", NULL);
+    [self.view addSubview:mixesView];
     
     //get list of sounds on background thread
-    dispatch_async(global_queue, ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       //init
       NSManagedObjectContext * context;
       NSPersistentStoreCoordinator * coordinator = [ad persistentStoreCoordinator];
@@ -79,22 +62,22 @@
       }
       
       //1) fetch sounds from server
-      NSData * data = [NSData dataWithContentsOfURL:soundsUrl];
+      NSData * data = [NSData dataWithContentsOfURL:mixesUrl];
       
       //2) parse into json array
-      NSArray * sounds = [NSJSONSerialization
+      NSArray * mixes = [NSJSONSerialization
                           JSONObjectWithData:data
                           options:kNilOptions
                           error:nil];
       
       //3) iterate sounds and create new record if needed
-      for(NSDictionary * sound in sounds) {
-        NSString * uuid = [sound objectForKey:@"uuid"];
-        if(![ad soundExists:uuid withContext:context]) {
+      for(NSDictionary * mix in mixes) {
+        NSString * uuid = [mix objectForKey:@"uuid"];
+        if(![ad mixExists:uuid withContext:context]) {
           
           //save sound record on main thread
-          [self performSelectorOnMainThread:@selector(saveSound:)
-                                 withObject:sound waitUntilDone:NO];
+          [self performSelectorOnMainThread:@selector(saveMix:)
+                                 withObject:mix waitUntilDone:NO];
         }
       }
     });
@@ -117,7 +100,7 @@
     //preview button
     previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [previewButton setTitle:@"Preview" forState:UIControlStateNormal];
-    [previewButton addTarget:self action:@selector(previewSound:) forControlEvents:UIControlEventTouchUpInside];
+    [previewButton addTarget:self action:@selector(previewMix:) forControlEvents:UIControlEventTouchUpInside];
     [previewButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [previewButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     
@@ -130,7 +113,7 @@
     //download
     downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [downloadButton setTitle:@"Download" forState:UIControlStateNormal];
-    [downloadButton addTarget:self action:@selector(downloadSound:) forControlEvents:UIControlEventTouchUpInside];
+    [downloadButton addTarget:self action:@selector(downloadMix:) forControlEvents:UIControlEventTouchUpInside];
     [downloadButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [downloadButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
     
@@ -160,25 +143,19 @@
   [super didReceiveMemoryWarning];
 }
 
-- (void)saveSound:(NSDictionary*)sound {
-  NSString * uuid = [sound objectForKey:@"uuid"];
+- (void)saveMix:(NSDictionary*)mix {
+  NSString * uuid = [mix objectForKey:@"uuid"];
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:ThumbnailTransfer withIdentifier:uuid];
+  [rmtm initTransferOfType:MixThumbnailTransfer withIdentifier:uuid];
   
   //hook up to delegate
   ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
   [rtm addDelegate:self];
   
-  [soundsData addObject:sound];
-  [soundsView reloadData];
-}
-
-- (void)addSoundToTable:(NSDictionary*)sound
-{
-  [soundsData addObject:sound];
-  [soundsView reloadData];
+  [mixesData addObject:mix];
+  [mixesView reloadData];
 }
 
 -(void)goBack:(id)sender
@@ -186,24 +163,17 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)loadAvailableSoundsFromDevice
-{
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSArray * sounds = [ad soundsWithState:Completed];
-  [soundsData addObjectsFromArray:sounds];
-}
-
--(void)previewSound:(id)sender
+-(void)previewMix:(id)sender
 {
   //get currently selected row index
-  NSIndexPath * path = [soundsView indexPathForSelectedRow];
+  NSIndexPath * path = [mixesView indexPathForSelectedRow];
   int row = path ? [path row] : -1;
   
   if (row >= 0) {
-    NSDictionary * sound = [soundsData objectAtIndex:[path row]];
-    NSString * uuid = [sound objectForKey:@"uuid"];
+    NSDictionary * mix = [mixesData objectAtIndex:[path row]];
+    NSString * uuid = [mix objectForKey:@"uuid"];
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-    NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", uuid]] path];
+    NSString * pp = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/preview", uuid]] path];
     bool exists = [[NSFileManager defaultManager] fileExistsAtPath:pp];
     if (exists) {
       [self playPreview:uuid];
@@ -211,7 +181,7 @@
       
       //enqueue preview download
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:PreviewTransfer withIdentifier:uuid];
+      [rmtm initTransferOfType:MixPreviewTransfer withIdentifier:uuid];
       
       //hook up to delegate
       ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -224,28 +194,30 @@
 {
   ResoModuleManager * rmm = [ResoModuleManager instance];
   ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:Preview]];
-  [rm loadPreview:uuid looped:false];
+  [rm loadPreview:uuid looped:false mediaType:MediaType_Mix];
   [rm.sound play];
 }
 
--(void)downloadSound:(id)sender
+-(void)downloadMix:(id)sender
 {
   //get currently selected row index
-  NSIndexPath * path = [soundsView indexPathForSelectedRow];
+  NSIndexPath * path = [mixesView indexPathForSelectedRow];
   int row = path ? [path row] : -1;
   
   if (row >= 0) {
     //get uuid for currently selected row
-    NSDictionary * sound = [soundsData objectAtIndex:[path row]];
-    NSString * uuid = [sound objectForKey:@"uuid"];
+    NSDictionary * mix = [mixesData objectAtIndex:[path row]];
+    NSString * uuid = [mix objectForKey:@"uuid"];
     
-    //first test if sound already exists
+    //first test if mix already exists
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     if (![ad soundExists:uuid withContext:[ad managedObjectContext]]) {
       
+      //get list of sounds you don't yet have, and downlaod those as well
+      
       //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid];
+      [rmtm initTransferOfType:MixTransferDownload withIdentifier:uuid];
       
       //hook up to delegate
       ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
@@ -260,29 +232,29 @@
   progressBar.progress = 0.0f;
   
   //remove downloaded item from list
-  NSDictionary * soundToRemove = nil;
-  for(NSDictionary * sound in soundsData) {
-    NSString * soundUUID = [sound objectForKey:@"uuid"];
-    if (soundUUID == uuid) {
-      soundToRemove = sound;
+  NSDictionary * mixToRemove = nil;
+  for(NSDictionary * mix in mixesData) {
+    NSString * mixUUID = [mix objectForKey:@"uuid"];
+    if (mixUUID == uuid) {
+      mixToRemove = mix;
       break;
     }
   }
-  [soundsData removeObject:soundToRemove];
-  [soundsView reloadData];
+  [mixesData removeObject:mixToRemove];
+  [mixesView reloadData];
 }
 
 #pragma mark - TableView DataSource Implementation
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return soundsData.count;
+  return mixesData.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NSDictionary * sound = [soundsData objectAtIndex:indexPath.row];
+  NSDictionary * mix = [mixesData objectAtIndex:indexPath.row];
   
   static NSString * cellIdentifier = @"";
-  NSString * uuid = [sound objectForKey:@"uuid"];
+  NSString * uuid = [mix objectForKey:@"uuid"];
   cellIdentifier = uuid;
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -292,9 +264,9 @@
   cell.backgroundView = [[UIView alloc] init];
   [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
   
-  cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
+  cell.textLabel.text = [NSString stringWithFormat:@"%@", [mix objectForKey:@"name"]];
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
+  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/thumb", uuid]] path]];
   
   return cell;
 }
@@ -308,7 +280,7 @@
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
 {
-  if (t.transferType == SoundTransferDownload) {
+  if (t.transferType == MixTransferDownload) {
     long long tbc = t.totalByteCount;
     long long cbc = t.currentByteCount;
     float p = (float)cbc / (float)tbc;
@@ -319,12 +291,12 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  if (t.transferType == ThumbnailTransfer) {
-    NSLog(@"thumbnailTransfer finished");
-    [soundsView reloadData];
-  } else if (t.transferType == PreviewTransfer) {
+  if (t.transferType == MixThumbnailTransfer) {
+    NSLog(@"mixThumbnailTransfer finished");
+    [mixesView reloadData];
+  } else if (t.transferType == MixPreviewTransfer) {
     [self playPreview:t.uuid];
-  } else if (t.transferType == SoundTransferDownload) {
+  } else if (t.transferType == MixTransferDownload) {
     [self downloadComplete:t.uuid];
   }
 }
