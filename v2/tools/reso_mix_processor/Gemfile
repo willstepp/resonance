@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'aws-s3'
+gem 'daemons'
+gem 'pony'
+gem 'rails', '3.2.13'
+gem 'rufus-scheduler'
+gem 'settingslogic'
+gem 'zip'
+gem 'pg'

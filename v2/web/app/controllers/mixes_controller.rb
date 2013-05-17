@@ -47,10 +47,9 @@ class MixesController < ApplicationController
 
     name = "#{params[:uuid]}.zip"
     Rails.logger.info "FILENAME: #{name}"
-    directory = "public/zips"
+    directory = "/opt/reso_mix_processor/mixes"
     path = File.join(directory, name)
     File.open(path, "wb") { |f| f.write(params[:userfile].read) }
-
 
     @mix = Mix.new(:uuid => params[:uuid])
 

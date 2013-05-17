@@ -8,3 +8,7 @@ sudo apt-get install unzip
 WAV->OGG ENCODING
 sudo apt-get install vorbis-tools
   oggenc ./preview.wav -q 5 -o preview.ogg
+
+
+COMMAND TO START ON BOOT: /etc/rc.local
+/usr/bin/sudo su prod -l -c 'cd /opt/reso_mix_processor && /usr/local/rvm/rubies/ruby-1.9.3-p0/bin/ruby /opt/reso_mix_processor/reso-mix-processor-daemon.rb start'
