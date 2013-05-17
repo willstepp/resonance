@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoAppDelegate.h"
 #import "ResoModuleViewController.h"
-#import "ResoDeviceSoundsViewController.h"
+#import "ResoSoundLibraryViewController.h"
 
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
@@ -82,7 +82,7 @@
       
         //sound library button
         soundLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [soundLibraryButton setTitle:@"Load New Sound" forState:UIControlStateNormal];
+        [soundLibraryButton setTitle:@"Sound Library" forState:UIControlStateNormal];
         [soundLibraryButton addTarget:self action:@selector(showSoundLibrary:) forControlEvents:UIControlEventTouchUpInside];
         [soundLibraryButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
         [soundLibraryButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
@@ -173,8 +173,8 @@
 
 -(void)showSoundLibrary:(id)sender
 {
-  ResoDeviceSoundsViewController * rdsvc = [[ResoDeviceSoundsViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:rdsvc animated:YES];
+  ResoSoundLibraryViewController * rslvc = [[ResoSoundLibraryViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rslvc animated:YES];
 }
 
 @end

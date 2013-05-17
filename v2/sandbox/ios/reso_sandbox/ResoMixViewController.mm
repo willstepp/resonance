@@ -12,13 +12,14 @@
 #import "ResoMixViewController.h"
 #import "ResoMixManager.h"
 #import "ResoMediaTransferManager.h"
+#import "ResoMixLibraryViewController.h"
 
 @interface ResoMixViewController ()
 
 @end
 
 @implementation ResoMixViewController
-@synthesize backButton, saveMixButton, loadMixButton, shareMixButton;
+@synthesize backButton, saveMixButton, mixLibraryButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,7 +40,7 @@
       
       //save mix button
       saveMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [saveMixButton setTitle:@"Save Mix" forState:UIControlStateNormal];
+      [saveMixButton setTitle:@"Save Current Mix" forState:UIControlStateNormal];
       [saveMixButton addTarget:self action:@selector(initSaveMix:) forControlEvents:UIControlEventTouchUpInside];
       [saveMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [saveMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
@@ -51,30 +52,17 @@
       [self.view addSubview:saveMixButton];
       
       //load mix button
-      loadMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [loadMixButton setTitle:@"Load Mix" forState:UIControlStateNormal];
-      [loadMixButton addTarget:self action:@selector(loadMix:) forControlEvents:UIControlEventTouchUpInside];
-      [loadMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [loadMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      mixLibraryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [mixLibraryButton setTitle:@"Mix Library" forState:UIControlStateNormal];
+      [mixLibraryButton addTarget:self action:@selector(showMixLibrary:) forControlEvents:UIControlEventTouchUpInside];
+      [mixLibraryButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+      [mixLibraryButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
-      loadMixButton.layer.borderColor = [UIColor blackColor].CGColor;
-      loadMixButton.layer.borderWidth = 0.0f;
-      loadMixButton.layer.cornerRadius = 4.0f;
-      loadMixButton.frame = CGRectMake(10, 175, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:loadMixButton];
-      
-      //share mix button
-      shareMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [shareMixButton setTitle:@"Share Mix" forState:UIControlStateNormal];
-      [shareMixButton addTarget:self action:@selector(shareMix:) forControlEvents:UIControlEventTouchUpInside];
-      [shareMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [shareMixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-      
-      shareMixButton.layer.borderColor = [UIColor blackColor].CGColor;
-      shareMixButton.layer.borderWidth = 0.0f;
-      shareMixButton.layer.cornerRadius = 4.0f;
-      shareMixButton.frame = CGRectMake(10, 250, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:shareMixButton];
+      mixLibraryButton.layer.borderColor = [UIColor blackColor].CGColor;
+      mixLibraryButton.layer.borderWidth = 0.0f;
+      mixLibraryButton.layer.cornerRadius = 4.0f;
+      mixLibraryButton.frame = CGRectMake(10, 175, self.view.bounds.size.width - 20, 50);
+      [self.view addSubview:mixLibraryButton];
       
       [self.view setBackgroundColor:[UIColor darkGrayColor]];
     }
@@ -99,7 +87,7 @@
 -(void)initSaveMix:(id)sender
 {
   //prompt for name of mix
-  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mix Name" message:@"Enter a name for your mix" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mix Name" message:@"Give your mix a name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
   alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
   alertView.delegate = self;
   [alertView show];
@@ -111,31 +99,10 @@
   [rmm saveMix:name];
 }
 
--(void)loadMix:(id)sender
+-(void)showMixLibrary:(id)sender
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * uuid = [ad getMixUUID];
-  if (uuid != nil) {
-    ResoMixManager * rmm = [ResoMixManager instance];
-    [rmm loadMix:uuid];
-  }
-}
-
--(void)shareMix:(id)sender
-{
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * uuid = [ad getMixUUID];
-  if (uuid != nil && ![ad mixAlreadyShared:uuid]) {
-    NSLog(@"sharing mix");
-    
-    //transfer with rtm
-    ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-    [rmtm initTransferOfType:MixTransferUpload withIdentifier:uuid];
-    
-    //hook up to delegate
-    ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-    [rtm addDelegate:self];
-  }
+  ResoMixLibraryViewController * rmlvc = [[ResoMixLibraryViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmlvc animated:YES];
 }
 
 #pragma uialertviewdelegate methods
@@ -144,42 +111,5 @@
   if (buttonIndex == 1) {
     [self saveMixWithName:[alertView textFieldAtIndex:0].text];
   }
-}
-
-#pragma mark -
-#pragma mark ResoMediaTransfer Delegates
--(void) transferStarted:(ResoMediaTransfer*)t
-{
-  //progressBar.progress = 0.0f;
-}
-
--(void) transferProgressUpdated:(ResoMediaTransfer*)t
-{
-  /*
-  if (t.transferType == SoundTransferDownload) {
-    long long tbc = t.totalByteCount;
-    long long cbc = t.currentByteCount;
-    float p = (float)cbc / (float)tbc;
-    progressBar.progress = p;
-  }
-   */
-  
-}
-
--(void) transferFinished:(ResoMediaTransfer*)t
-{
-  /*
-  if (t.transferType == ThumbnailTransfer) {
-    [soundsView reloadData];
-  } else if (t.transferType == PreviewTransfer) {
-    [self playPreview:t.uuid];
-  } else if (t.transferType == SoundTransferDownload) {
-    [self downloadComplete:t.uuid];
-  }
-   */
-}
-
--(void) transferError:(ResoMediaTransfer*)t
-{
 }
 @end

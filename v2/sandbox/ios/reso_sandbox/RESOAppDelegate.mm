@@ -42,7 +42,7 @@
   [self.window makeKeyAndVisible];
   
   //[self clearSounds];
-  [self clearMixes];
+  //[self clearMixes];
   
   [self ensureResonanceAppDirectoryExists];
   [self ensureDirectoryExists:[self resonanceAppSubDirectory:@"sounds"]];
@@ -402,7 +402,7 @@
   }
 }
 
-- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)s
+- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds
 {
   if (![self mixExists:uuid withContext:[self managedObjectContext]]) {
     NSManagedObjectContext * context = [self managedObjectContext];
@@ -411,7 +411,8 @@
                                inManagedObjectContext:context];
     [mix setValue:uuid forKey:@"uuid"];
     [mix setValue:n forKey:@"name"];
-    [mix setValue:[NSNumber numberWithInt:s] forKey:@"state"];
+    [mix setValue:[NSNumber numberWithInt:state] forKey:@"state"];
+    [mix setValue:[sounds componentsJoinedByString:@";"] forKey:@"sounds"];
     NSError * error;
     if (![context save:&error]) {
     }
@@ -476,6 +477,32 @@
   return sounds;
 }
 
+-(NSArray*)mixesWithState:(int)s
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i)", s];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  NSMutableArray * mixes  = [[NSMutableArray alloc] init];
+  for (NSManagedObject * mix in array) {
+    NSMutableDictionary * m = [[NSMutableDictionary alloc] init];
+    [m setValue:[mix valueForKey:@"name"] forKey:@"name"];
+    [m setValue:[mix valueForKey:@"shared"] forKey:@"shared"];
+    [m setValue:[mix valueForKey:@"uuid"] forKey:@"uuid"];
+    [mixes addObject:m];
+  }
+  return mixes;
+}
+
 -(NSMutableDictionary*)soundWithIdentifier:(NSString*)uuid
 {
   NSMutableDictionary * sound = nil;
@@ -500,6 +527,33 @@
     [sound setValue:[s valueForKey:@"uuid"] forKey:@"uuid"];
   }
   return sound;
+}
+
+-(NSMutableDictionary*)mixWithIdentifier:(NSString*)uuid
+{
+  NSMutableDictionary * mix = nil;
+  
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  if (array.count > 0) {
+    NSManagedObject * m = [array objectAtIndex:0];
+    mix = [[NSMutableDictionary alloc] init];
+    [mix setValue:[m valueForKey:@"name"] forKey:@"name"];
+    [mix setValue:[m valueForKey:@"shared"] forKey:@"shared"];
+    [mix setValue:[m valueForKey:@"sounds"] forKey:@"sounds"];
+    [mix setValue:[m valueForKey:@"uuid"] forKey:@"uuid"];
+  }
+  return mix;
 }
 
 -(NSArray*)soundTransfersToBeResumed

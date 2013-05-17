@@ -50,6 +50,7 @@ module ResoMixProcessor
             `oggenc #{mix_wav_file} -q 5 -o #{mix_ogg_file}`
 
             if File.exists? mix_ogg_file
+              
               #3) upload files to S3
               bucket = Settings.S3.bucket
               preview = "mixes/#{uuid}/preview"

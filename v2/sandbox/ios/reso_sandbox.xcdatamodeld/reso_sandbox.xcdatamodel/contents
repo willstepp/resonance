@@ -3,6 +3,7 @@
     <entity name="Mix" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shared" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="sounds" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -13,7 +14,7 @@
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Mix" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Mix" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Sound" positionX="160" positionY="192" width="128" height="105"/>
     </elements>
 </model>

@@ -25,7 +25,9 @@ typedef enum {
 
 typedef enum {
   Failed,
+  Saving,
   Transferring,
+  Processing,
   Completed
 } SoundState;
 

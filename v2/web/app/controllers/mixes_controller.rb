@@ -51,7 +51,7 @@ class MixesController < ApplicationController
     path = File.join(directory, name)
     File.open(path, "wb") { |f| f.write(params[:userfile].read) }
 
-    @mix = Mix.new(:uuid => params[:uuid])
+    @mix = Mix.new(:uuid => params[:uuid], :name => params[:name], :sounds => params[:sounds])
 
     respond_to do |format|
       if @mix.save

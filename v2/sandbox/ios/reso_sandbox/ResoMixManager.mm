@@ -20,6 +20,8 @@
 #import "FMODSoundEngine.h"
 
 #import "ResoThumbnailGenerator.h"
+#import "ResoMediaTransferManager.h"
+#import "ResoMediaTransfer.h"
 
 @interface ResoMixManager ()
 {
@@ -60,14 +62,11 @@ static ResoMixManager * rmm = nil;
 
 -(void)saveMix:(NSString*)name
 {
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   NSString * uuid = [[[NSUUID UUID] UUIDString] lowercaseString];
   currentMixUuid = uuid;
   
-  //1) create coredata record
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  [ad addMixWithId:uuid name:name state:Completed];
-  
-  //2) create mix dictionary
+  //1) create mix dictionary
   NSMutableDictionary * mix = [[NSMutableDictionary alloc] init];
   [mix setObject:name forKey:@"name"];
   [mix setObject:uuid forKey:@"uuid"];
@@ -106,6 +105,9 @@ static ResoMixManager * rmm = nil;
     }
   }
   [mix setObject:modules forKey:@"modules"];
+  
+  //2) create coredata record
+  [ad addMixWithId:uuid name:name state:Completed sounds:mixUuids];
   
   //3) persist mix data to file as json
   [ad ensureDirectoryExists:[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
@@ -164,10 +166,7 @@ static ResoMixManager * rmm = nil;
                       options:kNilOptions
                       error:nil];
   
-  //iterate over dictionary and recreate modules
-  NSString * name = [mix objectForKey:@"name"];
-  NSString * mixUuid = [mix objectForKey:@"uuid"];
-  
+  //iterate over dictionary and recreate modules  
   NSArray * modules = [mix objectForKey:@"modules"];
   for(NSDictionary * module in modules) {
     
@@ -222,9 +221,14 @@ static ResoMixManager * rmm = nil;
   [[NSFileManager defaultManager] removeItemAtPath:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]] path] error:nil];
 }
 
--(void)shareMix:(NSString*)uuid
+-(ResoMediaTransfer*)shareMix:(NSString*)uuid
 {
+  //upload using rtm
+  ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
+  [rmtm initTransferOfType:MixTransferUpload withIdentifier:uuid];
+  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
   
+  return rtm;
 }
 
 -(void)finishPreviewRecording

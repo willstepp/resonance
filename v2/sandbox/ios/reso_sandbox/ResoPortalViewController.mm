@@ -19,7 +19,7 @@
 @end
 
 @implementation ResoPortalViewController
-@synthesize playerButton, mixButton, cloudSoundsButton, timerButton;
+@synthesize playerButton, mixButton, timerButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -43,7 +43,7 @@
       
       //mix button
       mixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [mixButton setTitle:@"Mix" forState:UIControlStateNormal];
+      [mixButton setTitle:@"Mixes" forState:UIControlStateNormal];
       [mixButton addTarget:self action:@selector(showMix:) forControlEvents:UIControlEventTouchUpInside];
       [mixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [mixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
@@ -53,19 +53,6 @@
       mixButton.layer.cornerRadius = 4.0f;
       mixButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:mixButton];
-      
-      //cloud sounds button
-      cloudSoundsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [cloudSoundsButton setTitle:@"Cloud Sounds" forState:UIControlStateNormal];
-      [cloudSoundsButton addTarget:self action:@selector(showCloudSounds:) forControlEvents:UIControlEventTouchUpInside];
-      [cloudSoundsButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [cloudSoundsButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-      
-      cloudSoundsButton.layer.borderColor = [UIColor blackColor].CGColor;
-      cloudSoundsButton.layer.borderWidth = 0.0f;
-      cloudSoundsButton.layer.cornerRadius = 4.0f;
-      cloudSoundsButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
-      [self.view addSubview:cloudSoundsButton];
       
       //timer button
       timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,7 +64,7 @@
       timerButton.layer.borderColor = [UIColor blackColor].CGColor;
       timerButton.layer.borderWidth = 0.0f;
       timerButton.layer.cornerRadius = 4.0f;
-      timerButton.frame = CGRectMake(10, 310, self.view.bounds.size.width - 20, 50);
+      timerButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
       [self.view addSubview:timerButton];
     }
     return self;
@@ -95,13 +82,6 @@
   ResoPlayerViewController * rpvc = [[ResoPlayerViewController alloc] initWithNibName:nil bundle:nil];
   //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rpvc animated:YES];
-}
-
--(void)showCloudSounds:(id)sender
-{  
-  ResoCloudSoundsViewController * rdvc = [[ResoCloudSoundsViewController alloc] initWithNibName:nil bundle:nil];
-  //push it onto the 'navigation stack'
-  [self.navigationController pushViewController:rdvc animated:YES];
 }
 
 -(void)showTimer:(id)sender

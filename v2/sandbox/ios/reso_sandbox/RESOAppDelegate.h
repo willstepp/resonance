@@ -39,13 +39,15 @@
 
 //mix data methods
 - (void)clearMixes;
-- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)s;
+- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds;
 - (BOOL)mixExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
-- (void)removeMixWithIdentifier:(NSString*)uuid;
 - (BOOL)mixAlreadyShared:(NSString*)uuid;
 - (NSString*)getMixUUID;
 - (void)setStateforMix:(NSString*)uuid newState:(int)s;
 - (void)setSharedforMix:(NSString*)uuid shared:(BOOL)s;
+- (NSArray*)mixesWithState:(int)s;
+- (void)removeMixWithIdentifier:(NSString*)uuid;
+-(NSMutableDictionary*)mixWithIdentifier:(NSString*)uuid;
 
 - (BOOL)ensureDirectoryExists:(NSURL*)path;
 - (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;

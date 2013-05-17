@@ -8,6 +8,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+#import "ResoAppDelegate.h"
 #import "ResoMediaTransfer.h"
 #import "ResoUrlConnection.h"
 
@@ -124,6 +125,7 @@
   NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
   NSString *charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
   NSURL * url = [NSURL URLWithString:@"http://resoapp.com/mixes.json"];
+  //NSURL * url = [NSURL URLWithString:@"http://localhost:3000/mixes.json"];
   [request setURL:url];
   [request setHTTPMethod:@"POST"];
   
@@ -136,7 +138,21 @@
   NSMutableData *tempPostData = [NSMutableData data];
   [tempPostData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
   
-  // Sample Key Value for data
+  //get data from mix uuid
+  ResoAppDelegate * app = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  NSDictionary * mix = [app mixWithIdentifier:self.uuid];
+  
+  //name
+  [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"name"] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[[mix objectForKey:@"name"] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+  
+  //sounds
+  [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"sounds"] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[[mix objectForKey:@"sounds"] dataUsingEncoding:NSUTF8StringEncoding]];
+  [tempPostData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
+  
+  //uuid
   [tempPostData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"uuid"] dataUsingEncoding:NSUTF8StringEncoding]];
   [tempPostData appendData:[self.uuid dataUsingEncoding:NSUTF8StringEncoding]];
   [tempPostData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
@@ -160,21 +176,23 @@
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
   ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
-  NSNumber * totalBytes = [dict objectForKey:@"totalBytes"];
-  totalBytes = [NSNumber numberWithLongLong:[response expectedContentLength]];
-  [dict setObject:totalBytes forKey:@"totalBytes"];
-  
-  self.totalByteCount += [totalBytes longLongValue];
-  
-  NSMutableData * data = [dict objectForKey:@"data"];
-  [data setLength:0];
-  
-  if ([self allTotalByteCountsReceived]) {
-    totalByteCountReceived = true;
-    NSLog(@"ResoMediaTransfer->allTotalByteCountsReceived");
+  if (rmti.transferType != MixTransferUpload) {
+    NSNumber * totalBytes = [dict objectForKey:@"totalBytes"];
+    totalBytes = [NSNumber numberWithLongLong:[response expectedContentLength]];
+    [dict setObject:totalBytes forKey:@"totalBytes"];
+    
+    self.totalByteCount += [totalBytes longLongValue];
+    
+    NSMutableData * data = [dict objectForKey:@"data"];
+    [data setLength:0];
+    
+    if ([self allTotalByteCountsReceived]) {
+      totalByteCountReceived = true;
+      NSLog(@"ResoMediaTransfer->allTotalByteCountsReceived");
+    }
+    
+    NSLog(@"didReceiveResponse() for connection (%@) Expected Length: %@", [NSNumber numberWithInt:c.tag], totalBytes);
   }
-  
-  NSLog(@"didReceiveResponse() for connection (%@) Expected Length: %@", [NSNumber numberWithInt:c.tag], totalBytes);
 }
 
 - (BOOL)allTotalByteCountsReceived
@@ -213,22 +231,24 @@
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
   ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
-  //update byte counts
-  NSNumber * currBytes = [dict objectForKey:@"currentBytes"];
-  currBytes = [NSNumber numberWithLongLong:([currBytes longLongValue] + [data length])];
-  [dict setObject:currBytes forKey:@"currentBytes"];
-  
-  self.currentByteCount += [data length];
-  
-  //write data
-  NSMutableData * currData = [dict objectForKey:@"data"];
-  [currData appendData:data];
-  
-  if (totalByteCountReceived) {
-    [self notifyProgressUpdated];
+  if (rmti.transferType != MixTransferUpload) {
+    //update byte counts
+    NSNumber * currBytes = [dict objectForKey:@"currentBytes"];
+    currBytes = [NSNumber numberWithLongLong:([currBytes longLongValue] + [data length])];
+    [dict setObject:currBytes forKey:@"currentBytes"];
+    
+    self.currentByteCount += [data length];
+    
+    //write data
+    NSMutableData * currData = [dict objectForKey:@"data"];
+    [currData appendData:data];
+    
+    if (totalByteCountReceived) {
+      [self notifyProgressUpdated];
+    }
+    
+    NSLog(@"didReceiveData() for connection (%@). Item (%lld of %lld) - Media Transfer (%lld of %lld)", [NSNumber numberWithInt:c.tag], [[dict objectForKey:@"currentBytes"] longLongValue], [[dict objectForKey:@"totalBytes"] longLongValue], self.currentByteCount, self.totalByteCount);
   }
-  
-	NSLog(@"didReceiveData() for connection (%@). Item (%lld of %lld) - Media Transfer (%lld of %lld)", [NSNumber numberWithInt:c.tag], [[dict objectForKey:@"currentBytes"] longLongValue], [[dict objectForKey:@"totalBytes"] longLongValue], self.currentByteCount, self.totalByteCount);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
@@ -237,10 +257,12 @@
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
   ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
-  //write to file
-  NSMutableData * currData = [dict objectForKey:@"data"];
-  [currData writeToFile:rmti.destinationUrl atomically:YES];
-  
+  if (rmti.transferType != MixTransferUpload) {
+    //write to file
+    NSMutableData * currData = [dict objectForKey:@"data"];
+    [currData writeToFile:rmti.destinationUrl atomically:YES];
+  }
+
   //set state to finished
   [dict setObject:[NSNumber numberWithBool:YES] forKey:@"finished"];
   
@@ -258,7 +280,6 @@
 {
   ResoUrlConnection * c = (ResoUrlConnection*)conn;
   NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
-  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
   
   for(id tag in media) {
     NSMutableData * data = [dict objectForKey:@"data"];
@@ -277,9 +298,14 @@
 
 - (void)connection:(NSURLConnection *)conn didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-  ResoUrlConnection * c = (ResoUrlConnection*)conn;
-  NSMutableDictionary * dict = [media objectForKey:[NSNumber numberWithInt:c.tag]];
-  ResoMediaTransferItem * rmti = [dict objectForKey:@"transferItem"];
+  self.totalByteCountReceived = true;
+    
+  self.totalByteCount = totalBytesExpectedToWrite;
+  self.currentByteCount = totalBytesWritten;
+  
+  if (totalByteCountReceived) {
+    [self notifyProgressUpdated];
+  }
   
   NSLog(@"didSendBodyData()");
   NSLog(@"bytesWritten: %i", bytesWritten);

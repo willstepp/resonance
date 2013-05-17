@@ -78,6 +78,10 @@
 		65B2CDC11742E09D000DF1E6 /* ResoThumbnailGenerator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B2CDC01742E09C000DF1E6 /* ResoThumbnailGenerator.mm */; };
 		65D40931172DB09B00026905 /* ResoSlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65D40930172DB09B00026905 /* ResoSlider.mm */; };
 		65EADA0B1703F784007CB200 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65EADA0A1703F784007CB200 /* Default-568h@2x.png */; };
+		65EB4E0C1746809900C5D236 /* ResoSoundLibraryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65EB4E0B1746809900C5D236 /* ResoSoundLibraryViewController.mm */; };
+		65EB4E0F174680B600C5D236 /* ResoMixLibraryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65EB4E0E174680B600C5D236 /* ResoMixLibraryViewController.mm */; };
+		65EB4E12174685F200C5D236 /* ResoCloudMixesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65EB4E11174685F200C5D236 /* ResoCloudMixesViewController.mm */; };
+		65EB4E151746864200C5D236 /* ResoDeviceMixesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65EB4E141746864200C5D236 /* ResoDeviceMixesViewController.mm */; };
 		65FE9EB3172EE35200E8E1EF /* ResoPortalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */; };
 		65FE9EB6172EE39500E8E1EF /* ResoSoundViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65FE9EB5172EE39500E8E1EF /* ResoSoundViewController.mm */; };
 		65FE9EBA172EF5BF00E8E1EF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FE9EB7172EF5BE00E8E1EF /* AudioToolbox.framework */; };
@@ -198,6 +202,14 @@
 		65D4092F172DB09B00026905 /* ResoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSlider.h; sourceTree = "<group>"; };
 		65D40930172DB09B00026905 /* ResoSlider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSlider.mm; sourceTree = "<group>"; };
 		65EADA0A1703F784007CB200 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		65EB4E0A1746809900C5D236 /* ResoSoundLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSoundLibraryViewController.h; sourceTree = "<group>"; };
+		65EB4E0B1746809900C5D236 /* ResoSoundLibraryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSoundLibraryViewController.mm; sourceTree = "<group>"; };
+		65EB4E0D174680B600C5D236 /* ResoMixLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixLibraryViewController.h; sourceTree = "<group>"; };
+		65EB4E0E174680B600C5D236 /* ResoMixLibraryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixLibraryViewController.mm; sourceTree = "<group>"; };
+		65EB4E10174685F200C5D236 /* ResoCloudMixesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoCloudMixesViewController.h; sourceTree = "<group>"; };
+		65EB4E11174685F200C5D236 /* ResoCloudMixesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoCloudMixesViewController.mm; sourceTree = "<group>"; };
+		65EB4E131746864200C5D236 /* ResoDeviceMixesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoDeviceMixesViewController.h; sourceTree = "<group>"; };
+		65EB4E141746864200C5D236 /* ResoDeviceMixesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoDeviceMixesViewController.mm; sourceTree = "<group>"; };
 		65FE9EB1172EE35200E8E1EF /* ResoPortalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPortalViewController.h; sourceTree = "<group>"; };
 		65FE9EB2172EE35200E8E1EF /* ResoPortalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPortalViewController.mm; sourceTree = "<group>"; };
 		65FE9EB4172EE39500E8E1EF /* ResoSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSoundViewController.h; sourceTree = "<group>"; };
@@ -384,6 +396,14 @@
 				65B2CDBD17428272000DF1E6 /* ResoModuleViewController.mm */,
 				65B2CDBF1742E09B000DF1E6 /* ResoThumbnailGenerator.h */,
 				65B2CDC01742E09C000DF1E6 /* ResoThumbnailGenerator.mm */,
+				65EB4E0A1746809900C5D236 /* ResoSoundLibraryViewController.h */,
+				65EB4E0B1746809900C5D236 /* ResoSoundLibraryViewController.mm */,
+				65EB4E0D174680B600C5D236 /* ResoMixLibraryViewController.h */,
+				65EB4E0E174680B600C5D236 /* ResoMixLibraryViewController.mm */,
+				65EB4E10174685F200C5D236 /* ResoCloudMixesViewController.h */,
+				65EB4E11174685F200C5D236 /* ResoCloudMixesViewController.mm */,
+				65EB4E131746864200C5D236 /* ResoDeviceMixesViewController.h */,
+				65EB4E141746864200C5D236 /* ResoDeviceMixesViewController.mm */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -621,6 +641,10 @@
 				65B2CDB3173D3924000DF1E6 /* ResoMixManager.mm in Sources */,
 				65B2CDBE17428272000DF1E6 /* ResoModuleViewController.mm in Sources */,
 				65B2CDC11742E09D000DF1E6 /* ResoThumbnailGenerator.mm in Sources */,
+				65EB4E0C1746809900C5D236 /* ResoSoundLibraryViewController.mm in Sources */,
+				65EB4E0F174680B600C5D236 /* ResoMixLibraryViewController.mm in Sources */,
+				65EB4E12174685F200C5D236 /* ResoCloudMixesViewController.mm in Sources */,
+				65EB4E151746864200C5D236 /* ResoDeviceMixesViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
