@@ -213,8 +213,6 @@
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     if (![ad soundExists:uuid withContext:[ad managedObjectContext]]) {
       
-      //get list of sounds you don't yet have, and downlaod those as well
-      
       //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
       [rmtm initTransferOfType:MixTransferDownload withIdentifier:uuid];
@@ -222,6 +220,14 @@
       //hook up to delegate
       ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
       [rtm addDelegate:self];
+      
+      //now get list of sounds you don't yet have, and downlaod those as well
+      NSArray * soundsList = [[mix objectForKey:@"sounds"] componentsSeparatedByString:@";"];
+      for (NSString * sound in soundsList) {
+        if (![ad soundExists:sound withContext:[ad managedObjectContext]]) {
+          [rmtm initTransferOfType:SoundTransferDownload withIdentifier:sound];
+        }
+      }
     }
   }
   
