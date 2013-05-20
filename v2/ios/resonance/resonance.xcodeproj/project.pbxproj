@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		654E4E14174ACAEE00389576 /* ResoPondVisualization.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */; };
 		658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B5174AC90D00D2B03E /* UIKit.framework */; };
 		658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B7174AC90D00D2B03E /* Foundation.framework */; };
 		658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B9174AC90D00D2B03E /* CoreGraphics.framework */; };
 		658730BC174AC90D00D2B03E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730BB174AC90D00D2B03E /* CoreData.framework */; };
 		658730C2174AC90D00D2B03E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 658730C0174AC90D00D2B03E /* InfoPlist.strings */; };
 		658730C4174AC90D00D2B03E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658730C3174AC90D00D2B03E /* main.m */; };
-		658730C8174AC90D00D2B03E /* ResoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 658730C7174AC90D00D2B03E /* ResoAppDelegate.m */; };
+		658730C8174AC90D00D2B03E /* ResoAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */; };
 		658730CA174AC90D00D2B03E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730C9174AC90D00D2B03E /* Default.png */; };
 		658730CC174AC90D00D2B03E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CB174AC90D00D2B03E /* Default@2x.png */; };
 		658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CD174AC90D00D2B03E /* Default-568h@2x.png */; };
@@ -21,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		654E4E11174ACAC400389576 /* IResoVisualization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResoVisualization.h; sourceTree = "<group>"; };
+		654E4E12174ACAEE00389576 /* ResoPondVisualization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPondVisualization.h; sourceTree = "<group>"; };
+		654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPondVisualization.mm; sourceTree = "<group>"; };
 		658730B2174AC90D00D2B03E /* resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658730B5174AC90D00D2B03E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		658730B7174AC90D00D2B03E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -31,7 +35,7 @@
 		658730C3174AC90D00D2B03E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		658730C5174AC90D00D2B03E /* resonance-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "resonance-Prefix.pch"; sourceTree = "<group>"; };
 		658730C6174AC90D00D2B03E /* ResoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResoAppDelegate.h; sourceTree = "<group>"; };
-		658730C7174AC90D00D2B03E /* ResoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResoAppDelegate.m; sourceTree = "<group>"; };
+		658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoAppDelegate.mm; sourceTree = "<group>"; };
 		658730C9174AC90D00D2B03E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		658730CB174AC90D00D2B03E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		658730CD174AC90D00D2B03E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -53,24 +57,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		654E4E10174ACA9B00389576 /* visualization */ = {
+			isa = PBXGroup;
+			children = (
+				654E4E11174ACAC400389576 /* IResoVisualization.h */,
+				654E4E12174ACAEE00389576 /* ResoPondVisualization.h */,
+				654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */,
+			);
+			name = visualization;
+			sourceTree = "<group>";
+		};
 		658730A9174AC90D00D2B03E = {
 			isa = PBXGroup;
 			children = (
 				658730BD174AC90D00D2B03E /* resonance */,
-				658730B4174AC90D00D2B03E /* Frameworks */,
-				658730B3174AC90D00D2B03E /* Products */,
+				658730B4174AC90D00D2B03E /* frameworks */,
+				658730B3174AC90D00D2B03E /* products */,
 			);
 			sourceTree = "<group>";
 		};
-		658730B3174AC90D00D2B03E /* Products */ = {
+		658730B3174AC90D00D2B03E /* products */ = {
 			isa = PBXGroup;
 			children = (
 				658730B2174AC90D00D2B03E /* resonance.app */,
 			);
-			name = Products;
+			name = products;
 			sourceTree = "<group>";
 		};
-		658730B4174AC90D00D2B03E /* Frameworks */ = {
+		658730B4174AC90D00D2B03E /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				658730B5174AC90D00D2B03E /* UIKit.framework */,
@@ -78,21 +92,22 @@
 				658730B9174AC90D00D2B03E /* CoreGraphics.framework */,
 				658730BB174AC90D00D2B03E /* CoreData.framework */,
 			);
-			name = Frameworks;
+			name = frameworks;
 			sourceTree = "<group>";
 		};
 		658730BD174AC90D00D2B03E /* resonance */ = {
 			isa = PBXGroup;
 			children = (
+				654E4E10174ACA9B00389576 /* visualization */,
 				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
-				658730C7174AC90D00D2B03E /* ResoAppDelegate.m */,
+				658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */,
 				658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */,
-				658730BE174AC90D00D2B03E /* Supporting Files */,
+				658730BE174AC90D00D2B03E /* supporting files */,
 			);
 			path = resonance;
 			sourceTree = "<group>";
 		};
-		658730BE174AC90D00D2B03E /* Supporting Files */ = {
+		658730BE174AC90D00D2B03E /* supporting files */ = {
 			isa = PBXGroup;
 			children = (
 				658730BF174AC90D00D2B03E /* resonance-Info.plist */,
@@ -103,7 +118,7 @@
 				658730CB174AC90D00D2B03E /* Default@2x.png */,
 				658730CD174AC90D00D2B03E /* Default-568h@2x.png */,
 			);
-			name = "Supporting Files";
+			name = "supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,7 +159,7 @@
 				en,
 			);
 			mainGroup = 658730A9174AC90D00D2B03E;
-			productRefGroup = 658730B3174AC90D00D2B03E /* Products */;
+			productRefGroup = 658730B3174AC90D00D2B03E /* products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -173,8 +188,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				658730C4174AC90D00D2B03E /* main.m in Sources */,
-				658730C8174AC90D00D2B03E /* ResoAppDelegate.m in Sources */,
+				658730C8174AC90D00D2B03E /* ResoAppDelegate.mm in Sources */,
 				658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */,
+				654E4E14174ACAEE00389576 /* ResoPondVisualization.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +307,7 @@
 				658730D6174AC90D00D2B03E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
