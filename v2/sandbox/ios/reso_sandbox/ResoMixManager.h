@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class ResoMediaTransfer;
+#import "ResoMediaTransfer.h"
 
 @interface ResoMixManager : NSObject
 +(ResoMixManager*)instance;
@@ -18,5 +17,5 @@
 -(void)saveMix:(NSString*)name;
 -(void)loadMix:(NSString*)uuid;
 -(void)removeMix:(NSString*)uuid;
--(ResoMediaTransfer*)shareMix:(NSString*)uuid;
+-(void)shareMix:(NSString*)uuid;
 @end

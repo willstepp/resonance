@@ -48,6 +48,8 @@ static  ResoMediaTransferManager * rmtm = nil;
     queues = [[NSMutableDictionary alloc] initWithCapacity:4];
     transfers = [[NSMutableDictionary alloc] init];
     
+    delegates = [[NSMutableArray alloc] init];
+    
     //thumbnail
     ResoMediaTransferQueue * thumbQueue = [[ResoMediaTransferQueue alloc] init];
     thumbQueue.maxBatchCount = 10;
@@ -68,10 +70,30 @@ static  ResoMediaTransferManager * rmtm = nil;
   return self;
 }
 
--(void)initTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid;
+- (NSMutableArray*)delegates
 {
+  return delegates;
+}
+
+- (void)addDelegate:(id<ResoMediaTransferManagerDelegate>)d
+{
+  [delegates addObject:d];
+}
+
+- (void)removeDelegate:(id<ResoMediaTransferManagerDelegate>)d
+{
+  [delegates removeObject:d];
+}
+
+-(void)initTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid withObject:(id)object;
+{
+  NSString * owner = nil;
+  
   //1) sound transfer prep
   if (mt == SoundTransferDownload) {
+    if (object != nil) {
+      owner = (NSString*)object;
+    }
     [app addSoundWithIdentifier:uuid];
     [app setStateforSound:uuid newState:Transferring];
     [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]]];
@@ -120,16 +142,28 @@ static  ResoMediaTransferManager * rmtm = nil;
     [app setSharedforMix:uuid shared:YES];
   }
   if (mt == MixTransferDownload) {
-    [app addMixWithId:uuid name:@"" state:Transferring sounds:nil];
+    owner = uuid;
+    NSDictionary * mix = (NSDictionary*)object;
+    NSString * name = [mix objectForKey:@"name"];
+    NSArray * soundsList = [[mix objectForKey:@"sounds"] componentsSeparatedByString:@";"];
+    
+    [app addMixWithId:uuid name:name state:Transferring sounds:soundsList shared:YES];
     [app ensureDirectoryExists:[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
+    
+    //download any missing sounds as well
+    for (NSString * sound in soundsList) {
+      if (![app soundExists:sound withContext:[app managedObjectContext]]) {
+        [self initTransferOfType:SoundTransferDownload withIdentifier:sound withObject:uuid];
+      }
+    }
   }
   
   //3) setup transfer object
-  ResoMediaTransfer * rmt = [self setupTransferOfType:mt withIdentifier:uuid];
+  ResoMediaTransfer * rmt = [self setupTransferOfType:mt withIdentifier:uuid withOwner:owner];
   
-  //4) add self as delegate to be notified of status change
+  //4) add self as delegate to be notified of status change as well as argument delegate
   [rmt addDelegate:self];
-  
+
   //5) add to public transfers dictionary, keyed under uuid
   [transfers setObject:rmt forKey:uuid];
   
@@ -169,10 +203,11 @@ static  ResoMediaTransferManager * rmtm = nil;
   [queue enqueueWithMediaTransfer:rmt];
 }
 
--(ResoMediaTransfer*)setupTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid
+-(ResoMediaTransfer*)setupTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid withOwner:(NSString*)owner
 {
   ResoMediaTransfer * rmt = [[ResoMediaTransfer alloc] init];
   rmt.uuid = uuid;
+  rmt.ownerUUID = owner;
   rmt.transferType = mt;
   
   switch (mt) {
@@ -266,12 +301,21 @@ static  ResoMediaTransferManager * rmtm = nil;
 #pragma mark -
 #pragma mark ResoMediaTransfer Delegates
 
+-(void) transferStarted:(ResoMediaTransfer*)t
+{
+  [self notifyStartedWithTransfer:t];
+}
+
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t
+{
+  [self notifyProgressUpdatedWithTransfer:t];
+}
+
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
   //remove from transfers dictionary
-  [transfers removeObjectForKey:t.uuid];
+  [self.transfers removeObjectForKey:t.uuid];
   
-  //if sound, unzip files
   if (t.transferType == SoundTransferDownload) {
     
     NSString * installFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/install", t.uuid]] path];
@@ -282,18 +326,26 @@ static  ResoMediaTransferManager * rmtm = nil;
     
     [self loadSoundMetadata:t.uuid];
     [app setStateforSound:t.uuid newState:Completed];
+    if (t.ownerUUID != nil) {
+      bool completed = [self mixCompleted:t.ownerUUID];
+      if (completed) {
+        [app setStateforMix:t.ownerUUID newState:Completed];
+        [self notifyMixFinishedWithId:t.ownerUUID];
+      }
+    }
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-  }
-  
-  //if mix download, unzip files
-  if (t.transferType == MixTransferDownload) {
-    [self loadMixMetadata:t.uuid];
-    [app setStateforMix:t.uuid newState:Completed];
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-  }
-  
-  //if mix, remove transfer files, update state
-  if (t.transferType == MixTransferUpload) {
+    
+  } else if (t.transferType == MixTransferDownload) {
+    
+    [app setStateforMix:t.uuid newState:CompleteButWaiting];
+    bool completed = [self mixCompleted:t.uuid];
+    if (completed) {
+      [app setStateforMix:t.uuid newState:Completed];
+      [self notifyMixFinishedWithId:t.uuid];
+      AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+    
+  } else if (t.transferType == MixTransferUpload) {
     
     NSString * mixZipPath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/%@.zip", t.uuid, t.uuid]] path];
     [[NSFileManager defaultManager] removeItemAtPath:mixZipPath error:nil];
@@ -309,24 +361,31 @@ static  ResoMediaTransferManager * rmtm = nil;
 
     [app setStateforMix:t.uuid newState:Completed];
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    
   }
+  [self notifyFinishedWithTransfer:t];
 }
 
--(void)loadMixMetadata:(NSString*)uuid
+-(bool)mixCompleted:(NSString*)uuid
 {
-  //1) get path of mix file
-  NSString * mixFilePath = [[app resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@/mix", uuid]] path];
+  bool completed = true;
   
-  //2) read json
-  NSData * mixFile = [NSData dataWithContentsOfFile:mixFilePath];
+  NSDictionary * mix = [app mixWithIdentifier:uuid];
+  TransferState mixStatus = (TransferState)[[mix objectForKey:@"state"] intValue];
+  completed = (mixStatus == CompleteButWaiting);
+  if (!completed) {
+    return completed;
+  }
+  NSArray * sounds = [[mix objectForKey:@"sounds"] componentsSeparatedByString:@";"];
+  for (NSString * sound in sounds) {
+    NSDictionary * s = [app soundWithIdentifier:sound];
+    TransferState soundStatus = (TransferState)[[s objectForKey:@"state"] intValue];
+    completed = (soundStatus == Completed);
+    if (!completed)
+      break;
+  }
   
-  //3) parse json
-  NSDictionary * mix = [NSJSONSerialization
-                        JSONObjectWithData:mixFile
-                        options:kNilOptions
-                        error:nil];
-  //4) update mix data
-  [app setMixFromData:mix];
+  return completed;
 }
 
 -(void)loadSoundMetadata:(NSString*)uuid
@@ -348,12 +407,60 @@ static  ResoMediaTransferManager * rmtm = nil;
 
 -(void) transferError:(ResoMediaTransfer*)t
 {
-  [transfers removeObjectForKey:t.uuid];
+  [self.transfers removeObjectForKey:t.uuid];
   if (t.transferType == SoundTransferDownload) {
     [app setStateforSound:t.uuid newState:Failed];
   }
   if (t.transferType == MixTransferUpload || t.transferType == MixTransferDownload) {
     [app setStateforMix:t.uuid newState:Failed];
+  }
+  [self notifyErrorWithTransfer:t];
+}
+
+#pragma mark manager delegate notifications
+
+- (void) notifyStartedWithTransfer:(ResoMediaTransfer*)t
+{
+  for(id<ResoMediaTransferManagerDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferStarted:)] ) {
+      [delegate performSelector:@selector(transferStarted:) withObject:t];
+    }
+  }
+}
+
+- (void) notifyProgressUpdatedWithTransfer:(ResoMediaTransfer*)t
+{
+  for(id<ResoMediaTransferManagerDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferProgressUpdated:)] ) {
+      [delegate performSelector:@selector(transferProgressUpdated:) withObject:t];
+    }
+  }
+}
+
+- (void) notifyErrorWithTransfer:(ResoMediaTransfer*)t
+{
+  for(id<ResoMediaTransferManagerDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferError:)] ) {
+      [delegate performSelector:@selector(transferError:) withObject:t];
+    }
+  }
+}
+
+- (void) notifyFinishedWithTransfer:(ResoMediaTransfer*)t
+{
+  for(id<ResoMediaTransferManagerDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(transferFinished:)] ) {
+      [delegate performSelector:@selector(transferFinished:) withObject:t];
+    }
+  }
+}
+
+- (void) notifyMixFinishedWithId:(NSString*)uuid
+{
+  for(id<ResoMediaTransferManagerDelegate> delegate in delegates) {
+    if ( [delegate respondsToSelector:@selector(mixFinished:)] ) {
+      [delegate performSelector:@selector(mixFinished:) withObject:uuid];
+    }
   }
 }
 

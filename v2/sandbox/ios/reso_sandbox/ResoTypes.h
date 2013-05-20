@@ -33,11 +33,11 @@ typedef enum {
 
 typedef enum {
   Failed,
-  Saving,
+  Pending,
   Transferring,
-  Processing,
+  CompleteButWaiting,
   Completed
-} SoundState;
+} TransferState;
 
 typedef enum {
   PlayerMain,

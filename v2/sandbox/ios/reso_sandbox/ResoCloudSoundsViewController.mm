@@ -47,6 +47,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
       
+      static bool initialized = false;
+      if (!initialized) {
+        [[ResoMediaTransferManager instance] addDelegate:self];
+        initialized = true;
+      }
+      
       mediaTransfer = nil;
       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
       
@@ -166,11 +172,7 @@
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid];
-  
-  //hook up to delegate
-  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-  [rtm addDelegate:self];
+  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid withObject:nil];
   
   [soundsData addObject:sound];
   [soundsView reloadData];
@@ -212,11 +214,7 @@
       
       //enqueue preview download
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:SoundPreviewTransfer withIdentifier:uuid];
-      
-      //hook up to delegate
-      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-      [rtm addDelegate:self];
+      [rmtm initTransferOfType:SoundPreviewTransfer withIdentifier:uuid withObject:nil];
     }
   }
 }
@@ -246,11 +244,7 @@
       
       //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid];
-      
-      //hook up to delegate
-      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-      [rtm addDelegate:self];
+      [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid withObject:nil];
     }
   }
 
@@ -301,14 +295,18 @@
 }
 
 #pragma mark -
-#pragma mark ResoMediaTransfer Delegates
+#pragma mark ResoMediaTransferManager Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
+  NSLog(@"transfer started");
+  
   progressBar.progress = 0.0f;
 }
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
 {
+  NSLog(@"transfer progress");
+  
   if (t.transferType == SoundTransferDownload) {
     long long tbc = t.totalByteCount;
     long long cbc = t.currentByteCount;
@@ -320,6 +318,8 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
+  NSLog(@"transfer finished");
+  
   if (t.transferType == SoundThumbnailTransfer) {
     NSLog(@"thumbnailTransfer finished");
     [soundsView reloadData];
@@ -332,6 +332,7 @@
 
 -(void) transferError:(ResoMediaTransfer*)t
 {
+  NSLog(@"transfer error");
 }
 
 @end

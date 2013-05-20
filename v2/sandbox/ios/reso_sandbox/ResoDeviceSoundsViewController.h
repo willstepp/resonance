@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ResoMediaTransfer.h"
+#import "ResoMediaTransferManager.h"
 
-@interface ResoDeviceSoundsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferDelegate>
+@interface ResoDeviceSoundsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferManagerDelegate>
 @property (nonatomic, retain) UIButton * backButton;
 
 @property (nonatomic, retain) UIButton * removeButton;
@@ -21,7 +21,7 @@
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
 #pragma mark -
-#pragma mark ResoMediaTransfer Delegates
+#pragma mark ResoMediaTransferManager Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t;
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t;
 -(void) transferFinished:(ResoMediaTransfer*)t;

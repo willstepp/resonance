@@ -38,6 +38,12 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     
+    static bool initialized = false;
+    if (!initialized) {
+      [[ResoMediaTransferManager instance] addDelegate:self];
+      initialized = true;
+    }
+    
     mediaTransfer = nil;
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     
@@ -70,12 +76,12 @@
                           options:kNilOptions
                           error:nil];
       
-      //3) iterate sounds and create new record if needed
+      //3) iterate mixes and create new record if needed
       for(NSDictionary * mix in mixes) {
         NSString * uuid = [mix objectForKey:@"uuid"];
         if(![ad mixExists:uuid withContext:context]) {
           
-          //save sound record on main thread
+          //save mixes record on main thread
           [self performSelectorOnMainThread:@selector(saveMix:)
                                  withObject:mix waitUntilDone:NO];
         }
@@ -148,11 +154,7 @@
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:MixThumbnailTransfer withIdentifier:uuid];
-  
-  //hook up to delegate
-  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-  [rtm addDelegate:self];
+  [rmtm initTransferOfType:MixThumbnailTransfer withIdentifier:uuid withObject:nil];
   
   [mixesData addObject:mix];
   [mixesView reloadData];
@@ -181,11 +183,7 @@
       
       //enqueue preview download
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:MixPreviewTransfer withIdentifier:uuid];
-      
-      //hook up to delegate
-      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-      [rtm addDelegate:self];
+      [rmtm initTransferOfType:MixPreviewTransfer withIdentifier:uuid withObject:nil];
     }
   }
 }
@@ -215,19 +213,7 @@
       
       //download using rtm
       ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-      [rmtm initTransferOfType:MixTransferDownload withIdentifier:uuid];
-      
-      //hook up to delegate
-      ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-      [rtm addDelegate:self];
-      
-      //now get list of sounds you don't yet have, and downlaod those as well
-      NSArray * soundsList = [[mix objectForKey:@"sounds"] componentsSeparatedByString:@";"];
-      for (NSString * sound in soundsList) {
-        if (![ad soundExists:sound withContext:[ad managedObjectContext]]) {
-          [rmtm initTransferOfType:SoundTransferDownload withIdentifier:sound];
-        }
-      }
+      [rmtm initTransferOfType:MixTransferDownload withIdentifier:uuid withObject:mix];
     }
   }
   
@@ -281,30 +267,72 @@
 #pragma mark ResoMediaTransfer Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
-  progressBar.progress = 0.0f;
+  if (t.transferType == MixTransferDownload) {
+    progressBar.progress = 0.0f;
+  }
 }
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
 {
-  if (t.transferType == MixTransferDownload) {
-    long long tbc = t.totalByteCount;
-    long long cbc = t.currentByteCount;
-    float p = (float)cbc / (float)tbc;
-    progressBar.progress = p;
-  }
+  //if mix or sound download transfer
+  //calculate the cumulative progress update
   
+  if (t.transferType == MixTransferDownload ||
+      t.transferType == SoundTransferDownload) {
+  
+    NSString * uuid = (t.transferType == MixTransferDownload) ? t.uuid : t.ownerUUID;
+    if (uuid != nil) {
+      float mixProgress = 0.0f;
+      
+      ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+      ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
+      NSDictionary * mix = [ad mixWithIdentifier:uuid];
+      
+      //get mix transfer, if nil then add progress of 1.0 for mix
+      ResoMediaTransfer * mt = [rmtm.transfers objectForKey:uuid];
+      float mp = (mt != nil) ? [self calculateProgress:mt] : 1.0f;
+      mixProgress += mp;
+      
+      NSArray * soundsList = [[mix objectForKey:@"sounds"] componentsSeparatedByString:@";"];
+      for (NSString * sound in soundsList) {
+        ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:sound];
+        if (rtm != nil) {
+          mixProgress += [self calculateProgress:rtm];
+        } else {
+          mixProgress += 1.0f;
+        }
+      }
+      
+      float p = mixProgress / (float)(1 + [soundsList count]);
+      progressBar.progress = p;
+    }
+    
+  }
+}
+
+-(float)calculateProgress:(ResoMediaTransfer*)rtm
+{
+  long long tbc = rtm.totalByteCount;
+  long long cbc = rtm.currentByteCount;
+  float progress = (tbc > 0 && cbc > 0) ? (float)cbc / (float)tbc : 0;
+  return progress;
 }
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
   if (t.transferType == MixThumbnailTransfer) {
-    NSLog(@"mixThumbnailTransfer finished");
     [mixesView reloadData];
   } else if (t.transferType == MixPreviewTransfer) {
     [self playPreview:t.uuid];
-  } else if (t.transferType == MixTransferDownload) {
-    [self downloadComplete:t.uuid];
+  } else if (t.transferType == MixTransferDownload ||
+             t.transferType == SoundTransferDownload) {
+    
   }
+}
+
+-(void) mixFinished:(NSString *)uuid
+{
+  [self downloadComplete:uuid];
 }
 
 -(void) transferError:(ResoMediaTransfer*)t

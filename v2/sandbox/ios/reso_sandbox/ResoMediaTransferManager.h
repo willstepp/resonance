@@ -12,10 +12,25 @@
 
 @class ResoMediaTransfer;
 
-@interface ResoMediaTransferManager : NSObject <ResoMediaTransferDelegate>
+@protocol ResoMediaTransferManagerDelegate <NSObject>
+@optional
+-(void) transferStarted:(ResoMediaTransfer*)t;
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t;
+-(void) transferFinished:(ResoMediaTransfer*)t;
+-(void) mixFinished:(NSString*)uuid;
+-(void) transferError:(ResoMediaTransfer*)t;
+@end
+
+@interface ResoMediaTransferManager : NSObject <ResoMediaTransferDelegate> {
+  NSMutableArray * delegates;
+}
+
+- (NSMutableArray*)delegates;
+- (void)addDelegate:(id<ResoMediaTransferManagerDelegate>)d;
+- (void)removeDelegate:(id<ResoMediaTransferManagerDelegate>)d;
 
 +(ResoMediaTransferManager*)instance;
--(void)initTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid;
+-(void)initTransferOfType:(MediaTransfer)mt withIdentifier:(NSString*)uuid withObject:(id)object;
 
 @property (readonly) NSMutableDictionary * transfers;
 @end

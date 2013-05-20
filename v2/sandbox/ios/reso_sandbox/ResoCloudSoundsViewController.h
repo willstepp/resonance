@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ResoMediaTransfer.h"
+#import "ResoMediaTransferManager.h"
 
-@interface ResoCloudSoundsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferDelegate>
+@interface ResoCloudSoundsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferManagerDelegate>
   @property (nonatomic, retain) UIButton * backButton;
   @property (nonatomic, retain) UIButton * previewButton;
   @property (nonatomic, retain) UIButton * downloadButton;
@@ -18,7 +18,7 @@
   @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 
 #pragma mark -
-#pragma mark ResoMediaTransfer Delegates
+#pragma mark ResoMediaTransferManager Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t;
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t;
 -(void) transferFinished:(ResoMediaTransfer*)t;

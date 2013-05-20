@@ -45,6 +45,12 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     
+    static bool initialized = false;
+    if (!initialized) {
+      [[ResoMediaTransferManager instance] addDelegate:self];
+      initialized = true;
+    }
+    
     mediaTransfer = nil;
     
     soundsData = [[NSMutableArray alloc] init];
@@ -159,11 +165,7 @@
   
   //preview image download
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid];
-  
-  //hook up to delegate
-  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-  [rtm addDelegate:self];
+  [rmtm initTransferOfType:SoundThumbnailTransfer withIdentifier:uuid withObject:nil];
   
   [soundsData addObject:sound];
   [soundsView reloadData];
@@ -242,11 +244,7 @@
     
     //download using rtm
     ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid];
-    
-    //hook up to delegate
-    ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-    [rtm addDelegate:self];
+    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:uuid withObject:nil];
   }
 }
 

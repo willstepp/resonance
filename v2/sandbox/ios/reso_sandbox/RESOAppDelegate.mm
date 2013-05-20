@@ -18,6 +18,8 @@
 #import "ResoModule.h"
 #import "ISound.h"
 
+#import "ResoMixManager.h"
+
 @implementation ResoAppDelegate
 
 @synthesize window = _window;
@@ -345,11 +347,6 @@
   NSString * desc = [d objectForKey:@"description"];
   NSString * uuid = [d objectForKey:@"uuid"];
   
-  NSLog(@"setSoundFromData()");
-  NSLog(@"name: %s", [name UTF8String]);
-  NSLog(@"desc: %s", [desc UTF8String]);
-  NSLog(@"uuid: %s", [uuid UTF8String]);
-  
   NSManagedObjectContext * context = [self managedObjectContext];
   NSManagedObject * sound;
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
@@ -387,61 +384,6 @@
   }
 }
 
-- (void)setMixFromData:(NSDictionary*)d
-{
-  NSString * name = [d objectForKey:@"name"];
-  NSString * uuid = [d objectForKey:@"uuid"];
-  
-  NSManagedObjectContext * context = [self managedObjectContext];
-  NSManagedObject * mix;
-  if (![self mixExists:uuid withContext:[self managedObjectContext]]) {
-    
-    mix = [NSEntityDescription
-             insertNewObjectForEntityForName:@"Mix"
-             inManagedObjectContext:context];
-    
-  } else {
-    
-    //retrieve mix
-    NSEntityDescription * ed = [NSEntityDescription
-                                entityForName:@"Mix" inManagedObjectContext:context];
-    
-    NSFetchRequest * request = [[NSFetchRequest alloc] init];
-    [request setEntity:ed];
-    
-    NSPredicate * p = [NSPredicate predicateWithFormat:@"(uuid == %@)", uuid];
-    [request setPredicate:p];
-    
-    NSError * error;
-    NSArray * array = [context executeFetchRequest:request error:&error];
-    
-    mix = [array objectAtIndex:0];
-    
-  }
-  
-  [mix setValue:name forKey:@"name"];
-  [mix setValue:uuid forKey:@"uuid"];
-  
-  //this method is called upon mix download, so state will always be shared
-  [mix setValue:[NSNumber numberWithBool:YES] forKey:@"shared"];
-  
-  //add sounds
-  NSArray * modules = [d objectForKey:@"modules"];
-  NSMutableArray * soundUUIDs = [[NSMutableArray alloc] init];
-  for(NSDictionary * module in modules) {
-    ModuleType type = (ModuleType)[[module objectForKey:@"type"] intValue];
-    if (type == ModuleType_Sound) {
-      NSString * moduleUUID = [module objectForKey:@"uuid"];
-      [soundUUIDs addObject:moduleUUID];
-    }
-  }
-  [mix setValue:[soundUUIDs componentsJoinedByString:@";"] forKey:@"sounds"];
-  
-  NSError * error;
-  if (![context save:&error]) {
-  }
-}
-
 - (void)addSoundWithIdentifier:(NSString*)uuid
 {
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
@@ -457,7 +399,7 @@
   }
 }
 
-- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds
+- (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds shared:(BOOL)shared
 {
   if (![self mixExists:uuid withContext:[self managedObjectContext]]) {
     NSManagedObjectContext * context = [self managedObjectContext];
@@ -467,6 +409,7 @@
     [mix setValue:uuid forKey:@"uuid"];
     [mix setValue:n forKey:@"name"];
     [mix setValue:[NSNumber numberWithInt:state] forKey:@"state"];
+    [mix setValue:[NSNumber numberWithBool:shared] forKey:@"shared"];
     if (sounds != nil) {
       [mix setValue:[sounds componentsJoinedByString:@";"] forKey:@"sounds"];
     }
@@ -582,6 +525,7 @@
     [sound setValue:[s valueForKey:@"name"] forKey:@"name"];
     [sound setValue:[s valueForKey:@"desc"] forKey:@"desc"];
     [sound setValue:[s valueForKey:@"uuid"] forKey:@"uuid"];
+    [sound setValue:[s valueForKey:@"state"] forKey:@"state"];
   }
   return sound;
 }
@@ -607,6 +551,7 @@
     mix = [[NSMutableDictionary alloc] init];
     [mix setValue:[m valueForKey:@"name"] forKey:@"name"];
     [mix setValue:[m valueForKey:@"shared"] forKey:@"shared"];
+    [mix setValue:[m valueForKey:@"state"] forKey:@"state"];
     [mix setValue:[m valueForKey:@"sounds"] forKey:@"sounds"];
     [mix setValue:[m valueForKey:@"uuid"] forKey:@"uuid"];
   }
@@ -622,7 +567,7 @@
   NSFetchRequest * request = [[NSFetchRequest alloc] init];
   [request setEntity:ed];
   
-  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i)", Transferring, Failed];
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i) OR (state == %i) OR (state == %i)", Transferring, Failed, Pending, CompleteButWaiting];
   [request setPredicate:p];
   
   NSError * error;
@@ -634,6 +579,29 @@
     [sounds addObject:s];
   }
   return sounds;
+}
+
+-(NSArray*)mixTransfersToBeResumed
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  
+  NSEntityDescription * ed = [NSEntityDescription
+                              entityForName:@"Mix" inManagedObjectContext:context];
+  NSFetchRequest * request = [[NSFetchRequest alloc] init];
+  [request setEntity:ed];
+  
+  NSPredicate * p = [NSPredicate predicateWithFormat:@"(state == %i) OR (state == %i) OR (state == %i) OR (state == %i)", Transferring, Failed, Pending, CompleteButWaiting];
+  [request setPredicate:p];
+  
+  NSError * error;
+  NSArray * array = [context executeFetchRequest:request error:&error];
+  
+  NSMutableArray * mixes  = [[NSMutableArray alloc] init];
+  for (NSManagedObject * mix in array) {
+    NSString * m = [mix valueForKey:@"uuid"];
+    [mixes addObject:m];
+  }
+  return mixes;
 }
 
 - (int)getStateForSound:(NSString*)uuid
@@ -815,6 +783,15 @@ NSString * deviceName()
 
 -(void)resumeMediaTransfers
 {
+  //mixes
+  NSArray * mixes = [self mixTransfersToBeResumed];
+  ResoMixManager * mm = [ResoMixManager instance];
+  for (NSString * m in mixes) {
+    //for now, remove
+    [mm removeMix:m];
+  }
+  
+  //sounds
   NSArray * sounds = [self soundTransfersToBeResumed];
   for(NSString * s in sounds) {
     
@@ -826,7 +803,7 @@ NSString * deviceName()
     
     //enqueue transfer of sound
     ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:s];
+    [rmtm initTransferOfType:SoundTransferDownload withIdentifier:s withObject:nil];
   }
 }
 

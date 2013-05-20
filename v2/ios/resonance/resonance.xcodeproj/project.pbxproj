@@ -1,0 +1,311 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B5174AC90D00D2B03E /* UIKit.framework */; };
+		658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B7174AC90D00D2B03E /* Foundation.framework */; };
+		658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B9174AC90D00D2B03E /* CoreGraphics.framework */; };
+		658730BC174AC90D00D2B03E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730BB174AC90D00D2B03E /* CoreData.framework */; };
+		658730C2174AC90D00D2B03E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 658730C0174AC90D00D2B03E /* InfoPlist.strings */; };
+		658730C4174AC90D00D2B03E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658730C3174AC90D00D2B03E /* main.m */; };
+		658730C8174AC90D00D2B03E /* ResoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 658730C7174AC90D00D2B03E /* ResoAppDelegate.m */; };
+		658730CA174AC90D00D2B03E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730C9174AC90D00D2B03E /* Default.png */; };
+		658730CC174AC90D00D2B03E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CB174AC90D00D2B03E /* Default@2x.png */; };
+		658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CD174AC90D00D2B03E /* Default-568h@2x.png */; };
+		658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		658730B2174AC90D00D2B03E /* resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		658730B5174AC90D00D2B03E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		658730B7174AC90D00D2B03E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		658730B9174AC90D00D2B03E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		658730BB174AC90D00D2B03E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		658730BF174AC90D00D2B03E /* resonance-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "resonance-Info.plist"; sourceTree = "<group>"; };
+		658730C1174AC90D00D2B03E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		658730C3174AC90D00D2B03E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		658730C5174AC90D00D2B03E /* resonance-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "resonance-Prefix.pch"; sourceTree = "<group>"; };
+		658730C6174AC90D00D2B03E /* ResoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResoAppDelegate.h; sourceTree = "<group>"; };
+		658730C7174AC90D00D2B03E /* ResoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResoAppDelegate.m; sourceTree = "<group>"; };
+		658730C9174AC90D00D2B03E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		658730CB174AC90D00D2B03E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		658730CD174AC90D00D2B03E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		658730D0174AC90D00D2B03E /* resonance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = resonance.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		658730AF174AC90D00D2B03E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */,
+				658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */,
+				658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */,
+				658730BC174AC90D00D2B03E /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		658730A9174AC90D00D2B03E = {
+			isa = PBXGroup;
+			children = (
+				658730BD174AC90D00D2B03E /* resonance */,
+				658730B4174AC90D00D2B03E /* Frameworks */,
+				658730B3174AC90D00D2B03E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		658730B3174AC90D00D2B03E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				658730B2174AC90D00D2B03E /* resonance.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		658730B4174AC90D00D2B03E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				658730B5174AC90D00D2B03E /* UIKit.framework */,
+				658730B7174AC90D00D2B03E /* Foundation.framework */,
+				658730B9174AC90D00D2B03E /* CoreGraphics.framework */,
+				658730BB174AC90D00D2B03E /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		658730BD174AC90D00D2B03E /* resonance */ = {
+			isa = PBXGroup;
+			children = (
+				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
+				658730C7174AC90D00D2B03E /* ResoAppDelegate.m */,
+				658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */,
+				658730BE174AC90D00D2B03E /* Supporting Files */,
+			);
+			path = resonance;
+			sourceTree = "<group>";
+		};
+		658730BE174AC90D00D2B03E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				658730BF174AC90D00D2B03E /* resonance-Info.plist */,
+				658730C0174AC90D00D2B03E /* InfoPlist.strings */,
+				658730C3174AC90D00D2B03E /* main.m */,
+				658730C5174AC90D00D2B03E /* resonance-Prefix.pch */,
+				658730C9174AC90D00D2B03E /* Default.png */,
+				658730CB174AC90D00D2B03E /* Default@2x.png */,
+				658730CD174AC90D00D2B03E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		658730B1174AC90D00D2B03E /* resonance */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 658730D4174AC90D00D2B03E /* Build configuration list for PBXNativeTarget "resonance" */;
+			buildPhases = (
+				658730AE174AC90D00D2B03E /* Sources */,
+				658730AF174AC90D00D2B03E /* Frameworks */,
+				658730B0174AC90D00D2B03E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = resonance;
+			productName = resonance;
+			productReference = 658730B2174AC90D00D2B03E /* resonance.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		658730AA174AC90D00D2B03E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Reso;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Monomyth Software";
+			};
+			buildConfigurationList = 658730AD174AC90D00D2B03E /* Build configuration list for PBXProject "resonance" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 658730A9174AC90D00D2B03E;
+			productRefGroup = 658730B3174AC90D00D2B03E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				658730B1174AC90D00D2B03E /* resonance */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		658730B0174AC90D00D2B03E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				658730C2174AC90D00D2B03E /* InfoPlist.strings in Resources */,
+				658730CA174AC90D00D2B03E /* Default.png in Resources */,
+				658730CC174AC90D00D2B03E /* Default@2x.png in Resources */,
+				658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		658730AE174AC90D00D2B03E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				658730C4174AC90D00D2B03E /* main.m in Sources */,
+				658730C8174AC90D00D2B03E /* ResoAppDelegate.m in Sources */,
+				658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		658730C0174AC90D00D2B03E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				658730C1174AC90D00D2B03E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		658730D2174AC90D00D2B03E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		658730D3174AC90D00D2B03E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		658730D5174AC90D00D2B03E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "resonance/resonance-Prefix.pch";
+				INFOPLIST_FILE = "resonance/resonance-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		658730D6174AC90D00D2B03E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "resonance/resonance-Prefix.pch";
+				INFOPLIST_FILE = "resonance/resonance-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		658730AD174AC90D00D2B03E /* Build configuration list for PBXProject "resonance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				658730D2174AC90D00D2B03E /* Debug */,
+				658730D3174AC90D00D2B03E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		658730D4174AC90D00D2B03E /* Build configuration list for PBXNativeTarget "resonance" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				658730D5174AC90D00D2B03E /* Debug */,
+				658730D6174AC90D00D2B03E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				658730D0174AC90D00D2B03E /* resonance.xcdatamodel */,
+			);
+			currentVersion = 658730D0174AC90D00D2B03E /* resonance.xcdatamodel */;
+			path = resonance.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 658730AA174AC90D00D2B03E /* Project object */;
+}

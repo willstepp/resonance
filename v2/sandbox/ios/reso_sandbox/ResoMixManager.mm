@@ -107,7 +107,7 @@ static ResoMixManager * rmm = nil;
   [mix setObject:modules forKey:@"modules"];
   
   //2) create coredata record
-  [ad addMixWithId:uuid name:name state:Completed sounds:mixUuids];
+  [ad addMixWithId:uuid name:name state:Completed sounds:mixUuids shared:NO];
   
   //3) persist mix data to file as json
   [ad ensureDirectoryExists:[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]]];
@@ -221,14 +221,11 @@ static ResoMixManager * rmm = nil;
   [[NSFileManager defaultManager] removeItemAtPath:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"mixes/%@", uuid]] path] error:nil];
 }
 
--(ResoMediaTransfer*)shareMix:(NSString*)uuid
+-(void)shareMix:(NSString*)uuid
 {
   //upload using rtm
   ResoMediaTransferManager * rmtm = [ResoMediaTransferManager instance];
-  [rmtm initTransferOfType:MixTransferUpload withIdentifier:uuid];
-  ResoMediaTransfer * rtm = [rmtm.transfers objectForKey:uuid];
-  
-  return rtm;
+  [rmtm initTransferOfType:MixTransferUpload withIdentifier:uuid withObject:nil];
 }
 
 -(void)finishPreviewRecording

@@ -35,6 +35,12 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     
+    static bool initialized = false;
+    if (!initialized) {
+      [[ResoMediaTransferManager instance] addDelegate:self];
+      initialized = true;
+    }
+    
     mediaTransfer = nil;
     
     mixesData = [[NSMutableArray alloc] init];
@@ -185,8 +191,7 @@
     
     if (!shared) {
       ResoMixManager * rmm = [ResoMixManager instance];
-      ResoMediaTransfer * rtm = [rmm shareMix:uuid];
-      [rtm addDelegate:self];
+      [rmm shareMix:uuid];
     } else {
       NSLog(@"mix already shared");
     }
@@ -228,7 +233,7 @@
 }
 
 #pragma mark -
-#pragma mark ResoMediaTransfer Delegates
+#pragma mark ResoMediaTransferManager Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
   progressBar.progress = 0.0f;

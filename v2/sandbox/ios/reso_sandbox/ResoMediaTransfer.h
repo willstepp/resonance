@@ -30,6 +30,7 @@
   - (void)removeDelegate:(id<ResoMediaTransferDelegate>)d;
 
   @property (nonatomic, readwrite) NSString * uuid;
+  @property (nonatomic, readwrite) NSString * ownerUUID;
   @property (nonatomic, readwrite) MediaTransfer transferType;
 
   @property (readonly) bool transferring;

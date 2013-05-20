@@ -25,7 +25,7 @@
 @end
 
 @implementation ResoMediaTransfer
-@synthesize uuid, transferType, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished, backgroundTaskId;
+@synthesize uuid, ownerUUID, transferType, totalByteCount, currentByteCount, totalByteCountReceived, transferring, finished, backgroundTaskId;
 
 - (NSMutableArray*)delegates
 {
