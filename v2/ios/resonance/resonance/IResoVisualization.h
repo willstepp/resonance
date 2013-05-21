@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResoTypes.h"
 
 @protocol IResoVisualization <NSObject>
+
+-(void)setVisualizationState:(VisualizationState)vs;
+-(VisualizationState)visualizationState;
+
+-(NSArray*)sounds;
+-(void)addSound:(NSString*)uuid;
+-(void)removeSound:(NSString*)uuid;
+
+-(NSString*)activeSound;
+-(void)setActiveSound:(NSString*)uuid;
 
 @end

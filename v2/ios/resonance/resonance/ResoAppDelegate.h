@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol IResoVisualization;
+
 @interface ResoAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -18,5 +20,7 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
+@property (readonly, nonatomic) id<IResoVisualization> visualization;
 
 @end

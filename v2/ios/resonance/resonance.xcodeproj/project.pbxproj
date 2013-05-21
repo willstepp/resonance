@@ -19,6 +19,13 @@
 		658730CC174AC90D00D2B03E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CB174AC90D00D2B03E /* Default@2x.png */; };
 		658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CD174AC90D00D2B03E /* Default-568h@2x.png */; };
 		658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */; };
+		658A0FDB174B1643006E4605 /* ResoVisualViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */; };
+		65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */; };
+		65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */; };
+		65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */; };
+		65E06A44174ADA8B00BE68A5 /* ResoTimerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A43174ADA8B00BE68A5 /* ResoTimerViewController.mm */; };
+		65E06A46174ADF0500BE68A5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E06A45174ADF0500BE68A5 /* GLKit.framework */; };
+		65E06A48174AE19F00BE68A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E06A47174AE19E00BE68A5 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +47,19 @@
 		658730CB174AC90D00D2B03E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		658730CD174AC90D00D2B03E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		658730D0174AC90D00D2B03E /* resonance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = resonance.xcdatamodel; sourceTree = "<group>"; };
+		658A0FD8174B116F006E4605 /* ResoTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTypes.h; sourceTree = "<group>"; };
+		658A0FD9174B1643006E4605 /* ResoVisualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoVisualViewController.h; sourceTree = "<group>"; };
+		658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoVisualViewController.mm; sourceTree = "<group>"; };
+		65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
+		65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPlayerViewController.mm; sourceTree = "<group>"; };
+		65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleViewController.h; sourceTree = "<group>"; };
+		65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleViewController.mm; sourceTree = "<group>"; };
+		65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixViewController.h; sourceTree = "<group>"; };
+		65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixViewController.mm; sourceTree = "<group>"; };
+		65E06A42174ADA8B00BE68A5 /* ResoTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTimerViewController.h; sourceTree = "<group>"; };
+		65E06A43174ADA8B00BE68A5 /* ResoTimerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoTimerViewController.mm; sourceTree = "<group>"; };
+		65E06A45174ADF0500BE68A5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		65E06A47174AE19E00BE68A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E06A48174AE19F00BE68A5 /* OpenGLES.framework in Frameworks */,
+				65E06A46174ADF0500BE68A5 /* GLKit.framework in Frameworks */,
 				658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */,
 				658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */,
 				658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */,
@@ -87,6 +109,8 @@
 		658730B4174AC90D00D2B03E /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65E06A47174AE19E00BE68A5 /* OpenGLES.framework */,
+				65E06A45174ADF0500BE68A5 /* GLKit.framework */,
 				658730B5174AC90D00D2B03E /* UIKit.framework */,
 				658730B7174AC90D00D2B03E /* Foundation.framework */,
 				658730B9174AC90D00D2B03E /* CoreGraphics.framework */,
@@ -98,6 +122,7 @@
 		658730BD174AC90D00D2B03E /* resonance */ = {
 			isa = PBXGroup;
 			children = (
+				65E06A38174AD92700BE68A5 /* app */,
 				654E4E10174ACA9B00389576 /* visualization */,
 				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
 				658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */,
@@ -119,6 +144,24 @@
 				658730CD174AC90D00D2B03E /* Default-568h@2x.png */,
 			);
 			name = "supporting files";
+			sourceTree = "<group>";
+		};
+		65E06A38174AD92700BE68A5 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */,
+				65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */,
+				65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */,
+				65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */,
+				65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */,
+				65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */,
+				65E06A42174ADA8B00BE68A5 /* ResoTimerViewController.h */,
+				65E06A43174ADA8B00BE68A5 /* ResoTimerViewController.mm */,
+				658A0FD8174B116F006E4605 /* ResoTypes.h */,
+				658A0FD9174B1643006E4605 /* ResoVisualViewController.h */,
+				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
+			);
+			name = app;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +234,11 @@
 				658730C8174AC90D00D2B03E /* ResoAppDelegate.mm in Sources */,
 				658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */,
 				654E4E14174ACAEE00389576 /* ResoPondVisualization.mm in Sources */,
+				65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */,
+				65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */,
+				65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */,
+				65E06A44174ADA8B00BE68A5 /* ResoTimerViewController.mm in Sources */,
+				658A0FDB174B1643006E4605 /* ResoVisualViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

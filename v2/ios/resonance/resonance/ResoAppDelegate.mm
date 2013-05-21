@@ -8,19 +8,41 @@
 
 #import "ResoAppDelegate.h"
 
+#import "ResoPlayerViewController.h"
+#import "ResoPondVisualization.h"
+#import "IResoVisualization.h"
+
 @implementation ResoAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize visualization;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  
+  ResoPlayerViewController * rpvc = [[ResoPlayerViewController alloc] init];
+  UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rpvc];
+  [navController setNavigationBarHidden:YES];
+  
+  //we create the context using the latest API
+  EAGLContext * context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+  [EAGLContext setCurrentContext:context];
+  
+  //we init our GLKView subclass with our newly created context
+  visualization = [[ResoPondVisualization alloc] initWithFrame:self.window.frame context:context];
+  
+  [self.window setRootViewController:navController];
+  [self.window addSubview:(UIView*)visualization];
+  [self.window addSubview:navController.view];
+  
+  [self.window makeKeyAndVisible];
+
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
