@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		654E4E14174ACAEE00389576 /* ResoPondVisualization.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */; };
+		654E4E14174ACAEE00389576 /* ResoPondViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654E4E13174ACAEE00389576 /* ResoPondViewController.mm */; };
 		658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B5174AC90D00D2B03E /* UIKit.framework */; };
 		658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B7174AC90D00D2B03E /* Foundation.framework */; };
 		658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B9174AC90D00D2B03E /* CoreGraphics.framework */; };
@@ -20,6 +20,16 @@
 		658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 658730CD174AC90D00D2B03E /* Default-568h@2x.png */; };
 		658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */; };
 		658A0FDB174B1643006E4605 /* ResoVisualViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */; };
+		658A0FE3174BB20B006E4605 /* RippleModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A0FE0174BB20B006E4605 /* RippleModel.mm */; };
+		658A0FE6174BB243006E4605 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FE1174BB20B006E4605 /* Shader.fsh */; };
+		658A0FE7174BB243006E4605 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FE2174BB20B006E4605 /* Shader.vsh */; };
+		658A0FEB174BB377006E4605 /* oceanblue-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FE9174BB377006E4605 /* oceanblue-blur@2.jpg */; };
+		658A0FEC174BB377006E4605 /* oceanblue@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FEA174BB377006E4605 /* oceanblue@2.jpg */; };
+		658A0FEE174BC1B6006E4605 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658A0FED174BC1B6006E4605 /* QuartzCore.framework */; };
+		658A0FF0174BC1E9006E4605 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658A0FEF174BC1E9006E4605 /* AVFoundation.framework */; };
+		658A0FF2174BC1F8006E4605 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658A0FF1174BC1F8006E4605 /* CoreVideo.framework */; };
+		658A0FF5174C16EC006E4605 /* nebulaorange-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FF3174C16EC006E4605 /* nebulaorange-blur@2.jpg */; };
+		658A0FF6174C16EC006E4605 /* nebulaorange@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FF4174C16EC006E4605 /* nebulaorange@2.jpg */; };
 		65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */; };
 		65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */; };
 		65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */; };
@@ -30,8 +40,8 @@
 
 /* Begin PBXFileReference section */
 		654E4E11174ACAC400389576 /* IResoVisualization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResoVisualization.h; sourceTree = "<group>"; };
-		654E4E12174ACAEE00389576 /* ResoPondVisualization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPondVisualization.h; sourceTree = "<group>"; };
-		654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPondVisualization.mm; sourceTree = "<group>"; };
+		654E4E12174ACAEE00389576 /* ResoPondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPondViewController.h; sourceTree = "<group>"; };
+		654E4E13174ACAEE00389576 /* ResoPondViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPondViewController.mm; sourceTree = "<group>"; };
 		658730B2174AC90D00D2B03E /* resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658730B5174AC90D00D2B03E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		658730B7174AC90D00D2B03E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,6 +60,18 @@
 		658A0FD8174B116F006E4605 /* ResoTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTypes.h; sourceTree = "<group>"; };
 		658A0FD9174B1643006E4605 /* ResoVisualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoVisualViewController.h; sourceTree = "<group>"; };
 		658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoVisualViewController.mm; sourceTree = "<group>"; };
+		658A0FDC174BB149006E4605 /* ResoSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSettings.h; sourceTree = "<group>"; };
+		658A0FDF174BB20B006E4605 /* RippleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RippleModel.h; sourceTree = "<group>"; };
+		658A0FE0174BB20B006E4605 /* RippleModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RippleModel.mm; sourceTree = "<group>"; };
+		658A0FE1174BB20B006E4605 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
+		658A0FE2174BB20B006E4605 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		658A0FE9174BB377006E4605 /* oceanblue-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "oceanblue-blur@2.jpg"; sourceTree = "<group>"; };
+		658A0FEA174BB377006E4605 /* oceanblue@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "oceanblue@2.jpg"; sourceTree = "<group>"; };
+		658A0FED174BC1B6006E4605 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		658A0FEF174BC1E9006E4605 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		658A0FF1174BC1F8006E4605 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		658A0FF3174C16EC006E4605 /* nebulaorange-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "nebulaorange-blur@2.jpg"; sourceTree = "<group>"; };
+		658A0FF4174C16EC006E4605 /* nebulaorange@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "nebulaorange@2.jpg"; sourceTree = "<group>"; };
 		65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
 		65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPlayerViewController.mm; sourceTree = "<group>"; };
 		65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleViewController.h; sourceTree = "<group>"; };
@@ -67,6 +89,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658A0FF2174BC1F8006E4605 /* CoreVideo.framework in Frameworks */,
+				658A0FF0174BC1E9006E4605 /* AVFoundation.framework in Frameworks */,
+				658A0FEE174BC1B6006E4605 /* QuartzCore.framework in Frameworks */,
 				65E06A48174AE19F00BE68A5 /* OpenGLES.framework in Frameworks */,
 				65E06A46174ADF0500BE68A5 /* GLKit.framework in Frameworks */,
 				658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */,
@@ -82,9 +107,13 @@
 		654E4E10174ACA9B00389576 /* visualization */ = {
 			isa = PBXGroup;
 			children = (
+				658A0FDF174BB20B006E4605 /* RippleModel.h */,
+				658A0FE0174BB20B006E4605 /* RippleModel.mm */,
+				658A0FE1174BB20B006E4605 /* Shader.fsh */,
+				658A0FE2174BB20B006E4605 /* Shader.vsh */,
 				654E4E11174ACAC400389576 /* IResoVisualization.h */,
-				654E4E12174ACAEE00389576 /* ResoPondVisualization.h */,
-				654E4E13174ACAEE00389576 /* ResoPondVisualization.mm */,
+				654E4E12174ACAEE00389576 /* ResoPondViewController.h */,
+				654E4E13174ACAEE00389576 /* ResoPondViewController.mm */,
 			);
 			name = visualization;
 			sourceTree = "<group>";
@@ -92,6 +121,9 @@
 		658730A9174AC90D00D2B03E = {
 			isa = PBXGroup;
 			children = (
+				658A0FF1174BC1F8006E4605 /* CoreVideo.framework */,
+				658A0FEF174BC1E9006E4605 /* AVFoundation.framework */,
+				658A0FED174BC1B6006E4605 /* QuartzCore.framework */,
 				658730BD174AC90D00D2B03E /* resonance */,
 				658730B4174AC90D00D2B03E /* frameworks */,
 				658730B3174AC90D00D2B03E /* products */,
@@ -122,11 +154,15 @@
 		658730BD174AC90D00D2B03E /* resonance */ = {
 			isa = PBXGroup;
 			children = (
-				65E06A38174AD92700BE68A5 /* app */,
-				654E4E10174ACA9B00389576 /* visualization */,
 				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
 				658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */,
-				658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */,
+				658A0FDC174BB149006E4605 /* ResoSettings.h */,
+				658A0FD8174B116F006E4605 /* ResoTypes.h */,
+				658A0FE8174BB369006E4605 /* resources */,
+				658A0FDD174BB157006E4605 /* data */,
+				65E06A38174AD92700BE68A5 /* app */,
+				658A0FDE174BB173006E4605 /* ui */,
+				654E4E10174ACA9B00389576 /* visualization */,
 				658730BE174AC90D00D2B03E /* supporting files */,
 			);
 			path = resonance;
@@ -146,6 +182,32 @@
 			name = "supporting files";
 			sourceTree = "<group>";
 		};
+		658A0FDD174BB157006E4605 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				658730CF174AC90D00D2B03E /* resonance.xcdatamodeld */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		658A0FDE174BB173006E4605 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		658A0FE8174BB369006E4605 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				658A0FF3174C16EC006E4605 /* nebulaorange-blur@2.jpg */,
+				658A0FF4174C16EC006E4605 /* nebulaorange@2.jpg */,
+				658A0FE9174BB377006E4605 /* oceanblue-blur@2.jpg */,
+				658A0FEA174BB377006E4605 /* oceanblue@2.jpg */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
 		65E06A38174AD92700BE68A5 /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,7 +219,6 @@
 				65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */,
 				65E06A42174ADA8B00BE68A5 /* ResoTimerViewController.h */,
 				65E06A43174ADA8B00BE68A5 /* ResoTimerViewController.mm */,
-				658A0FD8174B116F006E4605 /* ResoTypes.h */,
 				658A0FD9174B1643006E4605 /* ResoVisualViewController.h */,
 				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
 			);
@@ -216,10 +277,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658A0FE6174BB243006E4605 /* Shader.fsh in Resources */,
+				658A0FE7174BB243006E4605 /* Shader.vsh in Resources */,
 				658730C2174AC90D00D2B03E /* InfoPlist.strings in Resources */,
 				658730CA174AC90D00D2B03E /* Default.png in Resources */,
 				658730CC174AC90D00D2B03E /* Default@2x.png in Resources */,
 				658730CE174AC90D00D2B03E /* Default-568h@2x.png in Resources */,
+				658A0FEB174BB377006E4605 /* oceanblue-blur@2.jpg in Resources */,
+				658A0FEC174BB377006E4605 /* oceanblue@2.jpg in Resources */,
+				658A0FF5174C16EC006E4605 /* nebulaorange-blur@2.jpg in Resources */,
+				658A0FF6174C16EC006E4605 /* nebulaorange@2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,12 +300,13 @@
 				658730C4174AC90D00D2B03E /* main.m in Sources */,
 				658730C8174AC90D00D2B03E /* ResoAppDelegate.mm in Sources */,
 				658730D1174AC90D00D2B03E /* resonance.xcdatamodeld in Sources */,
-				654E4E14174ACAEE00389576 /* ResoPondVisualization.mm in Sources */,
+				654E4E14174ACAEE00389576 /* ResoPondViewController.mm in Sources */,
 				65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */,
 				65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */,
 				65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */,
 				65E06A44174ADA8B00BE68A5 /* ResoTimerViewController.mm in Sources */,
 				658A0FDB174B1643006E4605 /* ResoVisualViewController.mm in Sources */,
+				658A0FE3174BB20B006E4605 /* RippleModel.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

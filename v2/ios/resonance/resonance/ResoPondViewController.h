@@ -9,10 +9,16 @@
 #import <GLKit/GLKit.h>
 #import "IResoVisualization.h"
 
-@interface ResoPondVisualization : GLKView <IResoVisualization>
+@interface ResoPondViewController : GLKViewController <IResoVisualization> {
+  NSMutableArray * delegates;
+}
 
--(void)setVisualizationState:(VisualizationState)vs;
+- (NSArray*)delegates;
+- (void)addDelegate:(id<ResoVisualizationDelegate>)d;
+- (void)removeDelegate:(id<ResoVisualizationDelegate>)d;
+
 -(VisualizationState)visualizationState;
+-(void)setVisualizationState:(VisualizationState)vs;
 
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
@@ -20,5 +26,8 @@
 
 -(NSString*)activeSound;
 -(void)setActiveSound:(NSString*)uuid;
+
+-(bool)inputEnabled;
+-(void)setInputEnabled:(bool)enabled;
 
 @end

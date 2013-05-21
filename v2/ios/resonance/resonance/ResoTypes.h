@@ -11,6 +11,7 @@
 
 typedef enum {
   Foreground,
+  Transitioning,
   Background
 } VisualizationState;
 

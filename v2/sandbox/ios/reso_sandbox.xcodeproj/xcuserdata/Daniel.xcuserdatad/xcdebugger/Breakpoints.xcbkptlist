@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoAppDelegate.mm"
-         timestampString = "390776667.437995"
+         timestampString = "390842984.855417"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "464"
-         endingLineNumber = "464"
+         startingLineNumber = "467"
+         endingLineNumber = "467"
          landmarkName = "-soundsWithState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoAppDelegate.mm"
-         timestampString = "390776667.437995"
+         timestampString = "390842984.855417"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "264"
-         endingLineNumber = "264"
+         startingLineNumber = "267"
+         endingLineNumber = "267"
          landmarkName = "-clearMixes"
          landmarkType = "5">
       </FileBreakpoint>
@@ -463,12 +463,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "reso_sandbox/ResoAppDelegate.mm"
-         timestampString = "390776690.261263"
+         timestampString = "390842984.855417"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "787"
-         endingLineNumber = "787"
+         startingLineNumber = "790"
+         endingLineNumber = "790"
          landmarkName = "-resumeMediaTransfers"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "reso_sandbox/ResoUiViewController.mm"
+         timestampString = "390843102.429723"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "658"
+         endingLineNumber = "658"
+         landmarkName = "-update"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

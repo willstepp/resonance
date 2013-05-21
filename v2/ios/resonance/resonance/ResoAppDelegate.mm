@@ -9,7 +9,7 @@
 #import "ResoAppDelegate.h"
 
 #import "ResoPlayerViewController.h"
-#import "ResoPondVisualization.h"
+#import "ResoPondViewController.h"
 #import "IResoVisualization.h"
 
 @implementation ResoAppDelegate
@@ -25,21 +25,21 @@
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
-  ResoPlayerViewController * rpvc = [[ResoPlayerViewController alloc] init];
-  UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rpvc];
-  [navController setNavigationBarHidden:YES];
+  ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
+  UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];
+  [nav setNavigationBarHidden:YES];
   
-  //we create the context using the latest API
-  EAGLContext * context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-  [EAGLContext setCurrentContext:context];
+  ResoPondViewController * pond = [[ResoPondViewController alloc] init];
+  [pond addSound:@"oceanblue"];
+  [pond addSound:@"nebulaorange"];
   
-  //we init our GLKView subclass with our newly created context
-  visualization = [[ResoPondVisualization alloc] initWithFrame:self.window.frame context:context];
+  visualization = pond;
   
-  [self.window setRootViewController:navController];
-  [self.window addSubview:(UIView*)visualization];
-  [self.window addSubview:navController.view];
+  [pond addChildViewController:nav];
+  [pond.view addSubview:nav.view];
+  [nav didMoveToParentViewController:pond];
   
+  [self.window setRootViewController:pond];
   [self.window makeKeyAndVisible];
 
   return YES;

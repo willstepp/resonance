@@ -284,6 +284,7 @@ enum
       [_modules setValue:mirButton forKey:[NSString stringWithFormat:@"%i",mirButton.tag]];
       [_modules setValue:mirButton2 forKey:[NSString stringWithFormat:@"%i",mirButton2.tag]];
       [_modules setValue:mirButton3 forKey:[NSString stringWithFormat:@"%i",mirButton3.tag]];
+      _touchEnabled = true;
     }
     return self;
 }
@@ -656,16 +657,19 @@ enum
 {
     if (!_textureCache)
     {
+      NSLog(@"no texture cache");
         return;
     }
   
     if (!_ripple)
     {
+        NSLog(@"load image into pond");
         [self loadImageIntoPond:_blurImageName];
     }
     
     if (_ripple)
     {
+        NSLog(@"running simulation");
         [_ripple runSimulation];
         
         // no need to rebind GL_ARRAY_BUFFER to _texcoordVBO since it should be still be bound from setupBuffers

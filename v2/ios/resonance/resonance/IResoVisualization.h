@@ -9,10 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "ResoTypes.h"
 
+@protocol ResoVisualizationDelegate <NSObject>
+
+-(void)visualizationStateChanged:(int)newState;
+-(void)activeSoundChanged:(NSString*)newSound;
+
+@end
+
 @protocol IResoVisualization <NSObject>
 
--(void)setVisualizationState:(VisualizationState)vs;
+- (NSArray*)delegates;
+- (void)addDelegate:(id<ResoVisualizationDelegate>)d;
+- (void)removeDelegate:(id<ResoVisualizationDelegate>)d;
+
 -(VisualizationState)visualizationState;
+-(void)setVisualizationState:(VisualizationState)vs;
 
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
@@ -20,5 +31,8 @@
 
 -(NSString*)activeSound;
 -(void)setActiveSound:(NSString*)uuid;
+
+-(bool)inputEnabled;
+-(void)setInputEnabled:(bool)enabled;
 
 @end

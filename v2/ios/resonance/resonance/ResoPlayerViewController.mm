@@ -7,11 +7,15 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "ResoAppDelegate.h"
 #import "ResoPlayerViewController.h"
 
 #import "ResoModuleViewController.h"
 #import "ResoMixViewController.h"
 #import "ResoTimerViewController.h"
+
+#import "ResoTypes.h"
+#import "IResoVisualization.h"
 
 @interface ResoPlayerViewController ()
 
@@ -29,8 +33,8 @@
       
       //module button
       moduleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [moduleButton setTitle:@"Module" forState:UIControlStateNormal];
-      [moduleButton addTarget:self action:@selector(showModule:) forControlEvents:UIControlEventTouchUpInside];
+      [moduleButton setTitle:@"Disable Input" forState:UIControlStateNormal];
+      [moduleButton addTarget:self action:@selector(toggleInput:) forControlEvents:UIControlEventTouchUpInside];
       [moduleButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [moduleButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
@@ -42,8 +46,8 @@
       
       //mix button
       mixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [mixButton setTitle:@"Mixes" forState:UIControlStateNormal];
-      [mixButton addTarget:self action:@selector(showMix:) forControlEvents:UIControlEventTouchUpInside];
+      [mixButton setTitle:@"Show Foreground" forState:UIControlStateNormal];
+      [mixButton addTarget:self action:@selector(toggleVisualState:) forControlEvents:UIControlEventTouchUpInside];
       [mixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [mixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
@@ -55,8 +59,8 @@
       
       //timer button
       timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [timerButton setTitle:@"Timer" forState:UIControlStateNormal];
-      [timerButton addTarget:self action:@selector(showTimer:) forControlEvents:UIControlEventTouchUpInside];
+      [timerButton setTitle:@"Show Nebula" forState:UIControlStateNormal];
+      [timerButton addTarget:self action:@selector(toggleActiveSound:) forControlEvents:UIControlEventTouchUpInside];
       [timerButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [timerButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
       
@@ -72,33 +76,68 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+-(void)toggleInput:(id)sender
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  if ([ad.visualization inputEnabled]) {
+    [moduleButton setTitle:@"Enable Input" forState:UIControlStateNormal];
+    [ad.visualization setInputEnabled:false];
+  } else {
+    [moduleButton setTitle:@"Disable Input" forState:UIControlStateNormal];
+    [ad.visualization setInputEnabled:true];
+  }
+}
+
+-(void)toggleVisualState:(id)sender
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  if ([ad.visualization visualizationState] != Transitioning) {
+    if ([ad.visualization visualizationState] == Foreground) {
+      [mixButton setTitle:@"Show Foreground" forState:UIControlStateNormal];
+      [ad.visualization setVisualizationState:Background];
+    } else if ([ad.visualization visualizationState] == Background) {
+      [mixButton setTitle:@"Show Background" forState:UIControlStateNormal];
+      [ad.visualization setVisualizationState:Foreground];
+    }
+  }
+}
+
+-(void)toggleActiveSound:(id)sender
+{
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  if ([ad.visualization visualizationState] != Transitioning) {
+    if ([[ad.visualization activeSound] isEqualToString:@"oceanblue"]) {
+      [timerButton setTitle:@"Show Ocean" forState:UIControlStateNormal];
+      [ad.visualization setActiveSound:@"nebulaorange"];
+    } else if ([[ad.visualization activeSound] isEqualToString:@"nebulaorange"]) {
+      [timerButton setTitle:@"Show Nebula" forState:UIControlStateNormal];
+      [ad.visualization setActiveSound:@"oceanblue"];
+    }
+  }
 }
 
 -(void)showMix:(id)sender
 {
   ResoMixViewController * rmvc = [[ResoMixViewController alloc] initWithNibName:nil bundle:nil];
-  //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rmvc animated:YES];
 }
 
 -(void)showModule:(id)sender
 {
   ResoModuleViewController * rmvc = [[ResoModuleViewController alloc] initWithNibName:nil bundle:nil];
-  //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rmvc animated:YES];
 }
 
 -(void)showTimer:(id)sender
 {
   ResoTimerViewController * rtvc = [[ResoTimerViewController alloc] initWithNibName:nil bundle:nil];
-  //push it onto the 'navigation stack'
   [self.navigationController pushViewController:rtvc animated:YES];
 }
 
@@ -106,13 +145,11 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-  NSLog(@"ResoPlayerViewController::touchesBegan");
   [super touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-  NSLog(@"ResoPlayerViewController::touchesMoved");
   [super touchesMoved:touches withEvent:event];
 }
 

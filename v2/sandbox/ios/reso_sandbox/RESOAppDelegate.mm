@@ -18,6 +18,8 @@
 #import "ResoModule.h"
 #import "ISound.h"
 
+#import "ResoUiViewController.h"
+
 #import "ResoMixManager.h"
 
 @implementation ResoAppDelegate
@@ -38,8 +40,9 @@
   UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rvc];
   [navController setNavigationBarHidden:YES];
   
-  [self.window setRootViewController:navController];
-  [self.window addSubview:navController.view];
+  ResoUiViewController * ruvc = [[ResoUiViewController alloc] init];
+  [self.window setRootViewController:ruvc];
+  [self.window addSubview:ruvc.view];
   
   [self.window makeKeyAndVisible];
   
