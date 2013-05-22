@@ -8,30 +8,23 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ResoMixViewController.h"
+#import "ResoSettings.h"
 
 @interface ResoMixViewController ()
-
+{
+  CGRect playerButtonFrame;
+  CGRect playerButtonFrame_offscreen;
+}
 @end
 
 @implementation ResoMixViewController
-@synthesize backButton;
+@synthesize playerButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-      //back button
-      backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [backButton setTitle:@"<" forState:UIControlStateNormal];
-      [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
-      [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [backButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-      
-      backButton.layer.borderColor = [UIColor blackColor].CGColor;
-      backButton.layer.borderWidth = 0.0f;
-      backButton.layer.cornerRadius = 4.0f;
-      backButton.frame = CGRectMake(10, 10, 44, 44);
-      [self.view addSubview:backButton];
+
     }
     return self;
 }
@@ -39,7 +32,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self calculateWidgetFrames];
+    
+    [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    
+    //player button
+    playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [playerButton setTitle:@"Pl" forState:UIControlStateNormal];
+    [playerButton addTarget:self action:@selector(showPlayer:) forControlEvents:UIControlEventTouchUpInside];
+    [playerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
+    [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
+    playerButton.layer.borderWidth = 0.0f;
+    playerButton.layer.cornerRadius = CORNER_RADIUS;
+    playerButton.frame = playerButtonFrame_offscreen;
+    [self.view addSubview:playerButton];
+    
+    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                          delay:0.00
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                       playerButton.frame = playerButtonFrame;
+                     } completion:^(BOOL finished) {
+                       if (finished) {
+                       }
+                     }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,9 +64,25 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)goBack:(id)sender
+- (void)showPlayer:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.00
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     playerButton.frame = playerButtonFrame_offscreen;
+                   } completion:^(BOOL finished) {
+                     if (finished) {
+                       [self.navigationController popViewControllerAnimated:NO];
+                     }
+                   }];
+}
+
+- (void)calculateWidgetFrames
+{
+  //player button
+  playerButtonFrame = CGRectMake(self.view.bounds.size.width-60, 10, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 10, 50, 50);
 }
 
 @end

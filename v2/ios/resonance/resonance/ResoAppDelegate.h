@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoTypes.h"
 
 @protocol IResoVisualization;
 
@@ -22,5 +23,6 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 @property (readonly, nonatomic) id<IResoVisualization> visualization;
+@property (assign, nonatomic) PlayerState currPlayerState;
 
 @end

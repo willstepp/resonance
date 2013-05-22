@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoVisualViewController : UIViewController
-
+@property (nonatomic, retain) UIButton * playerButton;
 @end

@@ -1,30 +1,30 @@
 //
-//  ResoTimerViewController.m
+//  ResoMenuViewController.mm
 //  resonance
 //
-//  Created by Daniel Stepp on 5/20/13.
+//  Created by Daniel Stepp on 5/22/13.
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ResoTimerViewController.h"
+#import "ResoMenuViewController.h"
 #import "ResoSettings.h"
 
-@interface ResoTimerViewController ()
+@interface ResoMenuViewController ()
 {
   CGRect playerButtonFrame;
   CGRect playerButtonFrame_offscreen;
 }
 @end
 
-@implementation ResoTimerViewController
+@implementation ResoMenuViewController
 @synthesize playerButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        // Custom initialization
     }
     return self;
 }
@@ -35,7 +35,7 @@
     [self calculateWidgetFrames];
   
     [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
-    
+  
     //player button
     playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [playerButton setTitle:@"Pl" forState:UIControlStateNormal];

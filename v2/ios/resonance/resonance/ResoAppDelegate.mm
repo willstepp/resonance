@@ -17,13 +17,14 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-@synthesize visualization;
+@synthesize visualization, currPlayerState;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  currPlayerState = PlayerState_Visual;
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
   UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];

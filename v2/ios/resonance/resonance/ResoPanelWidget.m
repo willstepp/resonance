@@ -1,0 +1,31 @@
+//
+//  ResoPanelWidget.m
+//  resonance
+//
+//  Created by Daniel Stepp on 5/22/13.
+//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//
+
+#import "ResoPanelWidget.h"
+
+@implementation ResoPanelWidget
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+    }
+    return self;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
+
+@end

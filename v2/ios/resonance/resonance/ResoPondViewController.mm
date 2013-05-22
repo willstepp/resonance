@@ -67,9 +67,11 @@ enum
   bool inputEnabled;
   
   NSTimer * transitionTimer;
+  NSTimer * rainDropTimer;
+  
   UIImageView * overlay;
 }
-@property (strong, nonatomic) EAGLContext *context;
+@property (strong, nonatomic) EAGLContext * context;
 - (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle;
 @end
 
@@ -83,7 +85,7 @@ enum
     sounds = [[NSMutableArray alloc] init];
     delegates = [[NSMutableArray alloc] init];
     
-    inputEnabled = true;
+    inputEnabled = false;
     transitionState = Background;
     currentState = Background;
   }
@@ -127,15 +129,11 @@ enum
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
   activeSound = [sounds objectAtIndex:0];
   transitionSound = activeSound;
   
   _imageName = [NSString stringWithFormat:@"%@-blur@2.jpg", activeSound];
-  
-  //load overlay view
-  overlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
-  overlay.alpha = 0.0f;
-  [self.view addSubview:overlay];
   
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
   
@@ -176,11 +174,19 @@ enum
   CVReturn err = CVOpenGLESTextureCacheCreate(kCFAllocatorDefault, NULL, (__bridge CVEAGLContext)((__bridge void *)_context), NULL, &_textureCache);
   if (err)  {
     NSLog(@"Error at CVOpenGLESTextureCacheCreate %d", err);
-    return;
   }
   
+  //load overlay view
+  overlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
+  overlay.alpha = 0.0f;
+  [self.view addSubview:overlay];
+  
+  //start transition timer
   if (transitionTimer) [transitionTimer invalidate];
   transitionTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+  
+  //start rain drop timer
+  rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
 }
 
 
@@ -279,6 +285,7 @@ enum
   [super viewDidUnload];
   
   [transitionTimer invalidate];
+  [rainDropTimer invalidate];
   
   [self tearDownGL];
   
@@ -296,9 +303,7 @@ enum
 - (void)changeActiveSound
 {
   NSString * sound = [sounds objectAtIndex:(arc4random() % [sounds count])];
-  NSLog(@"transition sound: %@", sound);
   if (![sound isEqualToString:activeSound] && currentState != Transitioning) {
-    NSLog(@"transition gtg");
     [self transitionToSound:sound];
   }
 }
@@ -320,7 +325,7 @@ enum
   [overlay setImage:overlayImage];
   
   //4) start an animation to increase the opacity of the overlay over 1 second
-  [UIView animateWithDuration:TRANSITION_DURATION
+  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_NORMAL
                         delay:0.00
                       options:UIViewAnimationOptionCurveLinear
                    animations:^{
@@ -348,9 +353,9 @@ enum
   [overlay setImage:overlayImage];
 
   //3) start an animation to increase the opacity of the overlay over 1 second
-  [UIView animateWithDuration:TRANSITION_DURATION
+  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_NORMAL
                         delay:0.00
-                      options:UIViewAnimationOptionCurveLinear
+                      options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      overlay.alpha = 1.0f;
                    } completion:^(BOOL finished) {
@@ -425,6 +430,18 @@ enum
   currentState = transitionState;
   activeSound = transitionSound;
   overlay.alpha = 0.0f;
+}
+
+-(void)makeItRain
+{
+  if (_ripple)
+  {
+    CGPoint location;
+    location.x = arc4random_uniform(self.view.bounds.size.width);
+    location.y = arc4random_uniform(self.view.bounds.size.height);
+    
+    [_ripple initiateRippleAtLocation:location];
+  }
 }
 
 #pragma mark - GLKViewDelegate

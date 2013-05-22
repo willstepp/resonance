@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoTimerViewController : UIViewController
-@property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * playerButton;
 @end

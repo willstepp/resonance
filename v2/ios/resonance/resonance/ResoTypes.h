@@ -46,13 +46,14 @@ typedef enum {
 } TransferState;
 
 typedef enum {
-  PlayerMain,
-  ModuleExpand,
-  Visual,
-  Timer,
-  Mix,
-  Share
-} ResoAppState;
+  PlayerState_Main,
+  PlayerState_Module,
+  PlayerState_Visual,
+  PlayerState_Timer,
+  PlayerState_Mix,
+  PlayerState_Menu,
+  PlayerState_Transitioning
+} PlayerState;
 
 typedef enum {
   Horizontal,
