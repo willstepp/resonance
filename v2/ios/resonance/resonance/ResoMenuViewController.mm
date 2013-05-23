@@ -34,7 +34,7 @@
     [super viewDidLoad];
     [self calculateWidgetFrames];
   
-    [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
   
     //player button
     playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -81,8 +81,8 @@
 - (void)calculateWidgetFrames
 {
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-60, 10, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 10, 50, 50);
+  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
 }
 
 @end

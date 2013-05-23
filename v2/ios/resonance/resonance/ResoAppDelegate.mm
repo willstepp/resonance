@@ -12,6 +12,10 @@
 #import "ResoPondViewController.h"
 #import "IResoVisualization.h"
 
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
+#import "ResoTypes.h"
+
 @implementation ResoAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -25,6 +29,8 @@
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   currPlayerState = PlayerState_Visual;
+  
+  [self setupModules];
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
   UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];
@@ -169,4 +175,38 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+-(NSURL*)resonanceAppDirectory
+{
+  NSURL * url = [[self applicationCachesDirectory] URLByAppendingPathComponent:@"resonance"];
+  return url;
+}
+
+-(NSURL*)resonanceAppSubDirectory:(NSString*)subdir
+{
+  NSURL * url = [[self resonanceAppDirectory] URLByAppendingPathComponent:subdir];
+  return url;
+}
+
+// Returns the URL to the application's Caches directory.
+- (NSURL *)applicationCachesDirectory
+{
+  return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+-(void)setupModules
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  for(int i = 0; i < ModuleCount; i++) {
+    [rmm addModuleWithId:i];
+  }
+  
+  ResoModule * one = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
+  [one loadSound:@"test" looped:true];
+  ResoModule * two = [rmm.modules objectForKey:[NSNumber numberWithInt:Two]];
+  [two loadSound:@"test" looped:true];
+  ResoModule * three = [rmm.modules objectForKey:[NSNumber numberWithInt:Three]];
+  [three loadSound:@"test" looped:true];
+  ResoModule * four = [rmm.modules objectForKey:[NSNumber numberWithInt:Four]];
+  //[four loadSound:@"test" looped:true];
+}
 @end

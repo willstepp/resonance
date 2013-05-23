@@ -186,7 +186,7 @@ enum
   transitionTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
   
   //start rain drop timer
-  rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
+  rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:47 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
 }
 
 
@@ -325,7 +325,7 @@ enum
   [overlay setImage:overlayImage];
   
   //4) start an animation to increase the opacity of the overlay over 1 second
-  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_NORMAL
+  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_SLOW
                         delay:0.00
                       options:UIViewAnimationOptionCurveLinear
                    animations:^{
@@ -353,7 +353,7 @@ enum
   [overlay setImage:overlayImage];
 
   //3) start an animation to increase the opacity of the overlay over 1 second
-  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_NORMAL
+  [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_SLOW
                         delay:0.00
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{

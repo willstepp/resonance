@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		654E4E14174ACAEE00389576 /* ResoPondViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 654E4E13174ACAEE00389576 /* ResoPondViewController.mm */; };
+		657B42E6174E80DE00350854 /* ResoModuleManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42E5174E80DE00350854 /* ResoModuleManager.mm */; };
+		657B42E9174E80F000350854 /* ResoModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42E8174E80F000350854 /* ResoModule.mm */; };
+		657B42F1174E835300350854 /* FMODSoundEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F0174E835300350854 /* FMODSoundEngine.mm */; };
+		657B42F4174E9CE000350854 /* FMODSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F3174E9CE000350854 /* FMODSound.mm */; };
+		657B42F7174E9CF600350854 /* FMODTone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F6174E9CF600350854 /* FMODTone.mm */; };
 		658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B5174AC90D00D2B03E /* UIKit.framework */; };
 		658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B7174AC90D00D2B03E /* Foundation.framework */; };
 		658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B9174AC90D00D2B03E /* CoreGraphics.framework */; };
@@ -46,6 +51,20 @@
 		654E4E11174ACAC400389576 /* IResoVisualization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResoVisualization.h; sourceTree = "<group>"; };
 		654E4E12174ACAEE00389576 /* ResoPondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPondViewController.h; sourceTree = "<group>"; };
 		654E4E13174ACAEE00389576 /* ResoPondViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPondViewController.mm; sourceTree = "<group>"; };
+		657B42E4174E80DE00350854 /* ResoModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleManager.h; sourceTree = "<group>"; };
+		657B42E5174E80DE00350854 /* ResoModuleManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleManager.mm; sourceTree = "<group>"; };
+		657B42E7174E80F000350854 /* ResoModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModule.h; sourceTree = "<group>"; };
+		657B42E8174E80F000350854 /* ResoModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModule.mm; sourceTree = "<group>"; };
+		657B42EB174E819100350854 /* ISound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISound.h; sourceTree = "<group>"; };
+		657B42EC174E81AE00350854 /* ITone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITone.h; sourceTree = "<group>"; };
+		657B42ED174E81BB00350854 /* ISoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISoundEngine.h; sourceTree = "<group>"; };
+		657B42EE174E81D100350854 /* IRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRecorder.h; sourceTree = "<group>"; };
+		657B42EF174E835300350854 /* FMODSoundEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODSoundEngine.h; sourceTree = "<group>"; };
+		657B42F0174E835300350854 /* FMODSoundEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODSoundEngine.mm; sourceTree = "<group>"; };
+		657B42F2174E9CE000350854 /* FMODSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODSound.h; sourceTree = "<group>"; };
+		657B42F3174E9CE000350854 /* FMODSound.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODSound.mm; sourceTree = "<group>"; };
+		657B42F5174E9CF600350854 /* FMODTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODTone.h; sourceTree = "<group>"; };
+		657B42F6174E9CF600350854 /* FMODTone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODTone.mm; sourceTree = "<group>"; };
 		658730B2174AC90D00D2B03E /* resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658730B5174AC90D00D2B03E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		658730B7174AC90D00D2B03E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,6 +149,23 @@
 			name = visualization;
 			sourceTree = "<group>";
 		};
+		657B42EA174E813D00350854 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				657B42EB174E819100350854 /* ISound.h */,
+				657B42EC174E81AE00350854 /* ITone.h */,
+				657B42ED174E81BB00350854 /* ISoundEngine.h */,
+				657B42EE174E81D100350854 /* IRecorder.h */,
+				657B42EF174E835300350854 /* FMODSoundEngine.h */,
+				657B42F0174E835300350854 /* FMODSoundEngine.mm */,
+				657B42F2174E9CE000350854 /* FMODSound.h */,
+				657B42F3174E9CE000350854 /* FMODSound.mm */,
+				657B42F5174E9CF600350854 /* FMODTone.h */,
+				657B42F6174E9CF600350854 /* FMODTone.mm */,
+			);
+			name = sound;
+			sourceTree = "<group>";
+		};
 		658730A9174AC90D00D2B03E = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +208,7 @@
 				658A0FD8174B116F006E4605 /* ResoTypes.h */,
 				658A0FE8174BB369006E4605 /* resources */,
 				658A0FDD174BB157006E4605 /* data */,
+				657B42EA174E813D00350854 /* sound */,
 				65E06A38174AD92700BE68A5 /* app */,
 				658A0FDE174BB173006E4605 /* ui */,
 				654E4E10174ACA9B00389576 /* visualization */,
@@ -241,6 +278,10 @@
 				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
 				658A1003174D6610006E4605 /* ResoMenuViewController.h */,
 				658A1004174D6610006E4605 /* ResoMenuViewController.mm */,
+				657B42E4174E80DE00350854 /* ResoModuleManager.h */,
+				657B42E5174E80DE00350854 /* ResoModuleManager.mm */,
+				657B42E7174E80F000350854 /* ResoModule.h */,
+				657B42E8174E80F000350854 /* ResoModule.mm */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -331,6 +372,11 @@
 				658A0FFC174D2036006E4605 /* ResoModuleWidget.mm in Sources */,
 				658A1002174D279D006E4605 /* ResoPanelWidget.m in Sources */,
 				658A1005174D6610006E4605 /* ResoMenuViewController.mm in Sources */,
+				657B42E6174E80DE00350854 /* ResoModuleManager.mm in Sources */,
+				657B42E9174E80F000350854 /* ResoModule.mm in Sources */,
+				657B42F1174E835300350854 /* FMODSoundEngine.mm in Sources */,
+				657B42F4174E9CE000350854 /* FMODSound.mm in Sources */,
+				657B42F7174E9CF600350854 /* FMODTone.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

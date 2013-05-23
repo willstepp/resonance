@@ -39,9 +39,8 @@
     [playerButton setTitle:@"Pl" forState:UIControlStateNormal];
     [playerButton addTarget:self action:@selector(showPlayer:) forControlEvents:UIControlEventTouchUpInside];
     [playerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
-    [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.20]];
+    [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
     playerButton.layer.borderWidth = 0.0f;
-    playerButton.layer.cornerRadius = CORNER_RADIUS;
     playerButton.frame = playerButtonFrame_offscreen;
     [self.view addSubview:playerButton];
   
@@ -78,8 +77,8 @@
 - (void)calculateWidgetFrames
 {
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-60, 10, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 10, 50, 50);
+  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
 }
 
 @end

@@ -12,9 +12,6 @@
 @class ResoPanelWidget;
 
 @interface ResoPlayerViewController : UIViewController
-@property (nonatomic, retain) UIButton * moduleButton;
-@property (nonatomic, retain) UIButton * mixButton;
-@property (nonatomic, retain) UIButton * timerButton;
 
 @property (nonatomic, retain) UIButton * menuButton;
 @property (nonatomic, retain) UIButton * visualButton;

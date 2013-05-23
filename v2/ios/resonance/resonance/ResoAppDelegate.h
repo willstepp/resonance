@@ -22,6 +22,8 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+- (NSURL*)resonanceAppSubDirectory:(NSString*)subdir;
+
 @property (readonly, nonatomic) id<IResoVisualization> visualization;
 @property (assign, nonatomic) PlayerState currPlayerState;
 

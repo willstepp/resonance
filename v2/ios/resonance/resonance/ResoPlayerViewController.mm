@@ -16,6 +16,11 @@
 #import "ResoVisualViewController.h"
 #import "ResoMenuViewController.h"
 
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
+
+#import "ResoModuleWidget.h"
+
 #import "ResoTypes.h"
 #import "ResoSettings.h"
 #import "IResoVisualization.h"
@@ -55,11 +60,14 @@
   
   CGRect overlayPanelWidgetFrame;
   CGRect overlayPanelWidgetFrame_offscreen;
+  
+  CGRect moduleWidgetFrame_offscreen;
+  NSMutableDictionary * moduleWidgetFrames;
+  NSMutableArray * moduleWidgets;
 }
 @end
 
 @implementation ResoPlayerViewController
-@synthesize mixButton, timerButton, moduleButton;
 @synthesize menuButton, visualButton, addModuleButton;
 @synthesize playerWidget, menuPanelWidget, mixPanelWidget, timerPanelWidget;
 @synthesize overlayPanelWidget;
@@ -76,55 +84,19 @@
 {
     [super viewDidLoad];
   
+    moduleWidgetFrames = [[NSMutableDictionary alloc] init];
     [self calculateWidgetFrames];
-    
+    moduleWidgets = [[NSMutableArray alloc] init];
+    [self createModuleWidgets];
+  
     playerWidgets = [[NSMutableDictionary alloc] init];
-    
+  
     moduleCount = 0;
     currPlayerState = PlayerState_Visual;
     transitionState = PlayerState_Visual;
     
     [self.view setBackgroundColor:[UIColor clearColor]];
-    
-    //module button
-    moduleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [moduleButton setTitle:@"Disable Input" forState:UIControlStateNormal];
-    [moduleButton addTarget:self action:@selector(toggleInput:) forControlEvents:UIControlEventTouchUpInside];
-    [moduleButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [moduleButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-    
-    moduleButton.layer.borderColor = [UIColor blackColor].CGColor;
-    moduleButton.layer.borderWidth = 0.0f;
-    moduleButton.layer.cornerRadius = 4.0f;
-    moduleButton.frame = CGRectMake(10, 100, self.view.bounds.size.width - 20, 50);
-    //[self.view addSubview:moduleButton];
-    
-    //mix button
-    mixButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mixButton setTitle:@"Show Foreground" forState:UIControlStateNormal];
-    [mixButton addTarget:self action:@selector(toggleVisualState:) forControlEvents:UIControlEventTouchUpInside];
-    [mixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [mixButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-    
-    mixButton.layer.borderColor = [UIColor blackColor].CGColor;
-    mixButton.layer.borderWidth = 0.0f;
-    mixButton.layer.cornerRadius = 4.0f;
-    mixButton.frame = CGRectMake(10, 170, self.view.bounds.size.width - 20, 50);
-    //[self.view addSubview:mixButton];
-    
-    //timer button
-    timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [timerButton setTitle:@"Show Nebula" forState:UIControlStateNormal];
-    [timerButton addTarget:self action:@selector(toggleActiveSound:) forControlEvents:UIControlEventTouchUpInside];
-    [timerButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [timerButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
-    
-    timerButton.layer.borderColor = [UIColor blackColor].CGColor;
-    timerButton.layer.borderWidth = 0.0f;
-    timerButton.layer.cornerRadius = CORNER_RADIUS;
-    timerButton.frame = CGRectMake(10, 240, self.view.bounds.size.width - 20, 50);
-    //[self.view addSubview:timerButton];
-  
+
     //menu button
     menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [menuButton setTitle:@"Me" forState:UIControlStateNormal];
@@ -149,10 +121,11 @@
   
     //add module button
     addModuleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addModuleButton setTitle:@"Add Module" forState:UIControlStateNormal];
+    [addModuleButton setTitle:@"+ Add Sound" forState:UIControlStateNormal];
     [addModuleButton addTarget:self action:@selector(addModule:) forControlEvents:UIControlEventTouchUpInside];
+    [addModuleButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
     [addModuleButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
-    [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
     addModuleButton.layer.borderWidth = 0.0f;
     addModuleButton.layer.cornerRadius = CORNER_RADIUS;
     addModuleButton.frame = addModuleButtonFrame_offscreen;
@@ -160,21 +133,21 @@
   
     //mix panel
     mixPanelWidget = [[ResoPanelWidget alloc] initWithFrame:mixPanelWidgetFrame_offscreen];
-    [mixPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [mixPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     mixPanelWidget.layer.borderWidth = 0.0f;
     mixPanelWidget.layer.cornerRadius = CORNER_RADIUS;
     [self.view addSubview:mixPanelWidget];
   
     //timer panel
     timerPanelWidget = [[ResoPanelWidget alloc] initWithFrame:timerPanelWidgetFrame_offscreen];
-    [timerPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [timerPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     timerPanelWidget.layer.borderWidth = 0.0f;
     timerPanelWidget.layer.cornerRadius = CORNER_RADIUS;
     [self.view addSubview:timerPanelWidget];
   
     //player widget
     playerWidget = [[ResoPlayerWidget alloc] initWithFrame:playerWidgetFrame_offscreen];
-    [playerWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [playerWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     playerWidget.layer.borderWidth = 0.0f;
     [playerWidget.timerButton addTarget:self action:@selector(showTimer:) forControlEvents:UIControlEventTouchUpInside];
     [playerWidget.mixButton addTarget:self action:@selector(showMix:) forControlEvents:UIControlEventTouchUpInside];
@@ -182,7 +155,7 @@
   
     //overlay
     overlayPanelWidget = [[ResoPanelWidget alloc] initWithFrame:overlayPanelWidgetFrame_offscreen];
-    [overlayPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA]];
+    [overlayPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     overlayPanelWidget.layer.borderWidth = 0.0f;
     [self.view addSubview:overlayPanelWidget];
 }
@@ -197,46 +170,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
--(void)toggleInput:(id)sender
-{
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  if ([ad.visualization inputEnabled]) {
-    [moduleButton setTitle:@"Enable Input" forState:UIControlStateNormal];
-    [ad.visualization setInputEnabled:false];
-  } else {
-    [moduleButton setTitle:@"Disable Input" forState:UIControlStateNormal];
-    [ad.visualization setInputEnabled:true];
-  }
-}
-
--(void)toggleVisualState:(id)sender
-{
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  if ([ad.visualization visualizationState] != Transitioning) {
-    if ([ad.visualization visualizationState] == Foreground) {
-      [mixButton setTitle:@"Show Foreground" forState:UIControlStateNormal];
-      [ad.visualization setVisualizationState:Background];
-    } else if ([ad.visualization visualizationState] == Background) {
-      [mixButton setTitle:@"Show Background" forState:UIControlStateNormal];
-      [ad.visualization setVisualizationState:Foreground];
-    }
-  }
-}
-
--(void)toggleActiveSound:(id)sender
-{
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  if ([ad.visualization visualizationState] != Transitioning) {
-    if ([[ad.visualization activeSound] isEqualToString:@"oceanblue"]) {
-      [timerButton setTitle:@"Show Ocean" forState:UIControlStateNormal];
-      [ad.visualization setActiveSound:@"nebulaorange"];
-    } else if ([[ad.visualization activeSound] isEqualToString:@"nebulaorange"]) {
-      [timerButton setTitle:@"Show Nebula" forState:UIControlStateNormal];
-      [ad.visualization setActiveSound:@"oceanblue"];
-    }
-  }
 }
 
 -(void)showMenu:(id)sender
@@ -270,17 +203,17 @@
   switch (state)
   {
     case PlayerState_Main:
+      [self showModules];
       menuButton.frame = menuButtonFrame;
       visualButton.frame = visualButtonFrame;
-      addModuleButton.frame = addModuleButtonFrame;
       mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
       timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
       playerWidget.frame = playerWidgetFrame;
       break;
     case PlayerState_Visual:
+      [self hideModules];
       menuButton.frame = menuButtonFrame_offscreen;
       visualButton.frame = visualButtonFrame_offscreen;
-      addModuleButton.frame = addModuleButtonFrame_offscreen;
       mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
       timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
       playerWidget.frame = playerWidgetFrame_offscreen;
@@ -288,28 +221,28 @@
     case PlayerState_Module:
       break;
     case PlayerState_Timer:
+      [self hideModules];
       overlayPanelWidget.frame = overlayPanelWidgetFrame;
       menuButton.frame = menuButtonFrame_offscreen;
       visualButton.frame = visualButtonFrame_offscreen;
-      addModuleButton.frame = addModuleButtonFrame_offscreen;
       mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
       timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
       playerWidget.frame = playerWidgetFrame_offscreen;
       break;
     case PlayerState_Menu:
+      [self hideModules];
       overlayPanelWidget.frame = overlayPanelWidgetFrame;
       menuButton.frame = menuButtonFrame_offscreen;
       visualButton.frame = visualButtonFrame_offscreen;
-      addModuleButton.frame = addModuleButtonFrame_offscreen;
       mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
       timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
       playerWidget.frame = playerWidgetFrame_offscreen;
       break;
     case PlayerState_Mix:
+      [self hideModules];
       overlayPanelWidget.frame = overlayPanelWidgetFrame;
       menuButton.frame = menuButtonFrame_offscreen;
       visualButton.frame = visualButtonFrame_offscreen;
-      addModuleButton.frame = addModuleButtonFrame_offscreen;
       mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
       timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
       playerWidget.frame = playerWidgetFrame_offscreen;
@@ -336,17 +269,17 @@
           [ad.visualization setVisualizationState:Background];
           [ad.visualization setInputEnabled:false];
           
+          [self transitionInModules];
+          
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                   delay:0.00
                   options:UIViewAnimationOptionCurveEaseOut
                   animations:^{
                     menuButton.frame = menuButtonFrame;
                     visualButton.frame = visualButtonFrame;
-                    addModuleButton.frame = addModuleButtonFrame;
                     playerWidget.frame = playerWidgetFrame;
                   } completion:^(BOOL finished) {
                    if (finished) {
-                     [self completeTransition];
                    }
                   }];
         }
@@ -354,6 +287,8 @@
         {
           transitionState = state;
           currPlayerState = PlayerState_Transitioning;
+          
+          [self transitionInModules];
                     
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                                 delay:0.00
@@ -362,11 +297,9 @@
                              overlayPanelWidget.alpha = 0.0f;
                              menuButton.frame = menuButtonFrame;
                              visualButton.frame = visualButtonFrame;
-                             addModuleButton.frame = addModuleButtonFrame;
                              playerWidget.frame = playerWidgetFrame;
                            } completion:^(BOOL finished) {
                              if (finished) {
-                               [self completeTransition];
                              }
                            }];
 
@@ -388,13 +321,10 @@
                          animations:^{
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
-                           addModuleButton.frame = addModuleButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
-                         } completion:^(BOOL finished) {
-                           if (finished) {
-                             [self completeTransition];
-                           }
-                         }];
+                         } completion:nil];
+        [self transitionOutModules];
+        
         break;
       }
       case PlayerState_Module:
@@ -407,6 +337,8 @@
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
         
+        [self transitionOutModules];
+        
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                               delay:0.00
                             options:UIViewAnimationOptionCurveEaseOut
@@ -414,13 +346,8 @@
                            overlayPanelWidget.alpha = 1.0f;
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
-                           addModuleButton.frame = addModuleButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
-                         } completion:^(BOOL finished) {
-                           if (finished) {
-                             [self completeTransition];
-                           }
-                         }];
+                         } completion:nil];
         break;
       }
       case PlayerState_Menu:
@@ -431,6 +358,8 @@
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
         
+        [self transitionOutModules];
+        
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                               delay:0.00
                             options:UIViewAnimationOptionCurveEaseOut
@@ -438,13 +367,8 @@
                            overlayPanelWidget.alpha = 1.0f;
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
-                           addModuleButton.frame = addModuleButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
-                         } completion:^(BOOL finished) {
-                           if (finished) {
-                             [self completeTransition];
-                           }
-                         }];
+                         } completion:nil];
         break;
       }
       case PlayerState_Mix:
@@ -455,6 +379,8 @@
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
         
+        [self transitionOutModules];
+        
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                               delay:0.00
                             options:UIViewAnimationOptionCurveEaseOut
@@ -462,11 +388,10 @@
                            overlayPanelWidget.alpha = 1.0f;
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
-                           addModuleButton.frame = addModuleButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
                          } completion:^(BOOL finished) {
                            if (finished) {
-                             [self completeTransition];
+
                            }
                          }];
         break;
@@ -525,17 +450,21 @@
 
 - (void)calculateWidgetFrames
 {
+  [self calculateModuleWidgetFrames];
+   
   //menu button
-  menuButtonFrame = CGRectMake(10, 10, 50, 50);
-  menuButtonFrame_offscreen = CGRectMake(-50, 10, 50, 50);
+  menuButtonFrame = CGRectMake(0, 0, 50, 50);
+  menuButtonFrame_offscreen = CGRectMake(-50, 0, 50, 50);
   
   //visual button
-  visualButtonFrame = CGRectMake(self.view.bounds.size.width-60, 10, 50, 50);
-  visualButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 10, 50, 50);
+  visualButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
+  visualButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
   
   //add module button
-  addModuleButtonFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
-  addModuleButtonFrame_offscreen = CGRectMake(10, -50, self.view.bounds.size.width - 20, 50);
+  //addModuleButtonFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+  NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:0]];
+  addModuleButtonFrame = [[frames objectAtIndex:0] CGRectValue];
+  addModuleButtonFrame_offscreen = moduleWidgetFrame_offscreen;
   
   //mix panel widget
   mixPanelWidgetFrame = self.view.bounds;
@@ -546,12 +475,181 @@
   timerPanelWidgetFrame_offscreen = CGRectMake(self.view.bounds.size.width-10, self.view.bounds.size.height - 10, 0, 0);
   
   //player widget
-  playerWidgetFrame = CGRectMake(0, self.view.bounds.size.height - 50, self.view.bounds.size.width, 50);
-  playerWidgetFrame_offscreen = CGRectMake(0, self.view.bounds.size.height + 50, self.view.bounds.size.width, 50);
+  playerWidgetFrame = CGRectMake(0, self.view.bounds.size.height - PLAYER_WIDGET_HEIGHT, self.view.bounds.size.width, PLAYER_WIDGET_HEIGHT);
+  playerWidgetFrame_offscreen = CGRectMake(0, self.view.bounds.size.height + PLAYER_WIDGET_HEIGHT, self.view.bounds.size.width, PLAYER_WIDGET_HEIGHT);
   
   //overlay
   overlayPanelWidgetFrame = self.view.bounds;
   overlayPanelWidgetFrame_offscreen = CGRectMake(0, 0, 0, 0);
+}
+
+-(void)calculateModuleWidgetFrames
+{
+  //what we want to do is center the entire block of modules in the screen no
+  //matter how many elements are there
+  
+  // 0 - add module button is visible
+  // 1 - one module + add module is visible
+  // 2 - two modules + add module is visible
+  // 3 - three modules + add module is visible
+  // 4 - four modules is visible
+  
+  int moduleHeight = MODULE_HEIGHT;
+  int moduleX = MODULE_X;
+  int moduleWidth = self.view.bounds.size.width - (moduleX * 2);
+  int moduleGap = MODULE_GAP;
+  
+  //offscreen
+  moduleWidgetFrame_offscreen = CGRectMake(moduleX, -(moduleHeight), moduleWidth, moduleHeight);
+  
+  for (int i = 0; i <= MAX_NUM_MODULES; i++) {
+    
+    NSMutableArray * frames = [[NSMutableArray alloc] init];
+    
+    int num_modules = (i < MAX_NUM_MODULES) ? i+1 : i;
+    int num_module_gaps = (i < MAX_NUM_MODULES) ? i : i-1;
+    
+    //1) calculate block height: height of all modules + gaps
+    int moduleBlockHeight = (num_modules * moduleHeight) + (num_module_gaps * moduleGap);
+    
+    //2) get y position of vertically centered block
+    float blockY = (self.view.bounds.size.height / 2.0f) - (moduleBlockHeight / 2.0f);
+    
+    //3) create frame for each module in current iteration
+    for (int k = 0; k < num_modules; k++) {
+      
+      float moduleY = (k > 0) ? (blockY + (moduleHeight * k) + (moduleGap * k)) : blockY;
+      CGRect frame = CGRectMake(moduleX, moduleY, moduleWidth, moduleHeight);
+      [frames addObject:[NSValue valueWithCGRect:frame]];
+
+    }
+
+    //4) add frames for this module count to moduleWidgetFrames
+    [moduleWidgetFrames setObject:frames forKey:[NSNumber numberWithInt:i]];
+  }
+}
+
+-(void)createModuleWidgets
+{
+  [moduleWidgets removeAllObjects];
+  
+  ResoModuleManager * rrm = [ResoModuleManager instance];
+  
+  for (id key in rrm.modules) {
+    ResoModule * rm = [rrm.modules objectForKey:key];
+    if ([rm loaded] && rm.tag != Preview) {
+      ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen];
+      [rmw setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
+      rmw.layer.borderWidth = 0.0f;
+      rmw.layer.cornerRadius = CORNER_RADIUS;
+      [self.view addSubview:rmw];
+      
+      [moduleWidgets addObject:rmw];
+    }
+  }
+}
+
+-(void)transitionInModules
+{
+  int count = [moduleWidgets count];
+  bool maxed_modules = [moduleWidgets count] == MAX_NUM_MODULES;
+  NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:count]];
+  for (int i = 0; i < [frames count]; i++) {
+    bool last = (i+1 == [frames count]);
+    int delayMultiplier = [frames count] - i;
+    CGRect f = [[frames objectAtIndex:i] CGRectValue];
+    if ((count < MAX_NUM_MODULES) && ((i+1) == [frames count])) {
+      f.size.height = f.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+      [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+                            delay:(delayMultiplier * TRANSITION_STAGGER_OFFSET)
+                          options:UIViewAnimationOptionCurveEaseOut
+                       animations:^{
+                         addModuleButton.frame = f;
+                       } completion:^(BOOL finished) {
+                         if (finished) {
+                           [self completeTransition];
+                         }
+                       }];
+    } else {
+      ResoModuleWidget * rmw = [moduleWidgets objectAtIndex:i];
+      
+      [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+                            delay:(delayMultiplier * TRANSITION_STAGGER_OFFSET)
+                          options:UIViewAnimationOptionCurveEaseOut
+                       animations:^{
+                         rmw.frame = f;
+                       } completion:^(BOOL finished) {
+                         if (finished && last && maxed_modules) {
+                           [self completeTransition];
+                         }
+                       }];
+
+    }
+  }
+}
+
+-(void)transitionOutModules
+{
+  int counter = 0;
+  bool maxed_modules = [moduleWidgets count] == MAX_NUM_MODULES;
+  for (ResoModuleWidget * rmw in moduleWidgets) {
+    bool last = (counter+1 == [moduleWidgets count]);
+    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+                          delay:(counter * TRANSITION_STAGGER_OFFSET)
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                       rmw.frame = moduleWidgetFrame_offscreen;
+                     } completion:^(BOOL finished) {
+                       if (finished && last && maxed_modules) {
+                         [self completeTransition];
+                       }
+                     }];
+    counter++;
+  }
+  //add module button
+  if ([moduleWidgets count] < MAX_NUM_MODULES) {
+    counter++;
+    CGRect rect = moduleWidgetFrame_offscreen;
+    rect.size.height = rect.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+                          delay:(counter * TRANSITION_STAGGER_OFFSET)
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                       addModuleButton.frame = rect;
+                     } completion:^(BOOL finished) {
+                       if (finished) {
+                         [self completeTransition];
+                       }
+                     }];
+  }
+}
+
+-(void)showModules
+{
+  //instantly set all module widgets to onscreen location
+  int count = [moduleWidgets count];
+  NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:count]];
+  for (int i = 0; i < [frames count]; i++) {
+    CGRect f = [[frames objectAtIndex:i] CGRectValue];
+    if ((count < MAX_NUM_MODULES) && ((i+1) == [frames count])) {
+      f.size.height = f.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+      addModuleButton.frame = f;
+    } else {
+      ResoModuleWidget * rmw = [moduleWidgets objectAtIndex:i];
+      rmw.frame = f;
+    }
+  }
+}
+
+-(void)hideModules
+{
+  //instantly set all module widgets to offscreen location
+  for (ResoModuleWidget * rmw in moduleWidgets) {
+    rmw.frame = moduleWidgetFrame_offscreen;
+  }
+  CGRect rect = moduleWidgetFrame_offscreen;
+  rect.size.height = rect.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+  addModuleButton.frame = rect;
 }
 
 #pragma mark - Touch handling methods
