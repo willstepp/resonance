@@ -271,17 +271,20 @@
           
           [self transitionInModules];
           
-          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_SLOW
                   delay:0.00
                   options:UIViewAnimationOptionCurveEaseOut
                   animations:^{
-                    menuButton.frame = menuButtonFrame;
-                    visualButton.frame = visualButtonFrame;
                     playerWidget.frame = playerWidgetFrame;
-                  } completion:^(BOOL finished) {
-                   if (finished) {
-                   }
-                  }];
+                  } completion:nil];
+          
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.75
+                              options:UIViewAnimationOptionCurveEaseOut
+                           animations:^{
+                             menuButton.frame = menuButtonFrame;
+                             visualButton.frame = visualButtonFrame;
+                           } completion:nil];
         }
         if (currPlayerState == PlayerState_Menu || currPlayerState == PlayerState_Mix || currPlayerState == PlayerState_Timer)
         {
@@ -290,18 +293,24 @@
           
           [self transitionInModules];
                     
-          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_SLOW
                                 delay:0.00
                               options:UIViewAnimationOptionCurveEaseOut
                            animations:^{
                              overlayPanelWidget.alpha = 0.0f;
-                             menuButton.frame = menuButtonFrame;
-                             visualButton.frame = visualButtonFrame;
                              playerWidget.frame = playerWidgetFrame;
                            } completion:^(BOOL finished) {
                              if (finished) {
                              }
                            }];
+          
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.75
+                              options:UIViewAnimationOptionCurveEaseOut
+                           animations:^{
+                             menuButton.frame = menuButtonFrame;
+                             visualButton.frame = visualButtonFrame;
+                           } completion:nil];
 
         }
         break;
@@ -510,7 +519,7 @@
     int num_module_gaps = (i < MAX_NUM_MODULES) ? i : i-1;
     
     //1) calculate block height: height of all modules + gaps
-    int moduleBlockHeight = (num_modules * moduleHeight) + (num_module_gaps * moduleGap);
+    int moduleBlockHeight = (num_modules * moduleHeight) + (num_module_gaps * moduleGap) + (moduleHeight / 2);
     
     //2) get y position of vertically centered block
     float blockY = (self.view.bounds.size.height / 2.0f) - (moduleBlockHeight / 2.0f);

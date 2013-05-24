@@ -1,5 +1,5 @@
 //
-//  ResoPanelWidget.m
+//  ResoPanelWidget.mm
 //  resonance
 //
 //  Created by Daniel Stepp on 5/22/13.

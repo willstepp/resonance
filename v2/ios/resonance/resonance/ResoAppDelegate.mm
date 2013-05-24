@@ -201,12 +201,12 @@
   }
   
   ResoModule * one = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
-  [one loadSound:@"test" looped:true];
+  //[one loadSound:@"test" looped:true];
   ResoModule * two = [rmm.modules objectForKey:[NSNumber numberWithInt:Two]];
-  [two loadSound:@"test" looped:true];
+  //[two loadSound:@"test" looped:true];
   ResoModule * three = [rmm.modules objectForKey:[NSNumber numberWithInt:Three]];
   [three loadSound:@"test" looped:true];
   ResoModule * four = [rmm.modules objectForKey:[NSNumber numberWithInt:Four]];
-  //[four loadSound:@"test" looped:true];
+  [four loadSound:@"test" looped:true];
 }
 @end

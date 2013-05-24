@@ -13,6 +13,7 @@
 		657B42F1174E835300350854 /* FMODSoundEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F0174E835300350854 /* FMODSoundEngine.mm */; };
 		657B42F4174E9CE000350854 /* FMODSound.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F3174E9CE000350854 /* FMODSound.mm */; };
 		657B42F7174E9CF600350854 /* FMODTone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F6174E9CF600350854 /* FMODTone.mm */; };
+		657B42FA174F0D8F00350854 /* ResoSlider.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42F9174F0D8F00350854 /* ResoSlider.mm */; };
 		658730B6174AC90D00D2B03E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B5174AC90D00D2B03E /* UIKit.framework */; };
 		658730B8174AC90D00D2B03E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B7174AC90D00D2B03E /* Foundation.framework */; };
 		658730BA174AC90D00D2B03E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658730B9174AC90D00D2B03E /* CoreGraphics.framework */; };
@@ -37,7 +38,7 @@
 		658A0FF6174C16EC006E4605 /* nebulaorange@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 658A0FF4174C16EC006E4605 /* nebulaorange@2.jpg */; };
 		658A0FF9174D1FFC006E4605 /* ResoPlayerWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A0FF8174D1FFC006E4605 /* ResoPlayerWidget.mm */; };
 		658A0FFC174D2036006E4605 /* ResoModuleWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A0FFB174D2036006E4605 /* ResoModuleWidget.mm */; };
-		658A1002174D279D006E4605 /* ResoPanelWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 658A1001174D279D006E4605 /* ResoPanelWidget.m */; };
+		658A1002174D279D006E4605 /* ResoPanelWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A1001174D279D006E4605 /* ResoPanelWidget.mm */; };
 		658A1005174D6610006E4605 /* ResoMenuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 658A1004174D6610006E4605 /* ResoMenuViewController.mm */; };
 		65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */; };
 		65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */; };
@@ -65,6 +66,8 @@
 		657B42F3174E9CE000350854 /* FMODSound.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODSound.mm; sourceTree = "<group>"; };
 		657B42F5174E9CF600350854 /* FMODTone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMODTone.h; sourceTree = "<group>"; };
 		657B42F6174E9CF600350854 /* FMODTone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FMODTone.mm; sourceTree = "<group>"; };
+		657B42F8174F0D8F00350854 /* ResoSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoSlider.h; sourceTree = "<group>"; };
+		657B42F9174F0D8F00350854 /* ResoSlider.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoSlider.mm; sourceTree = "<group>"; };
 		658730B2174AC90D00D2B03E /* resonance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = resonance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		658730B5174AC90D00D2B03E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		658730B7174AC90D00D2B03E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,7 +103,7 @@
 		658A0FFA174D2036006E4605 /* ResoModuleWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleWidget.h; sourceTree = "<group>"; };
 		658A0FFB174D2036006E4605 /* ResoModuleWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleWidget.mm; sourceTree = "<group>"; };
 		658A1000174D279D006E4605 /* ResoPanelWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPanelWidget.h; sourceTree = "<group>"; };
-		658A1001174D279D006E4605 /* ResoPanelWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoPanelWidget.m; sourceTree = "<group>"; };
+		658A1001174D279D006E4605 /* ResoPanelWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPanelWidget.mm; sourceTree = "<group>"; };
 		658A1003174D6610006E4605 /* ResoMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMenuViewController.h; sourceTree = "<group>"; };
 		658A1004174D6610006E4605 /* ResoMenuViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMenuViewController.mm; sourceTree = "<group>"; };
 		65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
@@ -247,7 +250,9 @@
 				658A0FFA174D2036006E4605 /* ResoModuleWidget.h */,
 				658A0FFB174D2036006E4605 /* ResoModuleWidget.mm */,
 				658A1000174D279D006E4605 /* ResoPanelWidget.h */,
-				658A1001174D279D006E4605 /* ResoPanelWidget.m */,
+				658A1001174D279D006E4605 /* ResoPanelWidget.mm */,
+				657B42F8174F0D8F00350854 /* ResoSlider.h */,
+				657B42F9174F0D8F00350854 /* ResoSlider.mm */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -370,13 +375,14 @@
 				658A0FE3174BB20B006E4605 /* RippleModel.mm in Sources */,
 				658A0FF9174D1FFC006E4605 /* ResoPlayerWidget.mm in Sources */,
 				658A0FFC174D2036006E4605 /* ResoModuleWidget.mm in Sources */,
-				658A1002174D279D006E4605 /* ResoPanelWidget.m in Sources */,
+				658A1002174D279D006E4605 /* ResoPanelWidget.mm in Sources */,
 				658A1005174D6610006E4605 /* ResoMenuViewController.mm in Sources */,
 				657B42E6174E80DE00350854 /* ResoModuleManager.mm in Sources */,
 				657B42E9174E80F000350854 /* ResoModule.mm in Sources */,
 				657B42F1174E835300350854 /* FMODSoundEngine.mm in Sources */,
 				657B42F4174E9CE000350854 /* FMODSound.mm in Sources */,
 				657B42F7174E9CF600350854 /* FMODTone.mm in Sources */,
+				657B42FA174F0D8F00350854 /* ResoSlider.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

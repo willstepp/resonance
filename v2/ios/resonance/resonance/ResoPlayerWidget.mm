@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ResoPlayerWidget.h"
+#import "ResoSlider.h"
 #import "ResoSettings.h"
 
 @interface ResoPlayerWidget()
@@ -17,7 +18,7 @@
 @end
 
 @implementation ResoPlayerWidget
-@synthesize timerButton, mixButton;
+@synthesize timerButton, mixButton, volumeSlider;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -42,6 +43,14 @@
       timerButton.layer.cornerRadius = CORNER_RADIUS;
       timerButton.frame = CGRectMake(frame.size.width-50, 0, 50, frame.size.height);
       [self addSubview:timerButton];
+      
+      int width = self.bounds.size.width;
+      int height = 44;
+      volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, -20, width, height) withOrientation:Horizontal];
+      volumeSlider.minValue = 0;
+      volumeSlider.maxValue = 100;
+      //[volumeSlider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
+      [self addSubview:volumeSlider];
     }
     return self;
 }

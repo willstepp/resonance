@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class ResoSlider;
+
 @interface ResoPlayerWidget : UIView
 @property (nonatomic, retain) UIButton * mixButton;
 @property (nonatomic, retain) UIButton * timerButton;
+@property (nonatomic, retain) ResoSlider * volumeSlider;
 @end
