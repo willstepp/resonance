@@ -79,24 +79,24 @@ static FMODSoundEngine * player = nil;
    */
 }
 
-- (id<ISound>) getSoundForId:(int)identifier
+- (id<ISound>) getSoundForUuid:(NSString *)uuid
 {
-  FMODSound * s = [sounds objectForKey:[NSNumber numberWithInt:identifier]];
+  FMODSound * s = [sounds objectForKey:uuid];
   if (s == NULL)
   {
     s = [[FMODSound alloc] initWithSoundEngine:self];
-    [sounds setObject:s forKey:[NSNumber numberWithInt:identifier]];
+    [sounds setObject:s forKey:uuid];
   }
   return s;
 }
 
-- (id<ITone>) getToneForId:(int)identifier
+- (id<ITone>) getToneForUuid:(NSString *)uuid
 {
-  FMODTone * t = [tones objectForKey:[NSNumber numberWithInt:identifier]];
+  FMODTone * t = [tones objectForKey:uuid];
   if (t == NULL)
   {
     t = [[FMODTone alloc] initWithSoundEngine:self];
-    [tones setObject:t forKey:[NSNumber numberWithInt:identifier]];
+    [tones setObject:t forKey:uuid];
   }
   return t;
 }

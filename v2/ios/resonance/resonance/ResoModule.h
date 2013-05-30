@@ -15,16 +15,17 @@
 
 @interface ResoModule : NSObject
 @property (readonly) ModuleType type;
-@property (readonly) NSString * uuid;
-@property (readonly) int tag;
+@property (readonly) NSString * soundUuid;
+@property (readonly) NSString * moduleUuid;
 
 @property (readonly) id<ISound> sound;
 @property (readonly) id<ITone> tone;
 
--(id)initWithSoundEngine:(id<ISoundEngine>)ise tag:(int)t;
+-(id)initWithSoundEngine:(id<ISoundEngine>)ise uuid:(NSString*)uuid;
 
 -(bool)loaded;
 -(void)loadSound:(NSString*)newUuid looped:(bool)l;
 -(void)loadPreview:(NSString*)newUuid looped:(bool)l mediaType:(int)t;
+-(void)unload;
 
 @end

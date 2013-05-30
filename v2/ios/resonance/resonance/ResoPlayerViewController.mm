@@ -64,6 +64,8 @@
   CGRect moduleWidgetFrame_offscreen;
   NSMutableDictionary * moduleWidgetFrames;
   NSMutableArray * moduleWidgets;
+  
+  CGRect expandedModuleFrame;
 }
 @end
 
@@ -87,7 +89,6 @@
     moduleWidgetFrames = [[NSMutableDictionary alloc] init];
     [self calculateWidgetFrames];
     moduleWidgets = [[NSMutableArray alloc] init];
-    [self createModuleWidgets];
   
     playerWidgets = [[NSMutableDictionary alloc] init];
   
@@ -121,8 +122,8 @@
   
     //add module button
     addModuleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [addModuleButton setTitle:@"+ Add Sound" forState:UIControlStateNormal];
-    [addModuleButton addTarget:self action:@selector(addModule:) forControlEvents:UIControlEventTouchUpInside];
+    [addModuleButton setTitle:@"Add Sound" forState:UIControlStateNormal];
+    [addModuleButton addTarget:self action:@selector(addSound:) forControlEvents:UIControlEventTouchUpInside];
     [addModuleButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
     [addModuleButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
@@ -162,6 +163,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [self createModuleWidgets];
+  
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   [self setPlayerToState:ad.currPlayerState];
   [self transitionPlayerToState:PlayerState_Main];
@@ -185,6 +188,60 @@
 -(void)showMix:(id)sender
 {
   [self transitionPlayerToState:PlayerState_Mix];
+}
+
+-(void)addSound:(id)sender
+{
+  if (currPlayerState != PlayerState_Transitioning) {
+    ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+    ad.currentModule = nil;
+    
+    [self transitionPlayerToState:PlayerState_Module];
+  }
+}
+
+-(void)expandModule:(id)sender
+{
+  UIButton * moduleButton = (UIButton*)sender;
+  ResoModuleWidget * rmw = (ResoModuleWidget*)moduleButton.superview;
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ad.currentModule = rmw.uuid;
+  
+  NSLog(@"expandModule: %@", rmw.uuid);
+  
+  [self transitionPlayerToState:PlayerState_Module];
+}
+
+-(void)removeModule:(id)sender
+{
+  UIButton * moduleButton = (UIButton*)sender;
+  ResoModuleWidget * rmw = (ResoModuleWidget*)moduleButton.superview;
+  
+  bool showAddModule = moduleWidgets.count >= MAX_NUM_MODULES;
+  
+  //remove from module manager
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  [rmm removeModuleWithUuid:rmw.uuid];
+
+  rmw.removeButton.alpha = 0.0f;
+  rmw.toggleRemoveButton.alpha = 0.0f;
+  rmw.expandButton.alpha = 0.0f;
+  rmw.titleLabel.alpha = 0.0f;
+
+  //animate removal of widget
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.00
+                      options:UIViewAnimationOptionCurveLinear
+                   animations:^{
+                       rmw.alpha = 0.0f;
+                   } completion:^(BOOL finished) {
+                     if (finished) {
+                       //remove widget from view
+                       [moduleWidgets removeObject:rmw];
+                       [rmw removeFromSuperview];
+                       [self shiftModules:showAddModule];
+                     }
+                   }];
 }
 
 -(void)showModule:(id)sender
@@ -219,7 +276,18 @@
       playerWidget.frame = playerWidgetFrame_offscreen;
       break;
     case PlayerState_Module:
+    {
+      menuButton.frame = menuButtonFrame_offscreen;
+      visualButton.frame = visualButtonFrame_offscreen;
+      mixPanelWidget.frame = mixPanelWidgetFrame_offscreen;
+      timerPanelWidget.frame = timerPanelWidgetFrame_offscreen;
+      playerWidget.frame = playerWidgetFrame_offscreen;
+      ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+      [self hideModulesOnscreen:ad.currentModule];
+      [self showModuleExpanded:ad.currentModule];
+      [self hideAddModuleButtonIfNeeded:ad.currentModule];
       break;
+    }
     case PlayerState_Timer:
       [self hideModules];
       overlayPanelWidget.frame = overlayPanelWidgetFrame;
@@ -255,6 +323,7 @@
 
 - (void) transitionPlayerToState:(PlayerState)state
 {
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   if ([self canChangeToState:state]) {
     switch (state)
     {
@@ -265,7 +334,6 @@
           transitionState = state;
           currPlayerState = PlayerState_Transitioning;
           
-          ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
           [ad.visualization setVisualizationState:Background];
           [ad.visualization setInputEnabled:false];
           
@@ -313,6 +381,50 @@
                            } completion:nil];
 
         }
+        if (currPlayerState == PlayerState_Module) {
+          
+          transitionState = state;
+          currPlayerState = PlayerState_Transitioning;
+          
+          //1) transition expanded module back to normal
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.00
+                              options:UIViewAnimationOptionCurveEaseIn
+                           animations:^{
+                             if (ad.currentModule == nil) {
+                               addModuleButton.frame = expandedModuleFrame;
+                             } else {
+                               ResoModuleWidget * rmw = [self getModuleWithUuid:ad.currentModule];
+                               rmw.frame = expandedModuleFrame;
+                             }
+                             [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
+                             
+                           } completion:^(BOOL finished) {
+                             if (finished) {
+                               //2) fade in other modules + transition in menu items
+                               [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                                     delay:0.0
+                                                   options:UIViewAnimationOptionCurveLinear
+                                                animations:^{
+                                                  if (moduleWidgets.count < MAX_NUM_MODULES) {
+                                                    addModuleButton.alpha = 1.0f;
+                                                    addModuleButton.titleLabel.alpha = 1.0f;
+                                                  }
+                                                  menuButton.frame = menuButtonFrame;
+                                                  visualButton.frame = visualButtonFrame;
+                                                  playerWidget.frame = playerWidgetFrame;
+                                                  for(ResoModuleWidget * rmw in moduleWidgets) {
+                                                    rmw.alpha = 1.0f;
+                                                    rmw.expandButton.alpha = 1.0f;
+                                                  }
+                                                } completion:^(BOOL finished) {
+                                                  if (finished) {
+                                                    [self completeTransition];
+                                                  }
+                                                }];
+                             }
+                           }];
+        }
         break;
       }
       case PlayerState_Visual:
@@ -337,7 +449,80 @@
         break;
       }
       case PlayerState_Module:
+      {
+        transitionState = state;
+        currPlayerState = PlayerState_Transitioning;
+        
+        ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+        NSString * currentModule = ad.currentModule;
+        if (currentModule == nil) {
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.00
+                              options:UIViewAnimationOptionCurveLinear
+                           animations:^{
+                             menuButton.frame = menuButtonFrame_offscreen;
+                             visualButton.frame = visualButtonFrame_offscreen;
+                             playerWidget.frame = playerWidgetFrame_offscreen;
+                             addModuleButton.titleLabel.alpha = 0.0f;
+                             for(ResoModuleWidget * rmw in moduleWidgets) {
+                               rmw.alpha = 0.0f;
+                             }
+                           } completion:^(BOOL finished){
+                             [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                                   delay:0.00
+                                                 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{
+                                               [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
+                                                addModuleButton.frame = overlayPanelWidgetFrame;
+                                              } completion:^(BOOL finished) {
+                                                if (finished) {
+                                                  [self completeTransition];
+                                                }
+                                              }];
+
+                           }];
+        } else {
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.00
+                              options:UIViewAnimationOptionCurveLinear
+                           animations:^{
+                             //fade out all elements except for current module
+                             menuButton.frame = menuButtonFrame_offscreen;
+                             visualButton.frame = visualButtonFrame_offscreen;
+                             playerWidget.frame = playerWidgetFrame_offscreen;
+                             addModuleButton.alpha = 0.0f;
+                             for(ResoModuleWidget * rmw in moduleWidgets) {
+                               if (currentModule != rmw.uuid) {
+                                 rmw.alpha = 0.0f;
+                               } else {
+                                 rmw.expandButton.alpha = 0.0f;
+                                 rmw.titleLabel.alpha = 0.0f;
+                                 rmw.removeButton.alpha = 0.0f;
+                                 rmw.toggleRemoveButton.alpha = 0.0f;
+                               }
+                             }
+                           } completion:^(BOOL finished){
+                             [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                                   delay:0.00
+                                                 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{
+                                                //expand current module to full screen
+                                                for(ResoModuleWidget * rmw in moduleWidgets) {
+                                                  if (currentModule == rmw.uuid) {
+                                                    rmw.frame = overlayPanelWidgetFrame;
+                                                  }
+                                                }
+                                              } completion:^(BOOL finished) {
+                                                if (finished) {
+                                                  [self completeTransition];
+                                                }
+                                              }];
+                             
+                           }];
+
+        }
         break;
+      }
       case PlayerState_Timer:
       {
         transitionState = state;
@@ -428,7 +613,11 @@
       break;
     }
     case PlayerState_Module:
+    {
+      ResoModuleViewController * rmvc = [[ResoModuleViewController alloc] initWithNibName:nil bundle:nil];
+      [self.navigationController pushViewController:rmvc animated:NO];
       break;
+    }
     case PlayerState_Timer:
     {
       ResoTimerViewController * rtvc = [[ResoTimerViewController alloc] initWithNibName:nil bundle:nil];
@@ -540,22 +729,36 @@
 
 -(void)createModuleWidgets
 {
+  [moduleWidgets makeObjectsPerformSelector:@selector(removeFromSuperview)];
   [moduleWidgets removeAllObjects];
   
   ResoModuleManager * rrm = [ResoModuleManager instance];
+  ResoModuleWidget * currModuleWidget = nil;
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   
   for (id key in rrm.modules) {
     ResoModule * rm = [rrm.modules objectForKey:key];
-    if ([rm loaded] && rm.tag != Preview) {
+    NSLog(@"creating module: %@", rm.moduleUuid);
+    if ([rm loaded] && ![rm.moduleUuid isEqualToString:@"preview"]) {
       ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen];
+      [rmw.expandButton addTarget:self action:@selector(expandModule:) forControlEvents:UIControlEventTouchUpInside];
+      [rmw.removeButton addTarget:self action:@selector(removeModule:) forControlEvents:UIControlEventTouchUpInside];
+      rmw.uuid = rm.moduleUuid;
+      [rmw.titleLabel setText:rm.moduleUuid];
       [rmw setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
       rmw.layer.borderWidth = 0.0f;
       rmw.layer.cornerRadius = CORNER_RADIUS;
       [self.view addSubview:rmw];
       
-      [moduleWidgets addObject:rmw];
+      if ([rm.moduleUuid isEqualToString:ad.currentModule]) {
+        currModuleWidget = rmw;
+      } else {
+        [moduleWidgets addObject:rmw];
+      }
     }
   }
+  if (currModuleWidget != nil)
+    [moduleWidgets addObject:currModuleWidget];
 }
 
 -(void)transitionInModules
@@ -659,6 +862,112 @@
   CGRect rect = moduleWidgetFrame_offscreen;
   rect.size.height = rect.size.height / ADD_MODULE_HEIGHT_DIVISOR;
   addModuleButton.frame = rect;
+}
+
+-(void)hideModulesOnscreen:(NSString*)uuid
+{
+  //setup modules to their onscreen location with an alpha of 0.0f
+  //instantly set all module widgets to onscreen location
+  int count = [moduleWidgets count];
+  NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:count]];
+  for (int i = 0; i < [frames count]; i++) {
+    CGRect f = [[frames objectAtIndex:i] CGRectValue];
+    if ((count < MAX_NUM_MODULES) && ((i+1) == [frames count])) {
+      f.size.height = f.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+      addModuleButton.alpha = 0.0f;
+      addModuleButton.frame = f;
+      if (uuid == nil) {
+        expandedModuleFrame = f; //so we can later transition to this frame
+      }
+    } else {
+      ResoModuleWidget * rmw = [moduleWidgets objectAtIndex:i];
+      rmw.alpha = 0.0f;
+      rmw.frame = f;
+      if ([uuid isEqualToString:rmw.uuid]) {
+        expandedModuleFrame = f;  //so we can later transition to this frame
+      }
+    }
+  }
+}
+
+-(void)showModuleExpanded:(NSString*)uuid
+{
+  //iterate through module widgets, expand one with uuid matching argument
+  if (uuid == nil) {
+    addModuleButton.frame = overlayPanelWidgetFrame;
+    addModuleButton.alpha = 1.0f;
+  } else {
+    for (ResoModuleWidget * rmw in moduleWidgets) {
+      if ([uuid isEqualToString:rmw.uuid]) {
+        rmw.frame = overlayPanelWidgetFrame;
+        rmw.alpha = 1.0f;
+      }
+    }
+  }
+}
+
+-(void)hideAddModuleButtonIfNeeded:(NSString*)uuid
+{
+  if (uuid != nil && moduleWidgets.count >= MAX_NUM_MODULES) {
+    addModuleButton.frame = addModuleButtonFrame_offscreen;
+    addModuleButton.alpha = 0.0f;
+  }
+}
+
+-(void)shiftModules:(bool)showAddModule
+{
+  //get frames for current module count, animate the current widgets to those frames
+  int count = [moduleWidgets count];
+  NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:count]];
+  for (int i = 0; i < [frames count]; i++) {
+    CGRect f = [[frames objectAtIndex:i] CGRectValue];
+    if ((count < MAX_NUM_MODULES) && ((i+1) == [frames count])) {
+      f.size.height = f.size.height / ADD_MODULE_HEIGHT_DIVISOR;
+      if (showAddModule) {
+        //first move to position
+        addModuleButton.alpha = 0.0f;
+        addModuleButton.titleLabel.alpha = 0.0f;
+        addModuleButton.frame = f;
+        
+        //fade in
+        [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                           addModuleButton.alpha = 1.0f;
+                           addModuleButton.titleLabel.alpha = 1.0f;
+                         } completion:nil];
+      } else {
+        
+        [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                           addModuleButton.frame = f;
+                           addModuleButton.alpha = 1.0f;
+                         } completion:nil];
+      }
+
+    } else {
+      ResoModuleWidget * rmw = [moduleWidgets objectAtIndex:i];
+      [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                            delay:0.0
+                          options:UIViewAnimationOptionCurveEaseIn
+                       animations:^{
+                         rmw.frame = f;
+                       } completion:nil];
+    }
+  }
+
+}
+
+-(ResoModuleWidget*)getModuleWithUuid:(NSString*)uuid
+{
+  for (ResoModuleWidget * rmw in moduleWidgets) {
+    if ([uuid isEqualToString:rmw.uuid])
+      return rmw;
+  }
+  return nil;
 }
 
 #pragma mark - Touch handling methods

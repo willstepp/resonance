@@ -173,7 +173,8 @@ typedef enum {
   Two,
   Three,
   Four,
-  ModuleCount
+  ModuleCount,
+  Empty
 } Module;
 
 typedef enum {

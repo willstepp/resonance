@@ -14,8 +14,8 @@
 +(id<ISoundEngine>)instance;
 -(void)deinstance;
 
--(id<ISound>)getSoundForId:(int)identifier;
--(id<ITone>)getToneForId:(int)identifier;
+-(id<ISound>)getSoundForUuid:(NSString*)uuid;
+-(id<ITone>)getToneForUuid:(NSString*)uuid;
 
 -(void)startRecording:(NSString*)fileName dynamicInput:(bool)di;
 -(void)stopRecording;

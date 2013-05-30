@@ -42,9 +42,14 @@ static  ResoModuleManager * rmm = nil;
   return self;
 }
 
--(void)addModuleWithId:(int)i
+-(void)addModuleWithUuid:(NSString*)uuid
 {
-  ResoModule * rm = [[ResoModule alloc] initWithSoundEngine:[FMODSoundEngine instance] tag:i];
-  [modules setObject:rm forKey:[NSNumber numberWithInt:i]];
+  ResoModule * rm = [[ResoModule alloc] initWithSoundEngine:[FMODSoundEngine instance] uuid:uuid];
+  [modules setObject:rm forKey:uuid];
+}
+
+-(void)removeModuleWithUuid:(NSString *)uuid
+{
+  [modules removeObjectForKey:uuid];
 }
 @end

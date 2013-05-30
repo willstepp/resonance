@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoModuleViewController : UIViewController
-@property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * playerButton;
+@property (nonatomic, retain) UIButton * loadSoundButton;
 @end

@@ -26,15 +26,15 @@
   id<ISoundEngine> soundEngine;
 }
 @property (nonatomic, readwrite) ModuleType type;
-@property (nonatomic, readwrite) NSString *  uuid;
-@property (nonatomic, readwrite) int tag;
+@property (nonatomic, readwrite) NSString *  soundUuid;
+@property (nonatomic, readwrite) NSString * moduleUuid;
 
 @property (nonatomic, readwrite) id<ISound> sound;
 @property (nonatomic, readwrite) id<ITone> tone;
 @end
 
 @implementation ResoModule
-@synthesize type, uuid, tag, sound, tone;
+@synthesize type, soundUuid, moduleUuid, sound, tone;
 
 -(id)init
 {
@@ -45,18 +45,26 @@
   return nil;
 }
 
--(id)initWithSoundEngine:(id<ISoundEngine>)ise tag:(int)t
+-(id)initWithSoundEngine:(id<ISoundEngine>)ise uuid:(NSString*)uuid
 {
   if (self = [super init])
   {
-    tag = t;
+    moduleUuid = uuid;
     soundEngine = ise;
-    sound = [soundEngine getSoundForId:tag];
-    tone = [soundEngine getToneForId:tag];
+    sound = [soundEngine getSoundForUuid:uuid];
+    tone = [soundEngine getToneForUuid:uuid];
     type = ModuleType_Unloaded;
-    uuid = @"";
+    soundUuid = @"";
   }
   return self;
+}
+
+-(void)dealloc
+{
+  [self unload];
+  tone = nil;
+  sound = nil;
+  soundEngine = nil;
 }
 
 -(bool)loaded
@@ -66,10 +74,10 @@
 
 -(void)loadSound:(NSString*)newUuid looped:(bool)l
 {
-  uuid = newUuid;
+  soundUuid = newUuid;
   
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * soundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", uuid]] path];
+  NSString * soundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", soundUuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:soundPath];
   if (true/*exists*/) {
     [sound load:soundPath looped:l];
@@ -79,16 +87,22 @@
 
 -(void)loadPreview:(NSString*)newUuid looped:(bool)l mediaType:(int)t
 {
-  uuid = newUuid;
+  soundUuid = newUuid;
   
   NSString * mediaType = (t == MediaType_Sound ? @"sounds" : @"mixes");
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * previewPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"%@/%@/preview", mediaType, uuid]] path];
+  NSString * previewPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"%@/%@/preview", mediaType, soundUuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:previewPath];
   if (exists) {
     [sound load:previewPath looped:l];
     type = ModuleType_Sound;
   }
+}
+
+-(void)unload
+{
+  if ([tone loaded]) [tone unload];
+  if ([sound loaded]) [sound unload];
 }
 
 @end

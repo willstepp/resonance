@@ -21,6 +21,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize currentModule = _currentModule;
 @synthesize visualization, currPlayerState;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -29,7 +30,7 @@
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   currPlayerState = PlayerState_Visual;
-  
+  _currentModule = nil;
   [self setupModules];
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
@@ -195,18 +196,24 @@
 
 -(void)setupModules
 {
+  /*
   ResoModuleManager * rmm = [ResoModuleManager instance];
   for(int i = 0; i < ModuleCount; i++) {
-    [rmm addModuleWithId:i];
+    if (i != Preview) {
+      NSString * uuid = [[NSUUID UUID] UUIDString];
+      [rmm addModuleWithUuid:uuid];
+    }
   }
   
-  ResoModule * one = [rmm.modules objectForKey:[NSNumber numberWithInt:One]];
-  //[one loadSound:@"test" looped:true];
-  ResoModule * two = [rmm.modules objectForKey:[NSNumber numberWithInt:Two]];
-  //[two loadSound:@"test" looped:true];
-  ResoModule * three = [rmm.modules objectForKey:[NSNumber numberWithInt:Three]];
-  [three loadSound:@"test" looped:true];
-  ResoModule * four = [rmm.modules objectForKey:[NSNumber numberWithInt:Four]];
-  [four loadSound:@"test" looped:true];
+  int count = 0;
+  int breakCount = 2;
+  for (id key in rmm.modules) {
+    ResoModule * module = [rmm.modules objectForKey:key];
+    [module loadSound:@"test" looped:true];
+    count++;
+    if (count >= breakCount)
+      break;
+  }
+   */
 }
 @end

@@ -138,6 +138,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6511738217579A8500CBCA9F /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = helpers;
+			sourceTree = "<group>";
+		};
 		654E4E10174ACA9B00389576 /* visualization */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +212,7 @@
 		658730BD174AC90D00D2B03E /* resonance */ = {
 			isa = PBXGroup;
 			children = (
+				6511738217579A8500CBCA9F /* helpers */,
 				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
 				658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */,
 				658A0FDC174BB149006E4605 /* ResoSettings.h */,

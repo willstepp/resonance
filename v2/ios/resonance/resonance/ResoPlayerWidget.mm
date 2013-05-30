@@ -50,6 +50,7 @@
       volumeSlider.minValue = 0;
       volumeSlider.maxValue = 100;
       //[volumeSlider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
+      [volumeSlider setValue:50];
       [self addSubview:volumeSlider];
     }
     return self;

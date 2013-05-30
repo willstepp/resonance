@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoModuleWidget : UIView
+@property (nonatomic, retain) UIButton * expandButton;
+@property (nonatomic, retain) UIButton * toggleRemoveButton;
+@property (nonatomic, retain) UIView * removePanel;
+@property (nonatomic, retain) UIButton * removeButton;
+@property (nonatomic, retain) UILabel * titleLabel;
 
+@property (nonatomic, assign) NSString * uuid;
 @end

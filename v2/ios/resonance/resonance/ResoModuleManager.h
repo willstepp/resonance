@@ -12,5 +12,7 @@
 @interface ResoModuleManager : NSObject
 @property (readonly) NSMutableDictionary * modules;
 +(ResoModuleManager*)instance;
--(void)addModuleWithId:(int)i;
+
+-(void)addModuleWithUuid:(NSString*)uuid;
+-(void)removeModuleWithUuid:(NSString*)uuid;
 @end

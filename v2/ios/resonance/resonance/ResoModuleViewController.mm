@@ -8,31 +8,61 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleViewController.h"
+#import "ResoAppDelegate.h"
+#import "ResoSettings.h"
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
 
 @interface ResoModuleViewController ()
-
+{
+  CGRect playerButtonFrame;
+  CGRect playerButtonFrame_offscreen;
+  
+  CGRect soundButtonFrame;
+  CGRect soundButtonFrame_offscreen;
+}
 @end
 
 @implementation ResoModuleViewController
-@synthesize backButton;
+@synthesize playerButton, loadSoundButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-      //back button
-      backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [backButton setTitle:@"<" forState:UIControlStateNormal];
-      [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
-      [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-      [backButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+      [self calculateWidgetFrames];
       
-      backButton.layer.borderColor = [UIColor blackColor].CGColor;
-      backButton.layer.borderWidth = 0.0f;
-      backButton.layer.cornerRadius = 4.0f;
-      backButton.frame = CGRectMake(10, 10, 44, 44);
-      [self.view addSubview:backButton];
+      [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
+      
+      //player button
+      playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [playerButton setTitle:@"Pl" forState:UIControlStateNormal];
+      [playerButton addTarget:self action:@selector(showPlayer:) forControlEvents:UIControlEventTouchUpInside];
+      [playerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
+      [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
+      playerButton.layer.borderWidth = 0.0f;
+      playerButton.layer.cornerRadius = CORNER_RADIUS;
+      playerButton.frame = playerButtonFrame_offscreen;
+      [self.view addSubview:playerButton];
 
+      //sound button
+      loadSoundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [loadSoundButton setTitle:@"Load Sound" forState:UIControlStateNormal];
+      [loadSoundButton addTarget:self action:@selector(loadSound:) forControlEvents:UIControlEventTouchUpInside];
+      [loadSoundButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
+      [loadSoundButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:1.0f]];
+      loadSoundButton.layer.borderWidth = 0.0f;
+      loadSoundButton.layer.cornerRadius = CORNER_RADIUS;
+      loadSoundButton.frame = soundButtonFrame_offscreen;
+      [self.view addSubview:loadSoundButton];
+      
+      [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                            delay:0.00
+                          options:UIViewAnimationOptionCurveEaseOut
+                       animations:^{
+                         playerButton.frame = playerButtonFrame;
+                         loadSoundButton.frame = soundButtonFrame;
+                       } completion:nil];
     }
     return self;
 }
@@ -49,9 +79,46 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)goBack:(id)sender
+- (void)loadSound:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  
+  if (ad.currentModule != nil)
+    [rmm removeModuleWithUuid:ad.currentModule];
+  
+  NSString * uuid = [[NSUUID UUID] UUIDString];
+  [rmm addModuleWithUuid:uuid];
+  ResoModule * rm = [rmm.modules objectForKey:uuid];
+  [rm loadSound:@"test" looped:false];
+
+  ad.currentModule = uuid;
+}
+
+- (void)showPlayer:(id)sender
+{
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.00
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     loadSoundButton.frame = soundButtonFrame_offscreen;
+                     playerButton.frame = playerButtonFrame_offscreen;
+                   } completion:^(BOOL finished) {
+                     if (finished) {
+                       [self.navigationController popViewControllerAnimated:NO];
+                     }
+                   }];
+}
+
+- (void)calculateWidgetFrames
+{
+  //player button
+  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  
+  //load sound button
+  soundButtonFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+  soundButtonFrame_offscreen = CGRectMake(-(soundButtonFrame.size.width), soundButtonFrame.origin.y, soundButtonFrame.size.width, soundButtonFrame.size.height);
 }
 
 @end
