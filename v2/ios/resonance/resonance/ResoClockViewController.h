@@ -1,5 +1,5 @@
 //
-//  ResoTimerViewController.h
+//  ResoClockViewController.h
 //  resonance
 //
 //  Created by Daniel Stepp on 5/20/13.
@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ResoTimerViewController : UIViewController
+@interface ResoClockViewController : UIViewController
 @property (nonatomic, retain) UIButton * playerButton;
+@property (nonatomic, retain) UILabel * titleLabel;
 @end

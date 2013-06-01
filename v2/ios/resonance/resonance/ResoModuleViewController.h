@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoActionBar.h"
 
 @interface ResoModuleViewController : UIViewController
 @property (nonatomic, retain) UIButton * playerButton;
 @property (nonatomic, retain) UIButton * loadSoundButton;
+@property (nonatomic, retain) ResoActionBar * settingsBar;
+@property (nonatomic, retain) ResoActionBar * changeSoundBar;
 @end

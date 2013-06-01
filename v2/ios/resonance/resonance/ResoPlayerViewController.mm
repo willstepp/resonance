@@ -12,7 +12,7 @@
 
 #import "ResoModuleViewController.h"
 #import "ResoMixViewController.h"
-#import "ResoTimerViewController.h"
+#import "ResoClockViewController.h"
 #import "ResoVisualViewController.h"
 #import "ResoMenuViewController.h"
 
@@ -195,6 +195,7 @@
   if (currPlayerState != PlayerState_Transitioning) {
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
     ad.currentModule = nil;
+    ad.currentModulePosition = -1;
     
     [self transitionPlayerToState:PlayerState_Module];
   }
@@ -206,6 +207,13 @@
   ResoModuleWidget * rmw = (ResoModuleWidget*)moduleButton.superview;
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
   ad.currentModule = rmw.uuid;
+  NSNumber * modulePosition = nil;
+  for (int i = 0; i < [moduleWidgets count]; i++) {
+    ResoModuleWidget * r = [moduleWidgets objectAtIndex:i];
+    if ([r.uuid isEqualToString:rmw.uuid])
+      modulePosition = [NSNumber numberWithInt:i];
+  }
+  ad.currentModulePosition = [modulePosition intValue];
   
   NSLog(@"expandModule: %@", rmw.uuid);
   
@@ -216,6 +224,11 @@
 {
   UIButton * moduleButton = (UIButton*)sender;
   ResoModuleWidget * rmw = (ResoModuleWidget*)moduleButton.superview;
+  
+  //reset any global current module
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ad.currentModule = nil;
+  ad.currentModulePosition = -1;
   
   bool showAddModule = moduleWidgets.count >= MAX_NUM_MODULES;
   
@@ -416,6 +429,8 @@
                                                   for(ResoModuleWidget * rmw in moduleWidgets) {
                                                     rmw.alpha = 1.0f;
                                                     rmw.expandButton.alpha = 1.0f;
+                                                    rmw.toggleRemoveButton.alpha = 1.0f;
+                                                    rmw.titleLabel.alpha = 1.0f;
                                                   }
                                                 } completion:^(BOOL finished) {
                                                   if (finished) {
@@ -620,8 +635,8 @@
     }
     case PlayerState_Timer:
     {
-      ResoTimerViewController * rtvc = [[ResoTimerViewController alloc] initWithNibName:nil bundle:nil];
-      [self.navigationController pushViewController:rtvc animated:NO];
+      ResoClockViewController * rcvc = [[ResoClockViewController alloc] initWithNibName:nil bundle:nil];
+      [self.navigationController pushViewController:rcvc animated:NO];
       break;
     }
     case PlayerState_Menu:
@@ -738,7 +753,6 @@
   
   for (id key in rrm.modules) {
     ResoModule * rm = [rrm.modules objectForKey:key];
-    NSLog(@"creating module: %@", rm.moduleUuid);
     if ([rm loaded] && ![rm.moduleUuid isEqualToString:@"preview"]) {
       ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen];
       [rmw.expandButton addTarget:self action:@selector(expandModule:) forControlEvents:UIControlEventTouchUpInside];
@@ -751,14 +765,20 @@
       [self.view addSubview:rmw];
       
       if ([rm.moduleUuid isEqualToString:ad.currentModule]) {
+        //don't add the current module widget to the list yet
         currModuleWidget = rmw;
       } else {
         [moduleWidgets addObject:rmw];
       }
     }
   }
-  if (currModuleWidget != nil)
+  if (currModuleWidget != nil && ad.currentModulePosition < 0) {
+    //module is new, so add it to the end of the list
     [moduleWidgets addObject:currModuleWidget];
+  } else if (currModuleWidget != nil && ad.currentModulePosition >= 0) {
+    //module existed before, so insert at previous index
+    [moduleWidgets insertObject:currModuleWidget atIndex:ad.currentModulePosition];
+  }
 }
 
 -(void)transitionInModules
@@ -901,6 +921,9 @@
       if ([uuid isEqualToString:rmw.uuid]) {
         rmw.frame = overlayPanelWidgetFrame;
         rmw.alpha = 1.0f;
+        rmw.toggleRemoveButton.alpha = 0.0f;
+        rmw.titleLabel.alpha = 0.0f;
+        rmw.expandButton.alpha = 0.0f;
       }
     }
   }

@@ -189,6 +189,27 @@ enum
   rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:47 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  
+  [self becomeFirstResponder];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  
+  [self becomeFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+  return YES;
+}
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+  if (motion == UIEventSubtypeMotionShake) {
+    [self makeItRain];
+  }
+  [super motionBegan:motion withEvent:event];
+}
+
 
 - (void)cleanUpTextures
 {

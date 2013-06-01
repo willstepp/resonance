@@ -23,8 +23,8 @@
 
 #define MAX_NUM_MODULES 4
 #define MODULE_HEIGHT 55
-#define MODULE_X 5
-#define MODULE_GAP 5
+#define MODULE_X 2
+#define MODULE_GAP 2
 
 #define ADD_MODULE_HEIGHT_DIVISOR 1.25
 

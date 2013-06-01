@@ -7,18 +7,21 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ResoTimerViewController.h"
+#import "ResoClockViewController.h"
 #import "ResoSettings.h"
 
-@interface ResoTimerViewController ()
+@interface ResoClockViewController ()
 {
   CGRect playerButtonFrame;
   CGRect playerButtonFrame_offscreen;
+  
+  CGRect titleFrame;
+  CGRect titleFrame_offscreen;
 }
 @end
 
-@implementation ResoTimerViewController
-@synthesize playerButton;
+@implementation ResoClockViewController
+@synthesize playerButton, titleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,12 +49,22 @@
     playerButton.layer.cornerRadius = CORNER_RADIUS;
     playerButton.frame = playerButtonFrame_offscreen;
     [self.view addSubview:playerButton];
-    
+  
+    //title
+    titleLabel = [[UILabel alloc] init];
+    [titleLabel setText:@"Clock"];
+    [titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+    [titleLabel setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:0.75]];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    titleLabel.frame = titleFrame_offscreen;
+    [self.view addSubview:titleLabel];
+  
     [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                           delay:0.00
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                        playerButton.frame = playerButtonFrame;
+                       titleLabel.frame = titleFrame;
                      } completion:^(BOOL finished) {
                        if (finished) {
                        }
@@ -71,6 +84,7 @@
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      playerButton.frame = playerButtonFrame_offscreen;
+                     titleLabel.frame = titleFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
                        [self.navigationController popViewControllerAnimated:NO];
@@ -83,6 +97,10 @@
   //player button
   playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
   playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  
+  //title
+  titleFrame = CGRectMake(10, 0, 100, 50);
+  titleFrame_offscreen = CGRectMake(-(titleFrame.size.width), titleFrame.origin.y, titleFrame.size.width, titleFrame.size.height);
 }
 
 @end

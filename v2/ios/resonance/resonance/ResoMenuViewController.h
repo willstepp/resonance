@@ -10,4 +10,5 @@
 
 @interface ResoMenuViewController : UIViewController
 @property (nonatomic, retain) UIButton * playerButton;
+@property (nonatomic, retain) UILabel * titleLabel;
 @end

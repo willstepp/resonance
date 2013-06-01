@@ -66,6 +66,7 @@
       removeButton.layer.borderWidth = 0.0f;
       removeButton.layer.cornerRadius = CORNER_RADIUS;
       removeButton.frame = removeButtonFrame_offscreen;
+      removeButton.alpha = 0.0f;
       [self addSubview:removeButton];
 
     }
@@ -77,16 +78,21 @@
   static bool showing = false;
   if (showing) {
     //hide remove panel
-    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                           delay:0.00
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                        removeButton.frame = removeButtonFrame_offscreen;
-                     } completion:nil];
+                     } completion:^(BOOL finished){
+                       if (finished) {
+                         removeButton.alpha = 0.0f;
+                       }
+                     }];
     showing = false;
   } else {
     //show remove panel
-    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
+    removeButton.alpha = 1.0f;
+    [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                           delay:0.00
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{

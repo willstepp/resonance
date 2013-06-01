@@ -22,6 +22,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize currentModule = _currentModule;
+@synthesize currentModulePosition = _currentModulePosition;
 @synthesize visualization, currPlayerState;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -31,6 +32,7 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   currPlayerState = PlayerState_Visual;
   _currentModule = nil;
+  _currentModulePosition = -1;
   [self setupModules];
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
@@ -50,6 +52,7 @@
   [self.window setRootViewController:pond];
   [self.window makeKeyAndVisible];
 
+  [application setApplicationSupportsShakeToEdit:YES];
   return YES;
 }
 
