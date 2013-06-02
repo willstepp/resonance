@@ -1,5 +1,5 @@
 //
-//  ResoMixViewController.h
+//  ResoClocksViewController.h
 //  resonance
 //
 //  Created by Daniel Stepp on 5/20/13.
@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ResoActionBar.h"
 
-@interface ResoMixViewController : UIViewController
+@interface ResoClocksViewController : UIViewController
 @property (nonatomic, retain) UIButton * playerButton;
-@property (nonatomic, retain) ResoActionBar * mixListBar;
+@property (nonatomic, retain) ResoActionBar * alarmBar;
+@property (nonatomic, retain) ResoActionBar * timerBar;
 @end

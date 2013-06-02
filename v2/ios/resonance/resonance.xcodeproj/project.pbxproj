@@ -47,15 +47,26 @@
 		65B4F9761759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9751759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm */; };
 		65B4F9791759192E00A11EF5 /* ResoDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9781759192E00A11EF5 /* ResoDataManager.mm */; };
 		65B4F97C175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */; };
-		65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.m */; };
+		65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */; };
 		65B4F981175923C600A11EF5 /* icon-play.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F980175923C600A11EF5 /* icon-play.png */; };
 		65B4F9831759246100A11EF5 /* icon-play-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F9821759246100A11EF5 /* icon-play-small.png */; };
 		65B4F9861759694A00A11EF5 /* ResoActionBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9851759694A00A11EF5 /* ResoActionBar.mm */; };
 		65B4F98817596AA800A11EF5 /* icon-right-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F98717596AA800A11EF5 /* icon-right-chevron.png */; };
+		65B4F98A175A63A500A11EF5 /* icon-left-chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F989175A63A400A11EF5 /* icon-left-chevron.png */; };
+		65B4F98D175A87CB00A11EF5 /* ResoAlarmViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */; };
+		65B4F990175A87DE00A11EF5 /* ResoTimerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */; };
+		65B4F993175A9AFC00A11EF5 /* starlight-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F991175A9AFC00A11EF5 /* starlight-blur@2.jpg */; };
+		65B4F994175A9AFC00A11EF5 /* starlight@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F992175A9AFC00A11EF5 /* starlight@2.jpg */; };
+		65B4F997175A9B1100A11EF5 /* ranier-snow-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F995175A9B1100A11EF5 /* ranier-snow-blur@2.jpg */; };
+		65B4F998175A9B1100A11EF5 /* ranier-snow@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F996175A9B1100A11EF5 /* ranier-snow@2.jpg */; };
+		65B4F99B175A9BEC00A11EF5 /* sunflower-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F999175A9BEC00A11EF5 /* sunflower-blur@2.jpg */; };
+		65B4F99C175A9BEC00A11EF5 /* sunflower@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F99A175A9BEC00A11EF5 /* sunflower@2.jpg */; };
+		65B4F99F175AA35500A11EF5 /* reso-space-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F99D175AA35500A11EF5 /* reso-space-blur@2.jpg */; };
+		65B4F9A0175AA35500A11EF5 /* reso-space@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65B4F99E175AA35500A11EF5 /* reso-space@2.jpg */; };
 		65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */; };
 		65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */; };
 		65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */; };
-		65E06A44174ADA8B00BE68A5 /* ResoClockViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A43174ADA8B00BE68A5 /* ResoClockViewController.mm */; };
+		65E06A44174ADA8B00BE68A5 /* ResoClocksViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */; };
 		65E06A46174ADF0500BE68A5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E06A45174ADF0500BE68A5 /* GLKit.framework */; };
 		65E06A48174AE19F00BE68A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E06A47174AE19E00BE68A5 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
@@ -133,20 +144,33 @@
 		65B4F97A175919B800A11EF5 /* ResoModuleToneGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleToneGeneratorViewController.h; sourceTree = "<group>"; };
 		65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleToneGeneratorViewController.mm; sourceTree = "<group>"; };
 		65B4F97D17591A0A00A11EF5 /* ResoMixListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixListViewController.h; sourceTree = "<group>"; };
-		65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoMixListViewController.m; sourceTree = "<group>"; };
+		65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixListViewController.mm; sourceTree = "<group>"; };
 		65B4F980175923C600A11EF5 /* icon-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-play.png"; sourceTree = "<group>"; };
 		65B4F9821759246100A11EF5 /* icon-play-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-play-small.png"; sourceTree = "<group>"; };
 		65B4F9841759694A00A11EF5 /* ResoActionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoActionBar.h; sourceTree = "<group>"; };
 		65B4F9851759694A00A11EF5 /* ResoActionBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoActionBar.mm; sourceTree = "<group>"; };
 		65B4F98717596AA800A11EF5 /* icon-right-chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-right-chevron.png"; sourceTree = "<group>"; };
+		65B4F989175A63A400A11EF5 /* icon-left-chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-left-chevron.png"; sourceTree = "<group>"; };
+		65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoAlarmViewController.h; sourceTree = "<group>"; };
+		65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoAlarmViewController.mm; sourceTree = "<group>"; };
+		65B4F98E175A87DC00A11EF5 /* ResoTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTimerViewController.h; sourceTree = "<group>"; };
+		65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoTimerViewController.mm; sourceTree = "<group>"; };
+		65B4F991175A9AFC00A11EF5 /* starlight-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "starlight-blur@2.jpg"; sourceTree = "<group>"; };
+		65B4F992175A9AFC00A11EF5 /* starlight@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "starlight@2.jpg"; sourceTree = "<group>"; };
+		65B4F995175A9B1100A11EF5 /* ranier-snow-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ranier-snow-blur@2.jpg"; sourceTree = "<group>"; };
+		65B4F996175A9B1100A11EF5 /* ranier-snow@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ranier-snow@2.jpg"; sourceTree = "<group>"; };
+		65B4F999175A9BEC00A11EF5 /* sunflower-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sunflower-blur@2.jpg"; sourceTree = "<group>"; };
+		65B4F99A175A9BEC00A11EF5 /* sunflower@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sunflower@2.jpg"; sourceTree = "<group>"; };
+		65B4F99D175AA35500A11EF5 /* reso-space-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-space-blur@2.jpg"; sourceTree = "<group>"; };
+		65B4F99E175AA35500A11EF5 /* reso-space@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-space@2.jpg"; sourceTree = "<group>"; };
 		65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoPlayerViewController.h; sourceTree = "<group>"; };
 		65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoPlayerViewController.mm; sourceTree = "<group>"; };
 		65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleViewController.h; sourceTree = "<group>"; };
 		65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleViewController.mm; sourceTree = "<group>"; };
 		65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixViewController.h; sourceTree = "<group>"; };
 		65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixViewController.mm; sourceTree = "<group>"; };
-		65E06A42174ADA8B00BE68A5 /* ResoClockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoClockViewController.h; sourceTree = "<group>"; };
-		65E06A43174ADA8B00BE68A5 /* ResoClockViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoClockViewController.mm; sourceTree = "<group>"; };
+		65E06A42174ADA8B00BE68A5 /* ResoClocksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoClocksViewController.h; sourceTree = "<group>"; };
+		65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoClocksViewController.mm; sourceTree = "<group>"; };
 		65E06A45174ADF0500BE68A5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		65E06A47174AE19E00BE68A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -305,6 +329,15 @@
 		658A0FE8174BB369006E4605 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				65B4F99D175AA35500A11EF5 /* reso-space-blur@2.jpg */,
+				65B4F99E175AA35500A11EF5 /* reso-space@2.jpg */,
+				65B4F999175A9BEC00A11EF5 /* sunflower-blur@2.jpg */,
+				65B4F99A175A9BEC00A11EF5 /* sunflower@2.jpg */,
+				65B4F995175A9B1100A11EF5 /* ranier-snow-blur@2.jpg */,
+				65B4F996175A9B1100A11EF5 /* ranier-snow@2.jpg */,
+				65B4F991175A9AFC00A11EF5 /* starlight-blur@2.jpg */,
+				65B4F992175A9AFC00A11EF5 /* starlight@2.jpg */,
+				65B4F989175A63A400A11EF5 /* icon-left-chevron.png */,
 				65B4F98717596AA800A11EF5 /* icon-right-chevron.png */,
 				65B4F9821759246100A11EF5 /* icon-play-small.png */,
 				65B4F980175923C600A11EF5 /* icon-play.png */,
@@ -325,8 +358,8 @@
 				65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */,
 				65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */,
 				65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */,
-				65E06A42174ADA8B00BE68A5 /* ResoClockViewController.h */,
-				65E06A43174ADA8B00BE68A5 /* ResoClockViewController.mm */,
+				65E06A42174ADA8B00BE68A5 /* ResoClocksViewController.h */,
+				65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */,
 				658A0FD9174B1643006E4605 /* ResoVisualViewController.h */,
 				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
 				658A1003174D6610006E4605 /* ResoMenuViewController.h */,
@@ -348,7 +381,11 @@
 				65B4F97A175919B800A11EF5 /* ResoModuleToneGeneratorViewController.h */,
 				65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */,
 				65B4F97D17591A0A00A11EF5 /* ResoMixListViewController.h */,
-				65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.m */,
+				65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */,
+				65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */,
+				65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */,
+				65B4F98E175A87DC00A11EF5 /* ResoTimerViewController.h */,
+				65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -418,6 +455,15 @@
 				65B4F981175923C600A11EF5 /* icon-play.png in Resources */,
 				65B4F9831759246100A11EF5 /* icon-play-small.png in Resources */,
 				65B4F98817596AA800A11EF5 /* icon-right-chevron.png in Resources */,
+				65B4F98A175A63A500A11EF5 /* icon-left-chevron.png in Resources */,
+				65B4F993175A9AFC00A11EF5 /* starlight-blur@2.jpg in Resources */,
+				65B4F994175A9AFC00A11EF5 /* starlight@2.jpg in Resources */,
+				65B4F997175A9B1100A11EF5 /* ranier-snow-blur@2.jpg in Resources */,
+				65B4F998175A9B1100A11EF5 /* ranier-snow@2.jpg in Resources */,
+				65B4F99B175A9BEC00A11EF5 /* sunflower-blur@2.jpg in Resources */,
+				65B4F99C175A9BEC00A11EF5 /* sunflower@2.jpg in Resources */,
+				65B4F99F175AA35500A11EF5 /* reso-space-blur@2.jpg in Resources */,
+				65B4F9A0175AA35500A11EF5 /* reso-space@2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +481,7 @@
 				65E06A3B174AD93D00BE68A5 /* ResoPlayerViewController.mm in Sources */,
 				65E06A3E174ADA5400BE68A5 /* ResoModuleViewController.mm in Sources */,
 				65E06A41174ADA7700BE68A5 /* ResoMixViewController.mm in Sources */,
-				65E06A44174ADA8B00BE68A5 /* ResoClockViewController.mm in Sources */,
+				65E06A44174ADA8B00BE68A5 /* ResoClocksViewController.mm in Sources */,
 				658A0FDB174B1643006E4605 /* ResoVisualViewController.mm in Sources */,
 				658A0FE3174BB20B006E4605 /* RippleModel.mm in Sources */,
 				658A0FF9174D1FFC006E4605 /* ResoPlayerWidget.mm in Sources */,
@@ -455,8 +501,10 @@
 				65B4F9761759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm in Sources */,
 				65B4F9791759192E00A11EF5 /* ResoDataManager.mm in Sources */,
 				65B4F97C175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm in Sources */,
-				65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.m in Sources */,
+				65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.mm in Sources */,
 				65B4F9861759694A00A11EF5 /* ResoActionBar.mm in Sources */,
+				65B4F98D175A87CB00A11EF5 /* ResoAlarmViewController.mm in Sources */,
+				65B4F990175A87DE00A11EF5 /* ResoTimerViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

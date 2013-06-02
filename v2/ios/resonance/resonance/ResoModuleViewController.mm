@@ -59,17 +59,17 @@
       [loadSoundButton setTitle:@"Load Sound" forState:UIControlStateNormal];
       [loadSoundButton addTarget:self action:@selector(loadSound:) forControlEvents:UIControlEventTouchUpInside];
       [loadSoundButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
-      [loadSoundButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:1.0f]];
+      [loadSoundButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
       loadSoundButton.layer.borderWidth = 0.0f;
       loadSoundButton.layer.cornerRadius = CORNER_RADIUS;
       loadSoundButton.frame = soundButtonFrame_offscreen;
       [self.view addSubview:loadSoundButton];
       
-      changeSoundBar = [[ResoActionBar alloc] initWithFrame:changeSoundBarFrame_offscreen withText:@"Change Sound" withIconText:@"Cs" withIconColor:nil];
+      changeSoundBar = [[ResoActionBar alloc] initWithFrame:changeSoundBarFrame_offscreen withText:@"Change Sound" withIconText:nil withIconColor:nil];
       [changeSoundBar.actionButton addTarget:self action:@selector(changeSound:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:changeSoundBar];
       
-      settingsBar = [[ResoActionBar alloc] initWithFrame:settingsBarFrame_offscreen withText:@"Settings" withIconText:@"Se" withIconColor:nil];
+      settingsBar = [[ResoActionBar alloc] initWithFrame:settingsBarFrame_offscreen withText:@"Settings" withIconText:nil withIconColor:nil];
       [settingsBar.actionButton addTarget:self action:@selector(showSettings:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:settingsBar];
       

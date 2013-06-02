@@ -40,8 +40,11 @@
   [nav setNavigationBarHidden:YES];
   
   ResoPondViewController * pond = [[ResoPondViewController alloc] init];
+  
+  [pond addSound:@"starlight"];
+  [pond addSound:@"ranier-snow"];
   [pond addSound:@"oceanblue"];
-  [pond addSound:@"nebulaorange"];
+  [pond addSound:@"sunflower"];
   
   visualization = pond;
   

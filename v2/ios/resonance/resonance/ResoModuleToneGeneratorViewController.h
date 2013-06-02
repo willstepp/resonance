@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoModuleToneGeneratorViewController : UIViewController
-
+@property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * toneGeneratorButton;
 @end

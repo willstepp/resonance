@@ -10,4 +10,5 @@
 
 @interface ResoModuleSettingsViewController : UIViewController
 @property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * settingsButton;
 @end

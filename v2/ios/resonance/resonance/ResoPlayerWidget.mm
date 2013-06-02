@@ -31,7 +31,7 @@
       [mixButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       mixButton.layer.borderWidth = 0.0f;
       mixButton.layer.cornerRadius = CORNER_RADIUS;
-      mixButton.frame = CGRectMake(0, 0, 50, frame.size.height);
+      mixButton.frame = CGRectMake(0, frame.size.height-50, 50, 50);
       [self addSubview:mixButton];
       
       //timer button
@@ -41,7 +41,7 @@
       [timerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       timerButton.layer.borderWidth = 0.0f;
       timerButton.layer.cornerRadius = CORNER_RADIUS;
-      timerButton.frame = CGRectMake(frame.size.width-50, 0, 50, frame.size.height);
+      timerButton.frame = CGRectMake(frame.size.width-50, frame.size.height-50, 50, 50);
       [self addSubview:timerButton];
       
       int width = self.bounds.size.width;

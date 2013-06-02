@@ -10,6 +10,8 @@
 #import "ResoMixViewController.h"
 #import "ResoSettings.h"
 
+#import "ResoMixListViewController.h"
+
 @interface ResoMixViewController ()
 {
   CGRect playerButtonFrame;
@@ -21,7 +23,7 @@
 @end
 
 @implementation ResoMixViewController
-@synthesize playerButton, titleLabel;
+@synthesize playerButton, mixListBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,21 +52,17 @@
     playerButton.frame = playerButtonFrame_offscreen;
     [self.view addSubview:playerButton];
   
-    //title
-    titleLabel = [[UILabel alloc] init];
-    [titleLabel setText:@"Mix"];
-    [titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
-    [titleLabel setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:0.75]];
-    [titleLabel setBackgroundColor:[UIColor clearColor]];
-    titleLabel.frame = titleFrame_offscreen;
-    [self.view addSubview:titleLabel];
+    //mix list bar
+    mixListBar = [[ResoActionBar alloc] initWithFrame:titleFrame_offscreen withText:@"Mix List" withIconText:nil withIconColor:nil];
+    [mixListBar.actionButton addTarget:self action:@selector(showMixList:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:mixListBar];
   
     [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                           delay:0.00
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                        playerButton.frame = playerButtonFrame;
-                       titleLabel.frame = titleFrame;
+                       mixListBar.frame = titleFrame;
                      } completion:^(BOOL finished) {
                        if (finished) {
                        }
@@ -84,12 +82,18 @@
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      playerButton.frame = playerButtonFrame_offscreen;
-                     titleLabel.frame = titleFrame_offscreen;
+                     mixListBar.frame = titleFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
                        [self.navigationController popViewControllerAnimated:NO];
                      }
                    }];
+}
+
+- (void)showMixList:(id)sender
+{
+  ResoMixListViewController * rmlvc = [[ResoMixListViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmlvc animated:YES];
 }
 
 - (void)calculateWidgetFrames
@@ -99,7 +103,7 @@
   playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
   
   //title
-  titleFrame = CGRectMake(10, 0, 100, 50);
+  titleFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
   titleFrame_offscreen = CGRectMake(-(titleFrame.size.width), titleFrame.origin.y, titleFrame.size.width, titleFrame.size.height);
 }
 

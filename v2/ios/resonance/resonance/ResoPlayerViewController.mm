@@ -12,7 +12,7 @@
 
 #import "ResoModuleViewController.h"
 #import "ResoMixViewController.h"
-#import "ResoClockViewController.h"
+#import "ResoClocksViewController.h"
 #import "ResoVisualViewController.h"
 #import "ResoMenuViewController.h"
 
@@ -214,8 +214,6 @@
       modulePosition = [NSNumber numberWithInt:i];
   }
   ad.currentModulePosition = [modulePosition intValue];
-  
-  NSLog(@"expandModule: %@", rmw.uuid);
   
   [self transitionPlayerToState:PlayerState_Module];
 }
@@ -635,7 +633,7 @@
     }
     case PlayerState_Timer:
     {
-      ResoClockViewController * rcvc = [[ResoClockViewController alloc] initWithNibName:nil bundle:nil];
+      ResoClocksViewController * rcvc = [[ResoClocksViewController alloc] initWithNibName:nil bundle:nil];
       [self.navigationController pushViewController:rcvc animated:NO];
       break;
     }
@@ -840,7 +838,7 @@
   }
   //add module button
   if ([moduleWidgets count] < MAX_NUM_MODULES) {
-    counter++;
+    //counter++;
     CGRect rect = moduleWidgetFrame_offscreen;
     rect.size.height = rect.size.height / ADD_MODULE_HEIGHT_DIVISOR;
     [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL

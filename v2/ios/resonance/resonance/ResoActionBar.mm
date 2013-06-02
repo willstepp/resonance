@@ -18,7 +18,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.layer.cornerRadius = CORNER_RADIUS * 2;
-        [self setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
+        [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
       
         //action button
         actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -28,26 +28,26 @@
         [self addSubview:actionButton];
       
         //icon label
-        if (iconColor == nil) {
-          iconColor = [UIColor blackColor];
+        if (iconColor != nil) {
+          UIColor * iconTextColor = [self changeBrightness:iconColor amount:1.5f];
+          iconLabel = [[UILabel alloc] init];
+          [iconLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 1.25]];
+          [iconLabel setTextColor:iconTextColor];
+          [iconLabel setBackgroundColor:iconColor];
+          iconLabel.frame = CGRectMake(5, 5, 40, 40);
+          iconLabel.layer.cornerRadius = CORNER_RADIUS * 1.25;
+          [iconLabel setText:iconText];
+          [iconLabel setTextAlignment:NSTextAlignmentCenter];
+          [self addSubview:iconLabel];
         }
-        UIColor * iconTextColor = [self changeBrightness:iconColor amount:1.25f];
-        iconLabel = [[UILabel alloc] init];
-        [iconLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 1.25]];
-        [iconLabel setTextColor:iconTextColor];
-        [iconLabel setBackgroundColor:iconColor];
-        iconLabel.frame = CGRectMake(5, 5, 40, 40);
-        iconLabel.layer.cornerRadius = CORNER_RADIUS * 1.25;
-        [iconLabel setText:iconText];
-        [iconLabel setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:iconLabel];
       
         //title label
         titleLabel = [[UILabel alloc] init];
         [titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE*1.05]];
         [titleLabel setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:1.0]];
         [titleLabel setBackgroundColor:[UIColor clearColor]];
-        titleLabel.frame = CGRectMake(iconLabel.frame.size.width+15, (frame.size.height / 2) - 25, frame.size.width-100, 50);
+        float titleX = (iconColor != nil) ? iconLabel.frame.size.width+15 : 10;
+        titleLabel.frame = CGRectMake(titleX, (frame.size.height / 2) - 25, frame.size.width-100, 50);
         [titleLabel setText:text];
         [self addSubview:titleLabel];
     }

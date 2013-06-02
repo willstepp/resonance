@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ResoMixListViewController : UIViewController
-
+@property (nonatomic, retain) UIButton * backButton;
+@property (nonatomic, retain) UIButton * mixListButton;
 @end

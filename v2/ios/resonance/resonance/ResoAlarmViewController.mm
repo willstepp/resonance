@@ -1,25 +1,24 @@
 //
-//  ResoModuleSoundDetailsViewController.m
+//  ResoAlarmViewController.mm
 //  resonance
 //
-//  Created by Daniel Stepp on 5/31/13.
+//  Created by Daniel Stepp on 6/1/13.
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ResoModuleSoundDetailsViewController.h"
+#import "ResoAlarmViewController.h"
 #import "ResoSettings.h"
-#import "ResoModuleViewController.h"
 
-@interface ResoModuleSoundDetailsViewController ()
+@interface ResoAlarmViewController ()
 {
   CGRect backButtonFrame;
   CGRect backButtonFrame_offscreen;
 }
 @end
 
-@implementation ResoModuleSoundDetailsViewController
-@synthesize backButton, returnBar;
+@implementation ResoAlarmViewController
+@synthesize backButton, alarmButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,13 +38,18 @@
     backButton.layer.borderColor = [UIColor blackColor].CGColor;
     backButton.layer.borderWidth = 0.0f;
     backButton.layer.cornerRadius = 4.0f;
-    backButton.frame = backButtonFrame;
+    backButton.frame = backButtonFrame_offscreen;
+    backButton.alpha = 0.0f;
     [self.view addSubview:backButton];
     
-    //return bar
-    returnBar = [[ResoActionBar alloc] initWithFrame:CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50) withText:@"Return to Module" withIconText:nil withIconColor:nil];
-    [returnBar.actionButton addTarget:self action:@selector(returnToModule:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:returnBar];
+    alarmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [alarmButton setTitle:@"Alarm" forState:UIControlStateNormal];
+    [alarmButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
+    [alarmButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
+    alarmButton.layer.borderWidth = 0.0f;
+    alarmButton.layer.cornerRadius = CORNER_RADIUS;
+    alarmButton.frame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+    [self.view addSubview:alarmButton];
   }
   return self;
 }
@@ -56,6 +60,19 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  
+  backButton.alpha = 1.0f;
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     backButton.frame = backButtonFrame;
+                   } completion:nil];
+}
+
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
@@ -64,6 +81,7 @@
 
 -(void)goBack:(id)sender
 {
+  backButton.alpha = 0.0f;
   [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -71,23 +89,6 @@
 {
   //back button
   backButtonFrame = CGRectMake(0, 0, 50, 50);
+  backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
 }
-
-- (void)returnToModule:(id)sender
-{
-  //This for loop iterates through all the view controllers in navigation stack.
-  for (UIViewController * viewController in self.navigationController.viewControllers) {
-    
-    //This if condition checks whether the viewController's class is MyGroupViewController
-    // if true that means its the MyGroupViewController (which has been pushed at some point)
-    if ([viewController isKindOfClass:[ResoModuleViewController class]] ) {
-      
-      // Here viewController is a reference of UIViewController base class of MyGroupViewController
-      // but viewController holds MyGroupViewController  object so we can type cast it here
-      ResoModuleViewController * rmvc = (ResoModuleViewController*)viewController;
-      [self.navigationController popToViewController:rmvc animated:YES];
-    }
-  }
-}
-
 @end

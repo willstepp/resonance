@@ -183,7 +183,8 @@ enum
   
   //start transition timer
   if (transitionTimer) [transitionTimer invalidate];
-  transitionTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+  //transitionTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+  transitionTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
   
   //start rain drop timer
   rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:47 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
