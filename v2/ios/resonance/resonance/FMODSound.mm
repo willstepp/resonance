@@ -1,17 +1,15 @@
 //
-//  FMODSound.mm
-//  resonance
+//  FMODSound.m
+//  Resonance
 //
-//  Created by Daniel Stepp on 5/23/13.
-//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//  Created by Daniel Stepp on 9/7/12.
+//  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
-
 
 #import "FMODSound.h"
 
 @interface FMODSound()
 {
-  /*
   FMOD::Sound * sound;
   FMOD::Channel * channel;
   
@@ -22,7 +20,6 @@
   FMOD::DSP * flange;
   
   FMOD::System * system;
-   */
   
   bool loaded;
   bool playing;
@@ -33,9 +30,9 @@
   id<ISound> listener;
 }
 -(void)ensureSoundReleased;
-//-(FMOD::DSP*)getDSPWithEffectType:(EffectType)et;
-//-(FMOD_DSP_TYPE)getDSPTypeWithEffectType:(EffectType)et;
-//-(void)setDSPWithEffectType:(EffectType)et withEffect:(FMOD::DSP*)effect;
+-(FMOD::DSP*)getDSPWithEffectType:(EffectType)et;
+-(FMOD_DSP_TYPE)getDSPTypeWithEffectType:(EffectType)et;
+-(void)setDSPWithEffectType:(EffectType)et withEffect:(FMOD::DSP*)effect;
 -(int)getDSPParameterWithEffectParameter:(EffectParameter)ep;
 -(EffectParameter)getEffectParameterFromDSPParameter:(int)p withType:(EffectType)et;
 -(void)loadEffectMappings;
@@ -60,16 +57,13 @@
 -(void)dealloc
 {
   [self ensureSoundReleased];
-  /*
   system = NULL;
   reverb = pitch = distortion = echo = flange = NULL;
-   */
   listener = nil;
 }
 
 -(void)ensureSoundReleased
 {
-  /*
   if (sound)
   {
     channel->stop();
@@ -81,10 +75,8 @@
     url = @"";
     [self unloadEffectMappings];
   }
-   */
 }
 
-/*
 -(FMOD::DSP*)getDSPWithEffectType:(EffectType)et
 {
   switch (et)
@@ -103,9 +95,7 @@
       return NULL;
   }
 }
- */
 
-/*
 -(void)setDSPWithEffectType:(EffectType)et withEffect:(FMOD::DSP*)effect
 {
   switch (et)
@@ -129,9 +119,7 @@
       break;
   }
 }
- */
 
-/*
 -(FMOD_DSP_TYPE)getDSPTypeWithEffectType:(EffectType)et
 {
   switch(et)
@@ -150,12 +138,9 @@
       return FMOD_DSP_TYPE_UNKNOWN;
   }
 }
- */
 
 -(int)getDSPParameterWithEffectParameter:(EffectParameter)ep
 {
-  return 1;
-  /*
   switch (ep)
   {
     case EffectParameter::Reverb_DryLevel:
@@ -222,13 +207,10 @@
     default:
       return FMOD_DSP_TYPE_UNKNOWN;
   }
-   */
 }
 
 -(EffectParameter)getEffectParameterFromDSPParameter:(int)p withType:(EffectType)et
 {
-  return (EffectParameter)1;
-  /*
   switch (et)
   {
     case EffectType::Reverb:
@@ -330,7 +312,6 @@
     default:
       return EffectParameter::EffectParameterCount;
   }
-   */
 }
 
 #pragma mark
@@ -340,11 +321,9 @@
 {
   if (self = [super init])
   {
-    /*
     FMODSoundEngine * se = ise;
     system = se.system;
     reverb = pitch = distortion = echo = flange = NULL;
-     */
     loaded = false;
     playing = false;
     url = @"";
@@ -354,7 +333,6 @@
   return self;
 }
 
-/*
 -(id)initWithFMODSystem:(FMOD::System*)s
 {
   if (self = [super init])
@@ -369,7 +347,6 @@
   }
   return self;
 }
- */
 
 -(void)load:(NSString*)newUrl
 {
@@ -379,7 +356,7 @@
 -(void)load:(NSString*)newUrl looped:(BOOL)l
 {
   [self ensureSoundReleased];
-  /*
+  
   FMOD_RESULT result = FMOD_OK;
   char buffer[200] = {0};
   
@@ -387,7 +364,7 @@
   
   [newUrl getCString:buffer maxLength:256 encoding:NSASCIIStringEncoding];
   result = system->createStream(buffer, FMOD_SOFTWARE | loop_type, NULL, &sound);
-  */
+  
   url = newUrl;
   loaded = true;
   [self loadEffectMappings];
@@ -413,7 +390,6 @@
 
 -(void)play
 {
-  /*
   if (sound)
   {
     system->playSound(FMOD_CHANNEL_FREE, sound, false, &channel);
@@ -421,17 +397,14 @@
     [self loadEffects];
   }
   if (listener) [listener play];
-   */
 }
 
 -(void)stop
 {
-  /*
   if (channel) channel->stop();
   playing = false;
   
   if (listener) [listener stop];
-   */
 }
 
 -(bool)playing
@@ -441,7 +414,6 @@
 
 -(void)loadEffects
 {
-  /*
   NSArray * ems = [effectMappings allKeys];
   for (id em in ems)
   {
@@ -468,47 +440,36 @@
       effect->setParameter([self getDSPParameterWithEffectParameter:ep], value);
     }
   }
-   */
 }
 
 -(void)setPaused:(bool)state
 {
-  /*
   if (channel) channel->setPaused(state);
   if (listener) [listener setPaused:state];
-   */
 }
 
 -(bool)paused
 {
-  /*
   bool paused = false;
   if (channel) channel->getPaused(&paused);
   return paused;
-   */
-  return false;
 }
 
 -(void)setVolume:(float)value
 {
-  /*
   if (channel) channel->setVolume(value);
   if (listener) [listener setVolume:value];
-   */
 }
 
 -(float)volume
 {
-  /*
   float volume = 0.0f;
   if (channel) channel->getVolume(&volume);
   return volume;
-   */
 }
 
 -(void)addEffectOfType:(EffectType)et;
 {
-  /*
   if (channel)
   {
     [self removeEffectOfType:et];
@@ -521,24 +482,20 @@
     [self addEffectMappingsForType:et];
   }
   if (listener) [listener addEffectOfType:et];
-   */
 }
 
 -(void)removeEffectOfType:(EffectType)et
 {
-  /*
   FMOD::DSP * effect = [self getDSPWithEffectType:et];
   if (effect) effect->remove(); effect = NULL;
   [self setDSPWithEffectType:et withEffect:effect];
   [self removeEffectMappingsForType:et];
   
   if (listener) [listener removeEffectOfType:et];
-   */
 }
 
 -(void)setEffectValueForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value
 {
-  /*
   FMOD::DSP * effect = [self getDSPWithEffectType:et];
   if (effect)
   {
@@ -547,7 +504,6 @@
   }
   
   if (listener) [listener setEffectValueForType:et forParameter:ep withValue:value];
-   */
 }
 
 -(NSMutableDictionary*)effectMappings
@@ -557,17 +513,14 @@
 
 -(void)loadEffectMappings
 {
-  /*
   if (sound)
   {
     effectMappings = [[NSMutableDictionary alloc] initWithCapacity:EffectType::EffectTypeCount];
   }
-   */
 }
 
 -(void)addEffectMappingsForType:(EffectType)et
 {
-  /*
   [self removeEffectMappingsForType:et];
   
   FMOD::DSP * effect = [self getDSPWithEffectType:et];
@@ -585,7 +538,6 @@
     [effectMappings setObject:mappings forKey:[NSString stringWithFormat:@"%i", et]];
   else
     mappings = nil;
-   */
 }
 
 -(void)updateEffectMappingsForType:(EffectType)et forParameter:(EffectParameter)ep withValue:(float)value

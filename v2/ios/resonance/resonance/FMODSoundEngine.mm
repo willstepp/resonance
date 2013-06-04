@@ -1,9 +1,9 @@
 //
 //  FMODSoundEngine.m
-//  resonance
+//  Resonance
 //
-//  Created by Daniel Stepp on 5/23/13.
-//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//  Created by Daniel Stepp on 9/7/12.
+//  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
 #import "FMODSoundEngine.h"
@@ -21,8 +21,8 @@
 @end
 
 @implementation FMODSoundEngine
-//@synthesize system;
-//@synthesize recordingSystem;
+@synthesize system;
+@synthesize recordingSystem;
 
 static FMODSoundEngine * player = nil;
 
@@ -49,7 +49,6 @@ static FMODSoundEngine * player = nil;
 {
   if (self = [super init])
   {
-    /*
     FMOD_RESULT result = FMOD_OK;
     result = FMOD::System_Create(&system);
     result = system->init(32,
@@ -58,14 +57,12 @@ static FMODSoundEngine * player = nil;
     sounds = [[NSMutableDictionary alloc] init];
     tones = [[NSMutableDictionary alloc] init];
     recordingSystem = nil;
-     */
   }
   return self;
 }
 
 -(void)deinstance
 {
-  /*
   [self stopRecording];
   
   if (sounds) sounds = nil;
@@ -76,7 +73,6 @@ static FMODSoundEngine * player = nil;
     system->release();
     system = NULL;
   }
-   */
 }
 
 - (id<ISound>) getSoundForUuid:(NSString *)uuid
@@ -103,7 +99,6 @@ static FMODSoundEngine * player = nil;
 
 -(void)startRecording:(NSString*)fileName dynamicInput:(bool)di;
 {
-  /*
   //cleanup any old recordings
   [self stopRecording];
   
@@ -206,13 +201,11 @@ static FMODSoundEngine * player = nil;
       }
     }
   }
-   */
   
 }
 
 -(void)stopRecording
 {
-  /*
   //removing listeners
   NSArray * soundKeys = [sounds allKeys];
   for (id sk in soundKeys)
@@ -235,7 +228,6 @@ static FMODSoundEngine * player = nil;
     recordingSystem->release();
     recordingSystem = NULL;
   }
-   */
 }
 
 @end

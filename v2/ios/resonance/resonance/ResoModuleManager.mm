@@ -16,7 +16,7 @@
 
 @implementation ResoModuleManager
 @synthesize modules;
-static  ResoModuleManager * rmm = nil;
+static ResoModuleManager * rmm = nil;
 
 -(id)init
 {

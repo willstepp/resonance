@@ -18,11 +18,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.layer.cornerRadius = CORNER_RADIUS * 2;
-        [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
+        [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
       
         //action button
         actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [actionButton setImage:[UIImage imageNamed:@"icon-right-chevron.png"] forState:UIControlStateNormal];
+        [actionButton setImage:[UIImage imageNamed:@"icon-chevron-right-small.png"] forState:UIControlStateNormal];
+        [actionButton setAdjustsImageWhenHighlighted:NO];
+        actionButton.alpha = ICON_BUTTON_OPACITY;
         [actionButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
         actionButton.frame = CGRectMake(frame.size.width-50, 0, 50, 50);
         [self addSubview:actionButton];

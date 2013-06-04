@@ -30,7 +30,9 @@
     
     //back button
     backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"icon-left-chevron.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"icon-chevron-left-small.png"] forState:UIControlStateNormal];
+    [backButton setAdjustsImageWhenHighlighted:NO];
+    backButton.alpha = ICON_BUTTON_OPACITY;
     [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [backButton setBackgroundColor:[UIColor clearColor]];
@@ -64,7 +66,7 @@
 {
   [super viewDidAppear:animated];
   
-  backButton.alpha = 1.0f;
+  backButton.alpha = ICON_BUTTON_OPACITY;
   [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                         delay:0.0
                       options:UIViewAnimationOptionCurveEaseInOut

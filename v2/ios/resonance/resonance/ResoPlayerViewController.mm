@@ -97,25 +97,34 @@
     transitionState = PlayerState_Visual;
     
     [self.view setBackgroundColor:[UIColor clearColor]];
+  
+    //overlay
+    overlayPanelWidget = [[ResoPanelWidget alloc] initWithFrame:overlayPanelWidgetFrame_offscreen];
+    [overlayPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
+    overlayPanelWidget.layer.borderWidth = 0.0f;
+    [self.view addSubview:overlayPanelWidget];
 
     //menu button
     menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [menuButton setTitle:@"Me" forState:UIControlStateNormal];
+    [menuButton setImage:[UIImage imageNamed:@"icon-menu-small.png"] forState:UIControlStateNormal];
+    [menuButton setAdjustsImageWhenHighlighted:NO];
     [menuButton addTarget:self action:@selector(showMenu:) forControlEvents:UIControlEventTouchUpInside];
     [menuButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [menuButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     menuButton.layer.borderWidth = 0.0f;
-    menuButton.layer.cornerRadius = CORNER_RADIUS;
+    menuButton.alpha = ICON_BUTTON_OPACITY;
     menuButton.frame = menuButtonFrame_offscreen;
     [self.view addSubview:menuButton];
   
     //visual button
     visualButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [visualButton setTitle:@"Vi" forState:UIControlStateNormal];
+    [visualButton setImage:[UIImage imageNamed:@"icon-visual-small.png"] forState:UIControlStateNormal];
+    [visualButton setAdjustsImageWhenHighlighted:NO];
     [visualButton addTarget:self action:@selector(showVisual:) forControlEvents:UIControlEventTouchUpInside];
     [visualButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [visualButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     visualButton.layer.borderWidth = 0.0f;
+    visualButton.alpha = ICON_BUTTON_OPACITY;
     visualButton.layer.cornerRadius = CORNER_RADIUS;
     visualButton.frame = visualButtonFrame_offscreen;
     [self.view addSubview:visualButton];
@@ -153,12 +162,6 @@
     [playerWidget.timerButton addTarget:self action:@selector(showTimer:) forControlEvents:UIControlEventTouchUpInside];
     [playerWidget.mixButton addTarget:self action:@selector(showMix:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:playerWidget];
-  
-    //overlay
-    overlayPanelWidget = [[ResoPanelWidget alloc] initWithFrame:overlayPanelWidgetFrame_offscreen];
-    [overlayPanelWidget setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
-    overlayPanelWidget.layer.borderWidth = 0.0f;
-    [self.view addSubview:overlayPanelWidget];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -426,7 +429,7 @@
                                                   playerWidget.frame = playerWidgetFrame;
                                                   for(ResoModuleWidget * rmw in moduleWidgets) {
                                                     rmw.alpha = 1.0f;
-                                                    rmw.expandButton.alpha = 1.0f;
+                                                    rmw.expandButton.alpha = ICON_BUTTON_OPACITY * .25f;
                                                     rmw.toggleRemoveButton.alpha = 1.0f;
                                                     rmw.titleLabel.alpha = 1.0f;
                                                   }
@@ -550,11 +553,12 @@
                               delay:0.00
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                           overlayPanelWidget.alpha = 1.0f;
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
-                         } completion:nil];
+                           overlayPanelWidget.alpha = 1.0f;
+                         } completion:^(BOOL finished){
+                         }];
         break;
       }
       case PlayerState_Menu:
@@ -802,7 +806,6 @@
                        }];
     } else {
       ResoModuleWidget * rmw = [moduleWidgets objectAtIndex:i];
-      
       [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
                             delay:(delayMultiplier * TRANSITION_STAGGER_OFFSET)
                           options:UIViewAnimationOptionCurveEaseOut
@@ -838,7 +841,6 @@
   }
   //add module button
   if ([moduleWidgets count] < MAX_NUM_MODULES) {
-    //counter++;
     CGRect rect = moduleWidgetFrame_offscreen;
     rect.size.height = rect.size.height / ADD_MODULE_HEIGHT_DIVISOR;
     [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL

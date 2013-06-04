@@ -31,7 +31,9 @@
       
       //back button
       backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [backButton setImage:[UIImage imageNamed:@"icon-left-chevron.png"] forState:UIControlStateNormal];
+      [backButton setImage:[UIImage imageNamed:@"icon-chevron-left-small.png"] forState:UIControlStateNormal];
+      [backButton setAdjustsImageWhenHighlighted:NO];
+      backButton.alpha = ICON_BUTTON_OPACITY;
       [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
       [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
       [backButton setBackgroundColor:[UIColor clearColor]];
@@ -39,7 +41,8 @@
       backButton.layer.borderColor = [UIColor blackColor].CGColor;
       backButton.layer.borderWidth = 0.0f;
       backButton.layer.cornerRadius = 4.0f;
-      backButton.frame = backButtonFrame;
+      backButton.frame = backButtonFrame_offscreen;
+      backButton.alpha = 0.0f;
       [self.view addSubview:backButton];
       
       //sound library bar
@@ -56,6 +59,20 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  
+  backButton.alpha = ICON_BUTTON_OPACITY;
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST / 2.0f
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     backButton.frame = backButtonFrame;
+                   } completion:nil];
+  
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -64,13 +81,22 @@
 
 -(void)goBack:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST / 2.0f
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     backButton.frame = backButtonFrame_offscreen;
+                   } completion:^(BOOL finished){
+                     backButton.alpha = 0.0f;
+                     [self.navigationController popViewControllerAnimated:YES];
+                   }];
 }
 
 - (void)calculateWidgetFrames
 {
   //back button
   backButtonFrame = CGRectMake(0, 0, 50, 50);
+  backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
 }
 
 - (void)showSoundsList:(id)sender

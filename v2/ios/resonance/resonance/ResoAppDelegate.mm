@@ -6,21 +6,18 @@
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+#import <sys/utsname.h>
 #import "ResoAppDelegate.h"
 
 #import "ResoPlayerViewController.h"
 #import "ResoPondViewController.h"
 #import "IResoVisualization.h"
-
-#import "ResoModuleManager.h"
-#import "ResoModule.h"
-#import "ResoTypes.h"
+#import "ResoDataManager.h"
+#import "ResoFileManager.h"
 
 @implementation ResoAppDelegate
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize currentModule = _currentModule;
 @synthesize currentModulePosition = _currentModulePosition;
 @synthesize visualization, currPlayerState;
@@ -33,7 +30,6 @@
   currPlayerState = PlayerState_Visual;
   _currentModule = nil;
   _currentModulePosition = -1;
-  [self setupModules];
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
   UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];
@@ -41,8 +37,18 @@
   
   ResoPondViewController * pond = [[ResoPondViewController alloc] init];
   
-  [pond addSound:@"starlight"];
   [pond addSound:@"ranier-snow"];
+  [pond addSound:@"ct"];
+  [pond addSound:@"ssb"];
+  [pond addSound:@"wt"];
+  [pond addSound:@"sr"];
+  [pond addSound:@"nebula-blue"];
+  [pond addSound:@"k"];
+  [pond addSound:@"pattern-blue"];
+  [pond addSound:@"pink-blossoms"];
+  [pond addSound:@"reso-space"];
+  [pond addSound:@"nebulaorange"];
+  [pond addSound:@"starlight"];
   [pond addSound:@"oceanblue"];
   [pond addSound:@"sunflower"];
   
@@ -56,6 +62,15 @@
   [self.window makeKeyAndVisible];
 
   [application setApplicationSupportsShakeToEdit:YES];
+  
+  [ResoFileManager ensureResonanceAppDirectoryExists];
+  [ResoFileManager ensureDirectoryExists:[ResoFileManager resonanceAppSubDirectory:@"sounds"]];
+  [ResoFileManager ensureDirectoryExists:[ResoFileManager resonanceAppSubDirectory:@"mixes"]];
+  
+  [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+  [[AVAudioSession sharedInstance] setActive: YES error: nil];
+  [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  
   return YES;
 }
 
@@ -83,143 +98,62 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-  // Saves changes in the application's managed object context before the application terminates.
-  [self saveContext];
+  ResoDataManager * rdm = [ResoDataManager instance];
+  [rdm saveContext];
 }
 
-- (void)saveContext
+NSString * deviceName()
 {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
+  struct utsname systemInfo;
+  uname(&systemInfo);
+  
+  return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 }
 
-#pragma mark - Core Data stack
+/*
+ @"i386"      on the simulator
+ @"iPod1,1"   on iPod Touch
+ @"iPod2,1"   on iPod Touch Second Generation
+ @"iPod3,1"   on iPod Touch Third Generation
+ @"iPod4,1"   on iPod Touch Fourth Generation
+ @"iPod5,1"   on iPod Touch Fifth Generation
+ @"iPhone1,1" on iPhone
+ @"iPhone1,2" on iPhone 3G
+ @"iPhone2,1" on iPhone 3GS
+ @"iPad1,1"   on iPad
+ @"iPad2,1"   on iPad 2
+ @"iPad3,1"   on 3rd Generation iPad
+ @"iPhone3,1" on iPhone 4
+ @"iPhone4,1" on iPhone 4S
+ @"iPhone5,1" on iPhone 5 (model A1428, AT&T/Canada)
+ @"iPhone5,2" on iPhone 5 (model A1429, everything else)
+ @"iPad3,4" on 4th Generation iPad
+ @"iPad2,5" on iPad Mini
+ */
 
-// Returns the managed object context for the application.
-// If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
+-(NSString*)iosVersionForDownload
 {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-
-// Returns the managed object model for the application.
-// If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"resonance" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
-// Returns the persistent store coordinator for the application.
-// If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"resonance.sqlite"];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }    
-    
-    return _persistentStoreCoordinator;
-}
-
-#pragma mark - Application's Documents directory
-
-// Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
--(NSURL*)resonanceAppDirectory
-{
-  NSURL * url = [[self applicationCachesDirectory] URLByAppendingPathComponent:@"resonance"];
-  return url;
-}
-
--(NSURL*)resonanceAppSubDirectory:(NSString*)subdir
-{
-  NSURL * url = [[self resonanceAppDirectory] URLByAppendingPathComponent:subdir];
-  return url;
-}
-
-// Returns the URL to the application's Caches directory.
-- (NSURL *)applicationCachesDirectory
-{
-  return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
--(void)setupModules
-{
-  /*
-  ResoModuleManager * rmm = [ResoModuleManager instance];
-  for(int i = 0; i < ModuleCount; i++) {
-    if (i != Preview) {
-      NSString * uuid = [[NSUUID UUID] UUIDString];
-      [rmm addModuleWithUuid:uuid];
-    }
+  NSString * version;
+  NSString * deviceVersion = deviceName();
+  
+  if(([deviceVersion rangeOfString:@"iPhone5"].location != NSNotFound) ||
+     ([deviceVersion rangeOfString:@"iPod5"].location != NSNotFound) ) {
+    version = @"iphone5";
+  } else if (([deviceVersion rangeOfString:@"iPhone4,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone3,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPod4"].location != NSNotFound)) {
+    version = @"iphone4";
+  } else if (([deviceVersion rangeOfString:@"iPhone1,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone1,2"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPhone2,1"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"iPod"].location != NSNotFound) ||
+             ([deviceVersion rangeOfString:@"86"].location != NSNotFound)) {
+    version = @"iphone";
+  } else {
+    version = @"";
   }
   
-  int count = 0;
-  int breakCount = 2;
-  for (id key in rmm.modules) {
-    ResoModule * module = [rmm.modules objectForKey:key];
-    [module loadSound:@"test" looped:true];
-    count++;
-    if (count >= breakCount)
-      break;
-  }
-   */
+  return version;
 }
+
 @end

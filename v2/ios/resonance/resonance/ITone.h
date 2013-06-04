@@ -1,9 +1,9 @@
 //
 //  ITone.h
-//  resonance
+//  Resonance
 //
-//  Created by Daniel Stepp on 5/23/13.
-//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//  Created by Daniel Stepp on 9/7/12.
+//  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

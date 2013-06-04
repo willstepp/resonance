@@ -164,9 +164,6 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
   [super touchesBegan:touches withEvent:event];
   
-  UITouch * touch = [touches anyObject];
-  //[self updateValueFromTouch:touch];
-  
   [self startHandleAnimationWithDirection:true];
 }
 

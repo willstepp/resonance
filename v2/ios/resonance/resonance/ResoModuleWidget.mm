@@ -27,7 +27,9 @@
       [self setClipsToBounds:YES];
       
       expandButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [expandButton setTitle:@"[+]" forState:UIControlStateNormal];
+      [expandButton setImage:[UIImage imageNamed:@"icon-plus-small.png"] forState:UIControlStateNormal];
+      expandButton.alpha = ICON_BUTTON_OPACITY * .25f;
+      [expandButton setAdjustsImageWhenHighlighted:NO];
       [expandButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
       [expandButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:0.75] forState:UIControlStateNormal];
       [expandButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];

@@ -15,6 +15,7 @@
 //
 
 #import "ResoAppDelegate.h"
+#import "ResoFileManager.h"
 #import "ResoModule.h"
 
 #import "ISoundEngine.h"
@@ -76,8 +77,7 @@
 {
   soundUuid = newUuid;
   
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * soundPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", soundUuid]] path];
+  NSString * soundPath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", soundUuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:soundPath];
   if (true/*exists*/) {
     [sound load:soundPath looped:l];
@@ -90,8 +90,7 @@
   soundUuid = newUuid;
   
   NSString * mediaType = (t == MediaType_Sound ? @"sounds" : @"mixes");
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSString * previewPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"%@/%@/preview", mediaType, soundUuid]] path];
+  NSString * previewPath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"%@/%@/preview", mediaType, soundUuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:previewPath];
   if (exists) {
     [sound load:previewPath looped:l];

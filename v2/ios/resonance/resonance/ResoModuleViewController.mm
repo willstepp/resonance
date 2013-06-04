@@ -45,13 +45,15 @@
       
       //player button
       playerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [playerButton setTitle:@"Pl" forState:UIControlStateNormal];
+      [playerButton setImage:[UIImage imageNamed:@"icon-play-small.png"] forState:UIControlStateNormal];
+      [playerButton setAdjustsImageWhenHighlighted:NO];
       [playerButton addTarget:self action:@selector(showPlayer:) forControlEvents:UIControlEventTouchUpInside];
       [playerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
       [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       playerButton.layer.borderWidth = 0.0f;
       playerButton.layer.cornerRadius = CORNER_RADIUS;
       playerButton.frame = playerButtonFrame_offscreen;
+      playerButton.alpha = ICON_BUTTON_OPACITY;
       [self.view addSubview:playerButton];
 
       //sound button

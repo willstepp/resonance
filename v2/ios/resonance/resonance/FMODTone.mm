@@ -1,16 +1,15 @@
 //
-//  FMODTone.mm
-//  resonance
+//  FMODTone.m
+//  Resonance
 //
-//  Created by Daniel Stepp on 5/23/13.
-//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//  Created by Daniel Stepp on 9/7/12.
+//  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
 #import "FMODTone.h"
 
 @interface FMODTone()
 {
-  /*
   FMOD::System * system;
   
   FMOD::DSP * primaryTone;
@@ -18,7 +17,6 @@
   
   FMOD::Channel * primaryChannel;
   FMOD::Channel * secondaryChannel;
-   */
   
   ToneType currentToneType;
   float currentFrequency;
@@ -46,20 +44,18 @@
 -(void)dealloc
 {
   [self ensureReleased];
-  //system = NULL;
+  system = NULL;
   listener = nil;
 }
 
 -(void)ensureReleased
 {
-  /*
   if (primaryChannel) { primaryChannel->stop(); }
   if (secondaryChannel) { secondaryChannel->stop(); }
   if (primaryTone) { primaryTone->release(); primaryTone = NULL; }
   if (secondaryTone) { secondaryTone->release(); secondaryTone = NULL; }
   if (primaryChannel) primaryChannel = NULL;
   if (secondaryChannel) secondaryChannel = NULL;
-   */
   loaded = false;
   playing = false;
 }
@@ -71,19 +67,16 @@
 {
   if (self = [super init])
   {
-    /*
     FMODSoundEngine * soundEngine = ise;
     system = soundEngine.system;
     primaryChannel = secondaryChannel = NULL;
     primaryTone = secondaryTone  = NULL;
-     */
     loaded = false; playing = false;
     listener = nil;
   }
   return self;
 }
 
-/*
 -(id)initWithFMODSystem:(FMOD::System*)s
 {
   if (self = [super init])
@@ -96,7 +89,6 @@
   }
   return self;
 }
-*/
 
 -(void)load:(ToneType)tt
 {
@@ -104,12 +96,12 @@
   
   if (tt == ToneType::Binaural)
   {
-    //system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &primaryTone);
-    //system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &secondaryTone);
+    system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &primaryTone);
+    system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &secondaryTone);
   }
   if (tt == ToneType::WhiteNoise)
   {
-    //system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &primaryTone);
+    system->createDSPByType(FMOD_DSP_TYPE_OSCILLATOR, &primaryTone);
   }
   currentToneType = tt;
   loaded = true;
@@ -137,7 +129,6 @@
 {
   if (currentToneType == ToneType::Binaural)
   {
-    /*
     primaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency);
     system->playDSP(FMOD_CHANNEL_FREE, primaryTone, true, &primaryChannel);
     primaryTone->setParameter(FMOD_DSP_OSCILLATOR_TYPE, 0);
@@ -155,11 +146,9 @@
     
     primaryChannel->setPaused(false);
     secondaryChannel->setPaused(false);
-     */
   }
   if (currentToneType == ToneType::WhiteNoise)
   {
-    /*
     primaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, 100.0);
     system->playDSP(FMOD_CHANNEL_FREE, primaryTone, true, &primaryChannel);
     primaryTone->setParameter(FMOD_DSP_OSCILLATOR_TYPE, 5);
@@ -169,7 +158,6 @@
     primaryChannel->setFrequency(frequency);
     
     primaryChannel->setPaused(false);
-     */
   }
   playing = true;
   
@@ -178,10 +166,8 @@
 
 -(void)stop
 {
-  /*
   if (primaryChannel) primaryChannel->stop();
   if (secondaryChannel) secondaryChannel->stop();
-   */
   playing = false;
   
   if (listener) [listener stop];
@@ -194,10 +180,8 @@
 
 -(void)setPaused:(bool)state
 {
-  /*
   if (primaryChannel) primaryChannel->setPaused(state);
   if (secondaryChannel) secondaryChannel->setPaused(state);
-   */
   
   if (listener) [listener setPaused:state];
 }
@@ -205,7 +189,7 @@
 -(bool)paused
 {
   bool paused = false;
-  //if (primaryChannel) primaryChannel->getPaused(&paused);
+  if (primaryChannel) primaryChannel->getPaused(&paused);
   return paused;
 }
 
@@ -214,8 +198,8 @@
   float divisor = currentToneType == ToneType::Binaural ? 8.0f : 20.0f;
   float quartered = value / divisor;
   
-	//if (primaryChannel) primaryChannel->setVolume(quartered);
-	//if (secondaryChannel) secondaryChannel->setVolume(quartered);
+	if (primaryChannel) primaryChannel->setVolume(quartered);
+	if (secondaryChannel) secondaryChannel->setVolume(quartered);
   
   if (listener) [listener setVolume:quartered];
 }
@@ -223,7 +207,7 @@
 -(float)volume
 {
   float volume = 0.0f;
-  //if (primaryChannel) primaryChannel->getVolume(&volume);
+  if (primaryChannel) primaryChannel->getVolume(&volume);
   
   float multiplier = currentToneType == ToneType::Binaural ? 8.0f : 20.0f;
   float value = volume * multiplier;
@@ -236,14 +220,14 @@
   if (tp == ToneProperty::BinauralGap)
   {
     currentBinauralGap = (int)value;
-    //if (secondaryTone) secondaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency + currentBinauralGap);
+    if (secondaryTone) secondaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency + currentBinauralGap);
   }
   if (tp == ToneProperty::Frequency)
   {
     currentFrequency = value;
     
-    //if (primaryTone) primaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency);
-    //if (secondaryTone) secondaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency + currentBinauralGap);
+    if (primaryTone) primaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency);
+    if (secondaryTone) secondaryTone->setParameter(FMOD_DSP_OSCILLATOR_RATE, currentFrequency + currentBinauralGap);
   }
   
   if (listener) [listener setPropertyOfType:tp withValue:value];
@@ -266,4 +250,5 @@
 {
   listener = nil;
 }
+
 @end

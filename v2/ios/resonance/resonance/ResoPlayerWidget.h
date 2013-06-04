@@ -13,5 +13,6 @@
 @interface ResoPlayerWidget : UIView
 @property (nonatomic, retain) UIButton * mixButton;
 @property (nonatomic, retain) UIButton * timerButton;
+@property (nonatomic, retain) UIButton * playButton;
 @property (nonatomic, retain) ResoSlider * volumeSlider;
 @end

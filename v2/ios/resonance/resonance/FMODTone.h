@@ -1,16 +1,19 @@
 //
 //  FMODTone.h
-//  resonance
+//  Resonance
 //
-//  Created by Daniel Stepp on 5/23/13.
-//  Copyright (c) 2013 Monomyth Software. All rights reserved.
+//  Created by Daniel Stepp on 9/7/12.
+//  Copyright (c) 2012 Monomyth Software. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "FMODSoundEngine.h"
 #import "ITone.h"
 
 @interface FMODTone : NSObject <ITone>
+
 -(id)initWithSoundEngine:(id<ISoundEngine>)ise;
+-(id)initWithFMODSystem:(FMOD::System*)s;
 
 -(void)load:(ToneType)tt;
 -(void)unload;
@@ -31,4 +34,7 @@
 
 -(void)setPropertyOfType:(ToneProperty)tp withValue:(float)value;
 -(float)getPropertyOfType:(ToneProperty)tp;
+
+-(void)addListener:(id<ITone>)l;
+-(void)removeListener;
 @end
