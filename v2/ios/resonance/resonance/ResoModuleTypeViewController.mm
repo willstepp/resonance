@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleTypeViewController.h"
 #import "ResoSettings.h"
-#import "ResoModuleSoundCategoryViewController.h"
+#import "ResoModuleSoundListViewController.h"
 #import "ResoModuleToneGeneratorViewController.h"
 
 @interface ResoModuleTypeViewController ()
@@ -105,8 +105,8 @@
 
 -(void)showSoundLibrary:(id)sender
 {
-  ResoModuleSoundCategoryViewController * rmscvc = [[ResoModuleSoundCategoryViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:rmscvc animated:YES];
+  ResoModuleSoundListViewController * rmslvc = [[ResoModuleSoundListViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmslvc animated:YES];
 }
 
 -(void)showToneGenerator:(id)sender

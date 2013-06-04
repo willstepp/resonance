@@ -32,7 +32,7 @@
       [mixButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       mixButton.layer.borderWidth = 0.0f;
       mixButton.layer.cornerRadius = CORNER_RADIUS;
-      mixButton.alpha = ICON_BUTTON_OPACITY * .25f;
+      mixButton.alpha = WIDGET_ALPHA_DARK;
       mixButton.frame = CGRectMake(frame.size.width-50, frame.size.height-50, 50, 50);
       [self addSubview:mixButton];
       
@@ -43,7 +43,7 @@
       [timerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
       [timerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       timerButton.layer.borderWidth = 0.0f;
-      timerButton.alpha = ICON_BUTTON_OPACITY * .25f;
+      timerButton.alpha = WIDGET_ALPHA_DARK;
       timerButton.frame = CGRectMake(0, frame.size.height-50, 50, 50);
       [self addSubview:timerButton];
       
@@ -61,7 +61,7 @@
       
       int width = self.bounds.size.width;
       int height = 44;
-      volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, -20, width, height) withOrientation:Horizontal];
+      volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, -20, width, height) withOrientation:Horizontal withCornerRadius:1.0f];
       volumeSlider.minValue = 0;
       volumeSlider.maxValue = 100;
       //[volumeSlider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];

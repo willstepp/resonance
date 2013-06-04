@@ -15,6 +15,7 @@
 #import "IResoVisualization.h"
 #import "ResoDataManager.h"
 #import "ResoFileManager.h"
+#import "ResoModuleManager.h"
 
 @implementation ResoAppDelegate
 
@@ -70,6 +71,10 @@
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   [[AVAudioSession sharedInstance] setActive: YES error: nil];
   [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+  
+  //setup preview module
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  [rmm addModuleWithUuid:@"preview"];
   
   return YES;
 }

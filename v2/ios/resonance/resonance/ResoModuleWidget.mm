@@ -28,7 +28,7 @@
       
       expandButton = [UIButton buttonWithType:UIButtonTypeCustom];
       [expandButton setImage:[UIImage imageNamed:@"icon-plus-small.png"] forState:UIControlStateNormal];
-      expandButton.alpha = ICON_BUTTON_OPACITY * .25f;
+      expandButton.alpha = ICON_BUTTON_OPACITY * .5f;
       [expandButton setAdjustsImageWhenHighlighted:NO];
       [expandButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
       [expandButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:0.75] forState:UIControlStateNormal];

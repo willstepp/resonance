@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "ResoActionBar.h"
+#import "ResoMediaTransferManager.h"
 
-@interface ResoModuleSoundListViewController : UIViewController
+@interface ResoModuleSoundListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferManagerDelegate>
 @property (nonatomic, retain) UIButton * backButton;
 @property (nonatomic, retain) ResoActionBar * soundDetailsBar;
+@property (nonatomic, retain) UIButton * previewButton;
+@property (nonatomic, retain) UIButton * downloadButton;
+@property (nonatomic, retain) UIProgressView * progressBar;
+
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+
+#pragma mark -
+#pragma mark ResoMediaTransferManager Delegates
+-(void) transferStarted:(ResoMediaTransfer*)t;
+-(void) transferProgressUpdated:(ResoMediaTransfer*)t;
+-(void) transferFinished:(ResoMediaTransfer*)t;
+-(void) transferError:(ResoMediaTransfer*)t;
 @end

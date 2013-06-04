@@ -43,6 +43,7 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   float _animationStepValue;
   NSTimer * _handleAnimationTimer;
   
+  float cornerRadius;
   ResoOrientation orientation;
 }
 @end
@@ -50,11 +51,13 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
 @implementation ResoSlider
 @synthesize minValue, maxValue, value;
 
-- (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o
+- (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o withCornerRadius:(float)cr
 {
   //height is fixed to apple's suggested touch height
-  int height = 44;
+  int height = 42;
   orientation = o;
+  cornerRadius = cr;
+  
   
   if (orientation == Horizontal) {
     self = [super initWithFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, height)];
@@ -103,7 +106,7 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   CGContextRef context = UIGraphicsGetCurrentContext();
   
   //calculate track rect
-  CGMutablePathRef trackPath = createRoundedRectForRect(_baseRect, 0.0);
+  CGMutablePathRef trackPath = createRoundedRectForRect(_baseRect, cornerRadius);
   
   //calculate slide width based on current value
   float percentage = (float)self.value / (float)self.maxValue;
@@ -118,10 +121,10 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
     
     //calculate slide rect
     slideWidth = _baseRect.size.width * percentage;
-    slidePath = createRoundedRectForRect(CGRectMake(_baseRect.origin.x, _baseRect.origin.y, slideWidth, _baseRect.size.height), 1.0);
+    slidePath = createRoundedRectForRect(CGRectMake(_baseRect.origin.x, _baseRect.origin.y, slideWidth, _baseRect.size.height), cornerRadius);
     
     //calculate handle rect
-    handlePath = createRoundedRectForRect(CGRectMake(slideWidth - halfHandleSize +_slideMarginX, (self.bounds.size.height / 2.0) - halfHandleSize, _currHandleSize, _currHandleSize), halfHandleSize);
+    handlePath = createRoundedRectForRect(CGRectMake(slideWidth - halfHandleSize +_slideMarginX, (self.bounds.size.height / 2.0) - halfHandleSize, _currHandleSize, _currHandleSize),halfHandleSize);
     
   } else {
     
@@ -132,7 +135,7 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
     
     //calculate slide rect
     slideWidth = _baseRect.size.height * percentage;
-    slidePath = createRoundedRectForRect(CGRectMake(_baseRect.origin.x, _baseRect.origin.y, _baseRect.size.width, slideWidth), 2.0);
+    slidePath = createRoundedRectForRect(CGRectMake(_baseRect.origin.x, _baseRect.origin.y, _baseRect.size.width, slideWidth), cornerRadius);
     
     //calculate handle rect
     handlePath = createRoundedRectForRect(CGRectMake((self.bounds.size.width / 2.0) - halfHandleSize, slideWidth - halfHandleSize + _slideMarginY, _currHandleSize, _currHandleSize), halfHandleSize);

@@ -16,5 +16,5 @@
 @property (nonatomic,assign) int value;
 
 -(void)updateValue:(int)value;
-- (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o;
+- (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o withCornerRadius:(float)cr;
 @end

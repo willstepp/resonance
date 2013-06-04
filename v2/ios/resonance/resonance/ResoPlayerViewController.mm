@@ -112,7 +112,7 @@
     [menuButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [menuButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     menuButton.layer.borderWidth = 0.0f;
-    menuButton.alpha = ICON_BUTTON_OPACITY;
+    menuButton.alpha = WIDGET_ALPHA_DARK;
     menuButton.frame = menuButtonFrame_offscreen;
     [self.view addSubview:menuButton];
   
@@ -124,7 +124,7 @@
     [visualButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [visualButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     visualButton.layer.borderWidth = 0.0f;
-    visualButton.alpha = ICON_BUTTON_OPACITY;
+    visualButton.alpha = WIDGET_ALPHA_DARK;
     visualButton.layer.cornerRadius = CORNER_RADIUS;
     visualButton.frame = visualButtonFrame_offscreen;
     [self.view addSubview:visualButton];
@@ -429,7 +429,7 @@
                                                   playerWidget.frame = playerWidgetFrame;
                                                   for(ResoModuleWidget * rmw in moduleWidgets) {
                                                     rmw.alpha = 1.0f;
-                                                    rmw.expandButton.alpha = ICON_BUTTON_OPACITY * .25f;
+                                                    rmw.expandButton.alpha = ICON_BUTTON_OPACITY * .5f;
                                                     rmw.toggleRemoveButton.alpha = 1.0f;
                                                     rmw.titleLabel.alpha = 1.0f;
                                                   }
@@ -728,7 +728,7 @@
     int moduleBlockHeight = (num_modules * moduleHeight) + (num_module_gaps * moduleGap) + (moduleHeight / 2);
     
     //2) get y position of vertically centered block
-    float blockY = (self.view.bounds.size.height / 2.0f) - (moduleBlockHeight / 2.0f);
+    float blockY = (self.view.bounds.size.height / 2.0f) - (moduleBlockHeight / 2.0f) - 5;
     
     //3) create frame for each module in current iteration
     for (int k = 0; k < num_modules; k++) {

@@ -19,7 +19,7 @@
 
 #define TRANSITION_STAGGER_OFFSET 0.15
 
-#define PLAYER_WIDGET_HEIGHT 60
+#define PLAYER_WIDGET_HEIGHT 65
 
 #define MAX_NUM_MODULES 4
 #define MODULE_HEIGHT 55
@@ -46,5 +46,7 @@
 #define FONT_GREEN 0.9f
 #define FONT_BLUE 0.9f
 #define FONT_ALPHA 1.0f
+
+#define soundsUrl [NSURL URLWithString:@"http://resoapp.com/sounds.json"]
 
 #endif

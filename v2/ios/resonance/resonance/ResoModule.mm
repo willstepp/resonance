@@ -79,7 +79,7 @@
   
   NSString * soundPath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/sound", soundUuid]] path];
   bool exists = [[NSFileManager defaultManager] fileExistsAtPath:soundPath];
-  if (true/*exists*/) {
+  if (exists) {
     [sound load:soundPath looped:l];
     type = ModuleType_Sound;
   }

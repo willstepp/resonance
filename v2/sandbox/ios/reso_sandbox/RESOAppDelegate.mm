@@ -40,9 +40,7 @@
   UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:rvc];
   [navController setNavigationBarHidden:YES];
   
-  ResoUiViewController * ruvc = [[ResoUiViewController alloc] init];
-  [self.window setRootViewController:ruvc];
-  [self.window addSubview:ruvc.view];
+  [self.window setRootViewController:navController];
   
   [self.window makeKeyAndVisible];
   
