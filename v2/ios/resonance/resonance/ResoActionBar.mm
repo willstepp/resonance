@@ -11,23 +11,20 @@
 #import "ResoSettings.h"
 
 @implementation ResoActionBar
-@synthesize actionButton, titleLabel, iconLabel;
+@synthesize actionButton, titleLabel, iconLabel, actionImage;
 
 - (id)initWithFrame:(CGRect)frame withText:(NSString*)text withIconText:(NSString*)iconText withIconColor:(UIColor*)iconColor
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.layer.cornerRadius = CORNER_RADIUS * 2;
-        [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
+        [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
       
-        //action button
-        actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [actionButton setImage:[UIImage imageNamed:@"icon-chevron-right-small.png"] forState:UIControlStateNormal];
-        [actionButton setAdjustsImageWhenHighlighted:NO];
-        actionButton.alpha = ICON_BUTTON_OPACITY;
-        [actionButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
-        actionButton.frame = CGRectMake(frame.size.width-50, 0, 50, 50);
-        [self addSubview:actionButton];
+        //action image
+        actionImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-chevron-right-small.png"]];
+        actionImage.frame = CGRectMake(frame.size.width-50, 0, 50, 50);
+        actionImage.alpha = ICON_BUTTON_OPACITY;
+        [self addSubview:actionImage];
       
         //icon label
         if (iconColor != nil) {
@@ -52,6 +49,12 @@
         titleLabel.frame = CGRectMake(titleX, (frame.size.height / 2) - 25, frame.size.width-100, 50);
         [titleLabel setText:text];
         [self addSubview:titleLabel];
+      
+        //action button
+        actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [actionButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
+        actionButton.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+        [self addSubview:actionButton];
     }
     return self;
 }

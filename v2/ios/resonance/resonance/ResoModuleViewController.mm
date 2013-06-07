@@ -9,9 +9,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleViewController.h"
 #import "ResoAppDelegate.h"
+#import "IResoVisualization.h"
 #import "ResoSettings.h"
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
+
+#import "ResoDataManager.h"
+#import "ResoFileManager.h"
 
 #import "ResoModuleSettingsViewController.h"
 #import "ResoModuleTypeViewController.h"
@@ -21,19 +25,29 @@
   CGRect playerButtonFrame;
   CGRect playerButtonFrame_offscreen;
   
-  CGRect soundButtonFrame;
-  CGRect soundButtonFrame_offscreen;
-  
   CGRect settingsBarFrame;
   CGRect settingsBarFrame_offscreen;
   
   CGRect changeSoundBarFrame;
   CGRect changeSoundBarFrame_offscreen;
+  
+  CGRect soundLabelFrame;
+  CGRect soundLabelFrame_offscreen;
+  
+  CGRect soundImageFrame;
+  CGRect soundImageFrame_offscreen;
+  
+  CGRect soundDescriptionFrame;
+  CGRect soundDescriptionFrame_offscreen;
+  
+  CGRect propertiesPanelFrame;
+  CGRect propertiesPanelFrame_offscreen;
 }
 @end
 
 @implementation ResoModuleViewController
-@synthesize playerButton, loadSoundButton, settingsBar, changeSoundBar;
+@synthesize playerButton, settingsBar, changeSoundBar;
+@synthesize soundTitleLabel, soundImageView, descriptionTextView, propertiesPanel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,17 +69,34 @@
       playerButton.frame = playerButtonFrame_offscreen;
       playerButton.alpha = ICON_BUTTON_OPACITY;
       [self.view addSubview:playerButton];
-
-      //sound button
-      loadSoundButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [loadSoundButton setTitle:@"Load Sound" forState:UIControlStateNormal];
-      [loadSoundButton addTarget:self action:@selector(loadSound:) forControlEvents:UIControlEventTouchUpInside];
-      [loadSoundButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
-      [loadSoundButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
-      loadSoundButton.layer.borderWidth = 0.0f;
-      loadSoundButton.layer.cornerRadius = CORNER_RADIUS;
-      loadSoundButton.frame = soundButtonFrame_offscreen;
-      [self.view addSubview:loadSoundButton];
+      
+      //sound title
+      soundTitleLabel = [[UILabel alloc] initWithFrame:soundLabelFrame];
+      [soundTitleLabel setBackgroundColor:[UIColor clearColor]];
+      [soundTitleLabel setFont:[UIFont systemFontOfSize:(FONT_SIZE*1.5f)]];
+      [soundTitleLabel setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA]];
+      
+      //sound image
+      soundImageView = [[UIImageView alloc] initWithFrame:soundImageFrame];
+      soundImageView.layer.cornerRadius = CORNER_RADIUS;
+      [soundImageView setClipsToBounds:YES];
+      
+      //sound description
+      descriptionTextView = [[UITextView alloc] initWithFrame:soundDescriptionFrame];
+      descriptionTextView.contentInset = UIEdgeInsetsMake(-8,-8,-8,-8);
+      [descriptionTextView setBackgroundColor:[UIColor clearColor]];
+      [descriptionTextView setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+      [descriptionTextView setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA]];
+      
+      //properties panel
+      propertiesPanel = [[UIView alloc] initWithFrame:propertiesPanelFrame_offscreen];
+      [propertiesPanel setBackgroundColor:[UIColor clearColor]];
+      
+      [propertiesPanel addSubview:soundTitleLabel];
+      [propertiesPanel addSubview:soundImageView];
+      [propertiesPanel addSubview:descriptionTextView];
+      
+      [self.view addSubview:propertiesPanel];
       
       changeSoundBar = [[ResoActionBar alloc] initWithFrame:changeSoundBarFrame_offscreen withText:@"Change Sound" withIconText:nil withIconColor:nil];
       [changeSoundBar.actionButton addTarget:self action:@selector(changeSound:) forControlEvents:UIControlEventTouchUpInside];
@@ -74,17 +105,7 @@
       settingsBar = [[ResoActionBar alloc] initWithFrame:settingsBarFrame_offscreen withText:@"Settings" withIconText:nil withIconColor:nil];
       [settingsBar.actionButton addTarget:self action:@selector(showSettings:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:settingsBar];
-      
-      [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                            delay:0.00
-                          options:UIViewAnimationOptionCurveEaseOut
-                       animations:^{
-                         playerButton.frame = playerButtonFrame;
-                         loadSoundButton.frame = soundButtonFrame;
-                         settingsBar.frame = settingsBarFrame;
-                         changeSoundBar.frame = changeSoundBarFrame;
-                       } completion:nil];
-    }
+  }
     return self;
 }
 
@@ -92,6 +113,35 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  //load properties
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:ad.currentModule];
+  ResoDataManager * rdm = [ResoDataManager instance];
+  NSMutableDictionary * sound = [rdm soundWithIdentifier:rm.soundUuid];
+  
+  [soundTitleLabel setText:[sound objectForKey:@"name"]];
+  NSString * imagePath = [NSString stringWithFormat:@"sounds/%@/thumb", rm.soundUuid];
+  NSString * image = [[ResoFileManager resonanceAppSubDirectory:imagePath] path];
+  [soundImageView setImage:[UIImage imageWithContentsOfFile:image]];
+
+  [descriptionTextView setText:[sound objectForKey:@"desc"]];
+  
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.00
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     playerButton.frame = playerButtonFrame;
+                     propertiesPanel.frame = propertiesPanelFrame;
+                     settingsBar.frame = settingsBarFrame;
+                     changeSoundBar.frame = changeSoundBarFrame;
+                   } completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,12 +172,14 @@
                         delay:0.00
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
-                     loadSoundButton.frame = soundButtonFrame_offscreen;
                      playerButton.frame = playerButtonFrame_offscreen;
+                     propertiesPanel.frame = propertiesPanelFrame_offscreen;
                      settingsBar.frame = settingsBarFrame_offscreen;
                      changeSoundBar.frame = changeSoundBarFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
+                       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+                       [ad.visualization enableTransitions:true];
                        [self.navigationController popViewControllerAnimated:NO];
                      }
                    }];
@@ -151,10 +203,6 @@
   playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
   playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
   
-  //load sound button
-  soundButtonFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
-  soundButtonFrame_offscreen = CGRectMake(-(soundButtonFrame.size.width), soundButtonFrame.origin.y, soundButtonFrame.size.width, soundButtonFrame.size.height);
-  
   //change sound bar
   changeSoundBarFrame = CGRectMake(10, (self.view.bounds.size.height - 60), self.view.bounds.size.width - 20, 50);
   changeSoundBarFrame_offscreen = CGRectMake(-(changeSoundBarFrame.size.width), changeSoundBarFrame.origin.y, changeSoundBarFrame.size.width, changeSoundBarFrame.size.height);
@@ -162,6 +210,24 @@
   //settings bar
   settingsBarFrame = CGRectMake(10, (changeSoundBarFrame.origin.y - 60), self.view.bounds.size.width - 20, 50);
   settingsBarFrame_offscreen = CGRectMake(-(settingsBarFrame.size.width), settingsBarFrame.origin.y, settingsBarFrame.size.width, settingsBarFrame.size.height);
+  
+  //properties panel
+  float panelHeight = (self.view.bounds.size.height - (playerButton.frame.size.height+changeSoundBar.frame.size.height+settingsBar.frame.size.height+10)) / 1.5f;
+  propertiesPanelFrame = CGRectMake(10, playerButtonFrame.size.height, self.view.bounds.size.width - 20, panelHeight);
+  
+  propertiesPanelFrame_offscreen = CGRectMake(-(propertiesPanelFrame.size.width), propertiesPanelFrame.origin.y, propertiesPanelFrame.size.width, propertiesPanelFrame.size.height);
+  
+  //sound title
+  soundLabelFrame = CGRectMake(0, 0, self.view.bounds.size.width - 20, 35);
+  soundLabelFrame_offscreen = CGRectMake(-(soundLabelFrame.size.width), soundLabelFrame.origin.y, soundLabelFrame.size.width, soundLabelFrame.size.height);
+  
+  //sound thumb
+  soundImageFrame = CGRectMake(0, soundLabelFrame.origin.y+soundLabelFrame.size.height+15, 100, 100);
+  soundImageFrame_offscreen = CGRectMake(-(soundImageFrame.size.width), soundImageFrame.origin.y, soundImageFrame.size.width, soundImageFrame.size.height);
+  
+  //sound description
+  soundDescriptionFrame = CGRectMake(0, soundImageFrame.origin.y+soundImageFrame.size.height+15, self.view.bounds.size.width - 20, 200);
+  soundDescriptionFrame_offscreen = CGRectMake(-(soundDescriptionFrame.size.width), soundDescriptionFrame.origin.y, soundDescriptionFrame.size.width, soundDescriptionFrame.size.height);
 }
 
 @end

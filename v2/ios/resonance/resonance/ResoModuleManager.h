@@ -15,4 +15,7 @@
 
 -(void)addModuleWithUuid:(NSString*)uuid;
 -(void)removeModuleWithUuid:(NSString*)uuid;
+
+-(void)pauseModules;
+-(void)playModules;
 @end

@@ -18,6 +18,7 @@
 
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
+#import "ResoSlider.h"
 
 #import "ResoModuleWidget.h"
 
@@ -66,6 +67,8 @@
   NSMutableArray * moduleWidgets;
   
   CGRect expandedModuleFrame;
+  
+  NSString * currentUuid;
 }
 @end
 
@@ -112,7 +115,7 @@
     [menuButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [menuButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     menuButton.layer.borderWidth = 0.0f;
-    menuButton.alpha = WIDGET_ALPHA_DARK;
+    menuButton.alpha = WIDGET_ALPHA_DARK * 0.65;
     menuButton.frame = menuButtonFrame_offscreen;
     [self.view addSubview:menuButton];
   
@@ -124,7 +127,7 @@
     [visualButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [visualButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
     visualButton.layer.borderWidth = 0.0f;
-    visualButton.alpha = WIDGET_ALPHA_DARK;
+    visualButton.alpha = WIDGET_ALPHA_DARK * 0.65;
     visualButton.layer.cornerRadius = CORNER_RADIUS;
     visualButton.frame = visualButtonFrame_offscreen;
     [self.view addSubview:visualButton];
@@ -197,8 +200,10 @@
 {
   if (currPlayerState != PlayerState_Transitioning) {
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+    
     ad.currentModule = nil;
     ad.currentModulePosition = -1;
+    [ad.visualization enableTransitions:false];
     
     [self transitionPlayerToState:PlayerState_Module];
   }
@@ -208,15 +213,22 @@
 {
   UIButton * moduleButton = (UIButton*)sender;
   ResoModuleWidget * rmw = (ResoModuleWidget*)moduleButton.superview;
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  ad.currentModule = rmw.uuid;
+  
   NSNumber * modulePosition = nil;
   for (int i = 0; i < [moduleWidgets count]; i++) {
     ResoModuleWidget * r = [moduleWidgets objectAtIndex:i];
     if ([r.uuid isEqualToString:rmw.uuid])
       modulePosition = [NSNumber numberWithInt:i];
   }
+  
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:rmw.uuid];
+  
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ad.currentModule = rmw.uuid;
   ad.currentModulePosition = [modulePosition intValue];
+  [ad.visualization enableTransitions:false];
+  currentUuid = rm.soundUuid;
   
   [self transitionPlayerToState:PlayerState_Module];
 }
@@ -240,7 +252,12 @@
   rmw.removeButton.alpha = 0.0f;
   rmw.toggleRemoveButton.alpha = 0.0f;
   rmw.expandButton.alpha = 0.0f;
-  rmw.titleLabel.alpha = 0.0f;
+  rmw.volumeSlider.alpha = 0.0f;
+  
+  //remove sound from visualization
+  [ad.visualization removeSound:rmw.soundUuid];
+  if ([[ad.visualization activeSound] isEqualToString:rmw.soundUuid])
+    [ad.visualization refreshVisual];
 
   //animate removal of widget
   [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
@@ -360,8 +377,9 @@
                     playerWidget.frame = playerWidgetFrame;
                   } completion:nil];
           
+          float delay = [moduleWidgets count] >= 2 ? 0.75f : 0.5f;
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0.75
+                                delay:delay
                               options:UIViewAnimationOptionCurveEaseOut
                            animations:^{
                              menuButton.frame = menuButtonFrame;
@@ -386,8 +404,9 @@
                              }
                            }];
           
+          float delay = [moduleWidgets count] >= 2 ? 0.75f : 0.5f;
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0.75
+                                delay:delay
                               options:UIViewAnimationOptionCurveEaseOut
                            animations:^{
                              menuButton.frame = menuButtonFrame;
@@ -429,9 +448,10 @@
                                                   playerWidget.frame = playerWidgetFrame;
                                                   for(ResoModuleWidget * rmw in moduleWidgets) {
                                                     rmw.alpha = 1.0f;
-                                                    rmw.expandButton.alpha = ICON_BUTTON_OPACITY * .5f;
-                                                    rmw.toggleRemoveButton.alpha = 1.0f;
-                                                    rmw.titleLabel.alpha = 1.0f;
+                                                    rmw.expandButton.alpha = PLAYER_ICON_OPACITY;
+                                                    bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
+                                                    rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
+                                                    rmw.volumeSlider.alpha = 1.0f;
                                                   }
                                                 } completion:^(BOOL finished) {
                                                   if (finished) {
@@ -490,6 +510,7 @@
                                               animations:^{
                                                [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
                                                 addModuleButton.frame = overlayPanelWidgetFrame;
+                                                [ad.visualization setActiveSound:nil];
                                               } completion:^(BOOL finished) {
                                                 if (finished) {
                                                   [self completeTransition];
@@ -512,7 +533,7 @@
                                  rmw.alpha = 0.0f;
                                } else {
                                  rmw.expandButton.alpha = 0.0f;
-                                 rmw.titleLabel.alpha = 0.0f;
+                                 rmw.volumeSlider.alpha = 0.0f;
                                  rmw.removeButton.alpha = 0.0f;
                                  rmw.toggleRemoveButton.alpha = 0.0f;
                                }
@@ -528,6 +549,7 @@
                                                     rmw.frame = overlayPanelWidgetFrame;
                                                   }
                                                 }
+                                                [ad.visualization setActiveSound:currentUuid];
                                               } completion:^(BOOL finished) {
                                                 if (finished) {
                                                   [self completeTransition];
@@ -756,7 +778,7 @@
   for (id key in rrm.modules) {
     ResoModule * rm = [rrm.modules objectForKey:key];
     if ([rm loaded] && ![rm.moduleUuid isEqualToString:@"preview"]) {
-      ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen];
+      ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen withSound:rm.soundUuid];
       [rmw.expandButton addTarget:self action:@selector(expandModule:) forControlEvents:UIControlEventTouchUpInside];
       [rmw.removeButton addTarget:self action:@selector(removeModule:) forControlEvents:UIControlEventTouchUpInside];
       rmw.uuid = rm.moduleUuid;
@@ -780,6 +802,12 @@
   } else if (currModuleWidget != nil && ad.currentModulePosition >= 0) {
     //module existed before, so insert at previous index
     [moduleWidgets insertObject:currModuleWidget atIndex:ad.currentModulePosition];
+  }
+  
+  //set thumb opacities based on active sound
+  for(ResoModuleWidget * rmw in moduleWidgets) {
+    bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
+    rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
   }
 }
 
@@ -922,7 +950,7 @@
         rmw.frame = overlayPanelWidgetFrame;
         rmw.alpha = 1.0f;
         rmw.toggleRemoveButton.alpha = 0.0f;
-        rmw.titleLabel.alpha = 0.0f;
+        rmw.volumeSlider.alpha = 0.0f;
         rmw.expandButton.alpha = 0.0f;
       }
     }

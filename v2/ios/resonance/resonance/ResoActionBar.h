@@ -14,4 +14,5 @@
 @property (nonatomic, retain) UILabel * iconLabel;
 @property (nonatomic, retain) UILabel * titleLabel;
 @property (nonatomic, retain) UIButton * actionButton;
+@property (nonatomic, retain) UIImageView * actionImage;
 @end

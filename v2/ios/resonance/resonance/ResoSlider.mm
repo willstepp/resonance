@@ -54,7 +54,7 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
 - (id)initWithFrame:(CGRect)frame withOrientation:(ResoOrientation)o withCornerRadius:(float)cr
 {
   //height is fixed to apple's suggested touch height
-  int height = 42;
+  int height = 43;
   orientation = o;
   cornerRadius = cr;
   
@@ -66,7 +66,7 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   }
   
   if (self) {
-    trackColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:WIDGET_ALPHA_NORMAL];
+    trackColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
     slideColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_DARK];
     handleColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_DARK];
     

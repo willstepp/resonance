@@ -42,7 +42,7 @@
     [playerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
     [playerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
     playerButton.layer.borderWidth = 0.0f;
-    playerButton.alpha = WIDGET_ALPHA_DARK;
+    playerButton.alpha = WIDGET_ALPHA_DARK * 0.65;
     playerButton.frame = playerButtonFrame_offscreen;
     [self.view addSubview:playerButton];
   

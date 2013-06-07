@@ -1,18 +1,24 @@
 //
-//  ResoDataViewController.m
-//  reso_sandbox
+//  ResoModuleDeviceListViewController.mm
+//  resonance
 //
-//  Created by Daniel Stepp on 4/29/13.
+//  Created by Daniel Stepp on 6/6/13.
 //  Copyright (c) 2013 Monomyth Software. All rights reserved.
 //
-
 
 #import <QuartzCore/QuartzCore.h>
 #import "SSZipArchive.h"
 
-#import "ResoDeviceSoundsViewController.h"
+#import "ResoModuleDeviceListViewController.h"
+#import "ResoModuleCloudListViewController.h"
+#import "ResoModuleTypeViewController.h"
+
 #import "ResoAppDelegate.h"
+#import "ResoFileManager.h"
+#import "ResoDataManager.h"
+
 #import "ResoTypes.h"
+#import "ResoSettings.h"
 
 #import "FMODSoundEngine.h"
 
@@ -23,7 +29,10 @@
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
 
-@interface ResoDeviceSoundsViewController ()
+#import "ISound.h"
+#import "IResoVisualization.h"
+
+@interface ResoModuleDeviceListViewController ()
 {
   UITableView * soundsView;
   NSMutableArray * soundsData;
@@ -39,8 +48,8 @@
 }
 @end
 
-@implementation ResoDeviceSoundsViewController
-@synthesize backButton, removeButton, redownloadButton, loadButton, progressBar;
+@implementation ResoModuleDeviceListViewController
+@synthesize backButton, removeButton, redownloadButton, loadButton, progressBar, deviceButton, cloudButton;
 @synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -55,12 +64,13 @@
     }
     
     mediaTransfer = nil;
+    [self calculateWidgetFrames];
     
     soundsData = [[NSMutableArray alloc] init];
     [self loadAvailableSoundsFromDevice];
     
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-    NSLog(@"sound library for module: %i", ad.currentModule);
+    NSLog(@"sound library for module: %@", ad.currentModule);
     
     //set up table view
     soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 210) style:UITableViewStylePlain];
@@ -71,20 +81,50 @@
     
     [self.view addSubview:soundsView];
     
-    [self.view setBackgroundColor:[UIColor darkGrayColor]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     
     //back button
     backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setTitle:@"<" forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"icon-chevron-left-small.png"] forState:UIControlStateNormal];
+    [backButton setAdjustsImageWhenHighlighted:NO];
+    backButton.alpha = ICON_BUTTON_OPACITY;
     [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [backButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.25]];
+    [backButton setBackgroundColor:[UIColor clearColor]];
     
     backButton.layer.borderColor = [UIColor blackColor].CGColor;
     backButton.layer.borderWidth = 0.0f;
     backButton.layer.cornerRadius = 4.0f;
-    backButton.frame = CGRectMake(10, 10, 44, 44);
+    backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
+    
+    float sourceButtonWidth = self.view.bounds.size.width / 4.0f;
+    float sourceButtonHeight = 35.0f;
+    float sourceButtonGap = 7.0f;
+    
+    //device button
+    deviceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deviceButton setTitle:@"Device" forState:UIControlStateNormal];
+    [deviceButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
+    [deviceButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [deviceButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
+    deviceButton.layer.borderWidth = 0.0f;
+    deviceButton.layer.cornerRadius = 4.0f;
+    deviceButton.frame = CGRectMake(self.view.bounds.size.width - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    [self.view addSubview:deviceButton];
+    
+    //cloud button
+    cloudButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cloudButton setTitle:@"Cloud" forState:UIControlStateNormal];
+    [cloudButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
+    [cloudButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [cloudButton addTarget:self action:@selector(showCloudList:) forControlEvents:UIControlEventTouchUpInside];
+    [cloudButton setBackgroundColor:[UIColor clearColor]];
+    cloudButton.layer.borderColor = [UIColor blackColor].CGColor;
+    cloudButton.layer.borderWidth = 0.0f;
+    cloudButton.layer.cornerRadius = 4.0f;
+    cloudButton.frame = CGRectMake(deviceButton.frame.origin.x+sourceButtonWidth, sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    [self.view addSubview:cloudButton];
     
     //remove button
     removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -145,6 +185,22 @@
   [super didReceiveMemoryWarning];
 }
 
+- (void)showCloudList:(id)sender
+{
+  //iterate through navigation list, if cloud list view is found, pop to that one
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleCloudListViewController class]] ) {
+      ResoModuleCloudListViewController * rmclvc = (ResoModuleCloudListViewController*)viewController;
+      [self.navigationController popToViewController:rmclvc animated:NO];
+      return;
+    }
+  }
+  
+  //push a new cloud list view onto stack
+  ResoModuleCloudListViewController * rmclvc = [[ResoModuleCloudListViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmclvc animated:NO];
+}
+
 - (void)loadSound:(id)sender
 {
   //get currently selected row index
@@ -157,9 +213,30 @@
     
     ResoModuleManager * rmm = [ResoModuleManager instance];
     ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-    ResoModule * rm = [rmm.modules objectForKey:[NSNumber numberWithInt:ad.currentModule]];
+    
+    //create new module if current module is nil
+    NSString * moduleUuid = ad.currentModule;
+    if (moduleUuid == nil) {
+      moduleUuid = [[NSUUID UUID] UUIDString];
+      [rmm addModuleWithUuid:moduleUuid];
+      ad.currentModule = moduleUuid;
+    }
+    
+    ResoModule * rm = [rmm.modules objectForKey:ad.currentModule];
+    
+    //load new sound
     [rm loadSound:uuid looped:true];
-    NSLog(@"sound loaded for module: %i", ad.currentModule);
+    [rm.sound play];
+    if (!ad.playing) {
+      [rm.sound setPaused:true];
+    }
+    
+    //update visualization
+    [ad.visualization removeSound:rm.soundUuid];
+    [ad.visualization addSound:uuid];
+    [ad.visualization setActiveSound:uuid];
+    
+    NSLog(@"sound loaded for module: %@", ad.currentModule);
   }
 }
 
@@ -182,14 +259,21 @@
 
 -(void)goBack:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  //iterate through navigation list, if device list view is found, pop to that one
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleTypeViewController class]] ) {
+      ResoModuleTypeViewController * rmtvc = (ResoModuleTypeViewController*)viewController;
+      [self.navigationController popToViewController:rmtvc animated:YES];
+      return;
+    }
+  }
 }
 
 -(void)loadAvailableSoundsFromDevice
 {
   [soundsData removeAllObjects];
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  NSArray * sounds = [ad soundsWithState:Completed];
+  ResoDataManager * rdm = [ResoDataManager instance];
+  NSArray * sounds = [rdm soundsWithState:Completed];
   [soundsData addObjectsFromArray:sounds];
 }
 
@@ -202,7 +286,7 @@
   if (row >= 0) {
     NSDictionary * sound = [soundsData objectAtIndex:[path row]];
     NSString * uuid = [sound objectForKey:@"uuid"];
-
+    
     [self removeSoundFromDevice:uuid];
     
     //reload
@@ -213,20 +297,19 @@
 
 -(void)removeSoundFromDevice:(NSString*)uuid
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  
+  ResoDataManager * rdm = [ResoDataManager instance];
   //remove install folder
-  NSString * soundInstallPath = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path];
+  NSString * soundInstallPath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@", uuid]] path];
   [[NSFileManager defaultManager] removeItemAtPath:soundInstallPath error:nil];
   
   //remove record from coredata
-  [ad removeSoundWithIdentifier:uuid];
+  [rdm removeSoundWithIdentifier:uuid];
 }
 
 -(void)playPreview:(NSString*)filePath
 {
   id<ISoundEngine> player = [FMODSoundEngine instance];
-  id<ISound> sound = [player getSoundForId:Preview];
+  id<ISound> sound = [player getSoundForUuid:@"preview"];
   [sound load:filePath looped:false];
   [sound play];
 }
@@ -279,8 +362,7 @@
   [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
   
   cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
+  cell.imageView.image = [UIImage imageWithContentsOfFile:[[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
   
   return cell;
 }
@@ -289,7 +371,9 @@
 #pragma mark ResoMediaTransfer Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
-  progressBar.progress = 0.0f;
+  if (t.transferType == SoundTransferDownload) {
+    progressBar.progress = 0.0f;
+  }
 }
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t
@@ -305,12 +389,10 @@
 
 -(void) transferFinished:(ResoMediaTransfer*)t
 {
-  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  
   if (t.transferType == SoundThumbnailTransfer) {
     [soundsView reloadData];
   } else if (t.transferType == SoundPreviewTransfer) {
-    NSString * file_path = [[ad resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
+    NSString * file_path = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/preview", t.uuid]] path];
     [self playPreview:file_path];
   } else if (t.transferType == SoundTransferDownload) {
     [self downloadComplete:t.uuid];
@@ -319,6 +401,13 @@
 
 -(void) transferError:(ResoMediaTransfer*)t
 {
+}
+
+- (void)calculateWidgetFrames
+{
+  //back button
+  backButtonFrame = CGRectMake(0, 0, 50, 50);
+  backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
 }
 
 @end

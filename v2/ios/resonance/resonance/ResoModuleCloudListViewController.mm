@@ -7,7 +7,9 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ResoModuleSoundListViewController.h"
+#import "ResoModuleCloudListViewController.h"
+#import "ResoModuleDeviceListViewController.h"
+#import "ResoModuleTypeViewController.h"
 #import "ResoAppDelegate.h"
 #import "ResoFileManager.h"
 #import "ResoDataManager.h"
@@ -17,7 +19,7 @@
 #import "ResoModule.h"
 #import "ISound.h"
 
-@interface ResoModuleSoundListViewController ()
+@interface ResoModuleCloudListViewController ()
 {
   UITableView * soundsView;
   NSMutableArray * soundsData;
@@ -33,8 +35,8 @@
 }
 @end
 
-@implementation ResoModuleSoundListViewController
-@synthesize backButton, previewButton, downloadButton, progressBar;
+@implementation ResoModuleCloudListViewController
+@synthesize backButton, previewButton, downloadButton, progressBar, deviceButton, cloudButton;
 @synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -119,6 +121,35 @@
     backButton.layer.cornerRadius = 4.0f;
     backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
+    
+    float sourceButtonWidth = self.view.bounds.size.width / 4.0f;
+    float sourceButtonHeight = 35.0f;
+    float sourceButtonGap = 7.0f;
+    
+    //device button
+    deviceButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deviceButton setTitle:@"Device" forState:UIControlStateNormal];
+    [deviceButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
+    [deviceButton addTarget:self action:@selector(showDeviceList:) forControlEvents:UIControlEventTouchUpInside];
+    [deviceButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [deviceButton setBackgroundColor:[UIColor clearColor]];
+    deviceButton.layer.borderWidth = 0.0f;
+    deviceButton.layer.cornerRadius = 4.0f;
+    deviceButton.frame = CGRectMake(self.view.bounds.size.width - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    [self.view addSubview:deviceButton];
+    
+    //cloud button
+    cloudButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cloudButton setTitle:@"Cloud" forState:UIControlStateNormal];
+    [cloudButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
+    [cloudButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [cloudButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
+    
+    cloudButton.layer.borderColor = [UIColor blackColor].CGColor;
+    cloudButton.layer.borderWidth = 0.0f;
+    cloudButton.layer.cornerRadius = 4.0f;
+    cloudButton.frame = CGRectMake(deviceButton.frame.origin.x+sourceButtonWidth, sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    [self.view addSubview:cloudButton];
 
     //preview button
     previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -166,6 +197,22 @@
   [super didReceiveMemoryWarning];
 }
 
+- (void)showDeviceList:(id)sender
+{
+  //iterate through navigation list, if device list view is found, pop to that one
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleDeviceListViewController class]] ) {
+      ResoModuleDeviceListViewController * rmdlvc = (ResoModuleDeviceListViewController*)viewController;
+      [self.navigationController popToViewController:rmdlvc animated:NO];
+      return;
+    }
+  }
+
+  //push a new device list view onto stack
+  ResoModuleDeviceListViewController * rmdlvc = [[ResoModuleDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:rmdlvc animated:NO];
+}
+
 - (void)saveSound:(NSDictionary*)sound {
   NSString * uuid = [sound objectForKey:@"uuid"];
   
@@ -185,7 +232,14 @@
 
 -(void)goBack:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  //iterate through navigation list, if device list view is found, pop to that one
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleTypeViewController class]] ) {
+      ResoModuleTypeViewController * rmtvc = (ResoModuleTypeViewController*)viewController;
+      [self.navigationController popToViewController:rmtvc animated:YES];
+      return;
+    }
+  }
 }
 
 -(void)loadAvailableSoundsFromDevice
@@ -296,8 +350,9 @@
 -(void) transferStarted:(ResoMediaTransfer*)t
 {
   NSLog(@"transfer started");
-  
-  progressBar.progress = 0.0f;
+  if (t.transferType == SoundTransferDownload) {
+    progressBar.progress = 0.0f;
+  }
 }
 
 -(void) transferProgressUpdated:(ResoMediaTransfer*)t

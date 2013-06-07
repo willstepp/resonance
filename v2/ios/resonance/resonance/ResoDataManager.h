@@ -19,6 +19,7 @@
 
 //sound data methods
 - (void)clearSounds;
+- (int)soundCount;
 - (void)addSoundWithIdentifier:(NSString*)uuid;
 - (void)setSoundFromData:(NSDictionary*)d;
 - (bool)soundExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
@@ -30,6 +31,7 @@
 
 //mix data methods
 - (void)clearMixes;
+- (int)mixCount;
 - (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds shared:(bool)shared;
 - (bool)mixExists:(NSString*)uuid withContext:(NSManagedObjectContext*)context;
 - (bool)mixAlreadyShared:(NSString*)uuid;

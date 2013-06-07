@@ -25,6 +25,9 @@
 -(VisualizationState)visualizationState;
 -(void)setVisualizationState:(VisualizationState)vs;
 
+-(void)enableTransitions:(bool)enable;
+-(void)refreshVisual;
+
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
 -(void)removeSound:(NSString*)uuid;

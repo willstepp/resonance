@@ -34,14 +34,12 @@
     [backButton setAdjustsImageWhenHighlighted:NO];
     backButton.alpha = ICON_BUTTON_OPACITY;
     [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
-    [backButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [backButton setBackgroundColor:[UIColor clearColor]];
     
     backButton.layer.borderColor = [UIColor blackColor].CGColor;
     backButton.layer.borderWidth = 0.0f;
     backButton.layer.cornerRadius = 4.0f;
     backButton.frame = backButtonFrame;
-    backButton.alpha = 0.0f;
     [self.view addSubview:backButton];
     
     alarmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -65,15 +63,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  backButton.alpha = ICON_BUTTON_OPACITY;
-  /*
-  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     backButton.alpha = 1.0f;
-                   } completion:nil];
-   */
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,7 +73,6 @@
 
 -(void)goBack:(id)sender
 {
-  //backButton.alpha = 0.0f;
   [self.navigationController popViewControllerAnimated:YES];
 }
 

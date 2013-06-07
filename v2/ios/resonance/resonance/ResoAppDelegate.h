@@ -19,6 +19,8 @@
 @property (assign, nonatomic) PlayerState currPlayerState;
 @property (nonatomic, assign) NSString * currentModule;
 @property (nonatomic, assign) int currentModulePosition;
+@property (nonatomic, assign) bool playing;
+
 
 -(NSString*)iosVersionForDownload;
 @end

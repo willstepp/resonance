@@ -10,12 +10,14 @@
 #import "ResoActionBar.h"
 #import "ResoMediaTransferManager.h"
 
-@interface ResoModuleSoundListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferManagerDelegate>
+@interface ResoModuleCloudListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ResoMediaTransferManagerDelegate>
 @property (nonatomic, retain) UIButton * backButton;
 @property (nonatomic, retain) ResoActionBar * soundDetailsBar;
 @property (nonatomic, retain) UIButton * previewButton;
 @property (nonatomic, retain) UIButton * downloadButton;
 @property (nonatomic, retain) UIProgressView * progressBar;
+@property (nonatomic, retain) UIButton * deviceButton;
+@property (nonatomic, retain) UIButton * cloudButton;
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 

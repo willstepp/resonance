@@ -40,8 +40,7 @@
     backButton.layer.borderColor = [UIColor blackColor].CGColor;
     backButton.layer.borderWidth = 0.0f;
     backButton.layer.cornerRadius = 4.0f;
-    backButton.frame = backButtonFrame_offscreen;
-    backButton.alpha = 0.0f;
+    backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
     
     timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -65,14 +64,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  
-  backButton.alpha = ICON_BUTTON_OPACITY;
-  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     backButton.frame = backButtonFrame;
-                   } completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +74,6 @@
 
 -(void)goBack:(id)sender
 {
-  backButton.alpha = 0.0f;
   [self.navigationController popViewControllerAnimated:YES];
 }
 

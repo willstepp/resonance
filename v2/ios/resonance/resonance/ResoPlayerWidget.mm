@@ -10,6 +10,8 @@
 #import "ResoPlayerWidget.h"
 #import "ResoSlider.h"
 #import "ResoSettings.h"
+#import "ResoAppDelegate.h"
+#import "ResoModuleManager.h"
 
 @interface ResoPlayerWidget()
 {
@@ -32,7 +34,7 @@
       [mixButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       mixButton.layer.borderWidth = 0.0f;
       mixButton.layer.cornerRadius = CORNER_RADIUS;
-      mixButton.alpha = WIDGET_ALPHA_DARK;
+      mixButton.alpha = PLAYER_ICON_OPACITY;
       mixButton.frame = CGRectMake(frame.size.width-50, frame.size.height-50, 50, 50);
       [self addSubview:mixButton];
       
@@ -43,7 +45,7 @@
       [timerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
       [timerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       timerButton.layer.borderWidth = 0.0f;
-      timerButton.alpha = WIDGET_ALPHA_DARK;
+      timerButton.alpha = PLAYER_ICON_OPACITY;
       timerButton.frame = CGRectMake(0, frame.size.height-50, 50, 50);
       [self addSubview:timerButton];
       
@@ -73,16 +75,19 @@
 
 -(void)togglePlayPause:(id)sender
 {
-  static bool playing = false;
-  if (playing)
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  if (ad.playing)
   {
     [playButton setImage:[UIImage imageNamed:@"icon-play-large.png"] forState:UIControlStateNormal];
+    [rmm pauseModules];
   }
   else
   {
     [playButton setImage:[UIImage imageNamed:@"icon-pause-large.png"] forState:UIControlStateNormal];
+    [rmm playModules];
   }
-  playing = !playing;
+  ad.playing = !ad.playing;
 }
 
 @end

@@ -13,6 +13,7 @@
 #import "RippleModel.h"
 
 #import "ResoSettings.h"
+#import "ResoFileManager.h"
 
 // Uniform index.
 enum
@@ -62,6 +63,7 @@ enum
   
   NSString * activeSound;
   NSString * transitionSound;
+  NSString * defaultSound;
   
   NSMutableArray * sounds;
   bool inputEnabled;
@@ -84,6 +86,8 @@ enum
   if (self) {
     sounds = [[NSMutableArray alloc] init];
     delegates = [[NSMutableArray alloc] init];
+    
+    defaultSound = @"reso-bg";
     
     inputEnabled = false;
     transitionState = Background;
@@ -130,10 +134,10 @@ enum
 {
   [super viewDidLoad];
   
-  activeSound = [sounds objectAtIndex:0];
-  transitionSound = activeSound;
+  activeSound = nil;
+  transitionSound = nil;
   
-  _imageName = [NSString stringWithFormat:@"%@-blur@2.jpg", activeSound];
+  _imageName = activeSound;
   
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
   
@@ -163,7 +167,7 @@ enum
   
   [self setupGL];
   
-  UIImage * myImage = [UIImage imageNamed:_imageName];
+  UIImage * myImage = [self getSoundImage:nil forState:currentState];
   CGImageRef imageRef = [myImage CGImage];
   imageRef = [self CGImageRotatedByAngle:imageRef angle:90.0f];
   _pixelBuffer = [self pixelBufferFromCGImage:imageRef];
@@ -182,9 +186,7 @@ enum
   [self.view addSubview:overlay];
   
   //start transition timer
-  if (transitionTimer) [transitionTimer invalidate];
-  //transitionTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
-  transitionTimer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+  [self enableTransitions:true];
   
   //start rain drop timer
   rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:47 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
@@ -324,26 +326,30 @@ enum
 
 - (void)changeActiveSound
 {
+  if ([sounds count] > 0) {
   NSString * sound = [sounds objectAtIndex:(arc4random() % [sounds count])];
   if (![sound isEqualToString:activeSound] && currentState != Transitioning) {
     [self transitionToSound:sound];
+  }
+  } else {
+    [self transitionToSound:nil];
   }
 }
 
 - (void)transitionToSound:(NSString*)uuid
 {
+  NSString * soundId = uuid != nil ? uuid : defaultSound;
+  
   //1) set state to transitioning
   transitionState = currentState;
   currentState = Transitioning;
   
   //2) set transition sound id
-  transitionSound = uuid;
+  transitionSound = soundId;
   
   //3) setup overlay
   overlay.alpha = 0.0f;
-  [NSString stringWithFormat:@"%@@2.jpg", uuid];
-  NSString * image = (transitionState == Foreground) ? [NSString stringWithFormat:@"%@@2.jpg", uuid] : [NSString stringWithFormat:@"%@-blur@2.jpg", uuid];
-  UIImage * overlayImage = [UIImage imageNamed:image];
+  UIImage * overlayImage = [self getSoundImage:uuid forState:transitionState];
   [overlay setImage:overlayImage];
   
   //4) start an animation to increase the opacity of the overlay over 1 second
@@ -354,7 +360,7 @@ enum
                      overlay.alpha = 1.0f;
                    } completion:^(BOOL finished) {
                      if (finished) {
-                       [self loadImageIntoPond:image];
+                       [self loadImageIntoPond:overlayImage];
                      }
                    }];
 }
@@ -370,24 +376,40 @@ enum
   
   //2) setup overlay
   overlay.alpha = 0.0f;
-  NSString * image = (vs == Foreground) ? [NSString stringWithFormat:@"%@@2.jpg", activeSound] : [NSString stringWithFormat:@"%@-blur@2.jpg", activeSound];
-  UIImage * overlayImage = [UIImage imageNamed:image];
+  UIImage * overlayImage = [self getSoundImage:activeSound forState:vs];
   [overlay setImage:overlayImage];
 
   //3) start an animation to increase the opacity of the overlay over 1 second
   [UIView animateWithDuration:VISUAL_TRANSITION_DURATION_SLOW
                         delay:0.00
-                      options:UIViewAnimationOptionCurveEaseOut
+                      options:UIViewAnimationOptionCurveLinear
                    animations:^{
                      overlay.alpha = 1.0f;
                    } completion:^(BOOL finished) {
                      if (finished) {
-                       [self loadImageIntoPond:image];
+                       [self loadImageIntoPond:overlayImage];
                      }
                    }];
 }
 
--(void)loadImageIntoPond:(NSString *)fileName
+-(UIImage*)getSoundImage:(NSString*)uuid forState:(VisualizationState)vs
+{
+  UIImage * soundImage = nil;
+  if (uuid != nil) {
+    //load sound image
+    NSString * imagePath = (vs == Foreground) ? [NSString stringWithFormat:@"sounds/%@/img", uuid] : [NSString stringWithFormat:@"sounds/%@/img_blur", uuid];
+    NSString * image = [[ResoFileManager resonanceAppSubDirectory:imagePath] path];
+    NSLog(@"image path: %@", image);
+    soundImage = [UIImage imageWithContentsOfFile:image];
+  } else {
+    //load default image
+    NSString * imagePath = (vs == Foreground) ? [NSString stringWithFormat:@"%@@2.jpg", defaultSound] : [NSString stringWithFormat:@"%@-blur@2.jpg", defaultSound];
+    soundImage = [UIImage imageNamed:imagePath];
+  }
+  return soundImage;
+}
+
+-(void)loadImageIntoPond:(UIImage *)image
 {
   [EAGLContext setCurrentContext:_context];
   
@@ -407,7 +429,6 @@ enum
   glActiveTexture(GL_TEXTURE0);
   
   // 1
-  UIImage * image = [UIImage imageNamed:fileName];
   CGImageRef spriteImage = image.CGImage;
   spriteImage = [self CGImageRotatedByAngle:spriteImage angle:90.0f];
   if (!spriteImage) {
@@ -490,7 +511,8 @@ enum
   
   if (!_ripple)
   {
-    [self loadImageIntoPond:_imageName];
+    UIImage * image = [self getSoundImage:nil forState:Background];
+    [self loadImageIntoPond:image];
   }
   
   if (_ripple)
@@ -647,6 +669,21 @@ enum
 -(VisualizationState)visualizationState
 {
   return currentState;
+}
+
+-(void)enableTransitions:(bool)enable
+{
+  if (enable) {
+    if (transitionTimer) [transitionTimer invalidate];
+    transitionTimer = [NSTimer scheduledTimerWithTimeInterval:73 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+  } else {
+    [transitionTimer invalidate];
+  }
+}
+
+-(void)refreshVisual
+{
+  [self changeActiveSound];
 }
 
 -(NSArray*)sounds

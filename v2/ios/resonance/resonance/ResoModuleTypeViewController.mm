@@ -9,8 +9,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleTypeViewController.h"
 #import "ResoSettings.h"
-#import "ResoModuleSoundListViewController.h"
+#import "ResoModuleCloudListViewController.h"
+#import "ResoModuleDeviceListViewController.h"
 #import "ResoModuleToneGeneratorViewController.h"
+#import "ResoDataManager.h"
 
 @interface ResoModuleTypeViewController ()
 {
@@ -42,8 +44,8 @@
         backButton.layer.borderColor = [UIColor blackColor].CGColor;
         backButton.layer.borderWidth = 0.0f;
         backButton.layer.cornerRadius = 4.0f;
-        backButton.frame = backButtonFrame_offscreen;
-        backButton.alpha = 0.0f;
+        backButton.alpha = ICON_BUTTON_OPACITY;
+        backButton.frame = backButtonFrame;
         [self.view addSubview:backButton];
       
         //sound library bar
@@ -68,15 +70,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  
-  backButton.alpha = ICON_BUTTON_OPACITY;
-  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST / 2.0f
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     backButton.frame = backButtonFrame;
-                   } completion:nil];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -92,21 +85,19 @@
 
 -(void)goBack:(id)sender
 {
-  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST / 2.0f
-                        delay:0.0
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^{
-                     backButton.frame = backButtonFrame_offscreen;
-                   } completion:^(BOOL finished){
-                     backButton.alpha = 0.0f;
-                     [self.navigationController popViewControllerAnimated:YES];
-                   }];
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)showSoundLibrary:(id)sender
 {
-  ResoModuleSoundListViewController * rmslvc = [[ResoModuleSoundListViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:rmslvc animated:YES];
+  ResoDataManager * rdm = [ResoDataManager instance];
+  if ([rdm soundCount] > 0) {
+    ResoModuleDeviceListViewController * vc = [[ResoModuleDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+  } else {
+    ResoModuleCloudListViewController * vc = [[ResoModuleCloudListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+  }
 }
 
 -(void)showToneGenerator:(id)sender

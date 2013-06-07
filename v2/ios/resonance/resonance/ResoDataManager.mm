@@ -152,6 +152,18 @@ static ResoDataManager * rdm = nil;
   //more error handling here
 }
 
+-(int)soundCount
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSFetchRequest * allSounds = [[NSFetchRequest alloc] init];
+  [allSounds setEntity:[NSEntityDescription entityForName:@"Sound" inManagedObjectContext:context]];
+  [allSounds setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+  
+  NSError * error = nil;
+  NSArray * sounds = [context executeFetchRequest:allSounds error:&error];
+  return [sounds count];
+}
+
 - (void)addSoundWithIdentifier:(NSString*)uuid
 {
   if (![self soundExists:uuid withContext:[self managedObjectContext]]) {
@@ -368,6 +380,18 @@ static ResoDataManager * rdm = nil;
   NSError * saveError = nil;
   [context save:&saveError];
   //more error handling here
+}
+
+-(int)mixCount
+{
+  NSManagedObjectContext * context = [self managedObjectContext];
+  NSFetchRequest * allMixes = [[NSFetchRequest alloc] init];
+  [allMixes setEntity:[NSEntityDescription entityForName:@"Mix" inManagedObjectContext:context]];
+  [allMixes setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+  
+  NSError * error = nil;
+  NSArray * mixes = [context executeFetchRequest:allMixes error:&error];
+  return [mixes count];
 }
 
 - (void)addMixWithId:(NSString*)uuid name:(NSString*)n state:(int)state sounds:(NSArray*)sounds shared:(bool)shared

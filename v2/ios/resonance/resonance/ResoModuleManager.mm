@@ -9,6 +9,8 @@
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
 #import "FMODSoundEngine.h"
+#import "ISound.h"
+#import "ITone.h"
 
 @interface ResoModuleManager()
 @property (nonatomic, readwrite) NSMutableDictionary *  modules;
@@ -51,5 +53,27 @@ static ResoModuleManager * rmm = nil;
 -(void)removeModuleWithUuid:(NSString *)uuid
 {
   [modules removeObjectForKey:uuid];
+}
+
+-(void)pauseModules
+{
+  for(id key in modules) {
+    ResoModule * rm = [modules objectForKey:key];
+    if ([rm loaded]) {
+      if ([rm type] == ModuleType_Sound) [rm.sound setPaused:true];
+      if ([rm type] == ModuleType_Tone) [rm.tone setPaused:true];
+    }
+  }
+}
+
+-(void)playModules
+{
+  for(id key in modules) {
+    ResoModule * rm = [modules objectForKey:key];
+    if ([rm loaded]) {
+      if ([rm type] == ModuleType_Sound) [rm.sound setPaused:false];
+      if ([rm type] == ModuleType_Tone) [rm.tone setPaused:false];
+    }
+  }
 }
 @end

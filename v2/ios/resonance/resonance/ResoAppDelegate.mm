@@ -21,7 +21,7 @@
 
 @synthesize currentModule = _currentModule;
 @synthesize currentModulePosition = _currentModulePosition;
-@synthesize visualization, currPlayerState;
+@synthesize visualization, currPlayerState, playing;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -31,6 +31,7 @@
   currPlayerState = PlayerState_Visual;
   _currentModule = nil;
   _currentModulePosition = -1;
+  playing = false;
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
   UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];
@@ -38,6 +39,7 @@
   
   ResoPondViewController * pond = [[ResoPondViewController alloc] init];
   
+  /*
   [pond addSound:@"ranier-snow"];
   [pond addSound:@"ct"];
   [pond addSound:@"ssb"];
@@ -52,6 +54,7 @@
   [pond addSound:@"starlight"];
   [pond addSound:@"oceanblue"];
   [pond addSound:@"sunflower"];
+   */
   
   visualization = pond;
   
@@ -75,6 +78,10 @@
   //setup preview module
   ResoModuleManager * rmm = [ResoModuleManager instance];
   [rmm addModuleWithUuid:@"preview"];
+  
+  //ResoDataManager * rdm = [ResoDataManager instance];
+  //[rdm clearSounds];
+  //[rdm clearMixes];
   
   return YES;
 }

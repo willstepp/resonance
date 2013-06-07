@@ -11,7 +11,11 @@
 
 @interface ResoModuleViewController : UIViewController
 @property (nonatomic, retain) UIButton * playerButton;
-@property (nonatomic, retain) UIButton * loadSoundButton;
 @property (nonatomic, retain) ResoActionBar * settingsBar;
 @property (nonatomic, retain) ResoActionBar * changeSoundBar;
+
+@property (nonatomic, retain) UIView * propertiesPanel;
+@property (nonatomic, retain) UILabel * soundTitleLabel;
+@property (nonatomic, retain) UIImageView * soundImageView;
+@property (nonatomic, retain) UITextView * descriptionTextView;
 @end
