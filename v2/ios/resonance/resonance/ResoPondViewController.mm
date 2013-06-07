@@ -698,7 +698,9 @@ enum
 
 -(void)removeSound:(NSString*)uuid
 {
+  NSLog(@"VISUAL_REMOVE_SOUND BEFORE: %i", [sounds count]);
   [sounds removeObject:uuid];
+  NSLog(@"VISUAL_REMOVE_SOUND AFTER: %i", [sounds count]);
 }
 
 -(NSString*)activeSound

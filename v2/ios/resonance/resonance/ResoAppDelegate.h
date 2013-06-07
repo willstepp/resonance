@@ -21,6 +21,9 @@
 @property (nonatomic, assign) int currentModulePosition;
 @property (nonatomic, assign) bool playing;
 
+@property (nonatomic, assign) int masterVolume;
+-(float)calculateActualVolume:(int)moduleVolume;
+
 
 -(NSString*)iosVersionForDownload;
 @end

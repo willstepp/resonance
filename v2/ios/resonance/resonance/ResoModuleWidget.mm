@@ -7,10 +7,17 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "ResoAppDelegate.h"
+
 #import "ResoModuleWidget.h"
 #import "ResoSlider.h"
 #import "ResoSettings.h"
 #import "ResoFileManager.h"
+
+#import "ResoModuleManager.h"
+#import "ResoModule.h"
+#import "ISound.h"
+#import "ITone.h"
 
 @interface ResoModuleWidget ()
 {
@@ -66,6 +73,7 @@
       volumeSlider.minValue = 0;
       volumeSlider.maxValue = 100;
       [volumeSlider setValue:50];
+      [volumeSlider addTarget:self action:@selector(volumeChanged:) forControlEvents:UIControlEventValueChanged];
       [self addSubview:volumeSlider];
       
       //remove button
@@ -85,6 +93,16 @@
 
     }
     return self;
+}
+
+-(void)volumeChanged:(id)sender
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  ResoModule * rm = [rmm.modules objectForKey:uuid];
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  
+  rm.volume = volumeSlider.value;
+  [rm updateVolume:[ad calculateActualVolume:volumeSlider.value]];
 }
 
 -(void)toggleRemoveModule:(id)sender

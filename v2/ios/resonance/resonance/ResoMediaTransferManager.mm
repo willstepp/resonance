@@ -16,6 +16,8 @@
 #import "ResoDataManager.h"
 #import "ResoFileManager.h"
 
+#import "ResoSettings.h"
+
 @interface ResoMediaTransferManager()
 {
   NSMutableDictionary * queues;
@@ -329,7 +331,7 @@ static  ResoMediaTransferManager * rmtm = nil;
     [SSZipArchive unzipFileAtPath:installFilePath toDestination:destinationPath];
     
     [[NSFileManager defaultManager] removeItemAtPath:installFilePath error:nil];
-    
+    [self generateSliceImage:t.uuid];
     [self loadSoundMetadata:t.uuid];
     [rdm setStateforSound:t.uuid newState:Completed];
     if (t.ownerUUID != nil) {
@@ -393,6 +395,39 @@ static  ResoMediaTransferManager * rmtm = nil;
   }
   
   return completed;
+}
+
+-(void)generateSliceImage:(NSString*)uuid
+{
+  //load blur image
+  NSString * blurImagePath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/img_blur", uuid]] path];
+  UIImage * blurImage = [UIImage imageWithContentsOfFile:blurImagePath];
+  
+  //create slice rect
+  CGRect rect = CGRectMake(0.0f, 0.0f, blurImage.size.width, SLICE_IMAGE_HEIGHT);
+  UIGraphicsBeginImageContext(rect.size);
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  
+  CGContextSetFillColorWithColor(context, [[UIColor blackColor] CGColor]);
+  CGContextFillRect(context, rect);
+  
+  //flip context so image will be drawn correctly
+  CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, SLICE_IMAGE_HEIGHT);
+  CGContextConcatCTM(context, flipVertical);
+
+  //take a slice from the blur image
+  CGRect sliceRect = CGRectMake(0, SLICE_IMAGE_HEIGHT, blurImage.size.width, SLICE_IMAGE_HEIGHT);
+  CGImageRef tempImage = CGImageCreateWithImageInRect(blurImage.CGImage, sliceRect);
+  CGContextDrawImage(context, rect, tempImage);
+  
+  UIImage * sliceImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  
+  //write image to file
+  NSString * slicePath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/slice", uuid]] path];
+  NSLog(@"Slice Image Path: %@", slicePath);
+  [UIImageJPEGRepresentation(sliceImage, 1.0) writeToFile:slicePath atomically:YES];
+  NSLog(@"Slice Image Created: %i", [[NSFileManager defaultManager] fileExistsAtPath:slicePath]);
 }
 
 -(void)loadSoundMetadata:(NSString*)uuid

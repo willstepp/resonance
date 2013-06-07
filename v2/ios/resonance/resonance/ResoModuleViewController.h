@@ -17,5 +17,6 @@
 @property (nonatomic, retain) UIView * propertiesPanel;
 @property (nonatomic, retain) UILabel * soundTitleLabel;
 @property (nonatomic, retain) UIImageView * soundImageView;
+@property (nonatomic, retain) UIImageView * sliceImageView;
 @property (nonatomic, retain) UITextView * descriptionTextView;
 @end

@@ -12,6 +12,7 @@
 #import "ResoSettings.h"
 #import "ResoAppDelegate.h"
 #import "ResoModuleManager.h"
+#import "ResoModule.h"
 
 @interface ResoPlayerWidget()
 {
@@ -66,7 +67,7 @@
       volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(0, -20, width, height) withOrientation:Horizontal withCornerRadius:1.0f];
       volumeSlider.minValue = 0;
       volumeSlider.maxValue = 100;
-      //[volumeSlider addTarget:self action:@selector(updateRangeLabel:) forControlEvents:UIControlEventValueChanged];
+      [volumeSlider addTarget:self action:@selector(volumeChanged:) forControlEvents:UIControlEventValueChanged];
       [volumeSlider setValue:50];
       [self addSubview:volumeSlider];
     }
@@ -88,6 +89,25 @@
     [rmm playModules];
   }
   ad.playing = !ad.playing;
+}
+
+-(void)volumeChanged:(id)sender
+{
+  //update master volume
+  ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+  ad.masterVolume = volumeSlider.value;
+  NSLog(@"masterVolume: %i", ad.masterVolume);
+  
+  //update all current modules based on new volume
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  for (id key in rmm.modules) {
+    ResoModule * rm = [rmm.modules objectForKey:key];
+    int moduleVolume = rm.volume;
+    NSLog(@"moduleVolume: %i", moduleVolume);
+    float actualVolume = [ad calculateActualVolume:rm.volume];
+    NSLog(@"actualVolume: %f", actualVolume);
+    [rm updateVolume:actualVolume];
+  }
 }
 
 @end

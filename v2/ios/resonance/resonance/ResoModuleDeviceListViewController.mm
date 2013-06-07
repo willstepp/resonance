@@ -224,15 +224,19 @@
     
     ResoModule * rm = [rmm.modules objectForKey:ad.currentModule];
     
+    //remove old sound from visualization
+    [ad.visualization removeSound:rm.soundUuid];
+    
     //load new sound
     [rm loadSound:uuid looped:true];
     [rm.sound play];
+    rm.volume = BASE_MODULE_VOLUME;
+    [rm updateVolume:BASE_MODULE_VOLUME];
     if (!ad.playing) {
       [rm.sound setPaused:true];
     }
     
     //update visualization
-    [ad.visualization removeSound:rm.soundUuid];
     [ad.visualization addSound:uuid];
     [ad.visualization setActiveSound:uuid];
     

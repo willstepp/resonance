@@ -17,9 +17,12 @@
 @property (readonly) ModuleType type;
 @property (readonly) NSString * soundUuid;
 @property (readonly) NSString * moduleUuid;
+@property (nonatomic, assign) int volume;
 
 @property (readonly) id<ISound> sound;
 @property (readonly) id<ITone> tone;
+
+-(void)updateVolume:(float)v;
 
 -(id)initWithSoundEngine:(id<ISoundEngine>)ise uuid:(NSString*)uuid;
 

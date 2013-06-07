@@ -35,7 +35,7 @@
 @end
 
 @implementation ResoModule
-@synthesize type, soundUuid, moduleUuid, sound, tone;
+@synthesize type, soundUuid, moduleUuid, sound, tone, volume;
 
 -(id)init
 {
@@ -102,6 +102,17 @@
 {
   if ([tone loaded]) [tone unload];
   if ([sound loaded]) [sound unload];
+}
+
+-(void)updateVolume:(float)v
+{
+  float normalized = v / 100.0f;
+  if (type == ModuleType_Sound) {
+    [sound setVolume:normalized];
+  }
+  if (type == ModuleType_Tone) {
+    [tone setVolume:normalized];
+  }
 }
 
 @end

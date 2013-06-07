@@ -21,7 +21,7 @@
 
 @synthesize currentModule = _currentModule;
 @synthesize currentModulePosition = _currentModulePosition;
-@synthesize visualization, currPlayerState, playing;
+@synthesize visualization, currPlayerState, playing, masterVolume;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -32,30 +32,13 @@
   _currentModule = nil;
   _currentModulePosition = -1;
   playing = false;
+  masterVolume = 50;
   
   ResoPlayerViewController * player = [[ResoPlayerViewController alloc] init];
   UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:player];
   [nav setNavigationBarHidden:YES];
   
   ResoPondViewController * pond = [[ResoPondViewController alloc] init];
-  
-  /*
-  [pond addSound:@"ranier-snow"];
-  [pond addSound:@"ct"];
-  [pond addSound:@"ssb"];
-  [pond addSound:@"wt"];
-  [pond addSound:@"sr"];
-  [pond addSound:@"nebula-blue"];
-  [pond addSound:@"k"];
-  [pond addSound:@"pattern-blue"];
-  [pond addSound:@"pink-blossoms"];
-  [pond addSound:@"reso-space"];
-  [pond addSound:@"nebulaorange"];
-  [pond addSound:@"starlight"];
-  [pond addSound:@"oceanblue"];
-  [pond addSound:@"sunflower"];
-   */
-  
   visualization = pond;
   
   [pond addChildViewController:nav];
@@ -79,9 +62,9 @@
   ResoModuleManager * rmm = [ResoModuleManager instance];
   [rmm addModuleWithUuid:@"preview"];
   
-  //ResoDataManager * rdm = [ResoDataManager instance];
-  //[rdm clearSounds];
-  //[rdm clearMixes];
+  /*ResoDataManager * rdm = [ResoDataManager instance];
+  [rdm clearSounds];
+  [rdm clearMixes];*/
   
   return YES;
 }
@@ -112,6 +95,12 @@
 {
   ResoDataManager * rdm = [ResoDataManager instance];
   [rdm saveContext];
+}
+
+-(float)calculateActualVolume:(int)moduleVolume
+{
+  float percentage = (float)self.masterVolume / 100.0f;
+  return moduleVolume * percentage;
 }
 
 NSString * deviceName()

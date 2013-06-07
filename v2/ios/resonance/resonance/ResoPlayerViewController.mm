@@ -22,6 +22,9 @@
 
 #import "ResoModuleWidget.h"
 
+#import "ISound.h"
+#import "ITone.h"
+
 #import "ResoTypes.h"
 #import "ResoSettings.h"
 #import "IResoVisualization.h"
@@ -500,6 +503,7 @@
                              visualButton.frame = visualButtonFrame_offscreen;
                              playerWidget.frame = playerWidgetFrame_offscreen;
                              addModuleButton.titleLabel.alpha = 0.0f;
+                             [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
                              for(ResoModuleWidget * rmw in moduleWidgets) {
                                rmw.alpha = 0.0f;
                              }
@@ -508,7 +512,6 @@
                                                    delay:0.00
                                                  options:UIViewAnimationOptionCurveEaseIn
                                               animations:^{
-                                               [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
                                                 addModuleButton.frame = overlayPanelWidgetFrame;
                                                 [ad.visualization setActiveSound:nil];
                                               } completion:^(BOOL finished) {
@@ -779,6 +782,7 @@
     ResoModule * rm = [rrm.modules objectForKey:key];
     if ([rm loaded] && ![rm.moduleUuid isEqualToString:@"preview"]) {
       ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen withSound:rm.soundUuid];
+      [rmw.volumeSlider setValue:[rm.sound volume] * 100];
       [rmw.expandButton addTarget:self action:@selector(expandModule:) forControlEvents:UIControlEventTouchUpInside];
       [rmw.removeButton addTarget:self action:@selector(removeModule:) forControlEvents:UIControlEventTouchUpInside];
       rmw.uuid = rm.moduleUuid;
