@@ -425,9 +425,7 @@ static  ResoMediaTransferManager * rmtm = nil;
   
   //write image to file
   NSString * slicePath = [[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/slice", uuid]] path];
-  NSLog(@"Slice Image Path: %@", slicePath);
   [UIImageJPEGRepresentation(sliceImage, 1.0) writeToFile:slicePath atomically:YES];
-  NSLog(@"Slice Image Created: %i", [[NSFileManager defaultManager] fileExistsAtPath:slicePath]);
 }
 
 -(void)loadSoundMetadata:(NSString*)uuid

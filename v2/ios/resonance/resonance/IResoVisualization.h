@@ -25,15 +25,17 @@
 -(VisualizationState)visualizationState;
 -(void)setVisualizationState:(VisualizationState)vs;
 
+-(NSString*)activeSound;
+-(void)setActiveSound:(NSString*)uuid;
+
+-(void)enableAnimations:(bool)enable;
+
 -(void)enableTransitions:(bool)enable;
 -(void)refreshVisual;
 
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
 -(void)removeSound:(NSString*)uuid;
-
--(NSString*)activeSound;
--(void)setActiveSound:(NSString*)uuid;
 
 -(bool)inputEnabled;
 -(void)setInputEnabled:(bool)enabled;

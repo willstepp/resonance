@@ -20,6 +20,7 @@
 -(VisualizationState)visualizationState;
 -(void)setVisualizationState:(VisualizationState)vs;
 
+-(void)enableAnimations:(bool)enable;
 -(void)enableTransitions:(bool)enable;
 
 -(NSArray*)sounds;

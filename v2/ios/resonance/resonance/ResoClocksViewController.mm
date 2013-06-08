@@ -13,6 +13,9 @@
 #import "ResoAlarmViewController.h"
 #import "ResoTimerViewController.h"
 
+#import "ResoAppDelegate.h"
+#import "IResoVisualization.h"
+
 @interface ResoClocksViewController ()
 {
   CGRect playerButtonFrame;
@@ -98,6 +101,9 @@
                      timerBar.frame = timerFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
+                       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+                       [ad.visualization refreshVisual];
+                       [ad.visualization enableTransitions:true];
                        [self.navigationController popViewControllerAnimated:NO];
                      }
                    }];

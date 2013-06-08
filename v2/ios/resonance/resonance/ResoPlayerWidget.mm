@@ -58,7 +58,7 @@
       [playButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
       [playButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0f]];
       playButton.layer.borderWidth = 0.0f;
-      playButton.alpha = WIDGET_ALPHA_DARK;
+      playButton.alpha = WIDGET_ALPHA_PRIMARY_ELEMENTS;
       playButton.frame = CGRectMake((frame.size.width / 2.0f) - 25, frame.size.height-50, 50, 50);
       [self addSubview:playButton];
       

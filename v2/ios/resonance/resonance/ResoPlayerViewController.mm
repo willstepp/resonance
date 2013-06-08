@@ -274,6 +274,7 @@
                        [moduleWidgets removeObject:rmw];
                        [rmw removeFromSuperview];
                        [self shiftModules:showAddModule];
+                       [self updateAddModuleButtonAlpha];
                      }
                    }];
 }
@@ -572,6 +573,8 @@
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
         
+        [ad.visualization enableTransitions:false];
+        
         [self transitionOutModules];
         
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
@@ -583,6 +586,7 @@
                            playerWidget.frame = playerWidgetFrame_offscreen;
                            overlayPanelWidget.alpha = 1.0f;
                          } completion:^(BOOL finished){
+                            [ad.visualization setActiveSound:nil];
                          }];
         break;
       }
@@ -594,6 +598,8 @@
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
         
+        [ad.visualization enableTransitions:false];
+        
         [self transitionOutModules];
         
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_NORMAL
@@ -604,7 +610,9 @@
                            menuButton.frame = menuButtonFrame_offscreen;
                            visualButton.frame = visualButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
-                         } completion:nil];
+                         } completion:^(BOOL finished){
+                           [ad.visualization setActiveSound:nil];
+                         }];
         break;
       }
       case PlayerState_Mix:
@@ -614,6 +622,8 @@
         
         overlayPanelWidget.frame = overlayPanelWidgetFrame;
         overlayPanelWidget.alpha = 0.0f;
+        
+        [ad.visualization enableTransitions:false];
         
         [self transitionOutModules];
         
@@ -626,9 +636,7 @@
                            visualButton.frame = visualButtonFrame_offscreen;
                            playerWidget.frame = playerWidgetFrame_offscreen;
                          } completion:^(BOOL finished) {
-                           if (finished) {
-
-                           }
+                           [ad.visualization setActiveSound:nil];
                          }];
         break;
       }
@@ -813,6 +821,10 @@
     bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
     rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
   }
+  
+  //update add module button alpha based on number of widgets
+  UIColor * addModuleColor = [UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:([moduleWidgets count] > 0 ? WIDGET_ALPHA_LIGHT : WIDGET_ALPHA_NORMAL)];
+  [addModuleButton setBackgroundColor:addModuleColor];
 }
 
 -(void)transitionInModules
@@ -969,6 +981,20 @@
   }
 }
 
+-(void)updateAddModuleButtonAlpha
+{
+  //update button alpha based on number of widgets
+  UIColor * addModuleColor = [UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:([moduleWidgets count] > 0 ? WIDGET_ALPHA_LIGHT : WIDGET_ALPHA_NORMAL)];
+  
+  //animate update
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+                     addModuleButton.backgroundColor = addModuleColor;
+                   } completion:nil];
+}
+
 -(void)shiftModules:(bool)showAddModule
 {
   //get frames for current module count, animate the current widgets to those frames
@@ -983,6 +1009,10 @@
         addModuleButton.alpha = 0.0f;
         addModuleButton.titleLabel.alpha = 0.0f;
         addModuleButton.frame = f;
+        
+        //update button alpha based on number of widgets
+        UIColor * addModuleColor = [UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:([moduleWidgets count] > 0 ? WIDGET_ALPHA_LIGHT : WIDGET_ALPHA_NORMAL)];
+        [addModuleButton setBackgroundColor:addModuleColor];
         
         //fade in
         [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST

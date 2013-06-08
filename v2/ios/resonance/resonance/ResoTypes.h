@@ -10,6 +10,11 @@
 #define resonance_ResoTypes_h
 
 typedef enum {
+  VisualizationAction_Transition,
+  VisualizationAction_StateChange
+} VisualizationAction;
+
+typedef enum {
   Foreground,
   Transitioning,
   Background

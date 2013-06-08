@@ -12,6 +12,9 @@
 
 #import "ResoMixListViewController.h"
 
+#import "ResoAppDelegate.h"
+#import "IResoVisualization.h"
+
 @interface ResoMixViewController ()
 {
   CGRect playerButtonFrame;
@@ -87,6 +90,9 @@
                      mixListBar.frame = titleFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
+                       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+                       [ad.visualization refreshVisual];
+                       [ad.visualization enableTransitions:true];
                        [self.navigationController popViewControllerAnimated:NO];
                      }
                    }];

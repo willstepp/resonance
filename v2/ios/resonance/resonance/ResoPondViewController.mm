@@ -72,6 +72,12 @@ enum
   NSTimer * rainDropTimer;
   
   UIImageView * overlay;
+  
+  //on deck
+  VisualizationAction onDeckAction;
+  NSString * onDeckSound;
+  VisualizationState onDeckState;
+  bool actionOnDeck;
 }
 @property (strong, nonatomic) EAGLContext * context;
 - (CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle;
@@ -136,6 +142,7 @@ enum
   
   activeSound = nil;
   transitionSound = nil;
+  actionOnDeck = false;
   
   _imageName = activeSound;
   
@@ -185,11 +192,7 @@ enum
   overlay.alpha = 0.0f;
   [self.view addSubview:overlay];
   
-  //start transition timer
-  [self enableTransitions:true];
-  
-  //start rain drop timer
-  rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:47 target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
+  [self enableAnimations:true];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -326,10 +329,14 @@ enum
 
 - (void)changeActiveSound
 {
+  NSLog(@"changeActiveSound");
   if ([sounds count] > 0) {
   NSString * sound = [sounds objectAtIndex:(arc4random() % [sounds count])];
   if (![sound isEqualToString:activeSound] && currentState != Transitioning) {
+    NSLog(@"changeActiveSound to: %@", sound);
     [self transitionToSound:sound];
+  } else {
+    [self processOnDeckAction];
   }
   } else {
     [self transitionToSound:nil];
@@ -338,7 +345,8 @@ enum
 
 - (void)transitionToSound:(NSString*)uuid
 {
-  NSString * soundId = uuid != nil ? uuid : defaultSound;
+  //NSString * soundId = uuid != nil ? uuid : defaultSound;
+  NSString * soundId = uuid;
   
   //1) set state to transitioning
   transitionState = currentState;
@@ -394,12 +402,12 @@ enum
 
 -(UIImage*)getSoundImage:(NSString*)uuid forState:(VisualizationState)vs
 {
+  NSLog(@"getSoundImage: %@", uuid);
   UIImage * soundImage = nil;
   if (uuid != nil) {
     //load sound image
     NSString * imagePath = (vs == Foreground) ? [NSString stringWithFormat:@"sounds/%@/img", uuid] : [NSString stringWithFormat:@"sounds/%@/img_blur", uuid];
     NSString * image = [[ResoFileManager resonanceAppSubDirectory:imagePath] path];
-    NSLog(@"image path: %@", image);
     soundImage = [UIImage imageWithContentsOfFile:image];
   } else {
     //load default image
@@ -473,6 +481,26 @@ enum
   currentState = transitionState;
   activeSound = transitionSound;
   overlay.alpha = 0.0f;
+  
+  NSLog(@"completeTransition");
+  [self processOnDeckAction];
+}
+
+- (void)processOnDeckAction
+{
+  if (actionOnDeck) {
+    if (onDeckAction == VisualizationAction_Transition) {
+      NSLog(@"processOnDeckAction: Transition");
+      [self setActiveSound:onDeckSound];
+    }
+    if (onDeckAction == VisualizationAction_StateChange) {
+      NSLog(@"processOnDeckAction: StateChange");
+      [self setVisualizationState:onDeckState];
+    }
+    actionOnDeck = false;
+  } else {
+    NSLog(@"processOnDeckAction: No Action");
+  }
 }
 
 -(void)makeItRain
@@ -660,9 +688,16 @@ enum
 
 -(void)setVisualizationState:(VisualizationState)vs
 {
-  if (currentState != vs && currentState != Transitioning) {
-    [self transitionToState:vs];
-    [self notifyStateChanged:vs];
+  if (currentState != Transitioning) {
+    if (currentState != vs) {
+      [self transitionToState:vs];
+      [self notifyStateChanged:vs];
+    }
+  } else {
+    NSLog(@"setVisualizationState: On Deck Added");
+    onDeckAction = VisualizationAction_StateChange;
+    onDeckState = vs;
+    actionOnDeck = true;
   }
 }
 
@@ -671,11 +706,24 @@ enum
   return currentState;
 }
 
+-(void)enableAnimations:(bool)enable
+{
+  /*
+  if (enable) {
+    if (rainDropTimer) [rainDropTimer invalidate];
+    rainDropTimer = [NSTimer scheduledTimerWithTimeInterval:VISUALIZATION_RAINDROP_INTERVAL target:self selector:@selector(makeItRain) userInfo:nil repeats:YES];
+  } else {
+    [rainDropTimer invalidate];
+  }
+   */
+  [self enableTransitions:enable];
+}
+
 -(void)enableTransitions:(bool)enable
 {
   if (enable) {
     if (transitionTimer) [transitionTimer invalidate];
-    transitionTimer = [NSTimer scheduledTimerWithTimeInterval:73 target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
+    transitionTimer = [NSTimer scheduledTimerWithTimeInterval:VISUALIZATION_TRANSITION_INTERVAL target:self selector:@selector(changeActiveSound) userInfo:nil repeats:YES];
   } else {
     [transitionTimer invalidate];
   }
@@ -698,9 +746,7 @@ enum
 
 -(void)removeSound:(NSString*)uuid
 {
-  NSLog(@"VISUAL_REMOVE_SOUND BEFORE: %i", [sounds count]);
   [sounds removeObject:uuid];
-  NSLog(@"VISUAL_REMOVE_SOUND AFTER: %i", [sounds count]);
 }
 
 -(NSString*)activeSound
@@ -710,9 +756,20 @@ enum
 
 -(void)setActiveSound:(NSString*)uuid
 {
-  if (activeSound != uuid && currentState != Transitioning) {
-    [self transitionToSound:uuid];
-    [self notifySoundChanged:uuid];
+  if (currentState != Transitioning) {
+    NSLog(@"setActiveSound: Current State is Not Transitioning");
+    if (activeSound != uuid) {
+      NSLog(@"setActiveSound: Active Sound is Not Equal To: %@", uuid);
+      [self transitionToSound:uuid];
+      [self notifySoundChanged:uuid];
+    } else {
+      NSLog(@"setActiveSound: Active Sound is Equal To: %@", uuid);
+    }
+  } else {
+    NSLog(@"setActiveSound: On Deck Added: %@", uuid);
+    onDeckAction = VisualizationAction_Transition;
+    onDeckSound = uuid;
+    actionOnDeck = true;
   }
 }
 

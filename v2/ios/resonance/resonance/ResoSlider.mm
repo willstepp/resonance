@@ -66,11 +66,11 @@ CGMutablePathRef createRoundedRectForRect(CGRect rect, CGFloat radius)
   }
   
   if (self) {
-    trackColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-    slideColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_DARK];
-    handleColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_DARK];
+    trackColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:WIDGET_ALPHA_PRIMARY_ELEMENTS];
+    slideColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_PRIMARY_ELEMENTS];
+    handleColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:WIDGET_ALPHA_PRIMARY_ELEMENTS];
     
-    [self setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.00]];
+    [self setBackgroundColor:[UIColor clearColor]];
     
     _minHandleSize = 0.0f;
     _currHandleSize = _minHandleSize;
