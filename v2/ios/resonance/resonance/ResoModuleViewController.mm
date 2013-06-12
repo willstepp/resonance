@@ -74,6 +74,7 @@
       
       //sound slice
       sliceImageView = [[UIImageView alloc] initWithFrame:soundSliceFrame];
+      sliceImageView.alpha = 0.50f;
       [sliceImageView setClipsToBounds:YES];
       
       //sound image
@@ -103,11 +104,11 @@
       
       [self.view addSubview:propertiesPanel];
       
-      changeSoundBar = [[ResoActionBar alloc] initWithFrame:changeSoundBarFrame_offscreen withText:@"Change Sound" withIconText:nil withIconColor:nil];
+      changeSoundBar = [[ResoActionBar alloc] initWithFrame:changeSoundBarFrame_offscreen withText:@"Change Sound" withIconText:nil withIconColor:nil withDirection:Forward];
       [changeSoundBar.actionButton addTarget:self action:@selector(changeSound:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:changeSoundBar];
       
-      settingsBar = [[ResoActionBar alloc] initWithFrame:settingsBarFrame_offscreen withText:@"Settings" withIconText:nil withIconColor:nil];
+      settingsBar = [[ResoActionBar alloc] initWithFrame:settingsBarFrame_offscreen withText:@"Settings" withIconText:nil withIconColor:nil withDirection:Forward];
       [settingsBar.actionButton addTarget:self action:@selector(showSettings:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:settingsBar];
   }
@@ -197,7 +198,7 @@
 {
   [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                         delay:0.00
-                      options:UIViewAnimationOptionCurveEaseOut
+                      options:UIViewAnimationOptionCurveEaseIn
                    animations:^{
                      playerButton.frame = playerButtonFrame_offscreen;
                      propertiesPanel.frame = propertiesPanelFrame_offscreen;
@@ -235,34 +236,34 @@
 - (void)calculateWidgetFrames
 {
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  playerButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
   //change sound bar
-  changeSoundBarFrame = CGRectMake(10, (self.view.bounds.size.height - 60), self.view.bounds.size.width - 20, 50);
+  changeSoundBarFrame = CGRectMake(10, ([ResoAppDelegate windowHeight] - 60), [ResoAppDelegate windowWidth] - 20, 50);
   changeSoundBarFrame_offscreen = CGRectMake(-(changeSoundBarFrame.size.width), changeSoundBarFrame.origin.y, changeSoundBarFrame.size.width, changeSoundBarFrame.size.height);
   
   //settings bar
-  settingsBarFrame = CGRectMake(10, (changeSoundBarFrame.origin.y - 60), self.view.bounds.size.width - 20, 50);
+  settingsBarFrame = CGRectMake(10, (changeSoundBarFrame.origin.y - 60), [ResoAppDelegate windowWidth] - 20, 50);
   settingsBarFrame_offscreen = CGRectMake(-(settingsBarFrame.size.width), settingsBarFrame.origin.y, settingsBarFrame.size.width, settingsBarFrame.size.height);
   
   //properties panel
-  float panelHeight = (self.view.bounds.size.height - (playerButton.frame.size.height+changeSoundBar.frame.size.height+settingsBar.frame.size.height+10)) / 1.5f;
-  propertiesPanelFrame = CGRectMake(0, playerButtonFrame.size.height, self.view.bounds.size.width, panelHeight);
+  float panelHeight = ([ResoAppDelegate windowHeight] - (playerButton.frame.size.height+changeSoundBar.frame.size.height+settingsBar.frame.size.height+10)) / 1.5f;
+  propertiesPanelFrame = CGRectMake(0, playerButtonFrame.size.height-5, [ResoAppDelegate windowHeight], panelHeight);
   
   propertiesPanelFrame_offscreen = CGRectMake(-(propertiesPanelFrame.size.width), propertiesPanelFrame.origin.y, propertiesPanelFrame.size.width, propertiesPanelFrame.size.height);
   
   //sound title
-  soundLabelFrame = CGRectMake(10, 0, self.view.bounds.size.width - 20, 35);
+  soundLabelFrame = CGRectMake(10, 0, [ResoAppDelegate windowWidth] - 20, 35);
   
   //sound slice
-  soundSliceFrame = CGRectMake(0, soundLabelFrame.origin.y+soundLabelFrame.size.height+7, self.view.bounds.size.width, SLICE_IMAGE_HEIGHT);
+  soundSliceFrame = CGRectMake(0, soundLabelFrame.origin.y+soundLabelFrame.size.height+7, [ResoAppDelegate windowWidth], SLICE_IMAGE_HEIGHT);
   
   //sound thumb
   soundImageFrame = CGRectMake(10, soundLabelFrame.origin.y+soundLabelFrame.size.height+15, 100, 100);
   
   //sound description
-  soundDescriptionFrame = CGRectMake(10, soundImageFrame.origin.y+soundImageFrame.size.height+15, self.view.bounds.size.width - 20, 200);
+  soundDescriptionFrame = CGRectMake(10, soundImageFrame.origin.y+soundImageFrame.size.height+15, [ResoAppDelegate windowWidth] - 20, 200);
 }
 
 @end

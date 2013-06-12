@@ -13,7 +13,7 @@
 @implementation ResoActionBar
 @synthesize actionButton, titleLabel, iconLabel, actionImage;
 
-- (id)initWithFrame:(CGRect)frame withText:(NSString*)text withIconText:(NSString*)iconText withIconColor:(UIColor*)iconColor
+- (id)initWithFrame:(CGRect)frame withText:(NSString*)text withIconText:(NSString*)iconText withIconColor:(UIColor*)iconColor withDirection:(WidgetDirection)wd
 {
     self = [super initWithFrame:frame];
     if (self) {

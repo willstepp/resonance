@@ -18,6 +18,7 @@
 #import "ResoModuleManager.h"
 #import "ResoModule.h"
 #import "ISound.h"
+#import "ResoTableViewCell.h"
 
 @interface ResoModuleCloudListViewController ()
 {
@@ -36,6 +37,7 @@
 @end
 
 @implementation ResoModuleCloudListViewController
+@synthesize refreshView;
 @synthesize backButton, previewButton, downloadButton, progressBar, deviceButton, cloudButton;
 @synthesize managedObjectContext;
 
@@ -44,26 +46,22 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     
-    static bool initialized = false;
-    if (!initialized) {
-      [[ResoMediaTransferManager instance] addDelegate:self];
-      initialized = true;
-    }
-    
     [self calculateWidgetFrames];
     
+    refreshView = false;
+    
     mediaTransfer = nil;
-    ResoDataManager * rdm = [ResoDataManager instance];
     
     soundsData = [[NSMutableArray alloc] init];
     //[self loadAvailableSoundsFromDevice];
     
     //set up table view
-    soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 150) style:UITableViewStylePlain];
+    soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, backButtonFrame.size.height+10, [ResoAppDelegate windowWidth], [ResoAppDelegate windowHeight]-(backButtonFrame.size.height-10)) style:UITableViewStylePlain];
     soundsView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     soundsView.delegate = self;
     soundsView.dataSource = self;
-    //[soundsView reloadData];
+    soundsView.separatorColor = [UIColor clearColor];
+    [soundsView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
     
     [self.view addSubview:soundsView];
     
@@ -74,37 +72,8 @@
     //initiate background queue to retreive preview clips
     preview_queue = dispatch_queue_create("com.resonance.preview_fetch", NULL);
     
-    //get list of sounds on background thread
-    dispatch_async(global_queue, ^{
-      //init
-      NSManagedObjectContext * context;
-      NSPersistentStoreCoordinator * coordinator = [rdm persistentStoreCoordinator];
-      if (coordinator != nil) {
-        context = [[NSManagedObjectContext alloc] init];
-        [context setPersistentStoreCoordinator:coordinator];
-      }
-      
-      //1) fetch sounds from server
-      NSData * data = [NSData dataWithContentsOfURL:soundsUrl];
-      
-      //2) parse into json array
-      NSArray * sounds = [NSJSONSerialization
-                          JSONObjectWithData:data
-                          options:kNilOptions
-                          error:nil];
-      
-      //3) iterate sounds and create new record if needed
-      for(NSDictionary * sound in sounds) {
-        NSString * uuid = [sound objectForKey:@"uuid"];
-        if(![rdm soundExists:uuid withContext:context]) {
-          
-          //save sound record on main thread
-          [self performSelectorOnMainThread:@selector(saveSound:)
-                                 withObject:sound waitUntilDone:NO];
-        }
-      }
-    });
-    
+    [self loadAvailableSoundsFromStore];
+        
     [self.view setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_NORMAL]];
     
     //back button
@@ -122,7 +91,7 @@
     backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
     
-    float sourceButtonWidth = self.view.bounds.size.width / 4.0f;
+    float sourceButtonWidth = [ResoAppDelegate windowWidth] / 4.0f;
     float sourceButtonHeight = 35.0f;
     float sourceButtonGap = 7.0f;
     
@@ -134,20 +103,20 @@
     [deviceButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [deviceButton setBackgroundColor:[UIColor clearColor]];
     deviceButton.layer.borderWidth = 0.0f;
-    deviceButton.layer.cornerRadius = 4.0f;
-    deviceButton.frame = CGRectMake(self.view.bounds.size.width - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    deviceButton.layer.cornerRadius = 3.0f;
+    deviceButton.frame = CGRectMake([ResoAppDelegate windowWidth] - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:deviceButton];
     
     //cloud button
     cloudButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cloudButton setTitle:@"Cloud" forState:UIControlStateNormal];
+    [cloudButton setTitle:@"Store" forState:UIControlStateNormal];
     [cloudButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
     [cloudButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [cloudButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
+    [cloudButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1]];
     
     cloudButton.layer.borderColor = [UIColor blackColor].CGColor;
     cloudButton.layer.borderWidth = 0.0f;
-    cloudButton.layer.cornerRadius = 4.0f;
+    cloudButton.layer.cornerRadius = 3.0f;
     cloudButton.frame = CGRectMake(deviceButton.frame.origin.x+sourceButtonWidth, sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:cloudButton];
 
@@ -161,8 +130,8 @@
     previewButton.layer.borderColor = [UIColor blackColor].CGColor;
     previewButton.layer.borderWidth = 0.0f;
     previewButton.layer.cornerRadius = 4.0f;
-    previewButton.frame = CGRectMake(5, self.view.bounds.size.height - 50, (self.view.bounds.size.width / 2) - 10, 44);
-    [self.view addSubview:previewButton];
+    previewButton.frame = CGRectMake(5, [ResoAppDelegate windowHeight] - 50, ([ResoAppDelegate windowWidth] / 2) - 10, 44);
+    //[self.view addSubview:previewButton];
     
     //download
     downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -174,14 +143,14 @@
     downloadButton.layer.borderColor = [UIColor blackColor].CGColor;
     downloadButton.layer.borderWidth = 0.0f;
     downloadButton.layer.cornerRadius = 4.0f;
-    downloadButton.frame = CGRectMake(previewButton.frame.size.width + 15, self.view.bounds.size.height - 50, (self.view.bounds.size.width / 2) - 10, 44);
-    [self.view addSubview:downloadButton];
+    downloadButton.frame = CGRectMake(previewButton.frame.size.width + 15, [ResoAppDelegate windowHeight] - 50, ([ResoAppDelegate windowWidth] / 2) - 10, 44);
+    //[self.view addSubview:downloadButton];
     
     //progress bar
     progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     progressBar.progress = 0.0f;
-    progressBar.frame = CGRectMake(10, 65, self.view.bounds.size.width - 20, 25);
-    [self.view addSubview:progressBar];
+    progressBar.frame = CGRectMake(10, 65, [ResoAppDelegate windowWidth] - 20, 25);
+    //[self.view addSubview:progressBar];
     
   }
   return self;
@@ -190,6 +159,19 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[ResoMediaTransferManager instance] addDelegate:self];
+  if (refreshView) {
+    [self loadAvailableSoundsFromStore];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [[ResoMediaTransferManager instance] removeDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -240,6 +222,46 @@
       return;
     }
   }
+}
+
+-(void)loadAvailableSoundsFromStore
+{
+  [soundsData removeAllObjects];
+  [soundsView reloadData];
+  
+  ResoDataManager * rdm = [ResoDataManager instance];
+  
+  //get list of sounds on background thread
+  dispatch_async(global_queue, ^{
+    //init
+    NSManagedObjectContext * context;
+    NSPersistentStoreCoordinator * coordinator = [rdm persistentStoreCoordinator];
+    if (coordinator != nil) {
+      context = [[NSManagedObjectContext alloc] init];
+      [context setPersistentStoreCoordinator:coordinator];
+    }
+    
+    //1) fetch sounds from server
+    NSData * data = [NSData dataWithContentsOfURL:soundsUrl];
+    
+    //2) parse into json array
+    NSArray * sounds = [NSJSONSerialization
+                        JSONObjectWithData:data
+                        options:kNilOptions
+                        error:nil];
+    
+    //3) iterate sounds and create new record if needed
+    for(NSDictionary * sound in sounds) {
+      NSString * uuid = [sound objectForKey:@"uuid"];
+      if(![rdm soundExists:uuid withContext:context]) {
+        
+        //save sound record on main thread
+        [self performSelectorOnMainThread:@selector(saveSound:)
+                               withObject:sound waitUntilDone:NO];
+      }
+    }
+  });
+
 }
 
 -(void)loadAvailableSoundsFromDevice
@@ -332,17 +354,72 @@
   NSString * uuid = [sound objectForKey:@"uuid"];
   cellIdentifier = uuid;
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  ResoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil)
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    cell = [[ResoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   
-  cell.backgroundView = [[UIView alloc] init];
-  [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
+  cell.selectedBackgroundView = [[UIView alloc] init];
+  [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.15]];
+  
+  cell.layer.borderWidth = 0.0f;
+  cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05];
   
   cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
+  [cell.textLabel setTextColor:[UIColor whiteColor]];
+  [cell.textLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+  [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+  
   cell.imageView.image = [UIImage imageWithContentsOfFile:[[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
   
+  UIImageView * actionImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-chevron-right-small.png"]];
+  actionImage.frame = CGRectMake(cell.frame.size.width-50, 5, 50, 50);
+  actionImage.alpha = ICON_BUTTON_OPACITY / 2.0f;
+  [cell.contentView addSubview:actionImage];
+  
   return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  return 60.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  //get sound selected by user
+  NSMutableDictionary * sound = [soundsData objectAtIndex:indexPath.row];
+  
+  //initialize view
+  ResoModuleSoundDetailsViewController * rmsdvc = [[ResoModuleSoundDetailsViewController alloc] initWithNibName:nil bundle:nil];
+  
+  //pass sound details to view
+  [rmsdvc.soundDetails removeAllObjects];
+  [rmsdvc.soundDetails setObject:[sound objectForKey:@"uuid"] forKey:@"uuid"];
+  [rmsdvc.soundDetails setObject:[sound objectForKey:@"name"] forKey:@"name"];
+  [rmsdvc.soundDetails setObject:[sound objectForKey:@"description"] forKey:@"desc"];
+
+  rmsdvc.downloaded = false;
+  
+  [self ensureDeviceListIsOnNavigationStack];
+    
+  //push new view onto nav stack
+  [self.navigationController pushViewController:rmsdvc animated:YES];
+}
+
+-(void) ensureDeviceListIsOnNavigationStack
+{
+  //ensure device list view is on stack
+  bool found = false;
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleDeviceListViewController class]] ) {
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    ResoModuleDeviceListViewController * rmdlvc = [[ResoModuleDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:rmdlvc animated:NO];
+  }
 }
 
 #pragma mark -

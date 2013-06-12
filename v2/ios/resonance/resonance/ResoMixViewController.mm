@@ -58,7 +58,7 @@
     [self.view addSubview:playerButton];
   
     //mix list bar
-    mixListBar = [[ResoActionBar alloc] initWithFrame:titleFrame_offscreen withText:@"Mix List" withIconText:nil withIconColor:nil];
+    mixListBar = [[ResoActionBar alloc] initWithFrame:titleFrame_offscreen withText:@"Mix List" withIconText:nil withIconColor:nil withDirection:Forward];
     [mixListBar.actionButton addTarget:self action:@selector(showMixList:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mixListBar];
   
@@ -107,11 +107,11 @@
 - (void)calculateWidgetFrames
 {
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  playerButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
   //title
-  titleFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+  titleFrame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
   titleFrame_offscreen = CGRectMake(-(titleFrame.size.width), titleFrame.origin.y, titleFrame.size.width, titleFrame.size.height);
 }
 

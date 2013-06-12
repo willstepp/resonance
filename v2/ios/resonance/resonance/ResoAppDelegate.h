@@ -24,6 +24,9 @@
 @property (nonatomic, assign) int masterVolume;
 -(float)calculateActualVolume:(int)moduleVolume;
 
++(CGRect) windowFrame;
++(CGFloat) windowHeight;
++(CGFloat) windowWidth;
 
 -(NSString*)iosVersionForDownload;
 @end

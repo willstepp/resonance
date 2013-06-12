@@ -92,8 +92,8 @@
 - (void)calculateWidgetFrames
 {
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  playerButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
   //title
   titleFrame = CGRectMake(10, 0, 100, 50);

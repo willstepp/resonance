@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleToneGeneratorViewController.h"
 #import "ResoSettings.h"
+#import "ResoAppDelegate.h"
 
 @interface ResoModuleToneGeneratorViewController ()
 {
@@ -50,7 +51,7 @@
     [toneGeneratorButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
     toneGeneratorButton.layer.borderWidth = 0.0f;
     toneGeneratorButton.layer.cornerRadius = CORNER_RADIUS;
-    toneGeneratorButton.frame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+    toneGeneratorButton.frame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
     [self.view addSubview:toneGeneratorButton];
   }
   return self;

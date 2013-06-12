@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+
 #import "ResoAppDelegate.h"
 #import "ResoPlayerViewController.h"
 
@@ -423,10 +424,37 @@
           transitionState = state;
           currPlayerState = PlayerState_Transitioning;
           
+          [self updateAddModuleButtonAlpha];
+          
+          //2) fade in other modules + transition in menu items
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0.20
+                              options:UIViewAnimationOptionCurveEaseOut
+                           animations:^{
+                             if (moduleWidgets.count < MAX_NUM_MODULES) {
+                               addModuleButton.alpha = 1.0f;
+                               addModuleButton.titleLabel.alpha = 1.0f;
+                             }
+                             menuButton.frame = menuButtonFrame;
+                             visualButton.frame = visualButtonFrame;
+                             playerWidget.frame = playerWidgetFrame;
+                             for(ResoModuleWidget * rmw in moduleWidgets) {
+                               rmw.alpha = 1.0f;
+                               rmw.expandButton.alpha = PLAYER_ICON_OPACITY;
+                               bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
+                               rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
+                               rmw.volumeSlider.alpha = 1.0f;
+                             }
+                           } completion:^(BOOL finished) {
+                             if (finished) {
+                               [self completeTransition];
+                             }
+                           }];
+          
           //1) transition expanded module back to normal
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0.00
-                              options:UIViewAnimationOptionCurveEaseIn
+                                delay:0.0
+                              options:UIViewAnimationOptionCurveEaseOut
                            animations:^{
                              if (ad.currentModule == nil) {
                                addModuleButton.frame = expandedModuleFrame;
@@ -434,34 +462,9 @@
                                ResoModuleWidget * rmw = [self getModuleWithUuid:ad.currentModule];
                                rmw.frame = expandedModuleFrame;
                              }
-                             [addModuleButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
-                             
                            } completion:^(BOOL finished) {
                              if (finished) {
-                               //2) fade in other modules + transition in menu items
-                               [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                                     delay:0.0
-                                                   options:UIViewAnimationOptionCurveLinear
-                                                animations:^{
-                                                  if (moduleWidgets.count < MAX_NUM_MODULES) {
-                                                    addModuleButton.alpha = 1.0f;
-                                                    addModuleButton.titleLabel.alpha = 1.0f;
-                                                  }
-                                                  menuButton.frame = menuButtonFrame;
-                                                  visualButton.frame = visualButtonFrame;
-                                                  playerWidget.frame = playerWidgetFrame;
-                                                  for(ResoModuleWidget * rmw in moduleWidgets) {
-                                                    rmw.alpha = 1.0f;
-                                                    rmw.expandButton.alpha = PLAYER_ICON_OPACITY;
-                                                    bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
-                                                    rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
-                                                    rmw.volumeSlider.alpha = 1.0f;
-                                                  }
-                                                } completion:^(BOOL finished) {
-                                                  if (finished) {
-                                                    [self completeTransition];
-                                                  }
-                                                }];
+
                              }
                            }];
         }
@@ -485,7 +488,6 @@
                            playerWidget.frame = playerWidgetFrame_offscreen;
                          } completion:nil];
         [self transitionOutModules];
-        
         break;
       }
       case PlayerState_Module:
@@ -496,8 +498,21 @@
         ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
         NSString * currentModule = ad.currentModule;
         if (currentModule == nil) {
+          
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0.00
+                                delay:0
+                              options:UIViewAnimationOptionCurveEaseIn
+                           animations:^{
+                             addModuleButton.frame = overlayPanelWidgetFrame;
+                             [ad.visualization setActiveSound:nil];
+                           } completion:^(BOOL finished) {
+                             if (finished) {
+                               [self completeTransition];
+                             }
+                           }];
+
+          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                delay:0
                               options:UIViewAnimationOptionCurveLinear
                            animations:^{
                              menuButton.frame = menuButtonFrame_offscreen;
@@ -509,18 +524,7 @@
                                rmw.alpha = 0.0f;
                              }
                            } completion:^(BOOL finished){
-                             [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                                   delay:0.00
-                                                 options:UIViewAnimationOptionCurveEaseIn
-                                              animations:^{
-                                                addModuleButton.frame = overlayPanelWidgetFrame;
-                                                [ad.visualization setActiveSound:nil];
-                                              } completion:^(BOOL finished) {
-                                                if (finished) {
-                                                  [self completeTransition];
-                                                }
-                                              }];
-
+                             
                            }];
         } else {
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
@@ -699,35 +703,34 @@
 - (void)calculateWidgetFrames
 {
   [self calculateModuleWidgetFrames];
-   
+    
   //menu button
   menuButtonFrame = CGRectMake(0, 0, 50, 50);
   menuButtonFrame_offscreen = CGRectMake(-50, 0, 50, 50);
   
   //visual button
-  visualButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
-  visualButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  visualButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
+  visualButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
   //add module button
-  //addModuleButtonFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
   NSArray * frames = [moduleWidgetFrames objectForKey:[NSNumber numberWithInt:0]];
   addModuleButtonFrame = [[frames objectAtIndex:0] CGRectValue];
   addModuleButtonFrame_offscreen = moduleWidgetFrame_offscreen;
   
   //mix panel widget
-  mixPanelWidgetFrame = self.view.bounds;
-  mixPanelWidgetFrame_offscreen = CGRectMake(10, self.view.bounds.size.height - 10, 0, 0);
+  mixPanelWidgetFrame = [ResoAppDelegate windowFrame];
+  mixPanelWidgetFrame_offscreen = CGRectMake(10, [ResoAppDelegate windowHeight] - 10, 0, 0);
   
   //timer panel widget
-  timerPanelWidgetFrame = self.view.bounds;
-  timerPanelWidgetFrame_offscreen = CGRectMake(self.view.bounds.size.width-10, self.view.bounds.size.height - 10, 0, 0);
+  timerPanelWidgetFrame = [ResoAppDelegate windowFrame];
+  timerPanelWidgetFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]-10, [ResoAppDelegate windowHeight] - 10, 0, 0);
   
   //player widget
-  playerWidgetFrame = CGRectMake(0, self.view.bounds.size.height - PLAYER_WIDGET_HEIGHT, self.view.bounds.size.width, PLAYER_WIDGET_HEIGHT);
-  playerWidgetFrame_offscreen = CGRectMake(0, self.view.bounds.size.height + PLAYER_WIDGET_HEIGHT, self.view.bounds.size.width, PLAYER_WIDGET_HEIGHT);
+  playerWidgetFrame = CGRectMake(0, [ResoAppDelegate windowHeight] - PLAYER_WIDGET_HEIGHT, [ResoAppDelegate windowWidth], PLAYER_WIDGET_HEIGHT);
+  playerWidgetFrame_offscreen = CGRectMake(0, [ResoAppDelegate windowHeight] + PLAYER_WIDGET_HEIGHT, [ResoAppDelegate windowWidth], PLAYER_WIDGET_HEIGHT);
   
   //overlay
-  overlayPanelWidgetFrame = self.view.bounds;
+  overlayPanelWidgetFrame = CGRectMake(0, 0, [ResoAppDelegate windowWidth], [ResoAppDelegate windowHeight]);
   overlayPanelWidgetFrame_offscreen = CGRectMake(0, 0, 0, 0);
 }
 
@@ -744,7 +747,7 @@
   
   int moduleHeight = MODULE_HEIGHT;
   int moduleX = MODULE_X;
-  int moduleWidth = self.view.bounds.size.width - (moduleX * 2);
+  int moduleWidth = [ResoAppDelegate windowWidth] - (moduleX * 2);
   int moduleGap = MODULE_GAP;
   
   //offscreen
@@ -761,7 +764,7 @@
     int moduleBlockHeight = (num_modules * moduleHeight) + (num_module_gaps * moduleGap) + (moduleHeight / 2);
     
     //2) get y position of vertically centered block
-    float blockY = (self.view.bounds.size.height / 2.0f) - (moduleBlockHeight / 2.0f) - 5;
+    float blockY = ([ResoAppDelegate windowHeight] / 2.0f) - (moduleBlockHeight / 2.0f) - 5;
     
     //3) create frame for each module in current iteration
     for (int k = 0; k < num_modules; k++) {

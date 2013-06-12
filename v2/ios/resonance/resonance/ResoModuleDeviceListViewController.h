@@ -18,6 +18,8 @@
 @property (nonatomic, retain) UIButton * deviceButton;
 @property (nonatomic, retain) UIButton * cloudButton;
 
+@property (nonatomic, assign) bool refreshView;
+
 @property (nonatomic, retain) UIProgressView * progressBar;
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;

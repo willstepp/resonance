@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65029CC51763CFC70009B331 /* reso-bg-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65029CC31763CFC70009B331 /* reso-bg-blur@2.jpg */; };
-		65029CC61763CFC70009B331 /* reso-bg@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65029CC41763CFC70009B331 /* reso-bg@2.jpg */; };
+		65029CD11763F8C20009B331 /* reso-bg-blur@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65029CCF1763F8C20009B331 /* reso-bg-blur@2.jpg */; };
+		65029CD21763F8C20009B331 /* reso-bg@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 65029CD01763F8C20009B331 /* reso-bg@2.jpg */; };
 		650CF788175E616C0093BC83 /* icon-menu-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 650CF787175E616C0093BC83 /* icon-menu-small.png */; };
 		650CF78C175E63D10093BC83 /* icon-visual-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 650CF78B175E63D10093BC83 /* icon-visual-small.png */; };
 		650CF798175E7C790093BC83 /* ResoMediaTransfer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 650CF78F175E7C790093BC83 /* ResoMediaTransfer.mm */; };
@@ -34,6 +34,7 @@
 		65529124175E350400CA1C95 /* icon-chevron-right-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65529123175E350400CA1C95 /* icon-chevron-right-small.png */; };
 		65529126175E351000CA1C95 /* icon-chevron-left-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65529125175E351000CA1C95 /* icon-chevron-left-small.png */; };
 		65529128175E351900CA1C95 /* icon-play-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65529127175E351900CA1C95 /* icon-play-small.png */; };
+		656ACB451766314000E29789 /* ResoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 656ACB441766314000E29789 /* ResoTableViewCell.m */; };
 		6577FD4F175EE27900E435D6 /* reso-icon-117.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577FD4E175EE27900E435D6 /* reso-icon-117.png */; };
 		6577FD51175EE27D00E435D6 /* reso-icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577FD50175EE27D00E435D6 /* reso-icon-57.png */; };
 		657B42E6174E80DE00350854 /* ResoModuleManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42E5174E80DE00350854 /* ResoModuleManager.mm */; };
@@ -114,8 +115,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		65029CC31763CFC70009B331 /* reso-bg-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-bg-blur@2.jpg"; sourceTree = "<group>"; };
-		65029CC41763CFC70009B331 /* reso-bg@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-bg@2.jpg"; sourceTree = "<group>"; };
+		65029CCF1763F8C20009B331 /* reso-bg-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-bg-blur@2.jpg"; sourceTree = "<group>"; };
+		65029CD01763F8C20009B331 /* reso-bg@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "reso-bg@2.jpg"; sourceTree = "<group>"; };
 		650CF787175E616C0093BC83 /* icon-menu-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-menu-small.png"; sourceTree = "<group>"; };
 		650CF78B175E63D10093BC83 /* icon-visual-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-visual-small.png"; sourceTree = "<group>"; };
 		650CF78E175E7C790093BC83 /* ResoMediaTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMediaTransfer.h; sourceTree = "<group>"; };
@@ -157,8 +158,10 @@
 		65529123175E350400CA1C95 /* icon-chevron-right-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-chevron-right-small.png"; sourceTree = "<group>"; };
 		65529125175E351000CA1C95 /* icon-chevron-left-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-chevron-left-small.png"; sourceTree = "<group>"; };
 		65529127175E351900CA1C95 /* icon-play-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-play-small.png"; sourceTree = "<group>"; };
+		656ACB431766314000E29789 /* ResoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTableViewCell.h; sourceTree = "<group>"; };
+		656ACB441766314000E29789 /* ResoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoTableViewCell.m; sourceTree = "<group>"; };
 		6577FD4E175EE27900E435D6 /* reso-icon-117.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reso-icon-117.png"; sourceTree = "<group>"; };
-		6577FD50175EE27D00E435D6 /* reso-icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reso-icon-57.png"; sourceTree = "<group>"; };
+		6577FD50175EE27D00E435D6 /* reso-icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reso-icon-57.png"; path = "../reso-icon-57.png"; sourceTree = "<group>"; };
 		657B42E4174E80DE00350854 /* ResoModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleManager.h; sourceTree = "<group>"; };
 		657B42E5174E80DE00350854 /* ResoModuleManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleManager.mm; sourceTree = "<group>"; };
 		657B42E7174E80F000350854 /* ResoModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModule.h; sourceTree = "<group>"; };
@@ -250,7 +253,7 @@
 		65B4F9841759694A00A11EF5 /* ResoActionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoActionBar.h; sourceTree = "<group>"; };
 		65B4F9851759694A00A11EF5 /* ResoActionBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoActionBar.mm; sourceTree = "<group>"; };
 		65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoAlarmViewController.h; sourceTree = "<group>"; };
-		65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoAlarmViewController.mm; sourceTree = "<group>"; };
+		65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = ResoAlarmViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		65B4F98E175A87DC00A11EF5 /* ResoTimerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTimerViewController.h; sourceTree = "<group>"; };
 		65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoTimerViewController.mm; sourceTree = "<group>"; };
 		65B4F991175A9AFC00A11EF5 /* starlight-blur@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "starlight-blur@2.jpg"; sourceTree = "<group>"; };
@@ -268,7 +271,7 @@
 		65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixViewController.h; sourceTree = "<group>"; };
 		65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixViewController.mm; sourceTree = "<group>"; };
 		65E06A42174ADA8B00BE68A5 /* ResoClocksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoClocksViewController.h; sourceTree = "<group>"; };
-		65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoClocksViewController.mm; sourceTree = "<group>"; };
+		65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = ResoClocksViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		65E06A45174ADF0500BE68A5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		65E06A47174AE19E00BE68A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -383,7 +386,6 @@
 		658730A9174AC90D00D2B03E = {
 			isa = PBXGroup;
 			children = (
-				6577FD50175EE27D00E435D6 /* reso-icon-57.png */,
 				6577FD4E175EE27900E435D6 /* reso-icon-117.png */,
 				658730BD174AC90D00D2B03E /* resonance */,
 				658730B4174AC90D00D2B03E /* frameworks */,
@@ -423,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				658730C6174AC90D00D2B03E /* ResoAppDelegate.h */,
+				6577FD50175EE27D00E435D6 /* reso-icon-57.png */,
 				658730C7174AC90D00D2B03E /* ResoAppDelegate.mm */,
 				658A0FDC174BB149006E4605 /* ResoSettings.h */,
 				658A0FD8174B116F006E4605 /* ResoTypes.h */,
@@ -477,6 +480,8 @@
 				657B42F9174F0D8F00350854 /* ResoSlider.mm */,
 				65B4F9841759694A00A11EF5 /* ResoActionBar.h */,
 				65B4F9851759694A00A11EF5 /* ResoActionBar.mm */,
+				656ACB431766314000E29789 /* ResoTableViewCell.h */,
+				656ACB441766314000E29789 /* ResoTableViewCell.m */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -484,8 +489,8 @@
 		658A0FE8174BB369006E4605 /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				65029CC31763CFC70009B331 /* reso-bg-blur@2.jpg */,
-				65029CC41763CFC70009B331 /* reso-bg@2.jpg */,
+				65029CCF1763F8C20009B331 /* reso-bg-blur@2.jpg */,
+				65029CD01763F8C20009B331 /* reso-bg@2.jpg */,
 				650CF78B175E63D10093BC83 /* icon-visual-small.png */,
 				650CF787175E616C0093BC83 /* icon-menu-small.png */,
 				65529127175E351900CA1C95 /* icon-play-small.png */,
@@ -669,8 +674,8 @@
 				650CF78C175E63D10093BC83 /* icon-visual-small.png in Resources */,
 				6577FD4F175EE27900E435D6 /* reso-icon-117.png in Resources */,
 				6577FD51175EE27D00E435D6 /* reso-icon-57.png in Resources */,
-				65029CC51763CFC70009B331 /* reso-bg-blur@2.jpg in Resources */,
-				65029CC61763CFC70009B331 /* reso-bg@2.jpg in Resources */,
+				65029CD11763F8C20009B331 /* reso-bg-blur@2.jpg in Resources */,
+				65029CD21763F8C20009B331 /* reso-bg@2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,6 +730,7 @@
 				650CF7AE175E7CBC0093BC83 /* SSZipArchive.mm in Sources */,
 				650CF7B1175E7D250093BC83 /* NSMutableArray+QueueAdditions.mm in Sources */,
 				651475AA1760C3D700A3DBDA /* ResoModuleDeviceListViewController.mm in Sources */,
+				656ACB451766314000E29789 /* ResoTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

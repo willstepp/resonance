@@ -74,12 +74,12 @@
         [self.view addSubview:playerButton];
       
         //sound library bar
-        soundLibraryBar = [[ResoActionBar alloc] initWithFrame:soundLibraryFrame withText:@"Sound Library" withIconText:nil withIconColor:nil];
+        soundLibraryBar = [[ResoActionBar alloc] initWithFrame:soundLibraryFrame withText:@"Sound Library" withIconText:nil withIconColor:nil withDirection:Forward];
         [soundLibraryBar.actionButton addTarget:self action:@selector(showSoundLibrary:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:soundLibraryBar];
       
         //tone generator bar
-        toneGeneratorBar = [[ResoActionBar alloc] initWithFrame:toneGeneratorFrame  withText:@"Tone Generator" withIconText:nil withIconColor:nil];
+        toneGeneratorBar = [[ResoActionBar alloc] initWithFrame:toneGeneratorFrame  withText:@"Tone Generator" withIconText:nil withIconColor:nil withDirection:Forward];
         [toneGeneratorBar.actionButton addTarget:self action:@selector(showToneGenerator:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:toneGeneratorBar];
     }
@@ -181,9 +181,15 @@
 {
   ResoDataManager * rdm = [ResoDataManager instance];
   if ([rdm soundCount] > 0) {
+    ResoModuleCloudListViewController * cvc = [[ResoModuleCloudListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:cvc animated:NO];
+    
     ResoModuleDeviceListViewController * vc = [[ResoModuleDeviceListViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
   } else {
+    ResoModuleDeviceListViewController * dvc = [[ResoModuleDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:dvc animated:NO];
+    
     ResoModuleCloudListViewController * vc = [[ResoModuleCloudListViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
   }
@@ -203,15 +209,15 @@
   backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
   
   //player button
-  playerButtonFrame = CGRectMake(self.view.bounds.size.width-50, 0, 50, 50);
-  playerButtonFrame_offscreen = CGRectMake(self.view.bounds.size.width+50, 0, 50, 50);
+  playerButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
+  playerButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
   //sound library
-  soundLibraryFrame = CGRectMake(10, (self.view.bounds.size.height / 2) - 75, self.view.bounds.size.width - 20, 50);
+  soundLibraryFrame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 75, [ResoAppDelegate windowWidth] - 20, 50);
   soundLibraryFrame_offscreen = CGRectMake(-(soundLibraryFrame.size.width), soundLibraryFrame.origin.y, soundLibraryFrame.size.width, soundLibraryFrame.size.height);
   
   //tone generator
-  toneGeneratorFrame = CGRectMake(10, soundLibraryFrame.origin.y+60, self.view.bounds.size.width - 20, 50);
+  toneGeneratorFrame = CGRectMake(10, soundLibraryFrame.origin.y+60, [ResoAppDelegate windowWidth] - 20, 50);
   toneGeneratorFrame_offscreen = CGRectMake(-(toneGeneratorFrame.size.width), toneGeneratorFrame.origin.y, toneGeneratorFrame.size.width, toneGeneratorFrame.size.height);
 }
 

@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoAlarmViewController.h"
 #import "ResoSettings.h"
+#import "ResoAppDelegate.h"
 
 @interface ResoAlarmViewController ()
 {
@@ -48,7 +49,7 @@
     [alarmButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
     alarmButton.layer.borderWidth = 0.0f;
     alarmButton.layer.cornerRadius = CORNER_RADIUS;
-    alarmButton.frame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+    alarmButton.frame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
     [self.view addSubview:alarmButton];
   }
   return self;

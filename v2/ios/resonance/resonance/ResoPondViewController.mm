@@ -15,6 +15,8 @@
 #import "ResoSettings.h"
 #import "ResoFileManager.h"
 
+#import "ResoAppDelegate.h"
+
 // Uniform index.
 enum
 {
@@ -149,7 +151,6 @@ enum
   self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
   
   if (!self.context) {
-    NSLog(@"Failed to create ES context");
   }
   
   GLKView *view = (GLKView *)self.view;
@@ -188,7 +189,7 @@ enum
   }
   
   //load overlay view
-  overlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
+  overlay = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [ResoAppDelegate windowWidth], [ResoAppDelegate windowHeight])];
   overlay.alpha = 0.0f;
   [self.view addSubview:overlay];
   
@@ -329,11 +330,9 @@ enum
 
 - (void)changeActiveSound
 {
-  NSLog(@"changeActiveSound");
   if ([sounds count] > 0) {
   NSString * sound = [sounds objectAtIndex:(arc4random() % [sounds count])];
   if (![sound isEqualToString:activeSound] && currentState != Transitioning) {
-    NSLog(@"changeActiveSound to: %@", sound);
     [self transitionToSound:sound];
   } else {
     [self processOnDeckAction];
@@ -402,7 +401,6 @@ enum
 
 -(UIImage*)getSoundImage:(NSString*)uuid forState:(VisualizationState)vs
 {
-  NSLog(@"getSoundImage: %@", uuid);
   UIImage * soundImage = nil;
   if (uuid != nil) {
     //load sound image
@@ -482,7 +480,6 @@ enum
   activeSound = transitionSound;
   overlay.alpha = 0.0f;
   
-  NSLog(@"completeTransition");
   [self processOnDeckAction];
 }
 
@@ -490,16 +487,12 @@ enum
 {
   if (actionOnDeck) {
     if (onDeckAction == VisualizationAction_Transition) {
-      NSLog(@"processOnDeckAction: Transition");
       [self setActiveSound:onDeckSound];
     }
     if (onDeckAction == VisualizationAction_StateChange) {
-      NSLog(@"processOnDeckAction: StateChange");
       [self setVisualizationState:onDeckState];
     }
     actionOnDeck = false;
-  } else {
-    NSLog(@"processOnDeckAction: No Action");
   }
 }
 
@@ -508,8 +501,8 @@ enum
   if (_ripple)
   {
     CGPoint location;
-    location.x = arc4random_uniform(self.view.bounds.size.width);
-    location.y = arc4random_uniform(self.view.bounds.size.height);
+    location.x = arc4random_uniform([ResoAppDelegate windowWidth]);
+    location.y = arc4random_uniform([ResoAppDelegate windowHeight]);
     
     [_ripple initiateRippleAtLocation:location];
   }
@@ -694,7 +687,6 @@ enum
       [self notifyStateChanged:vs];
     }
   } else {
-    NSLog(@"setVisualizationState: On Deck Added");
     onDeckAction = VisualizationAction_StateChange;
     onDeckState = vs;
     actionOnDeck = true;
@@ -731,6 +723,7 @@ enum
 
 -(void)refreshVisual
 {
+  NSLog(@"refreshVisual");
   [self changeActiveSound];
 }
 
@@ -756,17 +749,14 @@ enum
 
 -(void)setActiveSound:(NSString*)uuid
 {
+  NSLog(@"setActiveSound");
   if (currentState != Transitioning) {
-    NSLog(@"setActiveSound: Current State is Not Transitioning");
     if (activeSound != uuid) {
-      NSLog(@"setActiveSound: Active Sound is Not Equal To: %@", uuid);
       [self transitionToSound:uuid];
       [self notifySoundChanged:uuid];
     } else {
-      NSLog(@"setActiveSound: Active Sound is Equal To: %@", uuid);
     }
   } else {
-    NSLog(@"setActiveSound: On Deck Added: %@", uuid);
     onDeckAction = VisualizationAction_Transition;
     onDeckSound = uuid;
     actionOnDeck = true;

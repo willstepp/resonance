@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoTypes.h"
 
 @interface ResoActionBar : UIView
-- (id)initWithFrame:(CGRect)frame withText:(NSString*)text withIconText:(NSString*)iconText withIconColor:(UIColor*)iconColor;
+- (id)initWithFrame:(CGRect)frame withText:(NSString*)text withIconText:(NSString*)iconText withIconColor:(UIColor*)iconColor withDirection:(WidgetDirection)wd;
 
 @property (nonatomic, retain) UILabel * iconLabel;
 @property (nonatomic, retain) UILabel * titleLabel;

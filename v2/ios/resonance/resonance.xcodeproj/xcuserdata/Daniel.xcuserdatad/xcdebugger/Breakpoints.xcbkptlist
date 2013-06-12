@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392409565.253277"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "351"
-         endingLineNumber = "351"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
          landmarkName = "-transitionToSound:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392409565.253277"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "379"
-         endingLineNumber = "379"
+         startingLineNumber = "376"
+         endingLineNumber = "376"
          landmarkName = "-transitionToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "641"
-         endingLineNumber = "641"
+         startingLineNumber = "645"
+         endingLineNumber = "645"
          landmarkName = "-transitionPlayerToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "706"
-         endingLineNumber = "706"
+         startingLineNumber = "710"
+         endingLineNumber = "710"
          landmarkName = "-calculateWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "774"
-         endingLineNumber = "774"
+         startingLineNumber = "778"
+         endingLineNumber = "778"
          landmarkName = "-calculateModuleWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "780"
-         endingLineNumber = "780"
+         startingLineNumber = "784"
+         endingLineNumber = "784"
          landmarkName = "-createModuleWidgets"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "778"
-         endingLineNumber = "778"
+         startingLineNumber = "782"
+         endingLineNumber = "782"
          landmarkName = "-calculateModuleWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "779"
-         endingLineNumber = "779"
+         startingLineNumber = "783"
+         endingLineNumber = "783"
          landmarkName = "@implementation ResoPlayerViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -216,11 +216,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "894"
-         endingLineNumber = "894"
+         startingLineNumber = "898"
+         endingLineNumber = "898"
          landmarkName = "-transitionOutModules"
          landmarkType = "5">
       </FileBreakpoint>
@@ -229,11 +229,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "893"
-         endingLineNumber = "893"
+         startingLineNumber = "897"
+         endingLineNumber = "897"
          landmarkName = "-transitionOutModules"
          landmarkType = "5">
       </FileBreakpoint>
@@ -242,11 +242,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "659"
-         endingLineNumber = "659"
+         startingLineNumber = "663"
+         endingLineNumber = "663"
          landmarkName = "-completeTransition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "781"
-         endingLineNumber = "781"
+         startingLineNumber = "785"
+         endingLineNumber = "785"
          landmarkName = "-createModuleWidgets"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "901"
-         endingLineNumber = "901"
+         startingLineNumber = "905"
+         endingLineNumber = "905"
          landmarkName = "-transitionOutModules"
          landmarkType = "5">
       </FileBreakpoint>
@@ -320,11 +320,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "828"
-         endingLineNumber = "828"
+         startingLineNumber = "832"
+         endingLineNumber = "832"
          landmarkName = "-createModuleWidgets"
          landmarkType = "5">
       </FileBreakpoint>
@@ -333,11 +333,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "700"
-         endingLineNumber = "700"
+         startingLineNumber = "704"
+         endingLineNumber = "704"
          landmarkName = "-calculateWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -359,11 +359,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "938"
-         endingLineNumber = "938"
+         startingLineNumber = "942"
+         endingLineNumber = "942"
          landmarkName = "-hideModulesOnscreen:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "943"
-         endingLineNumber = "943"
+         startingLineNumber = "947"
+         endingLineNumber = "947"
          landmarkName = "-hideModulesOnscreen:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -424,11 +424,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "434"
-         endingLineNumber = "434"
+         startingLineNumber = "461"
+         endingLineNumber = "461"
          landmarkName = "-transitionPlayerToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -450,11 +450,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392399815.132596"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "214"
-         endingLineNumber = "214"
+         startingLineNumber = "213"
+         endingLineNumber = "213"
          landmarkName = "-motionBegan:withEvent:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -463,11 +463,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392399815.132596"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "213"
-         endingLineNumber = "213"
+         startingLineNumber = "212"
+         endingLineNumber = "212"
          landmarkName = "-motionBegan:withEvent:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -502,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "521"
-         endingLineNumber = "521"
+         startingLineNumber = "518"
+         endingLineNumber = "518"
          landmarkName = "-transitionPlayerToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -515,11 +515,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "515"
-         endingLineNumber = "515"
+         startingLineNumber = "582"
+         endingLineNumber = "582"
          landmarkName = "-transitionPlayerToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -528,37 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "503"
-         endingLineNumber = "503"
-         landmarkName = "-transitionPlayerToState:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "578"
-         endingLineNumber = "578"
-         landmarkName = "-transitionPlayerToState:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "880"
-         endingLineNumber = "880"
+         startingLineNumber = "884"
+         endingLineNumber = "884"
          landmarkName = "-transitionOutModules"
          landmarkType = "5">
       </FileBreakpoint>
@@ -567,11 +541,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "896"
-         endingLineNumber = "896"
+         startingLineNumber = "900"
+         endingLineNumber = "900"
          landmarkName = "-transitionOutModules"
          landmarkType = "5">
       </FileBreakpoint>
@@ -580,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "660"
-         endingLineNumber = "660"
+         startingLineNumber = "664"
+         endingLineNumber = "664"
          landmarkName = "-completeTransition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -593,11 +567,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "672"
-         endingLineNumber = "672"
+         startingLineNumber = "676"
+         endingLineNumber = "676"
          landmarkName = "-completeTransition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -632,11 +606,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "650"
-         endingLineNumber = "650"
+         startingLineNumber = "654"
+         endingLineNumber = "654"
          landmarkName = "-completeTransition"
          landmarkType = "5">
       </FileBreakpoint>
@@ -658,11 +632,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "730"
-         endingLineNumber = "730"
+         startingLineNumber = "734"
+         endingLineNumber = "734"
          landmarkName = "-calculateWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -723,11 +697,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "573"
-         endingLineNumber = "573"
+         startingLineNumber = "577"
+         endingLineNumber = "577"
          landmarkName = "-transitionPlayerToState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -866,11 +840,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleCloudListViewController.mm"
-         timestampString = "392228021.023888"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "360"
-         endingLineNumber = "360"
+         startingLineNumber = "435"
+         endingLineNumber = "435"
          landmarkName = "-transferProgressUpdated:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -879,11 +853,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleCloudListViewController.mm"
-         timestampString = "392227916.206166"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "352"
-         endingLineNumber = "352"
+         startingLineNumber = "427"
+         endingLineNumber = "427"
          landmarkName = "-transferStarted:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -892,11 +866,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleCloudListViewController.mm"
-         timestampString = "392228021.023888"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "373"
-         endingLineNumber = "373"
+         startingLineNumber = "448"
+         endingLineNumber = "448"
          landmarkName = "-transferFinished:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -905,11 +879,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleCloudListViewController.mm"
-         timestampString = "392228021.023888"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "387"
-         endingLineNumber = "387"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
          landmarkName = "-transferError:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -918,24 +892,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392241427.86007"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
-         landmarkName = "-initWithNibName:bundle:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392401006.751728"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "374"
-         endingLineNumber = "374"
+         startingLineNumber = "439"
+         endingLineNumber = "439"
          landmarkName = "-transferStarted:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -944,37 +905,37 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392401006.751728"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "380"
-         endingLineNumber = "380"
-         landmarkName = "-transferProgressUpdated:"
-         landmarkType = "5">
+         startingLineNumber = "445"
+         endingLineNumber = "445"
+         landmarkName = "@implementation ResoModuleDeviceListViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392401006.751728"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "391"
-         endingLineNumber = "391"
-         landmarkName = "-transferFinished:"
-         landmarkType = "5">
+         startingLineNumber = "456"
+         endingLineNumber = "456"
+         landmarkName = "@implementation ResoModuleDeviceListViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392401006.751728"
+         timestampString = "392762830.754262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "383"
-         endingLineNumber = "383"
+         startingLineNumber = "448"
+         endingLineNumber = "448"
          landmarkName = "-transferProgressUpdated:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1009,11 +970,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392409565.253277"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "403"
-         endingLineNumber = "403"
+         startingLineNumber = "400"
+         endingLineNumber = "400"
          landmarkName = "-getSoundImage:forState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1022,11 +983,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPondViewController.mm"
-         timestampString = "392409565.253277"
+         timestampString = "392420113.744126"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "406"
-         endingLineNumber = "406"
+         startingLineNumber = "402"
+         endingLineNumber = "402"
          landmarkName = "-getSoundImage:forState:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1035,11 +996,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleDeviceListViewController.mm"
-         timestampString = "392401006.751728"
+         timestampString = "392761787.983654"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "204"
-         endingLineNumber = "204"
+         startingLineNumber = "220"
+         endingLineNumber = "220"
          landmarkName = "-loadSound:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1048,11 +1009,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoModuleViewController.mm"
-         timestampString = "392329879.664172"
+         timestampString = "392519803.534087"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "250"
-         endingLineNumber = "250"
+         startingLineNumber = "251"
+         endingLineNumber = "251"
          landmarkName = "-calculateWidgetFrames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1087,12 +1048,207 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "resonance/ResoPlayerViewController.mm"
-         timestampString = "392418947.904321"
+         timestampString = "392622114.987673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1014"
-         endingLineNumber = "1014"
+         startingLineNumber = "1018"
+         endingLineNumber = "1018"
          landmarkName = "-shiftModules:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "361"
+         endingLineNumber = "361"
+         landmarkName = "-playPreview:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "346"
+         endingLineNumber = "346"
+         landmarkName = "-previewSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "347"
+         endingLineNumber = "347"
+         landmarkName = "-previewSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "345"
+         endingLineNumber = "345"
+         landmarkName = "-previewSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "368"
+         endingLineNumber = "368"
+         landmarkName = "-downloadSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761006.287004"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "211"
+         endingLineNumber = "211"
+         landmarkName = "-viewWillAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "310"
+         endingLineNumber = "310"
+         landmarkName = "-loadSound:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "449"
+         endingLineNumber = "449"
+         landmarkName = "-transferProgressUpdated:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "440"
+         endingLineNumber = "440"
+         landmarkName = "-transferStarted:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoSlider.mm"
+         timestampString = "392752779.570429"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
+         landmarkName = "-updateValue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "450"
+         endingLineNumber = "450"
+         landmarkName = "-transferProgressUpdated:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "382"
+         endingLineNumber = "382"
+         landmarkName = "-downloadComplete:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392761787.983654"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "464"
+         endingLineNumber = "464"
+         landmarkName = "-transferFinished:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392759619.843459"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
+         landmarkName = "-viewDidLoad"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "resonance/ResoModuleSoundDetailsViewController.mm"
+         timestampString = "392762059.888428"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "-goBack:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

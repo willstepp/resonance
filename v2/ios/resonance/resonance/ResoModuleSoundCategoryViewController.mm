@@ -10,6 +10,7 @@
 #import "ResoModuleSoundCategoryViewController.h"
 #import "ResoSettings.h"
 #import "ResoModuleCloudListViewController.h"
+#import "ResoAppDelegate.h"
 
 @interface ResoModuleSoundCategoryViewController ()
 {
@@ -46,7 +47,7 @@
       [self.view addSubview:backButton];
       
       //sound library bar
-      soundListBar = [[ResoActionBar alloc] initWithFrame:CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50) withText:@"Sounds List" withIconText:nil withIconColor:nil];
+      soundListBar = [[ResoActionBar alloc] initWithFrame:CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50) withText:@"Sounds List" withIconText:nil withIconColor:nil withDirection:Forward];
       [soundListBar.actionButton addTarget:self action:@selector(showSoundsList:) forControlEvents:UIControlEventTouchUpInside];
       [self.view addSubview:soundListBar];
     }

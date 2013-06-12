@@ -27,7 +27,7 @@
 {
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
   
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   currPlayerState = PlayerState_Visual;
   _currentModule = nil;
   _currentModulePosition = -1;
@@ -157,6 +157,21 @@ NSString * deviceName()
   }
   
   return version;
+}
+
++ (CGRect) windowFrame
+{
+  return [UIScreen mainScreen].applicationFrame;
+}
+
++ (CGFloat) windowHeight
+{
+  return [UIScreen mainScreen].applicationFrame.size.height;
+}
+
++ (CGFloat) windowWidth
+{
+  return [UIScreen mainScreen].applicationFrame.size.width;
 }
 
 @end

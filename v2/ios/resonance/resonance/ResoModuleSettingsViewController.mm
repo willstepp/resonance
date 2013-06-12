@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ResoModuleSettingsViewController.h"
 #import "ResoSettings.h"
+#import "ResoAppDelegate.h"
 
 @interface ResoModuleSettingsViewController ()
 {
@@ -49,7 +50,7 @@
       [settingsButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
       settingsButton.layer.borderWidth = 0.0f;
       settingsButton.layer.cornerRadius = CORNER_RADIUS;
-      settingsButton.frame = CGRectMake(10, (self.view.bounds.size.height / 2) - 50, self.view.bounds.size.width - 20, 50);
+      settingsButton.frame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
       [self.view addSubview:settingsButton];
     }
     return self;

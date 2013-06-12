@@ -32,6 +32,9 @@
 #import "ISound.h"
 #import "IResoVisualization.h"
 
+#import "ResoModuleSoundDetailsViewController.h"
+#import "ResoTableViewCell.h"
+
 @interface ResoModuleDeviceListViewController ()
 {
   UITableView * soundsView;
@@ -49,6 +52,7 @@
 @end
 
 @implementation ResoModuleDeviceListViewController
+@synthesize refreshView;
 @synthesize backButton, removeButton, redownloadButton, loadButton, progressBar, deviceButton, cloudButton;
 @synthesize managedObjectContext;
 
@@ -56,12 +60,8 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    
-    static bool initialized = false;
-    if (!initialized) {
-      [[ResoMediaTransferManager instance] addDelegate:self];
-      initialized = true;
-    }
+
+    refreshView = false;
     
     mediaTransfer = nil;
     [self calculateWidgetFrames];
@@ -70,10 +70,12 @@
     [self loadAvailableSoundsFromDevice];
     
     //set up table view
-    soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, 90, self.view.bounds.size.width, self.view.bounds.size.height - 210) style:UITableViewStylePlain];
+    soundsView = [[UITableView alloc] initWithFrame:CGRectMake(0, backButtonFrame.size.height+10, [ResoAppDelegate windowWidth], [ResoAppDelegate windowHeight]-(backButtonFrame.size.height-10)) style:UITableViewStylePlain];
     soundsView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     soundsView.delegate = self;
     soundsView.dataSource = self;
+    soundsView.separatorColor = [UIColor clearColor];
+    [soundsView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
     [soundsView reloadData];
     
     [self.view addSubview:soundsView];
@@ -95,7 +97,7 @@
     backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
     
-    float sourceButtonWidth = self.view.bounds.size.width / 4.0f;
+    float sourceButtonWidth = [ResoAppDelegate windowWidth] / 4.0f;
     float sourceButtonHeight = 35.0f;
     float sourceButtonGap = 7.0f;
     
@@ -104,22 +106,22 @@
     [deviceButton setTitle:@"Device" forState:UIControlStateNormal];
     [deviceButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
     [deviceButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
-    [deviceButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.075]];
+    [deviceButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1]];
     deviceButton.layer.borderWidth = 0.0f;
-    deviceButton.layer.cornerRadius = 4.0f;
-    deviceButton.frame = CGRectMake(self.view.bounds.size.width - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
+    deviceButton.layer.cornerRadius = 3.0f;
+    deviceButton.frame = CGRectMake([ResoAppDelegate windowWidth] - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:deviceButton];
     
     //cloud button
     cloudButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cloudButton setTitle:@"Cloud" forState:UIControlStateNormal];
+    [cloudButton setTitle:@"Store" forState:UIControlStateNormal];
     [cloudButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
     [cloudButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [cloudButton addTarget:self action:@selector(showCloudList:) forControlEvents:UIControlEventTouchUpInside];
     [cloudButton setBackgroundColor:[UIColor clearColor]];
     cloudButton.layer.borderColor = [UIColor blackColor].CGColor;
     cloudButton.layer.borderWidth = 0.0f;
-    cloudButton.layer.cornerRadius = 4.0f;
+    cloudButton.layer.cornerRadius = 3.0f;
     cloudButton.frame = CGRectMake(deviceButton.frame.origin.x+sourceButtonWidth, sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:cloudButton];
     
@@ -133,8 +135,8 @@
     removeButton.layer.borderColor = [UIColor blackColor].CGColor;
     removeButton.layer.borderWidth = 0.0f;
     removeButton.layer.cornerRadius = 4.0f;
-    removeButton.frame = CGRectMake(5, self.view.bounds.size.height - 110, (self.view.bounds.size.width / 2) - 10, 44);
-    [self.view addSubview:removeButton];
+    removeButton.frame = CGRectMake(5, [ResoAppDelegate windowWidth] - 110, ([ResoAppDelegate windowHeight] / 2) - 10, 44);
+    //[self.view addSubview:removeButton];
     
     //redownload
     redownloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,8 +148,8 @@
     redownloadButton.layer.borderColor = [UIColor blackColor].CGColor;
     redownloadButton.layer.borderWidth = 0.0f;
     redownloadButton.layer.cornerRadius = 4.0f;
-    redownloadButton.frame = CGRectMake(removeButton.frame.size.width + 15, self.view.bounds.size.height - 110, (self.view.bounds.size.width / 2) - 10, 44);
-    [self.view addSubview:redownloadButton];
+    redownloadButton.frame = CGRectMake(removeButton.frame.size.width + 15, [ResoAppDelegate windowHeight] - 110, ([ResoAppDelegate windowWidth] / 2) - 10, 44);
+    //[self.view addSubview:redownloadButton];
     
     //load
     loadButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -159,14 +161,14 @@
     loadButton.layer.borderColor = [UIColor blackColor].CGColor;
     loadButton.layer.borderWidth = 0.0f;
     loadButton.layer.cornerRadius = 4.0f;
-    loadButton.frame = CGRectMake(5, self.view.bounds.size.height - 55, self.view.bounds.size.width - 10, 44);
-    [self.view addSubview:loadButton];
+    loadButton.frame = CGRectMake(5, [ResoAppDelegate windowHeight] - 55, [ResoAppDelegate windowWidth] - 10, 44);
+    //[self.view addSubview:loadButton];
     
     //progress bar
     progressBar = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     progressBar.progress = 0.0f;
-    progressBar.frame = CGRectMake(10, 65, self.view.bounds.size.width - 20, 25);
-    [self.view addSubview:progressBar];
+    progressBar.frame = CGRectMake(10, 65, [ResoAppDelegate windowWidth] - 20, 25);
+    //[self.view addSubview:progressBar];
     
   }
   return self;
@@ -175,6 +177,20 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[ResoMediaTransferManager instance] addDelegate:self];
+  if (refreshView) {
+    [self loadAvailableSoundsFromDevice];
+    [soundsView reloadData];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [[ResoMediaTransferManager instance] removeDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -353,17 +369,69 @@
   NSString * uuid = [sound objectForKey:@"uuid"];
   cellIdentifier = uuid;
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  ResoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil)
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    cell = [[ResoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   
-  cell.backgroundView = [[UIView alloc] init];
-  [cell.backgroundView setBackgroundColor:[UIColor clearColor]];
+  cell.selectedBackgroundView = [[UIView alloc] init];
+  [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.15]];
+  
+  cell.layer.borderWidth = 0.0f;
+  
+  cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05];
   
   cell.textLabel.text = [NSString stringWithFormat:@"%@", [sound objectForKey:@"name"]];
+  [cell.textLabel setTextColor:[UIColor whiteColor]];
+  [cell.textLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
+  [cell.textLabel setBackgroundColor:[UIColor clearColor]];
+  
   cell.imageView.image = [UIImage imageWithContentsOfFile:[[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
   
+  UIImageView * actionImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-chevron-right-small.png"]];
+  actionImage.frame = CGRectMake(cell.frame.size.width-50, 5, 50, 50);
+  actionImage.alpha = ICON_BUTTON_OPACITY / 2.0f;
+  [cell.contentView addSubview:actionImage];
+  
   return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  return 60.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  //get sound selected by user
+  NSMutableDictionary * sound = [soundsData objectAtIndex:indexPath.row];
+  
+  //initialize view
+  ResoModuleSoundDetailsViewController * rmsdvc = [[ResoModuleSoundDetailsViewController alloc] initWithNibName:nil bundle:nil];
+  
+  //pass sound details to view
+  rmsdvc.soundDetails = sound;
+  rmsdvc.downloaded = true;
+  
+  [self ensureCloudListIsOnNavigationStack];
+  
+  //push new view onto nav stack
+  [self.navigationController pushViewController:rmsdvc animated:YES];
+}
+
+-(void) ensureCloudListIsOnNavigationStack
+{
+  //ensure cloud list view is on stack
+  bool found = false;
+  for (UIViewController * viewController in self.navigationController.viewControllers) {
+    if ([viewController isKindOfClass:[ResoModuleCloudListViewController class]] ) {
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    ResoModuleCloudListViewController * rmclvc = [[ResoModuleCloudListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:rmclvc animated:NO];
+  }
 }
 
 #pragma mark -

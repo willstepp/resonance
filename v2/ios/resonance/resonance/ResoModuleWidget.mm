@@ -46,7 +46,7 @@
       [expandButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
       expandButton.layer.borderWidth = 0.0f;
       expandButton.layer.cornerRadius = CORNER_RADIUS / 2.0f;
-      expandButton.frame = CGRectMake(frame.size.width-50, 0, 50, 50);
+      expandButton.frame = CGRectMake(frame.size.width-50, 3, 50, 50);
       [self addSubview:expandButton];
       
       toggleRemoveButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -69,7 +69,7 @@
       //volume slider
       int width = self.bounds.size.width / 1.6f;
       int height = 44;
-      volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(toggleRemoveButton.frame.size.width+20, (frame.size.height / 2) - 23, width, height) withOrientation:Horizontal withCornerRadius:1.0f];
+      volumeSlider = [[ResoSlider alloc]initWithFrame:CGRectMake(toggleRemoveButton.frame.size.width+20, (frame.size.height / 2) - 21, width, height) withOrientation:Horizontal withCornerRadius:1.0f];
       volumeSlider.minValue = 0;
       volumeSlider.maxValue = 100;
       [volumeSlider setValue:50];
@@ -84,7 +84,7 @@
       [removeButton setTitle:@"Remove" forState:UIControlStateNormal];
       [removeButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
       [removeButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:1.0] forState:UIControlStateNormal];
-      [removeButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
+      [removeButton setBackgroundColor:[UIColor colorWithRed:0.025 green:0.025 blue:0.025 alpha:1.0]];
       removeButton.layer.borderWidth = 0.0f;
       removeButton.layer.cornerRadius = CORNER_RADIUS;
       removeButton.frame = removeButtonFrame_offscreen;

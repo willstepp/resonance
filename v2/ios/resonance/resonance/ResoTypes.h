@@ -10,6 +10,16 @@
 #define resonance_ResoTypes_h
 
 typedef enum {
+  Forward,
+  Backward
+} WidgetDirection;
+
+typedef enum {
+  SoundLocation_Store,
+  SoundLocation_Device
+} SoundLocation;
+
+typedef enum {
   VisualizationAction_Transition,
   VisualizationAction_StateChange
 } VisualizationAction;
