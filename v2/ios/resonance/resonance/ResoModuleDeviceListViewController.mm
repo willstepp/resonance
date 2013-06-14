@@ -97,9 +97,9 @@
     backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
     
-    float sourceButtonWidth = [ResoAppDelegate windowWidth] / 4.0f;
-    float sourceButtonHeight = 35.0f;
-    float sourceButtonGap = 7.0f;
+    float sourceButtonWidth = [ResoAppDelegate windowWidth] / 4.5f;
+    float sourceButtonHeight = 30.0f;
+    float sourceButtonGap = 10.0f;
     
     //device button
     deviceButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -108,20 +108,20 @@
     [deviceButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [deviceButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1]];
     deviceButton.layer.borderWidth = 0.0f;
-    deviceButton.layer.cornerRadius = 3.0f;
+    deviceButton.layer.cornerRadius = CORNER_RADIUS;
     deviceButton.frame = CGRectMake([ResoAppDelegate windowWidth] - (sourceButtonWidth * 2) - (sourceButtonGap), sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:deviceButton];
     
     //cloud button
     cloudButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cloudButton setTitle:@"Store" forState:UIControlStateNormal];
+    [cloudButton setTitle:@"Cloud" forState:UIControlStateNormal];
     [cloudButton.titleLabel setFont:[UIFont systemFontOfSize:FONT_SIZE * 0.85]];
     [cloudButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
     [cloudButton addTarget:self action:@selector(showCloudList:) forControlEvents:UIControlEventTouchUpInside];
     [cloudButton setBackgroundColor:[UIColor clearColor]];
     cloudButton.layer.borderColor = [UIColor blackColor].CGColor;
     cloudButton.layer.borderWidth = 0.0f;
-    cloudButton.layer.cornerRadius = 3.0f;
+    cloudButton.layer.cornerRadius = CORNER_RADIUS;
     cloudButton.frame = CGRectMake(deviceButton.frame.origin.x+sourceButtonWidth, sourceButtonGap, sourceButtonWidth, sourceButtonHeight);
     [self.view addSubview:cloudButton];
     

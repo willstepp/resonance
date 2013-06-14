@@ -22,16 +22,20 @@
 #import "ResoMediaTransferManager.h"
 #import "ResoModuleCloudListViewController.h"
 #import "ResoModuleDeviceListViewController.h"
+#import "ResoPlayerViewController.h"
 
 @interface ResoModuleSoundDetailsViewController ()
 {
   CGRect backButtonFrame;
   CGRect backButtonFrame_offscreen;
+  
+  CGRect viewPanelFrame;
+  CGRect viewPanelFrame_offscreen;
 }
 @end
 
 @implementation ResoModuleSoundDetailsViewController
-@synthesize backButton, soundDetails, soundTitleLabel, soundImageView, titlePanel, devicePanel, devicePreviewButton, removeButton, deviceDescriptionTextView, loadButton, returnBar, storePanel, downloadProgress, storeDescriptionTextView, storePreviewButton, downloadButton;
+@synthesize backButton, soundDetails, soundTitleLabel, soundImageView, titlePanel, devicePanel, devicePreviewButton, removeButton, deviceDescriptionTextView, loadButton, returnButton, storePanel, downloadProgress, storeDescriptionTextView, storePreviewButton, downloadButton, viewPanel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,16 +66,21 @@
   
   backButton.layer.borderColor = [UIColor blackColor].CGColor;
   backButton.layer.borderWidth = 0.0f;
-  backButton.layer.cornerRadius = 4.0f;
+  backButton.layer.cornerRadius = CORNER_RADIUS;
   backButton.frame = backButtonFrame;
   [self.view addSubview:backButton];
   
+  //view panel
+  viewPanel = [[UIView alloc] initWithFrame:viewPanelFrame];
+  [viewPanel setBackgroundColor:[UIColor clearColor]];
+  [self.view addSubview:viewPanel];
+  
   //title panel
-  titlePanel = [[UIView alloc] initWithFrame:CGRectMake(10, backButton.frame.size.height+5, [ResoAppDelegate windowWidth] - 20, SLICE_IMAGE_HEIGHT)];
+  titlePanel = [[UIView alloc] initWithFrame:CGRectMake(10, 5, [ResoAppDelegate windowWidth] - 20, SLICE_IMAGE_HEIGHT)];
   titlePanel.layer.cornerRadius = CORNER_RADIUS;
   [titlePanel setClipsToBounds:YES];
-  [titlePanel setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1]];
-  [self.view addSubview:titlePanel];
+  [titlePanel setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.15]];
+  [viewPanel addSubview:titlePanel];
   
   //sound image
   soundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 75, 75)];
@@ -96,7 +105,7 @@
   devicePanel = [[UIView alloc] initWithFrame:CGRectMake(10, titlePanel.frame.origin.y+titlePanel.frame.size.height+10, [ResoAppDelegate windowWidth] - 20, [ResoAppDelegate windowHeight] - (backButton.frame.size.height+titlePanel.frame.size.height+25))];
   [devicePanel setBackgroundColor:[UIColor clearColor]];
   devicePanel.alpha = 0.0f;
-  [self.view addSubview:devicePanel];
+  [viewPanel addSubview:devicePanel];
   
   //device: preview button
   devicePreviewButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -107,7 +116,7 @@
   
   devicePreviewButton.layer.borderColor = [UIColor blackColor].CGColor;
   devicePreviewButton.layer.borderWidth = 0.0f;
-  devicePreviewButton.layer.cornerRadius = 4.0f;
+  devicePreviewButton.layer.cornerRadius = CORNER_RADIUS;
   devicePreviewButton.frame = CGRectMake(0, 0, (devicePanel.frame.size.width / 2.0f) - 5, 44);
   [devicePanel addSubview:devicePreviewButton];
   
@@ -120,7 +129,7 @@
   
   removeButton.layer.borderColor = [UIColor blackColor].CGColor;
   removeButton.layer.borderWidth = 0.0f;
-  removeButton.layer.cornerRadius = 4.0f;
+  removeButton.layer.cornerRadius = CORNER_RADIUS;
   removeButton.frame = CGRectMake(devicePreviewButton.frame.size.width+10, 0, (devicePanel.frame.size.width / 2.0f) - 5, 44);
   [devicePanel addSubview:removeButton];
   
@@ -140,21 +149,30 @@
   
   loadButton.layer.borderColor = [UIColor blackColor].CGColor;
   loadButton.layer.borderWidth = 0.0f;
-  loadButton.layer.cornerRadius = 4.0f;
+  loadButton.layer.cornerRadius = CORNER_RADIUS;
   loadButton.frame = CGRectMake(0, devicePanel.frame.size.height - 50, devicePanel.frame.size.width, 50);
   [devicePanel addSubview:loadButton];
   
-  //device: return bar
-  returnBar = [[ResoActionBar alloc] initWithFrame:CGRectMake(0, devicePanel.frame.size.height - 50, devicePanel.frame.size.width, 50) withText:@"Return to Module" withIconText:nil withIconColor:nil withDirection:Backward];
-  [returnBar.actionButton addTarget:self action:@selector(returnToModule:) forControlEvents:UIControlEventTouchUpInside];
-  returnBar.alpha = 0.0f;
-  [devicePanel addSubview:returnBar];
-  
+  //device: return button
+  returnButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [returnButton setAdjustsImageWhenHighlighted:NO];
+  [returnButton addTarget:self action:@selector(returnToPlayer:) forControlEvents:UIControlEventTouchUpInside];
+  [returnButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+  [returnButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1]];
+  returnButton.alpha = 0.0f;
+  returnButton.layer.borderColor = [UIColor blackColor].CGColor;
+  returnButton.layer.borderWidth = 0.0f;
+  returnButton.layer.cornerRadius = CORNER_RADIUS;
+  returnButton.frame = CGRectMake(0, devicePanel.frame.size.height - 50, devicePanel.frame.size.width, 50);
+  returnButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+  [returnButton setImage:[UIImage imageNamed:@"icon-play-small.png"] forState:UIControlStateNormal];
+  [devicePanel addSubview:returnButton];
+
   //store: panel
   storePanel = [[UIView alloc] initWithFrame:CGRectMake(10, titlePanel.frame.origin.y+titlePanel.frame.size.height+10, [ResoAppDelegate windowWidth] - 20, [ResoAppDelegate windowHeight] - (backButton.frame.size.height+titlePanel.frame.size.height+25))];
   [devicePanel setBackgroundColor:[UIColor clearColor]];
   storePanel.alpha = 1.0f;
-  [self.view addSubview:storePanel];
+  [viewPanel addSubview:storePanel];
   
   //store: progress
   downloadProgress = [[ResoSlider alloc]initWithFrame:CGRectMake(0, 0, storePanel.frame.size.width, 44) withOrientation:Horizontal withCornerRadius:1.0f];
@@ -192,7 +210,7 @@
   
   downloadButton.layer.borderColor = [UIColor blackColor].CGColor;
   downloadButton.layer.borderWidth = 0.0f;
-  downloadButton.layer.cornerRadius = 4.0f;
+  downloadButton.layer.cornerRadius = CORNER_RADIUS;
   downloadButton.frame = CGRectMake(storePreviewButton.frame.size.width+10, storePanel.frame.size.height-44, (storePanel.frame.size.width / 2.0f) - 5, 44);
   [storePanel addSubview:downloadButton];
 }
@@ -275,21 +293,46 @@
 {
   //back button
   backButtonFrame = CGRectMake(0, 0, 50, 50);
+  backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
+  
+  //view panel
+  viewPanelFrame = CGRectMake(0, backButtonFrame.size.height, [ResoAppDelegate windowWidth], ([ResoAppDelegate windowHeight] - backButtonFrame.size.height));
+  viewPanelFrame_offscreen = CGRectMake(viewPanelFrame.size.width, viewPanelFrame.origin.y, viewPanelFrame.size.width, viewPanelFrame.size.height);
 }
 
-- (void)returnToModule:(id)sender
+- (void)returnToPlayer:(id)sender
+{
+  [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                        delay:0.00
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     backButton.frame = backButtonFrame_offscreen;
+                     viewPanel.frame = viewPanelFrame_offscreen;
+                   } completion:^(BOOL finished) {
+                     if (finished) {
+                       ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
+                       [ad.visualization enableTransitions:true];
+                       if (ad.currentModule == nil) {
+                         [ad.visualization refreshVisual];
+                       }
+                       [self showPlayer];
+                     }
+                   }];
+}
+
+- (void)showPlayer
 {
   //This for loop iterates through all the view controllers in navigation stack.
   for (UIViewController * viewController in self.navigationController.viewControllers) {
     
     //This if condition checks whether the viewController's class is MyGroupViewController
     // if true that means its the MyGroupViewController (which has been pushed at some point)
-    if ([viewController isKindOfClass:[ResoModuleViewController class]] ) {
+    if ([viewController isKindOfClass:[ResoPlayerViewController class]] ) {
       
       // Here viewController is a reference of UIViewController base class of MyGroupViewController
       // but viewController holds MyGroupViewController  object so we can type cast it here
-      ResoModuleViewController * rmvc = (ResoModuleViewController*)viewController;
-      [self.navigationController popToViewController:rmvc animated:YES];
+      ResoPlayerViewController * rpvc = (ResoPlayerViewController*)viewController;
+      [self.navigationController popToViewController:rpvc animated:NO];
     }
   }
 }
@@ -298,9 +341,9 @@
 {
   if (show) {
     loadButton.alpha = 0.0f;
-    returnBar.alpha = 1.0f;
+    returnButton.alpha = 1.0f;
   } else {
-    returnBar.alpha = 0.0f;
+    returnButton.alpha = 0.0f;
     loadButton.alpha = 1.0f;
   }
 }

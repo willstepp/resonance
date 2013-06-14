@@ -249,7 +249,7 @@
   
   //properties panel
   float panelHeight = ([ResoAppDelegate windowHeight] - (playerButton.frame.size.height+changeSoundBar.frame.size.height+settingsBar.frame.size.height+10)) / 1.5f;
-  propertiesPanelFrame = CGRectMake(0, playerButtonFrame.size.height-5, [ResoAppDelegate windowHeight], panelHeight);
+  propertiesPanelFrame = CGRectMake(0, playerButtonFrame.size.height-5, [ResoAppDelegate windowWidth], panelHeight);
   
   propertiesPanelFrame_offscreen = CGRectMake(-(propertiesPanelFrame.size.width), propertiesPanelFrame.origin.y, propertiesPanelFrame.size.width, propertiesPanelFrame.size.height);
   

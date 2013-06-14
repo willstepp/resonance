@@ -19,6 +19,8 @@
 @property (nonatomic, retain) NSMutableDictionary * soundDetails;
 @property (nonatomic, assign) bool downloaded;
 
+@property (nonatomic, retain) UIView * viewPanel;
+
 @property (nonatomic, retain) UIView * titlePanel;
 @property (nonatomic, retain) UILabel * soundTitleLabel;
 @property (nonatomic, retain) UIImageView * soundImageView;
@@ -28,7 +30,7 @@
 @property (nonatomic, retain) UIButton * removeButton;
 @property (nonatomic, retain) UITextView * deviceDescriptionTextView;
 @property (nonatomic, retain) UIButton * loadButton;
-@property (nonatomic, retain) ResoActionBar * returnBar;
+@property (nonatomic, retain) UIButton * returnButton;
 
 @property (nonatomic, retain) UIView * storePanel;
 @property (nonatomic, retain) ResoSlider * downloadProgress;

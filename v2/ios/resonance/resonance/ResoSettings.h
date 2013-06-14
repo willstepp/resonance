@@ -43,7 +43,7 @@
 
 #define FONT_SIZE 15.0f
 
-#define CORNER_RADIUS 2.0f
+#define CORNER_RADIUS 4.0f
 
 #define WIDGET_RED 0.0f
 #define WIDGET_GREEN 0.0f

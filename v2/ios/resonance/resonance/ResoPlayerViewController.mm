@@ -426,31 +426,6 @@
           
           [self updateAddModuleButtonAlpha];
           
-          //2) fade in other modules + transition in menu items
-          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0.20
-                              options:UIViewAnimationOptionCurveEaseOut
-                           animations:^{
-                             if (moduleWidgets.count < MAX_NUM_MODULES) {
-                               addModuleButton.alpha = 1.0f;
-                               addModuleButton.titleLabel.alpha = 1.0f;
-                             }
-                             menuButton.frame = menuButtonFrame;
-                             visualButton.frame = visualButtonFrame;
-                             playerWidget.frame = playerWidgetFrame;
-                             for(ResoModuleWidget * rmw in moduleWidgets) {
-                               rmw.alpha = 1.0f;
-                               rmw.expandButton.alpha = PLAYER_ICON_OPACITY;
-                               bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
-                               rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
-                               rmw.volumeSlider.alpha = 1.0f;
-                             }
-                           } completion:^(BOOL finished) {
-                             if (finished) {
-                               [self completeTransition];
-                             }
-                           }];
-          
           //1) transition expanded module back to normal
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                                 delay:0.0
@@ -464,7 +439,30 @@
                              }
                            } completion:^(BOOL finished) {
                              if (finished) {
-
+                               //2) fade in other modules + transition in menu items
+                               [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                                     delay:0
+                                                   options:UIViewAnimationOptionCurveEaseOut
+                                                animations:^{
+                                                  if (moduleWidgets.count < MAX_NUM_MODULES) {
+                                                    addModuleButton.alpha = 1.0f;
+                                                    addModuleButton.titleLabel.alpha = 1.0f;
+                                                  }
+                                                  menuButton.frame = menuButtonFrame;
+                                                  visualButton.frame = visualButtonFrame;
+                                                  playerWidget.frame = playerWidgetFrame;
+                                                  for(ResoModuleWidget * rmw in moduleWidgets) {
+                                                    rmw.alpha = 1.0f;
+                                                    rmw.expandButton.alpha = PLAYER_ICON_OPACITY;
+                                                    bool activeSound = [[ad.visualization activeSound] isEqualToString:rmw.soundUuid];
+                                                    rmw.toggleRemoveButton.alpha = activeSound ? MODULE_THUMB_OPACITY_ACTIVE : MODULE_THUMB_OPACITY_ACTIVE;
+                                                    rmw.volumeSlider.alpha = 1.0f;
+                                                  }
+                                                } completion:^(BOOL finished) {
+                                                  if (finished) {
+                                                    [self completeTransition];
+                                                  }
+                                                }];
                              }
                            }];
         }
@@ -498,18 +496,6 @@
         ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
         NSString * currentModule = ad.currentModule;
         if (currentModule == nil) {
-          
-          [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
-                                delay:0
-                              options:UIViewAnimationOptionCurveEaseIn
-                           animations:^{
-                             addModuleButton.frame = overlayPanelWidgetFrame;
-                             [ad.visualization setActiveSound:nil];
-                           } completion:^(BOOL finished) {
-                             if (finished) {
-                               [self completeTransition];
-                             }
-                           }];
 
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                                 delay:0
@@ -524,7 +510,17 @@
                                rmw.alpha = 0.0f;
                              }
                            } completion:^(BOOL finished){
-                             
+                             [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
+                                                   delay:0
+                                                 options:UIViewAnimationOptionCurveEaseIn
+                                              animations:^{
+                                                addModuleButton.frame = overlayPanelWidgetFrame;
+                                                [ad.visualization setActiveSound:nil];
+                                              } completion:^(BOOL finished) {
+                                                if (finished) {
+                                                  [self completeTransition];
+                                                }
+                                              }];
                            }];
         } else {
           [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
