@@ -742,6 +742,12 @@ enum
   [sounds removeObject:uuid];
 }
 
+-(void)clearSounds
+{
+  [sounds removeAllObjects];
+  [self refreshVisual];
+}
+
 -(NSString*)activeSound
 {
   return activeSound;

@@ -787,6 +787,7 @@
   
   for (id key in rrm.modules) {
     ResoModule * rm = [rrm.modules objectForKey:key];
+    NSLog(@"module uuid: %@", rm.moduleUuid);
     if ([rm loaded] && ![rm.moduleUuid isEqualToString:@"preview"]) {
       ResoModuleWidget * rmw = [[ResoModuleWidget alloc] initWithFrame:moduleWidgetFrame_offscreen withSound:rm.soundUuid];
       [rmw.volumeSlider setValue:[rm.sound volume] * 100];

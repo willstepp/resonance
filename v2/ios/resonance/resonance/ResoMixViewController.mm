@@ -10,23 +10,27 @@
 #import "ResoMixViewController.h"
 #import "ResoSettings.h"
 
-#import "ResoMixListViewController.h"
+#import "ResoMixDeviceListViewController.h"
+#import "ResoMixCloudListViewController.h"
 
 #import "ResoAppDelegate.h"
 #import "IResoVisualization.h"
+
+#import "ResoDataManager.h"
+#import "ResoMixManager.h"
 
 @interface ResoMixViewController ()
 {
   CGRect playerButtonFrame;
   CGRect playerButtonFrame_offscreen;
   
-  CGRect titleFrame;
-  CGRect titleFrame_offscreen;
+  CGRect viewPanelFrame;
+  CGRect viewPanelFrame_offscreen;
 }
 @end
 
 @implementation ResoMixViewController
-@synthesize playerButton, mixListBar;
+@synthesize playerButton, mixListBar, viewPanel, currentMixPanel, currentMixTitle, currentMixThumb, currentMixButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,21 +61,76 @@
     playerButton.frame = playerButtonFrame_offscreen;
     [self.view addSubview:playerButton];
   
+    //view panel
+    viewPanel = [[UIView alloc] initWithFrame:viewPanelFrame_offscreen];
+    [viewPanel setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:viewPanel];
+  
+    //title panel
+    currentMixPanel = [[UIView alloc] initWithFrame:CGRectMake(10, 5, [ResoAppDelegate windowWidth] - 20, ([ResoAppDelegate windowHeight] / 2.0f))];
+    currentMixPanel.layer.cornerRadius = CORNER_RADIUS;
+    [currentMixPanel setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
+    [viewPanel addSubview:currentMixPanel];
+  
+    //mix title
+    currentMixTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, currentMixPanel.frame.size.width-20, 60)];
+    [currentMixTitle setBackgroundColor:[UIColor clearColor]];
+    [currentMixTitle setFont:[UIFont systemFontOfSize:(FONT_SIZE*1.15)]];
+    [currentMixTitle setTextColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA]];
+    [currentMixTitle setLineBreakMode:NSLineBreakByWordWrapping];
+    [currentMixTitle setNumberOfLines:3];
+    [currentMixTitle setText:@"Current Mix"];
+    [currentMixPanel addSubview:currentMixTitle];
+  
+    //mix image
+    currentMixThumb = [[UIImageView alloc] initWithFrame:CGRectMake(10, currentMixTitle.frame.size.height, 75, 75)];
+    currentMixThumb.layer.cornerRadius = CORNER_RADIUS;
+    currentMixThumb.layer.shadowColor = [UIColor blackColor].CGColor;
+    currentMixThumb.layer.shadowOffset = CGSizeMake(0, 1);
+    currentMixThumb.layer.shadowOpacity = 1;
+    currentMixThumb.layer.shadowRadius = 1.0;
+    [currentMixThumb setClipsToBounds:NO];
+    [currentMixThumb setBackgroundColor:[UIColor blackColor]];
+    [currentMixPanel addSubview:currentMixThumb];
+  
+    //save mix button
+    currentMixButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [currentMixButton setTitle:@"Save Mix" forState:UIControlStateNormal];
+    [currentMixButton addTarget:self action:@selector(initSaveMix:) forControlEvents:UIControlEventTouchUpInside];
+    [currentMixButton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [currentMixButton setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
+    
+    currentMixButton.layer.borderColor = [UIColor blackColor].CGColor;
+    currentMixButton.layer.borderWidth = 0.0f;
+    currentMixButton.layer.cornerRadius = CORNER_RADIUS;
+    currentMixButton.frame = CGRectMake(10, (currentMixPanel.frame.size.height-54), (currentMixPanel.frame.size.width - 20), 44);
+    [currentMixPanel addSubview:currentMixButton];
+  
     //mix list bar
-    mixListBar = [[ResoActionBar alloc] initWithFrame:titleFrame_offscreen withText:@"Mix List" withIconText:nil withIconColor:nil withDirection:Forward];
-    [mixListBar.actionButton addTarget:self action:@selector(showMixList:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:mixListBar];
+    mixListBar = [[ResoActionBar alloc] initWithFrame:CGRectMake(10, viewPanel.frame.size.height - 60, viewPanel.frame.size.width-20, 50) withText:@"Mix Library" withIconText:nil withIconColor:nil withDirection:Forward];
+    [mixListBar.actionButton addTarget:self action:@selector(showMixLibrary:) forControlEvents:UIControlEventTouchUpInside];
+    [viewPanel addSubview:mixListBar];
   
     [UIView animateWithDuration:PLAYER_TRANSITION_DURATION_FAST
                           delay:0.00
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                        playerButton.frame = playerButtonFrame;
-                       mixListBar.frame = titleFrame;
+                       viewPanel.frame = viewPanelFrame;
                      } completion:^(BOOL finished) {
                        if (finished) {
                        }
                      }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,7 +146,7 @@
                       options:UIViewAnimationOptionCurveEaseOut
                    animations:^{
                      playerButton.frame = playerButtonFrame_offscreen;
-                     mixListBar.frame = titleFrame_offscreen;
+                     viewPanel.frame = viewPanelFrame_offscreen;
                    } completion:^(BOOL finished) {
                      if (finished) {
                        ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
@@ -98,10 +157,37 @@
                    }];
 }
 
-- (void)showMixList:(id)sender
+- (void)showMixLibrary:(id)sender
 {
-  ResoMixListViewController * rmlvc = [[ResoMixListViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:rmlvc animated:YES];
+  ResoDataManager * rdm = [ResoDataManager instance];
+  if ([rdm mixCount] > 0) {
+    ResoMixCloudListViewController * cvc = [[ResoMixCloudListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:cvc animated:NO];
+    
+    ResoMixDeviceListViewController * vc = [[ResoMixDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+  } else {
+    ResoMixDeviceListViewController * dvc = [[ResoMixDeviceListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:dvc animated:NO];
+    
+    ResoMixCloudListViewController * vc = [[ResoMixCloudListViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:vc animated:YES];
+  }
+}
+
+-(void)initSaveMix:(id)sender
+{
+  //prompt for name of mix
+  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Mix Name" message:@"Give your mix a name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+  alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+  alertView.delegate = self;
+  [alertView show];
+}
+
+-(void)saveMixWithName:(NSString*)name
+{
+  ResoMixManager * rmm = [ResoMixManager instance];
+  [rmm saveMix:name];
 }
 
 - (void)calculateWidgetFrames
@@ -110,9 +196,17 @@
   playerButtonFrame = CGRectMake([ResoAppDelegate windowWidth]-50, 0, 50, 50);
   playerButtonFrame_offscreen = CGRectMake([ResoAppDelegate windowWidth]+50, 0, 50, 50);
   
-  //title
-  titleFrame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
-  titleFrame_offscreen = CGRectMake(-(titleFrame.size.width), titleFrame.origin.y, titleFrame.size.width, titleFrame.size.height);
+  //view panel
+  viewPanelFrame = CGRectMake(0, playerButtonFrame.size.height, [ResoAppDelegate windowWidth], ([ResoAppDelegate windowHeight] - playerButtonFrame.size.height));
+  viewPanelFrame_offscreen = CGRectMake(-(viewPanelFrame.size.width), viewPanelFrame.origin.y, viewPanelFrame.size.width, viewPanelFrame.size.height);
+}
+
+#pragma uialertviewdelegate methods
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+  if (buttonIndex == 1) {
+    [self saveMixWithName:[alertView textFieldAtIndex:0].text];
+  }
 }
 
 @end

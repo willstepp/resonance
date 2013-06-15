@@ -35,6 +35,10 @@
 		65529126175E351000CA1C95 /* icon-chevron-left-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65529125175E351000CA1C95 /* icon-chevron-left-small.png */; };
 		65529128175E351900CA1C95 /* icon-play-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65529127175E351900CA1C95 /* icon-play-small.png */; };
 		656ACB451766314000E29789 /* ResoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 656ACB441766314000E29789 /* ResoTableViewCell.m */; };
+		65743013176CB63D009C1199 /* ResoMixCloudListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65743012176CB63D009C1199 /* ResoMixCloudListViewController.mm */; };
+		65743016176CB656009C1199 /* ResoMixDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65743015176CB656009C1199 /* ResoMixDetailsViewController.mm */; };
+		6574301E176CBFB0009C1199 /* ResoMixManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6574301D176CBFB0009C1199 /* ResoMixManager.mm */; };
+		65743021176CBFFF009C1199 /* ResoThumbnailGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 65743020176CBFFE009C1199 /* ResoThumbnailGenerator.m */; };
 		6577FD4F175EE27900E435D6 /* reso-icon-117.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577FD4E175EE27900E435D6 /* reso-icon-117.png */; };
 		6577FD51175EE27D00E435D6 /* reso-icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 6577FD50175EE27D00E435D6 /* reso-icon-57.png */; };
 		657B42E6174E80DE00350854 /* ResoModuleManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657B42E5174E80DE00350854 /* ResoModuleManager.mm */; };
@@ -94,7 +98,7 @@
 		65B4F9761759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9751759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm */; };
 		65B4F9791759192E00A11EF5 /* ResoDataManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9781759192E00A11EF5 /* ResoDataManager.mm */; };
 		65B4F97C175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */; };
-		65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */; };
+		65B4F97F17591A0A00A11EF5 /* ResoMixDeviceListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F97E17591A0A00A11EF5 /* ResoMixDeviceListViewController.mm */; };
 		65B4F9861759694A00A11EF5 /* ResoActionBar.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F9851759694A00A11EF5 /* ResoActionBar.mm */; };
 		65B4F98D175A87CB00A11EF5 /* ResoAlarmViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */; };
 		65B4F990175A87DE00A11EF5 /* ResoTimerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */; };
@@ -160,6 +164,14 @@
 		65529127175E351900CA1C95 /* icon-play-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-play-small.png"; sourceTree = "<group>"; };
 		656ACB431766314000E29789 /* ResoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoTableViewCell.h; sourceTree = "<group>"; };
 		656ACB441766314000E29789 /* ResoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoTableViewCell.m; sourceTree = "<group>"; };
+		65743011176CB63D009C1199 /* ResoMixCloudListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixCloudListViewController.h; sourceTree = "<group>"; };
+		65743012176CB63D009C1199 /* ResoMixCloudListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixCloudListViewController.mm; sourceTree = "<group>"; };
+		65743014176CB656009C1199 /* ResoMixDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixDetailsViewController.h; sourceTree = "<group>"; };
+		65743015176CB656009C1199 /* ResoMixDetailsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixDetailsViewController.mm; sourceTree = "<group>"; };
+		6574301C176CBFAF009C1199 /* ResoMixManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixManager.h; sourceTree = "<group>"; };
+		6574301D176CBFB0009C1199 /* ResoMixManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixManager.mm; sourceTree = "<group>"; };
+		6574301F176CBFFE009C1199 /* ResoThumbnailGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoThumbnailGenerator.h; sourceTree = "<group>"; };
+		65743020176CBFFE009C1199 /* ResoThumbnailGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResoThumbnailGenerator.m; sourceTree = "<group>"; };
 		6577FD4E175EE27900E435D6 /* reso-icon-117.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reso-icon-117.png"; sourceTree = "<group>"; };
 		6577FD50175EE27D00E435D6 /* reso-icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reso-icon-57.png"; path = "../reso-icon-57.png"; sourceTree = "<group>"; };
 		657B42E4174E80DE00350854 /* ResoModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleManager.h; sourceTree = "<group>"; };
@@ -248,8 +260,8 @@
 		65B4F9781759192E00A11EF5 /* ResoDataManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoDataManager.mm; sourceTree = "<group>"; };
 		65B4F97A175919B800A11EF5 /* ResoModuleToneGeneratorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoModuleToneGeneratorViewController.h; sourceTree = "<group>"; };
 		65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoModuleToneGeneratorViewController.mm; sourceTree = "<group>"; };
-		65B4F97D17591A0A00A11EF5 /* ResoMixListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixListViewController.h; sourceTree = "<group>"; };
-		65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixListViewController.mm; sourceTree = "<group>"; };
+		65B4F97D17591A0A00A11EF5 /* ResoMixDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoMixDeviceListViewController.h; sourceTree = "<group>"; };
+		65B4F97E17591A0A00A11EF5 /* ResoMixDeviceListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoMixDeviceListViewController.mm; sourceTree = "<group>"; };
 		65B4F9841759694A00A11EF5 /* ResoActionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoActionBar.h; sourceTree = "<group>"; };
 		65B4F9851759694A00A11EF5 /* ResoActionBar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResoActionBar.mm; sourceTree = "<group>"; };
 		65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResoAlarmViewController.h; sourceTree = "<group>"; };
@@ -364,6 +376,75 @@
 				654E4E13174ACAEE00389576 /* ResoPondViewController.mm */,
 			);
 			name = visualization;
+			sourceTree = "<group>";
+		};
+		65743017176CB6B7009C1199 /* mixes */ = {
+			isa = PBXGroup;
+			children = (
+				65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */,
+				65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */,
+				65B4F97D17591A0A00A11EF5 /* ResoMixDeviceListViewController.h */,
+				65B4F97E17591A0A00A11EF5 /* ResoMixDeviceListViewController.mm */,
+				65743011176CB63D009C1199 /* ResoMixCloudListViewController.h */,
+				65743012176CB63D009C1199 /* ResoMixCloudListViewController.mm */,
+				65743014176CB656009C1199 /* ResoMixDetailsViewController.h */,
+				65743015176CB656009C1199 /* ResoMixDetailsViewController.mm */,
+			);
+			name = mixes;
+			sourceTree = "<group>";
+		};
+		65743018176CB6F3009C1199 /* clocks */ = {
+			isa = PBXGroup;
+			children = (
+				65E06A42174ADA8B00BE68A5 /* ResoClocksViewController.h */,
+				65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */,
+				65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */,
+				65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */,
+				65B4F98E175A87DC00A11EF5 /* ResoTimerViewController.h */,
+				65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */,
+			);
+			name = clocks;
+			sourceTree = "<group>";
+		};
+		65743019176CB707009C1199 /* menu */ = {
+			isa = PBXGroup;
+			children = (
+				658A1003174D6610006E4605 /* ResoMenuViewController.h */,
+				658A1004174D6610006E4605 /* ResoMenuViewController.mm */,
+			);
+			name = menu;
+			sourceTree = "<group>";
+		};
+		6574301A176CB70F009C1199 /* visual */ = {
+			isa = PBXGroup;
+			children = (
+				658A0FD9174B1643006E4605 /* ResoVisualViewController.h */,
+				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
+			);
+			name = visual;
+			sourceTree = "<group>";
+		};
+		6574301B176CB71B009C1199 /* module */ = {
+			isa = PBXGroup;
+			children = (
+				65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */,
+				65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */,
+				65B4F96817590E8800A11EF5 /* ResoModuleSettingsViewController.h */,
+				65B4F96917590E8800A11EF5 /* ResoModuleSettingsViewController.mm */,
+				65B4F96B17590FB200A11EF5 /* ResoModuleTypeViewController.h */,
+				65B4F96C17590FB200A11EF5 /* ResoModuleTypeViewController.mm */,
+				65B4F96E1759102B00A11EF5 /* ResoModuleSoundCategoryViewController.h */,
+				65B4F96F1759102B00A11EF5 /* ResoModuleSoundCategoryViewController.mm */,
+				65B4F9711759104900A11EF5 /* ResoModuleCloudListViewController.h */,
+				65B4F9721759104900A11EF5 /* ResoModuleCloudListViewController.mm */,
+				65B4F9741759106300A11EF5 /* ResoModuleSoundDetailsViewController.h */,
+				65B4F9751759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm */,
+				65B4F97A175919B800A11EF5 /* ResoModuleToneGeneratorViewController.h */,
+				65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */,
+				651475A81760C3D700A3DBDA /* ResoModuleDeviceListViewController.h */,
+				651475A91760C3D700A3DBDA /* ResoModuleDeviceListViewController.mm */,
+			);
+			name = module;
 			sourceTree = "<group>";
 		};
 		657B42EA174E813D00350854 /* sound */ = {
@@ -537,42 +618,21 @@
 		65E06A38174AD92700BE68A5 /* app */ = {
 			isa = PBXGroup;
 			children = (
+				6574301B176CB71B009C1199 /* module */,
+				6574301A176CB70F009C1199 /* visual */,
+				65743019176CB707009C1199 /* menu */,
+				65743018176CB6F3009C1199 /* clocks */,
+				65743017176CB6B7009C1199 /* mixes */,
 				65E06A39174AD93D00BE68A5 /* ResoPlayerViewController.h */,
 				65E06A3A174AD93D00BE68A5 /* ResoPlayerViewController.mm */,
-				65E06A3C174ADA5400BE68A5 /* ResoModuleViewController.h */,
-				65E06A3D174ADA5400BE68A5 /* ResoModuleViewController.mm */,
-				65E06A3F174ADA7700BE68A5 /* ResoMixViewController.h */,
-				65E06A40174ADA7700BE68A5 /* ResoMixViewController.mm */,
-				65E06A42174ADA8B00BE68A5 /* ResoClocksViewController.h */,
-				65E06A43174ADA8B00BE68A5 /* ResoClocksViewController.mm */,
-				658A0FD9174B1643006E4605 /* ResoVisualViewController.h */,
-				658A0FDA174B1643006E4605 /* ResoVisualViewController.mm */,
-				658A1003174D6610006E4605 /* ResoMenuViewController.h */,
-				658A1004174D6610006E4605 /* ResoMenuViewController.mm */,
 				657B42E4174E80DE00350854 /* ResoModuleManager.h */,
 				657B42E5174E80DE00350854 /* ResoModuleManager.mm */,
 				657B42E7174E80F000350854 /* ResoModule.h */,
 				657B42E8174E80F000350854 /* ResoModule.mm */,
-				65B4F96817590E8800A11EF5 /* ResoModuleSettingsViewController.h */,
-				65B4F96917590E8800A11EF5 /* ResoModuleSettingsViewController.mm */,
-				65B4F96B17590FB200A11EF5 /* ResoModuleTypeViewController.h */,
-				65B4F96C17590FB200A11EF5 /* ResoModuleTypeViewController.mm */,
-				65B4F96E1759102B00A11EF5 /* ResoModuleSoundCategoryViewController.h */,
-				65B4F96F1759102B00A11EF5 /* ResoModuleSoundCategoryViewController.mm */,
-				65B4F9711759104900A11EF5 /* ResoModuleCloudListViewController.h */,
-				65B4F9721759104900A11EF5 /* ResoModuleCloudListViewController.mm */,
-				65B4F9741759106300A11EF5 /* ResoModuleSoundDetailsViewController.h */,
-				65B4F9751759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm */,
-				65B4F97A175919B800A11EF5 /* ResoModuleToneGeneratorViewController.h */,
-				65B4F97B175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm */,
-				65B4F97D17591A0A00A11EF5 /* ResoMixListViewController.h */,
-				65B4F97E17591A0A00A11EF5 /* ResoMixListViewController.mm */,
-				65B4F98B175A87C800A11EF5 /* ResoAlarmViewController.h */,
-				65B4F98C175A87C900A11EF5 /* ResoAlarmViewController.mm */,
-				65B4F98E175A87DC00A11EF5 /* ResoTimerViewController.h */,
-				65B4F98F175A87DD00A11EF5 /* ResoTimerViewController.mm */,
-				651475A81760C3D700A3DBDA /* ResoModuleDeviceListViewController.h */,
-				651475A91760C3D700A3DBDA /* ResoModuleDeviceListViewController.mm */,
+				6574301C176CBFAF009C1199 /* ResoMixManager.h */,
+				6574301D176CBFB0009C1199 /* ResoMixManager.mm */,
+				6574301F176CBFFE009C1199 /* ResoThumbnailGenerator.h */,
+				65743020176CBFFE009C1199 /* ResoThumbnailGenerator.m */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -713,7 +773,7 @@
 				65B4F9761759106300A11EF5 /* ResoModuleSoundDetailsViewController.mm in Sources */,
 				65B4F9791759192E00A11EF5 /* ResoDataManager.mm in Sources */,
 				65B4F97C175919B900A11EF5 /* ResoModuleToneGeneratorViewController.mm in Sources */,
-				65B4F97F17591A0A00A11EF5 /* ResoMixListViewController.mm in Sources */,
+				65B4F97F17591A0A00A11EF5 /* ResoMixDeviceListViewController.mm in Sources */,
 				65B4F9861759694A00A11EF5 /* ResoActionBar.mm in Sources */,
 				65B4F98D175A87CB00A11EF5 /* ResoAlarmViewController.mm in Sources */,
 				65B4F990175A87DE00A11EF5 /* ResoTimerViewController.mm in Sources */,
@@ -731,6 +791,10 @@
 				650CF7B1175E7D250093BC83 /* NSMutableArray+QueueAdditions.mm in Sources */,
 				651475AA1760C3D700A3DBDA /* ResoModuleDeviceListViewController.mm in Sources */,
 				656ACB451766314000E29789 /* ResoTableViewCell.m in Sources */,
+				65743013176CB63D009C1199 /* ResoMixCloudListViewController.mm in Sources */,
+				65743016176CB656009C1199 /* ResoMixDetailsViewController.mm in Sources */,
+				6574301E176CBFB0009C1199 /* ResoMixManager.mm in Sources */,
+				65743021176CBFFF009C1199 /* ResoThumbnailGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

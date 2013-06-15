@@ -76,4 +76,15 @@ static ResoModuleManager * rmm = nil;
     }
   }
 }
+
+-(void)unloadCurrentMix
+{
+  NSArray * keys = [modules allKeys];
+  for (id key in keys) {
+    NSString * k = (NSString*)key;
+    if (![k isEqualToString:@"preview"]) {
+      [self removeModuleWithUuid:k];
+    }
+  }
+}
 @end

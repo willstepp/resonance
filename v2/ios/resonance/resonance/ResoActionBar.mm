@@ -54,6 +54,8 @@
         actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [actionButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:0.0]];
         actionButton.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+        [actionButton addTarget:self action:@selector(highlightButton:) forControlEvents:UIControlEventTouchDown];
+        [actionButton addTarget:self action:@selector(unhighlightButton:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
         [self addSubview:actionButton];
     }
     return self;
@@ -77,6 +79,16 @@
   }
   
   return nil;
+}
+
+- (void)highlightButton:(id)sender
+{
+  [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.10]];
+}
+
+- (void)unhighlightButton:(id)sender
+{
+  [self setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
 }
 
 @end

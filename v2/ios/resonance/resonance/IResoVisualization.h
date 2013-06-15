@@ -36,6 +36,7 @@
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
 -(void)removeSound:(NSString*)uuid;
+-(void)clearSounds;
 
 -(bool)inputEnabled;
 -(void)setInputEnabled:(bool)enabled;

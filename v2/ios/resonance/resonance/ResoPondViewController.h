@@ -26,6 +26,7 @@
 -(NSArray*)sounds;
 -(void)addSound:(NSString*)uuid;
 -(void)removeSound:(NSString*)uuid;
+-(void)clearSounds;
 
 -(NSString*)activeSound;
 -(void)setActiveSound:(NSString*)uuid;

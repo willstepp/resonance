@@ -18,4 +18,6 @@
 
 -(void)pauseModules;
 -(void)playModules;
+
+-(void)unloadCurrentMix;
 @end
