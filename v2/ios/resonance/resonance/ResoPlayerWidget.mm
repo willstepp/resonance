@@ -77,37 +77,22 @@
 -(void)togglePlayPause:(id)sender
 {
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  ResoModuleManager * rmm = [ResoModuleManager instance];
   if (ad.playing)
   {
+    [ad pauseAll];
     [playButton setImage:[UIImage imageNamed:@"icon-play-large.png"] forState:UIControlStateNormal];
-    [rmm pauseModules];
   }
   else
   {
     [playButton setImage:[UIImage imageNamed:@"icon-pause-large.png"] forState:UIControlStateNormal];
-    [rmm playModules];
+    [ad playAll];
   }
-  ad.playing = !ad.playing;
 }
 
 -(void)volumeChanged:(id)sender
 {
-  //update master volume
   ResoAppDelegate * ad = (ResoAppDelegate*)[[UIApplication sharedApplication]delegate];
-  ad.masterVolume = volumeSlider.value;
-  NSLog(@"masterVolume: %i", ad.masterVolume);
-  
-  //update all current modules based on new volume
-  ResoModuleManager * rmm = [ResoModuleManager instance];
-  for (id key in rmm.modules) {
-    ResoModule * rm = [rmm.modules objectForKey:key];
-    int moduleVolume = rm.volume;
-    NSLog(@"moduleVolume: %i", moduleVolume);
-    float actualVolume = [ad calculateActualVolume:rm.volume];
-    NSLog(@"actualVolume: %f", actualVolume);
-    [rm updateVolume:actualVolume];
-  }
+  [ad updateMasterVolume:volumeSlider.value];
 }
 
 @end

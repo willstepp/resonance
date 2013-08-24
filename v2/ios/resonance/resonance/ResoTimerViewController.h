@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResoTimer.h"
 
-@interface ResoTimerViewController : UIViewController
+@interface ResoTimerViewController : UIViewController  <ResoTimerDelegate>
 @property (nonatomic, retain) UIButton * backButton;
-@property (nonatomic, retain) UIButton * timerButton;
+
+@property (nonatomic, retain) UIView * chooseTimePanel;
+@property (nonatomic, retain) UIDatePicker * timePicker;
+@property (nonatomic, retain) UIButton * startTimerbutton;
+
+@property (nonatomic, retain) UIView * countdownPanel;
+@property (nonatomic, retain) UILabel * countdownLabel;
+@property (nonatomic, retain) UIButton * cancelTimerbutton;
+@property (nonatomic, retain) UIButton * pauseTimerbutton;
 @end

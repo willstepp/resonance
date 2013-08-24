@@ -16,6 +16,11 @@
 @property (nonatomic, retain) UIButton * shareButton;
 @property (nonatomic, retain) UIButton * loadButton;
 
+@property (nonatomic, assign) bool refreshView;
+
+@property (nonatomic, retain) UIButton * deviceButton;
+@property (nonatomic, retain) UIButton * cloudButton;
+
 @property (nonatomic, retain) UIProgressView * progressBar;
 
 #pragma mark -

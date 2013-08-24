@@ -19,7 +19,7 @@
 @end
 
 @implementation ResoTimerViewController
-@synthesize backButton, timerButton;
+@synthesize backButton, chooseTimePanel, startTimerbutton, timePicker, countdownPanel, countdownLabel, cancelTimerbutton, pauseTimerbutton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,14 +44,30 @@
     backButton.frame = backButtonFrame;
     [self.view addSubview:backButton];
     
-    timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [timerButton setTitle:@"Timer" forState:UIControlStateNormal];
-    [timerButton setTitleColor:[UIColor colorWithRed:FONT_RED green:FONT_GREEN blue:FONT_BLUE alpha:FONT_ALPHA] forState:UIControlStateNormal];
-    [timerButton setBackgroundColor:[UIColor colorWithRed:WIDGET_RED green:WIDGET_GREEN blue:WIDGET_BLUE alpha:WIDGET_ALPHA_LIGHT]];
-    timerButton.layer.borderWidth = 0.0f;
-    timerButton.layer.cornerRadius = CORNER_RADIUS;
-    timerButton.frame = CGRectMake(10, ([ResoAppDelegate windowHeight] / 2) - 50, [ResoAppDelegate windowWidth] - 20, 50);
-    [self.view addSubview:timerButton];
+    //picker view: panel
+    chooseTimePanel = [[UIView alloc] initWithFrame:CGRectMake(0, backButton.frame.size.height, [ResoAppDelegate windowWidth], [ResoAppDelegate windowHeight] - backButton.frame.size.height)];
+    [self.view addSubview:chooseTimePanel];
+    [chooseTimePanel setBackgroundColor:[UIColor clearColor]];
+    
+    //picker view: time picker
+    int pickerY = 75;
+    timePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, pickerY, [ResoAppDelegate windowWidth], 200)];
+    [timePicker setDatePickerMode:UIDatePickerModeCountDownTimer];
+    [chooseTimePanel addSubview:timePicker];
+    
+    //picker view: start button
+    int buttonHeight = 50;
+    startTimerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [startTimerbutton setTitle:@"Start Timer" forState:UIControlStateNormal];
+    [startTimerbutton addTarget:self action:@selector(startTimer:) forControlEvents:UIControlEventTouchUpInside];
+    [startTimerbutton setTitleColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] forState:UIControlStateNormal];
+    [startTimerbutton setBackgroundColor:[UIColor colorWithRed:0.75 green:1.0 blue:0.75 alpha:0.25]];
+    
+    startTimerbutton.layer.borderWidth = 0.0f;
+    startTimerbutton.layer.cornerRadius = CORNER_RADIUS;
+    startTimerbutton.frame = CGRectMake(10, pickerY+timePicker.frame.size.height+buttonHeight, chooseTimePanel.frame.size.width-20, buttonHeight);
+    [chooseTimePanel addSubview:startTimerbutton];
+                         
   }
   return self;
 }
@@ -73,6 +89,13 @@
   // Dispose of any resources that can be recreated.
 }
 
+-(void)startTimer:(id)sender
+{
+  ResoTimer * rt = [ResoTimer instance];
+  NSTimeInterval ti = timePicker.countDownDuration;
+  [rt setTimeout:round(ti)];
+}
+
 -(void)goBack:(id)sender
 {
   [self.navigationController popViewControllerAnimated:YES];
@@ -83,5 +106,27 @@
   //back button
   backButtonFrame = CGRectMake(0, 0, 50, 50);
   backButtonFrame_offscreen = CGRectMake(-(backButtonFrame.size.width), backButtonFrame.origin.y, backButtonFrame.size.width, backButtonFrame.size.height);
+}
+
+#pragma mark resotimerdelegate
+
+-(void) timerSecondsRemaining:(NSNumber*)seconds
+{
+  NSLog(@"timerSecondsRemaining(): %i", [seconds intValue]);
+  //[timerLabel setText:[seconds stringValue]];
+}
+
+-(void) timerStarted
+{
+  NSLog(@"timerStarted()");
+  //show timer panel
+  //set label to timer timeout value
+  ResoTimer * rt = [ResoTimer instance];
+}
+
+-(void) timerFinished
+{
+  NSLog(@"timerFinished()");
+  //show time selection panel
 }
 @end

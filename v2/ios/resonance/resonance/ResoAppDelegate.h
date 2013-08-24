@@ -22,6 +22,9 @@
 @property (nonatomic, assign) bool playing;
 
 @property (nonatomic, assign) int masterVolume;
+-(void)updateMasterVolume:(int)newVolume;
+-(void)playAll;
+-(void)pauseAll;
 -(float)calculateActualVolume:(int)moduleVolume;
 
 +(CGRect) windowFrame;

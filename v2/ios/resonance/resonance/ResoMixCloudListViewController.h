@@ -15,6 +15,11 @@
 @property (nonatomic, retain) UIButton * downloadButton;
 @property (nonatomic, retain) UIProgressView * progressBar;
 
+@property (nonatomic, assign) bool refreshView;
+
+@property (nonatomic, retain) UIButton * deviceButton;
+@property (nonatomic, retain) UIButton * cloudButton;
+
 #pragma mark -
 #pragma mark ResoMediaTransfer Delegates
 -(void) transferStarted:(ResoMediaTransfer*)t;

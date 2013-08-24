@@ -226,6 +226,7 @@ static ResoMixManager * rmm = nil;
       [m.tone play];
     }
   }
+  [ad playAll];
 }
 
 -(void)removeMix:(NSString*)uuid

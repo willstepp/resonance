@@ -382,6 +382,8 @@
     [ad.visualization setActiveSound:uuid];
   
     [self showReturnToModuleButton:true];
+  
+    [ad playAll];
 }
 
 -(void)previewSound:(id)sender

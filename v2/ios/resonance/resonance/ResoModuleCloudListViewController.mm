@@ -359,7 +359,7 @@
     cell = [[ResoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   
   cell.selectedBackgroundView = [[UIView alloc] init];
-  [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.15]];
+  [cell.selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05]];
   
   cell.layer.borderWidth = 0.0f;
   cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.05];
@@ -370,6 +370,8 @@
   [cell.textLabel setBackgroundColor:[UIColor clearColor]];
   
   cell.imageView.image = [UIImage imageWithContentsOfFile:[[ResoFileManager resonanceAppSubDirectory:[NSString stringWithFormat:@"sounds/%@/thumb", uuid]] path]];
+  cell.imageView.layer.cornerRadius = CORNER_RADIUS;
+  [cell.imageView setClipsToBounds:YES];
   
   UIImageView * actionImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-chevron-right-small.png"]];
   actionImage.frame = CGRectMake(cell.frame.size.width-50, 5, 50, 50);

@@ -16,6 +16,9 @@
 #import "ResoDataManager.h"
 #import "ResoFileManager.h"
 #import "ResoModuleManager.h"
+#import "ResoModule.h"
+#import "ISound.h"
+#import "ITone.h"
 
 @implementation ResoAppDelegate
 
@@ -97,6 +100,34 @@
 {
   ResoDataManager * rdm = [ResoDataManager instance];
   [rdm saveContext];
+}
+
+-(void)updateMasterVolume:(int)newVolume
+{
+  //1) update master volume
+  masterVolume = newVolume;
+  
+  //2) update all current modules based on new volume
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  for (id key in rmm.modules) {
+    ResoModule * rm = [rmm.modules objectForKey:key];
+    float actualVolume = [self calculateActualVolume:rm.volume];
+    [rm updateVolume:actualVolume];
+  }
+}
+
+-(void)playAll
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  [rmm playModules];
+  playing = true;
+}
+
+-(void)pauseAll
+{
+  ResoModuleManager * rmm = [ResoModuleManager instance];
+  [rmm pauseModules];
+  playing = false;
 }
 
 -(float)calculateActualVolume:(int)moduleVolume
